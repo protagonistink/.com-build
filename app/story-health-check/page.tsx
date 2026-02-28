@@ -154,10 +154,6 @@ export default function StoryHealthCheckPage() {
                     Curse of Knowledge. Earns both products.
                     ═══════════════════════════════════════════════════════ */}
                 <section className="max-w-6xl mx-auto px-6 mb-0 relative">
-                    <div className="absolute top-1/2 left-0 -translate-y-1/2 text-[15vw] font-display text-ink/[0.03] italic leading-none pointer-events-none z-0 select-none overflow-hidden max-w-full -rotate-90 origin-left">
-                        Curse of Knowledge
-                    </div>
-
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-start relative z-10">
                         <div className="md:col-span-5 sticky top-32">
                             <div className="flex items-center gap-4 mb-8 reveal">
@@ -195,6 +191,9 @@ export default function StoryHealthCheckPage() {
                                         <span className="leading-relaxed">Marketing burns cash with zero attribution.</span>
                                     </li>
                                 </ul>
+                                <p className="mt-10 pt-8 border-t border-ink/10 text-ink/70 leading-[1.8] font-sans font-light text-base">
+                                    Every day your story leaks, you pay for it&mdash;in abandoned carts, in meetings that don&apos;t convert, in funding rounds that stall before the second slide. The curse of knowledge isn&apos;t a metaphor. It&apos;s the invisible ceiling on your revenue, and it compounds.
+                                </p>
                             </div>
                         </div>
                     </div>
