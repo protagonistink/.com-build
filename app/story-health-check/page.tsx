@@ -658,7 +658,7 @@ export default function StoryHealthCheckPage() {
                             fill
                             sizes="32vw"
                             className="object-cover contrast-110"
-                            style={{ objectPosition: '50% 45%' }}
+                            style={{ objectPosition: '85% 45%' }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent pointer-events-none" />
                         <div className="absolute inset-0 bg-gradient-to-b from-ink/10 to-ink/60 pointer-events-none" />
@@ -888,7 +888,8 @@ export default function StoryHealthCheckPage() {
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                             <a href={DUBSADO_URL} className="group relative flex">
-                                <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-10 py-5 flex items-center gap-3 transition-opacity group-hover:opacity-90">
+                                <div className="absolute inset-0 bg-black/50 transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
+                                <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-10 py-5 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                                     Book the Story Audit — $1,500
                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </div>
