@@ -29,6 +29,9 @@ export default function ParallaxHeroBackground({ src, alt }: { src: string; alt:
             </motion.div>
 
             {/* Cinematic Vignette Layers */}
+            {/* 0. Lightening scrim to lift image toward homepage brightness */}
+            <div className="absolute inset-0 bg-white/15 pointer-events-none" />
+
             {/* 1. Perimeter darkening */}
             <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.5)] pointer-events-none" />
 
