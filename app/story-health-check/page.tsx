@@ -106,7 +106,7 @@ export default function StoryHealthCheckPage() {
                 {/* ═══════════════════════════════════════════════════════
                     SECTION 1 — HERO
                     Hook. Problem. Dark cinematic treatment — no form.
-                    Illustration: storybook_bg.jpg as parallax background
+                    Illustration: storybook_bg3.jpg as parallax background
                     with vignette overlays.
                     ═══════════════════════════════════════════════════════ */}
                 <section className="relative min-h-[90vh] flex flex-col justify-center items-center px-6 mb-32 bg-ink overflow-hidden">
