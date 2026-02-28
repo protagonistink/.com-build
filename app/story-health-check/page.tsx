@@ -117,11 +117,11 @@ export default function StoryHealthCheckPage() {
                         alt="Illustrated storybook pages — the craft of narrative strategy"
                     />
 
-                    {/* Content — centered over the parallax background */}
-                    <div className="max-w-6xl mx-auto z-10 w-full flex flex-col items-center md:items-end relative">
-                        <div className="absolute top-0 right-0 w-32 h-32 border-t-2 border-r-2 border-rust/30 pointer-events-none" />
+                    {/* Content — left-aligned over the parallax background */}
+                    <div className="max-w-6xl mx-auto z-10 w-full flex flex-col items-center md:items-start relative">
+                        <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-rust/30 pointer-events-none" />
 
-                        <div className="text-right max-w-4xl md:max-w-[58%]">
+                        <div className="text-left max-w-4xl md:max-w-[58%]">
                             <div className="inline-block mb-10 px-6 py-2 border border-rust/50 text-rust text-[0.65rem] font-bold uppercase tracking-[0.25em] bg-ink/50 backdrop-blur-sm reveal reveal-delay-1 shadow-[4px_4px_0px_rgba(200,60,47,0.15)]">
                                 Story Audit
                             </div>
@@ -143,15 +143,15 @@ export default function StoryHealthCheckPage() {
                                 </span>
                             </h1>
 
-                            <div className="w-full flex justify-end mb-16 reveal reveal-delay-3">
-                                <p className="font-sans text-lg md:text-xl max-w-lg text-paper/70 leading-[1.8] font-light border-r-2 border-rust/50 pr-8 text-right backdrop-blur-sm p-4">
+                            <div className="w-full flex justify-start mb-16 reveal reveal-delay-3">
+                                <p className="font-sans text-lg md:text-xl max-w-lg text-paper/70 leading-[1.8] font-light border-l-2 border-rust/50 pl-8 text-left backdrop-blur-sm p-4">
                                     Founders don&apos;t fail because their product is broken. They fail because their narrative is unrecognizable.<br />
                                     <span className="text-paper font-bold mt-4 block uppercase tracking-widest text-[0.65rem]">We apply engineering rigor to your brand story.</span>
                                 </p>
                             </div>
 
                             {/* Single rust CTA + quiet text-link */}
-                            <div className="flex flex-col sm:flex-row gap-4 justify-end items-center reveal reveal-delay-4">
+                            <div className="flex flex-col sm:flex-row gap-4 justify-start items-center reveal reveal-delay-4">
                                 <a href="#story-loom" className="group relative flex">
                                     <div className="absolute inset-0 bg-black/50 transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
                                     <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-8 py-4 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
