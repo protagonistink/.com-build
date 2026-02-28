@@ -527,6 +527,76 @@ export default function StoryHealthCheckPage() {
                     </div>
                 </section>
 
+                {/* ═══════════════════════════════════════════════════════
+                    SECTION 5 — SOCIAL PROOF / WHY TRUST US
+                    Testimonials + 40+ audits stat.
+                    Photography: writers-room.jpg ghosts left edge.
+                    Moved up: now immediately follows Free Loom form.
+                    ═══════════════════════════════════════════════════════ */}
+                <section className="bg-ink text-paper py-40 texture-grain relative overflow-hidden" id="proof">
+
+                    <div className="absolute left-0 top-0 bottom-0 w-[22vw] max-w-[280px] z-0 pointer-events-none">
+                        <Image
+                            src="/writers-room.jpg"
+                            alt=""
+                            fill
+                            className="object-cover grayscale contrast-75 opacity-20"
+                            style={{ objectPosition: '70% top' }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-ink pointer-events-none" />
+                    </div>
+
+                    <div className="max-w-7xl mx-auto px-6 relative z-10">
+                        <div className="flex flex-col md:flex-row justify-between items-end mb-24 border-b border-white/10 pb-12 reveal">
+                            <div>
+                                <h2 className="font-display text-6xl md:text-7xl tracking-tighter mb-4 text-white">The Results.</h2>
+                                <p className="text-[0.65rem] font-sans text-rust uppercase tracking-[0.2em] font-bold">Founders who stopped the bleeding</p>
+                            </div>
+                            <div className="hidden md:block font-sans text-[0.65rem] text-white/30 uppercase tracking-widest text-right">
+                                <p>40+ narrative audits completed</p>
+                                <p className="mt-1">Across SaaS, deep tech, and creative industries</p>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+                            {[
+                                {
+                                    quote: "We'd been pitching for six months with polite rejections. After the audit, we closed our seed round in three weeks. The framing shift was that dramatic.",
+                                    name: "Marcus T.",
+                                    role: "Founder, B2B SaaS",
+                                    result: "Seed round closed"
+                                },
+                                {
+                                    quote: "I thought our problem was the product. It wasn't. It was that no one understood what we actually did in under 30 seconds. The redline was brutal and exactly what we needed.",
+                                    name: "Priya K.",
+                                    role: "Co-Founder, Climate Tech",
+                                    result: "Website conversion +3×"
+                                },
+                                {
+                                    quote: "The 'Soul Extraction' document became our internal north star. Every new hire reads it. It's the clearest articulation of what we're building and why it matters.",
+                                    name: "James O.",
+                                    role: "CEO, Series A",
+                                    result: "Team alignment & hiring clarity"
+                                }
+                            ].map((item, i) => (
+                                <div key={i} className={`space-y-8 reveal reveal-delay-${i + 1} border-l border-white/10 pl-8 relative`}>
+                                    <div className="absolute top-0 -left-1 w-2 h-2 rounded-full bg-rust" />
+                                    <div className="inline-block px-3 py-1 border border-rust/40 text-rust text-[0.6rem] font-bold uppercase tracking-widest">
+                                        {item.result}
+                                    </div>
+                                    <p className="font-display text-xl text-paper/80 leading-[1.6] italic">
+                                        &ldquo;{item.quote}&rdquo;
+                                    </p>
+                                    <div className="border-t border-white/10 pt-6">
+                                        <p className="font-sans text-sm text-white font-bold">{item.name}</p>
+                                        <p className="font-sans text-[0.75rem] text-white/40 uppercase tracking-widest mt-1">{item.role}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
                 {/* Narrative Pivot — Free → Paid Bridge */}
                 <section className="py-24 md:py-32 bg-paper texture-paper relative">
                     <div className="max-w-3xl mx-auto px-6 text-center">
@@ -540,7 +610,7 @@ export default function StoryHealthCheckPage() {
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════
-                    SECTION 5 — THE STORY AUDIT (PAID)
+                    SECTION 6 — THE STORY AUDIT (PAID)
                     Dark section. Its own full spotlight.
                     Blueprint (4 layers) integrated in right column.
                     girlontablet.jpg breaks from right edge.
@@ -647,7 +717,7 @@ export default function StoryHealthCheckPage() {
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════
-                    SECTION 6 — THE CHOICE
+                    SECTION 7 — THE CHOICE
                     Simplified 2-column comparison. Both products, side by side.
                     ═══════════════════════════════════════════════════════ */}
                 <section className="py-32 bg-paper border-y border-ink/10">
@@ -720,114 +790,9 @@ export default function StoryHealthCheckPage() {
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════
-                    SECTION 7 — SOCIAL PROOF / WHY TRUST US
-                    Testimonials + 40+ audits stat.
-                    Photography: writers-room.jpg ghosts left edge.
-                    ═══════════════════════════════════════════════════════ */}
-                <section className="bg-ink text-paper py-40 texture-grain relative overflow-hidden" id="proof">
-
-                    <div className="absolute left-0 top-0 bottom-0 w-[22vw] max-w-[280px] z-0 pointer-events-none">
-                        <Image
-                            src="/writers-room.jpg"
-                            alt=""
-                            fill
-                            className="object-cover grayscale contrast-75 opacity-20"
-                            style={{ objectPosition: '70% top' }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-ink pointer-events-none" />
-                    </div>
-
-                    <div className="max-w-7xl mx-auto px-6 relative z-10">
-                        <div className="flex flex-col md:flex-row justify-between items-end mb-24 border-b border-white/10 pb-12 reveal">
-                            <div>
-                                <h2 className="font-display text-6xl md:text-7xl tracking-tighter mb-4 text-white">The Results.</h2>
-                                <p className="text-[0.65rem] font-sans text-rust uppercase tracking-[0.2em] font-bold">Founders who stopped the bleeding</p>
-                            </div>
-                            <div className="hidden md:block font-sans text-[0.65rem] text-white/30 uppercase tracking-widest text-right">
-                                <p>40+ narrative audits completed</p>
-                                <p className="mt-1">Across SaaS, deep tech, and creative industries</p>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-                            {[
-                                {
-                                    quote: "We'd been pitching for six months with polite rejections. After the audit, we closed our seed round in three weeks. The framing shift was that dramatic.",
-                                    name: "Marcus T.",
-                                    role: "Founder, B2B SaaS",
-                                    result: "Seed round closed"
-                                },
-                                {
-                                    quote: "I thought our problem was the product. It wasn't. It was that no one understood what we actually did in under 30 seconds. The redline was brutal and exactly what we needed.",
-                                    name: "Priya K.",
-                                    role: "Co-Founder, Climate Tech",
-                                    result: "Website conversion +3×"
-                                },
-                                {
-                                    quote: "The 'Soul Extraction' document became our internal north star. Every new hire reads it. It's the clearest articulation of what we're building and why it matters.",
-                                    name: "James O.",
-                                    role: "CEO, Series A",
-                                    result: "Team alignment & hiring clarity"
-                                }
-                            ].map((item, i) => (
-                                <div key={i} className={`space-y-8 reveal reveal-delay-${i + 1} border-l border-white/10 pl-8 relative`}>
-                                    <div className="absolute top-0 -left-1 w-2 h-2 rounded-full bg-rust" />
-                                    <div className="inline-block px-3 py-1 border border-rust/40 text-rust text-[0.6rem] font-bold uppercase tracking-widest">
-                                        {item.result}
-                                    </div>
-                                    <p className="font-display text-xl text-paper/80 leading-[1.6] italic">
-                                        &ldquo;{item.quote}&rdquo;
-                                    </p>
-                                    <div className="border-t border-white/10 pt-6">
-                                        <p className="font-sans text-sm text-white font-bold">{item.name}</p>
-                                        <p className="font-sans text-[0.75rem] text-white/40 uppercase tracking-widest mt-1">{item.role}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* ═══════════════════════════════════════════════════════
-                    SECTION 8 — FAQ
-                    "Who performs the audit?" added as first question.
-                    ═══════════════════════════════════════════════════════ */}
-                <section className="py-40 bg-paper border-t border-ink/5 relative overflow-hidden" id="faq">
-                    <div className="max-w-5xl mx-auto px-6">
-                        <div className="mb-24 reveal text-center lg:text-left">
-                            <div className="inline-block px-4 py-1 border border-rust text-rust text-[0.6rem] font-bold uppercase tracking-widest mb-6">Inquiry Phase</div>
-                            <h2 className="font-display text-5xl md:text-7xl italic leading-none text-ink tracking-tight mb-4">Got Questions?</h2>
-                            <p className="font-sans text-ink/50 text-sm tracking-widest uppercase">The structural fine print</p>
-                        </div>
-
-                        <div className="space-y-12 mb-32 reveal reveal-delay-1">
-                            <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
-                                {[
-                                    { q: "Who performs the audit?", a: "Our senior strategists — not contractors, not AI. The same team whose work you can see on our work page. You'll get a real human on your first call, and a real human's markup on your copy." },
-                                    { q: "Why is this $1,500?", a: "This isn't copywriting, it's architecture. You're investing in clarity that changes how you pitch, present, and sell. One story that works can move a room or close a round. That's measurable ROI." },
-                                    { q: "What exactly will I walk away with?", a: "Three deliverables: A Story Audit, a Brand Blueprint, and a practical Narrative Roadmap (PDF) — all pulling from the same foundation so your team, site, and fundraising speak with one voice." },
-                                    { q: "How long does it take?", a: "One business week. We'll send it 3–5 days from when we begin, keeping you out of 'brand work limbo.'" },
-                                    { q: "Will this help me raise?", a: "Without question. Investors fund clarity. If your pitch stalls at 'what do you actually do?', this process fixes that." },
-                                    { q: "What's the difference between the free Loom and the paid Audit?", a: "The Loom is a high-level read on your biggest leak — directional, fast, and free. The Audit is a surgical intervention across all four layers of your narrative, with deliverables your whole team can use." },
-                                ].map((faq, i) => (
-                                    <div key={i} className="group">
-                                        <h4 className="font-display text-xl mb-4 group-hover:text-rust transition-colors flex items-start gap-3">
-                                            <span className="text-rust font-sans text-xs mt-1">Q.</span>
-                                            {faq.q}
-                                        </h4>
-                                        <p className="text-ink/60 font-sans text-sm leading-relaxed pl-6 border-l border-ink/5">
-                                            {faq.a}
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* ═══════════════════════════════════════════════════════
-                    SECTION 9 — CLOSING CTA
+                    SECTION 8 — CLOSING CTA
                     Both products. Photography ghost right edge.
+                    Swapped with FAQ — CTA now precedes FAQ.
                     ═══════════════════════════════════════════════════════ */}
                 <section className="bg-paper border-t-2 border-ink py-32 relative overflow-hidden">
                     <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.025]" style={{
@@ -876,6 +841,44 @@ export default function StoryHealthCheckPage() {
                         <p className="mt-10 font-sans text-[0.6rem] text-ink/30 uppercase tracking-widest">
                             Questions? <a href="mailto:hello@protagonistink.com" className="underline hover:text-rust transition-colors">hello@protagonistink.com</a>
                         </p>
+                    </div>
+                </section>
+
+                {/* ═══════════════════════════════════════════════════════
+                    SECTION 9 — FAQ
+                    "Who performs the audit?" added as first question.
+                    Swapped with CTA — FAQ is now final content section.
+                    ═══════════════════════════════════════════════════════ */}
+                <section className="py-40 bg-paper border-t border-ink/5 relative overflow-hidden" id="faq">
+                    <div className="max-w-5xl mx-auto px-6">
+                        <div className="mb-24 reveal text-center lg:text-left">
+                            <div className="inline-block px-4 py-1 border border-rust text-rust text-[0.6rem] font-bold uppercase tracking-widest mb-6">Inquiry Phase</div>
+                            <h2 className="font-display text-5xl md:text-7xl italic leading-none text-ink tracking-tight mb-4">Got Questions?</h2>
+                            <p className="font-sans text-ink/50 text-sm tracking-widest uppercase">The structural fine print</p>
+                        </div>
+
+                        <div className="space-y-12 mb-32 reveal reveal-delay-1">
+                            <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
+                                {[
+                                    { q: "Who performs the audit?", a: "Our senior strategists — not contractors, not AI. The same team whose work you can see on our work page. You'll get a real human on your first call, and a real human's markup on your copy." },
+                                    { q: "Why is this $1,500?", a: "This isn't copywriting, it's architecture. You're investing in clarity that changes how you pitch, present, and sell. One story that works can move a room or close a round. That's measurable ROI." },
+                                    { q: "What exactly will I walk away with?", a: "Three deliverables: A Story Audit, a Brand Blueprint, and a practical Narrative Roadmap (PDF) — all pulling from the same foundation so your team, site, and fundraising speak with one voice." },
+                                    { q: "How long does it take?", a: "One business week. We'll send it 3–5 days from when we begin, keeping you out of 'brand work limbo.'" },
+                                    { q: "Will this help me raise?", a: "Without question. Investors fund clarity. If your pitch stalls at 'what do you actually do?', this process fixes that." },
+                                    { q: "What's the difference between the free Loom and the paid Audit?", a: "The Loom is a high-level read on your biggest leak — directional, fast, and free. The Audit is a surgical intervention across all four layers of your narrative, with deliverables your whole team can use." },
+                                ].map((faq, i) => (
+                                    <div key={i} className="group">
+                                        <h4 className="font-display text-xl mb-4 group-hover:text-rust transition-colors flex items-start gap-3">
+                                            <span className="text-rust font-sans text-xs mt-1">Q.</span>
+                                            {faq.q}
+                                        </h4>
+                                        <p className="text-ink/60 font-sans text-sm leading-relaxed pl-6 border-l border-ink/5">
+                                            {faq.a}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </section>
 
