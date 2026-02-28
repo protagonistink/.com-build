@@ -101,7 +101,7 @@ export default function StoryHealthCheckPage() {
     return (
         <MotionConfig reducedMotion="user">
         <div className="flex flex-col overflow-x-hidden bg-paper text-ink font-sans selection:bg-rust/20 selection:text-ink">
-            <main className="pt-32 pb-0 isolate">
+            <main className="pt-0 pb-0 isolate">
 
                 {/* ═══════════════════════════════════════════════════════
                     SECTION 1 — HERO
@@ -658,10 +658,10 @@ export default function StoryHealthCheckPage() {
                             fill
                             sizes="32vw"
                             className="object-cover grayscale contrast-110"
-                            style={{ objectPosition: 'center top' }}
+                            style={{ objectPosition: 'center 68%' }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/50 to-transparent pointer-events-none" />
-                        <div className="absolute inset-0 bg-gradient-to-b from-ink/20 to-ink/80 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-ink/10 to-ink/60 pointer-events-none" />
                     </div>
 
                     <div className="max-w-6xl mx-auto px-6 relative z-10">
@@ -863,11 +863,11 @@ export default function StoryHealthCheckPage() {
                             src="/images/pages/girlfounder_conference.jpg"
                             alt=""
                             fill
-                            className="object-cover grayscale contrast-110 opacity-25"
+                            className="object-cover grayscale contrast-110 opacity-50"
                             style={{ objectPosition: 'center top' }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-r from-ink to-ink/20 pointer-events-none" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/60 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent pointer-events-none" />
                     </div>
 
                     <motion.div
