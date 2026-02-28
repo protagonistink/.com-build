@@ -657,8 +657,8 @@ export default function StoryHealthCheckPage() {
                             alt="Founder on the path to narrative clarity"
                             fill
                             sizes="32vw"
-                            className="object-cover grayscale contrast-110"
-                            style={{ objectPosition: 'center 68%' }}
+                            className="object-cover contrast-110"
+                            style={{ objectPosition: '50% 80%' }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent pointer-events-none" />
                         <div className="absolute inset-0 bg-gradient-to-b from-ink/10 to-ink/60 pointer-events-none" />
@@ -863,10 +863,10 @@ export default function StoryHealthCheckPage() {
                             src="/images/pages/girlfounder_conference.jpg"
                             alt=""
                             fill
-                            className="object-cover grayscale contrast-110 opacity-50"
+                            className="object-cover grayscale contrast-110 opacity-60"
                             style={{ objectPosition: 'center top' }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/60 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/25 to-transparent pointer-events-none" />
                         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent pointer-events-none" />
                     </div>
 
@@ -888,8 +888,7 @@ export default function StoryHealthCheckPage() {
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                             <a href={DUBSADO_URL} className="group relative flex">
-                                <div className="absolute inset-0 bg-rust transform translate-x-2 translate-y-2 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
-                                <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-10 py-5 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+                                <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-10 py-5 flex items-center gap-3 transition-opacity group-hover:opacity-90">
                                     Book the Story Audit — $1,500
                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </div>
