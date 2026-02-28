@@ -3,11 +3,18 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight, PlayCircle, CheckCircle2 } from "lucide-react";
 import Image from 'next/image';
-import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
+import { motion, useScroll, useTransform, AnimatePresence, MotionConfig } from 'motion/react';
 import TypewriterHeadline from '@/components/TypewriterHeadline';
 import ParallaxHeroBackground from '@/components/ParallaxHeroBackground';
 
 const DUBSADO_URL = "#"; // TODO: Replace with Dubsado booking URL
+
+// ── Shared animation presets ─────────────────────────────────────────────────
+const FADE_UP = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 } } as const;
+const SLIDE_LEFT = { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 } } as const;
+const SLIDE_RIGHT = { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 } } as const;
+const MOTION_TRANSITION = { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] } as const;
+const MOTION_VIEWPORT = { once: true, amount: 0.2 } as const;
 
 export default function StoryHealthCheckPage() {
     // ── Multi-step Story Loom form ──────────────────────────────────────────
@@ -92,6 +99,7 @@ export default function StoryHealthCheckPage() {
     };
 
     return (
+        <MotionConfig reducedMotion="user">
         <div className="flex flex-col overflow-x-hidden bg-paper text-ink font-sans selection:bg-rust/20 selection:text-ink">
             <main className="pt-32 pb-32 isolate">
 
@@ -167,10 +175,9 @@ export default function StoryHealthCheckPage() {
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-start relative z-10">
                         <motion.div
                             className="md:col-span-5 sticky top-32"
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, amount: 0.2 }}
-                            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                            {...SLIDE_LEFT}
+                            viewport={MOTION_VIEWPORT}
+                            transition={MOTION_TRANSITION}
                         >
                             <div className="flex items-center gap-4 mb-8">
                                 <span className="text-rust font-bold font-sans text-sm">01</span>
@@ -181,10 +188,9 @@ export default function StoryHealthCheckPage() {
                         </motion.div>
                         <motion.div
                             className="md:col-span-7 space-y-12"
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, amount: 0.2 }}
-                            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.15 }}
+                            {...SLIDE_RIGHT}
+                            viewport={MOTION_VIEWPORT}
+                            transition={{ ...MOTION_TRANSITION, delay: 0.15 }}
                         >
                             <p className="text-2xl md:text-3xl font-display font-light leading-[1.4] text-ink">
                                 You are the protagonist. But the market sees <span className="bg-ink text-paper px-2 py-1 italic">a confused extra.</span>
@@ -245,20 +251,19 @@ export default function StoryHealthCheckPage() {
                     </motion.div>
 
                     {/* Dark overlay for legibility */}
-                    <div className="absolute inset-0 bg-ink/60 z-[1]" />
+                    <div className="absolute inset-0 bg-ink/65 z-[1]" />
 
                     {/* Gradual edge gradients — smooth bleed into surrounding sections */}
-                    <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-paper via-paper/60 to-transparent pointer-events-none z-[2]" />
-                    <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-paper via-paper/60 to-transparent pointer-events-none z-[2]" />
-                    <div className="absolute inset-0 shadow-[inset_0_0_80px_20px_rgba(0,0,0,0.3)] pointer-events-none z-[2]" />
+                    <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-paper via-paper/50 via-30% to-transparent pointer-events-none z-[2]" />
+                    <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-paper via-paper/50 via-30% to-transparent pointer-events-none z-[2]" />
+                    <div className="absolute inset-0 shadow-[inset_0_0_100px_30px_rgba(0,0,0,0.35)] pointer-events-none z-[2]" />
 
                     {/* Content */}
                     <motion.div
                         className="relative z-10 max-w-2xl mx-auto px-6 md:px-10 text-center py-20"
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        {...FADE_UP}
                         viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                        transition={{ ...MOTION_TRANSITION, duration: 0.8 }}
                     >
                         <p className="font-sans text-paper/50 text-[0.65rem] uppercase tracking-[0.25em] mb-6">
                             Our approach
@@ -640,7 +645,7 @@ export default function StoryHealthCheckPage() {
                     initial={{ opacity: 0, scale: 0.97 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, amount: 0.15 }}
-                    transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                    transition={{ ...MOTION_TRANSITION, duration: 0.8 }}
                 >
                     {/* Blueprint grid overlay */}
                     <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'linear-gradient(var(--color-paper) 1px, transparent 1px), linear-gradient(90deg, var(--color-paper) 1px, transparent 1px)', backgroundSize: '3rem 3rem' }} />
@@ -750,10 +755,9 @@ export default function StoryHealthCheckPage() {
                     <div className="max-w-5xl mx-auto px-6">
                         <motion.div
                             className="text-center mb-20"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            {...FADE_UP}
                             viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                            transition={MOTION_TRANSITION}
                         >
                             <h2 className="font-display text-5xl md:text-6xl tracking-tighter text-ink mb-4">The Choice.</h2>
                             <p className="font-sans text-ink/50 text-sm max-w-md mx-auto">Both paths lead to clarity. Pick the depth you need.</p>
@@ -763,10 +767,9 @@ export default function StoryHealthCheckPage() {
                             {/* Free Loom Column */}
                             <motion.div
                                 className="flex-1 py-12 md:pr-16"
-                                initial={{ opacity: 0, x: -30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true, amount: 0.2 }}
-                                transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                                {...SLIDE_LEFT}
+                                viewport={MOTION_VIEWPORT}
+                                transition={MOTION_TRANSITION}
                             >
                                 <p className="font-sans text-[0.6rem] font-bold uppercase tracking-[0.2em] text-ink/40 mb-4">Free</p>
                                 <h3 className="font-display text-4xl text-ink mb-3 italic">Story Loom</h3>
@@ -798,10 +801,9 @@ export default function StoryHealthCheckPage() {
                             {/* Paid Audit Column */}
                             <motion.div
                                 className="flex-1 py-12 md:pl-16"
-                                initial={{ opacity: 0, x: 30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true, amount: 0.2 }}
-                                transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.15 }}
+                                {...SLIDE_RIGHT}
+                                viewport={MOTION_VIEWPORT}
+                                transition={{ ...MOTION_TRANSITION, delay: 0.15 }}
                             >
                                 <p className="font-sans text-[0.6rem] font-bold uppercase tracking-[0.2em] text-ink/40 mb-4">$1,500</p>
                                 <h3 className="font-display text-4xl text-ink mb-3 italic">Story Audit</h3>
@@ -870,10 +872,9 @@ export default function StoryHealthCheckPage() {
 
                     <motion.div
                         className="max-w-5xl mx-auto px-6 relative z-10 text-center"
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.2 }}
-                        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                        {...FADE_UP}
+                        viewport={MOTION_VIEWPORT}
+                        transition={{ ...MOTION_TRANSITION, duration: 0.8 }}
                     >
                         <div className="inline-block mb-10 px-4 py-1 border border-rust text-rust text-[0.6rem] font-bold uppercase tracking-widest">
                             The Decision Point
@@ -970,5 +971,6 @@ export default function StoryHealthCheckPage() {
                 </div>
             </div>
         </div>
+        </MotionConfig>
     );
 }
