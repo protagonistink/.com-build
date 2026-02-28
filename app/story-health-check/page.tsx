@@ -731,7 +731,6 @@ export default function StoryHealthCheckPage() {
                 <section className="py-32 bg-paper border-y border-ink/10">
                     <div className="max-w-5xl mx-auto px-6">
                         <div className="text-center mb-20 reveal">
-                            <div className="font-sans text-[0.6rem] uppercase tracking-[0.2em] text-rust font-bold mb-4">Section 04</div>
                             <h2 className="font-display text-5xl md:text-6xl tracking-tighter text-ink mb-4">The Choice.</h2>
                             <p className="font-sans text-ink/50 text-sm max-w-md mx-auto">Both paths lead to clarity. Pick the depth you need.</p>
                         </div>
@@ -792,6 +791,19 @@ export default function StoryHealthCheckPage() {
                                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                     </div>
                                 </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Full-width testimonial pull quote */}
+                    <div className="max-w-4xl mx-auto px-6 pt-24 pb-8 reveal reveal-delay-2">
+                        <div className="border-t border-ink/10 pt-20 text-center">
+                            <p className="font-display text-3xl md:text-4xl lg:text-[2.75rem] italic text-ink leading-[1.35] tracking-tight">
+                                &ldquo;We&apos;d been pitching for six months with polite rejections. After the audit, we closed our seed round in three weeks. The framing shift was that dramatic.&rdquo;
+                            </p>
+                            <div className="mt-10">
+                                <p className="font-sans text-sm font-bold text-ink tracking-wide">Marcus T.</p>
+                                <p className="font-sans text-[0.7rem] text-ink/40 uppercase tracking-[0.2em] mt-1">Founder, B2B SaaS</p>
                             </div>
                         </div>
                     </div>
