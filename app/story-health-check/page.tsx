@@ -106,15 +106,15 @@ export default function StoryHealthCheckPage() {
                 {/* ═══════════════════════════════════════════════════════
                     SECTION 1 — HERO
                     Hook. Problem. Dark cinematic treatment — no form.
-                    Photography: writers-room.jpg as parallax background
-                    with vignette overlays. Navbar starts transparent/white.
+                    Illustration: storybook_bg.jpg as parallax background
+                    with vignette overlays.
                     ═══════════════════════════════════════════════════════ */}
                 <section className="relative min-h-[90vh] flex flex-col justify-center items-center px-6 mb-32 bg-ink overflow-hidden">
 
                     {/* Parallax background with cinematic vignette */}
                     <ParallaxHeroBackground
-                        src="/writers-room.jpg"
-                        alt="Strategy session — makers at work, whiteboards covered in red marks"
+                        src="/images/pages/storybook_bg.jpg"
+                        alt="Illustrated storybook pages — the craft of narrative strategy"
                     />
 
                     {/* Content — centered over the parallax background */}
@@ -241,8 +241,8 @@ export default function StoryHealthCheckPage() {
                         style={{ y: methodologyY }}
                     >
                         <Image
-                            src="/images/pages/storybook_bg.jpg"
-                            alt="Illustrated storybook pages — the craft of narrative strategy"
+                            src="/writers-room.jpg"
+                            alt="Strategy session — makers at work, whiteboards covered in red marks"
                             fill
                             sizes="100vw"
                             className="object-cover"
