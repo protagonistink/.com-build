@@ -658,7 +658,7 @@ export default function StoryHealthCheckPage() {
                             fill
                             sizes="32vw"
                             className="object-cover contrast-110"
-                            style={{ objectPosition: '50% 80%' }}
+                            style={{ objectPosition: '50% 45%' }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent pointer-events-none" />
                         <div className="absolute inset-0 bg-gradient-to-b from-ink/10 to-ink/60 pointer-events-none" />
