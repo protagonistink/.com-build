@@ -12,11 +12,12 @@ export default function Navbar() {
 
   const isWorkIndex = pathname === '/work';
   const isWorkDetail = pathname?.startsWith('/work/') && pathname !== '/work';
-  // On work detail pages, the hero is dark and ~90vh tall.
+  const isStoryHealthCheck = pathname === '/story-health-check';
+  // On work detail + story-health-check pages, the hero is dark and ~90vh tall.
   // We want the navbar to start transparent/light-text, then
   // switch to light bg/dark text once we scroll past the hero.
-  const useDarkHero = isWorkDetail;
-  const heroThreshold = useDarkHero ? 400 : 20;
+  const useDarkHero = isWorkDetail || isStoryHealthCheck;
+  const heroThreshold = useDarkHero ? (isWorkDetail ? 400 : 550) : 20;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > heroThreshold);

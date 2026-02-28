@@ -113,7 +113,7 @@ export default function StoryHealthCheckPage() {
 
                     {/* Parallax background with cinematic vignette */}
                     <ParallaxHeroBackground
-                        src="/images/pages/storybook_bg.jpg"
+                        src="/images/pages/storybook_bg2.jpg"
                         alt="Illustrated storybook pages — the craft of narrative strategy"
                     />
 
@@ -650,11 +650,11 @@ export default function StoryHealthCheckPage() {
                     {/* Blueprint grid overlay */}
                     <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'linear-gradient(var(--color-paper) 1px, transparent 1px), linear-gradient(90deg, var(--color-paper) 1px, transparent 1px)', backgroundSize: '3rem 3rem' }} />
 
-                    {/* HUMAN PHOTOGRAPHY — girlfounder_conference breaks right edge */}
+                    {/* HUMAN PHOTOGRAPHY — yellowbrickroad breaks right edge */}
                     <div className="absolute right-0 top-0 bottom-0 w-[32vw] max-w-[420px] z-[1] pointer-events-none">
                         <Image
-                            src="/images/pages/girlfounder_conference.jpg"
-                            alt="Founder reviewing narrative strategy"
+                            src="/images/pages/yellowbrickroad.jpg"
+                            alt="Founder on the path to narrative clarity"
                             fill
                             sizes="32vw"
                             className="object-cover grayscale contrast-110"
@@ -860,10 +860,10 @@ export default function StoryHealthCheckPage() {
 
                     <div className="absolute right-0 top-0 bottom-0 w-[36vw] max-w-[480px] z-0 pointer-events-none">
                         <Image
-                            src="/girlontablet.jpg"
+                            src="/images/pages/girlfounder_conference.jpg"
                             alt=""
                             fill
-                            className="object-cover grayscale contrast-110 opacity-20"
+                            className="object-cover grayscale contrast-110 opacity-25"
                             style={{ objectPosition: 'center top' }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-ink to-ink/20 pointer-events-none" />
