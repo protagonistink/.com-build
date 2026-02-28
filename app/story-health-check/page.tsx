@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, PlayCircle, CheckCircle2 } from "lucide-react";
 import Image from 'next/image';
+import { motion, useScroll, useTransform } from 'motion/react';
 import TypewriterHeadline from '@/components/TypewriterHeadline';
 import ParallaxHeroBackground from '@/components/ParallaxHeroBackground';
 
@@ -17,6 +18,14 @@ export default function StoryHealthCheckPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [loomSubmitted, setLoomSubmitted] = useState(false);
     const [pastLoomForm, setPastLoomForm] = useState(false);
+
+    // ── Parallax for methodology interstitial ────────────────────────────────
+    const methodologyRef = useRef(null);
+    const { scrollYProgress: methodologyScroll } = useScroll({
+        target: methodologyRef,
+        offset: ['start end', 'end start'],
+    });
+    const methodologyY = useTransform(methodologyScroll, [0, 1], ['0%', '12%']);
 
     useEffect(() => {
         const loomSection = document.getElementById('free-loom');
@@ -200,29 +209,51 @@ export default function StoryHealthCheckPage() {
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════
-                    SECTION 3 — CINEMATIC STRIP
-                    hero-typewriter.png full bleed. Updated caption: two paths.
+                    SECTION 3 — METHODOLOGY INTERSTITIAL
+                    Storybook background, parallax. Introduces what PI does.
                     ═══════════════════════════════════════════════════════ */}
-                <div className="relative w-full h-[44vh] md:h-[56vh] overflow-hidden my-20 reveal">
-                    <Image
-                        src="/hero-typewriter.png"
-                        alt="Close-up of typewriter keys — the analog craft behind every narrative"
-                        fill
-                        className="object-cover grayscale contrast-125"
-                        style={{ objectPosition: 'center 50%' }}
-                    />
-                    <div className="absolute inset-0 bg-ink/55" />
-                    <div className="absolute bottom-10 left-6 md:left-16 right-6 md:right-auto max-w-xl">
-                        <p className="font-display text-paper/95 text-2xl md:text-4xl italic leading-[1.3] mb-4">
-                            Two paths forward.<br />
-                            <span className="text-rust/90">One free. One surgical.</span>
+                <div
+                    ref={methodologyRef}
+                    className="relative w-full min-h-[65vh] md:min-h-[75vh] overflow-hidden my-20 reveal flex items-center justify-center"
+                >
+                    {/* Parallax background image */}
+                    <motion.div
+                        className="absolute inset-0 h-[115%] -top-[8%] z-0"
+                        style={{ y: methodologyY }}
+                    >
+                        <Image
+                            src="/images/pages/storybook_bg.jpg"
+                            alt="Illustrated storybook pages — the craft of narrative strategy"
+                            fill
+                            sizes="100vw"
+                            className="object-cover"
+                            style={{ objectPosition: 'center 40%' }}
+                        />
+                    </motion.div>
+
+                    {/* Dark overlay for legibility */}
+                    <div className="absolute inset-0 bg-ink/60 z-[1]" />
+
+                    {/* Gradual edge gradients — smooth bleed into surrounding sections */}
+                    <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-paper via-paper/60 to-transparent pointer-events-none z-[2]" />
+                    <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-paper via-paper/60 to-transparent pointer-events-none z-[2]" />
+                    <div className="absolute inset-0 shadow-[inset_0_0_80px_20px_rgba(0,0,0,0.3)] pointer-events-none z-[2]" />
+
+                    {/* Content */}
+                    <div className="relative z-10 max-w-2xl mx-auto px-6 md:px-10 text-center py-20">
+                        <p className="font-sans text-paper/50 text-[0.65rem] uppercase tracking-[0.25em] mb-6">
+                            Our approach
                         </p>
-                        <p className="font-sans text-paper/40 text-[0.6rem] uppercase tracking-[0.2em]">
-                            Both start with knowing exactly where your narrative is broken.
+                        <h2 className="font-display text-paper text-3xl md:text-5xl italic leading-[1.25] mb-8">
+                            Every founder has a story<br className="hidden md:inline" /> worth telling.
+                        </h2>
+                        <p className="font-sans text-paper/80 text-base md:text-lg leading-[1.85] mb-4">
+                            You built something real. But somewhere between your vision and the way people experience it, the signal gets lost. We help founders articulate what makes them matter&mdash;so the right audience doesn&apos;t just understand your product, they <em className="text-rust/90 not-italic">feel</em> it.
+                        </p>
+                        <p className="font-sans text-paper/60 text-sm md:text-base leading-[1.85]">
+                            Protagonist Ink is a story strategy studio. We find the narrative thread that connects what you&apos;ve built to the people it&apos;s built for&mdash;then we make it impossible to ignore.
                         </p>
                     </div>
-                    <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-paper to-transparent pointer-events-none" />
-                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-paper to-transparent pointer-events-none" />
                 </div>
 
                 {/* ═══════════════════════════════════════════════════════
