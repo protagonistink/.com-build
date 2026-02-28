@@ -101,7 +101,7 @@ export default function StoryHealthCheckPage() {
     return (
         <MotionConfig reducedMotion="user">
         <div className="flex flex-col overflow-x-hidden bg-paper text-ink font-sans selection:bg-rust/20 selection:text-ink">
-            <main className="pt-32 pb-32 isolate">
+            <main className="pt-32 pb-0 isolate">
 
                 {/* ═══════════════════════════════════════════════════════
                     SECTION 1 — HERO
@@ -852,9 +852,9 @@ export default function StoryHealthCheckPage() {
                     Both products. Photography ghost right edge.
                     Swapped with FAQ — CTA now precedes FAQ.
                     ═══════════════════════════════════════════════════════ */}
-                <section className="bg-paper border-t-2 border-ink py-32 relative overflow-hidden">
-                    <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.025]" style={{
-                        backgroundImage: 'linear-gradient(var(--color-ink) 1px, transparent 1px), linear-gradient(90deg, var(--color-ink) 1px, transparent 1px)',
+                <section className="bg-ink border-t-2 border-rust py-32 relative overflow-hidden">
+                    <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.06]" style={{
+                        backgroundImage: 'linear-gradient(var(--color-paper) 1px, transparent 1px), linear-gradient(90deg, var(--color-paper) 1px, transparent 1px)',
                         backgroundSize: '4rem 4rem'
                     }} />
 
@@ -863,11 +863,11 @@ export default function StoryHealthCheckPage() {
                             src="/girlontablet.jpg"
                             alt=""
                             fill
-                            className="object-cover grayscale contrast-110 opacity-30"
+                            className="object-cover grayscale contrast-110 opacity-20"
                             style={{ objectPosition: 'center top' }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-r from-paper to-paper/30 pointer-events-none" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-paper/90 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-ink to-ink/20 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 to-transparent pointer-events-none" />
                     </div>
 
                     <motion.div
@@ -879,10 +879,10 @@ export default function StoryHealthCheckPage() {
                         <div className="inline-block mb-10 px-4 py-1 border border-rust text-rust text-[0.6rem] font-bold uppercase tracking-widest">
                             The Decision Point
                         </div>
-                        <h2 className="font-display text-6xl md:text-8xl tracking-tighter mb-8 text-ink leading-[0.9]">
+                        <h2 className="font-display text-6xl md:text-8xl tracking-tighter mb-8 text-paper leading-[0.9]">
                             Stop guessing.<br /><span className="italic text-rust">Start converting.</span>
                         </h2>
-                        <p className="font-sans text-ink/60 text-lg max-w-xl mx-auto leading-relaxed mb-16">
+                        <p className="font-sans text-paper/60 text-lg max-w-xl mx-auto leading-relaxed mb-16">
                             The free Loom shows you the leak. The Story Audit fixes it. Either way, you&apos;ll know more about your narrative in the next 72 hours than you have in years.
                         </p>
 
@@ -895,13 +895,13 @@ export default function StoryHealthCheckPage() {
                                 </div>
                             </a>
 
-                            <a href="#free-loom" className="font-sans text-[0.6rem] tracking-[0.15em] text-ink/30 hover:text-rust transition-colors flex items-center gap-1.5 mt-6">
+                            <a href="#free-loom" className="font-sans text-[0.6rem] tracking-[0.15em] text-paper/30 hover:text-rust transition-colors flex items-center gap-1.5 mt-6">
                                 Not ready? Send your URL for the free teardown first
                                 <ArrowRight className="w-3 h-3" />
                             </a>
                         </div>
 
-                        <p className="mt-10 font-sans text-[0.6rem] text-ink/30 uppercase tracking-widest">
+                        <p className="mt-10 font-sans text-[0.6rem] text-paper/30 uppercase tracking-widest">
                             Questions? <a href="mailto:hello@protagonistink.com" className="underline hover:text-rust transition-colors">hello@protagonistink.com</a>
                         </p>
                     </motion.div>
@@ -912,16 +912,15 @@ export default function StoryHealthCheckPage() {
                     "Who performs the audit?" added as first question.
                     Swapped with CTA — FAQ is now final content section.
                     ═══════════════════════════════════════════════════════ */}
-                <section className="py-40 bg-paper border-t border-ink/5 relative overflow-hidden" id="faq">
+                <section className="pt-40 pb-8 bg-paper border-t border-ink/5 relative overflow-hidden" id="faq">
                     <div className="max-w-5xl mx-auto px-6">
                         <div className="mb-24 reveal text-center lg:text-left">
-                            <div className="inline-block px-4 py-1 border border-rust text-rust text-[0.6rem] font-bold uppercase tracking-widest mb-6">Inquiry Phase</div>
                             <h2 className="font-display text-5xl md:text-7xl italic leading-none text-ink tracking-tight mb-4">Got Questions?</h2>
                             <p className="font-sans text-ink/50 text-sm tracking-widest uppercase">The structural fine print</p>
                         </div>
 
-                        <div className="space-y-12 mb-32 reveal reveal-delay-1">
-                            <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
+                        <div className="space-y-12 reveal reveal-delay-1">
+                            <div className="grid md:grid-cols-2 gap-x-12 gap-y-10 items-start">
                                 {[
                                     { q: "Who performs the audit?", a: "Our senior strategists — not contractors, not AI. The same team whose work you can see on our work page. You'll get a real human on your first call, and a real human's markup on your copy." },
                                     { q: "Why is this $1,500?", a: "This isn't copywriting, it's architecture. You're investing in clarity that changes how you pitch, present, and sell. One story that works can move a room or close a round. That's measurable ROI." },
