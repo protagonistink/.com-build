@@ -165,23 +165,35 @@ export default function StoryHealthCheckPage() {
                     ═══════════════════════════════════════════════════════ */}
                 <section className="max-w-6xl mx-auto px-6 mb-0 relative">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-start relative z-10">
-                        <div className="md:col-span-5 sticky top-32">
-                            <div className="flex items-center gap-4 mb-8 reveal">
+                        <motion.div
+                            className="md:col-span-5 sticky top-32"
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                        >
+                            <div className="flex items-center gap-4 mb-8">
                                 <span className="text-rust font-bold font-sans text-sm">01</span>
                                 <div className="flex-1 h-[1px] bg-ink/20" />
                             </div>
-                            <h2 className="font-display text-5xl md:text-6xl italic leading-[0.9] mb-6 tracking-tight text-ink reveal reveal-delay-1">The Crisis Mirror</h2>
-                            <p className="text-[0.65rem] font-sans uppercase tracking-[0.2em] text-rust font-bold reveal reveal-delay-2">Diagnostic Phase</p>
-                        </div>
-                        <div className="md:col-span-7 space-y-12">
-                            <p className="text-2xl md:text-3xl font-display font-light leading-[1.4] text-ink reveal">
+                            <h2 className="font-display text-5xl md:text-6xl italic leading-[0.9] mb-6 tracking-tight text-ink">The Crisis Mirror</h2>
+                            <p className="text-[0.65rem] font-sans uppercase tracking-[0.2em] text-rust font-bold">Diagnostic Phase</p>
+                        </motion.div>
+                        <motion.div
+                            className="md:col-span-7 space-y-12"
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.15 }}
+                        >
+                            <p className="text-2xl md:text-3xl font-display font-light leading-[1.4] text-ink">
                                 You are the protagonist. But the market sees <span className="bg-ink text-paper px-2 py-1 italic">a confused extra.</span>
                             </p>
-                            <p className="text-ink/80 leading-[1.8] font-light text-lg reveal border-l border-ink/20 pl-6">
+                            <p className="text-ink/80 leading-[1.8] font-light text-lg border-l border-ink/20 pl-6">
                                 Most founders suffer from the &ldquo;Curse of Knowledge.&rdquo; You know your product so well that you&apos;ve forgotten what it&apos;s like not to know. You speak in features, specs, and internal shorthand. The market hears noise.
                             </p>
 
-                            <div className="p-10 bg-white border border-ink/10 relative overflow-hidden reveal shadow-sm mt-16">
+                            <div className="p-10 bg-white border border-ink/10 relative overflow-hidden shadow-sm mt-16">
 
                                 <h3 className="font-sans text-[0.65rem] font-bold uppercase tracking-[0.2em] mb-8 text-rust flex items-center gap-3">
                                     <span className="w-2 h-2 rounded-full bg-rust animate-pulse" />
@@ -205,7 +217,7 @@ export default function StoryHealthCheckPage() {
                                     Every day your story leaks, you pay for it&mdash;in abandoned carts, in meetings that don&apos;t convert, in funding rounds that stall before the second slide. The curse of knowledge isn&apos;t a metaphor. It&apos;s the invisible ceiling on your revenue, and it compounds.
                                 </p>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </section>
 
@@ -215,7 +227,7 @@ export default function StoryHealthCheckPage() {
                     ═══════════════════════════════════════════════════════ */}
                 <div
                     ref={methodologyRef}
-                    className="relative w-full min-h-[65vh] md:min-h-[75vh] overflow-hidden my-20 reveal flex items-center justify-center"
+                    className="relative w-full min-h-[65vh] md:min-h-[75vh] overflow-hidden my-20 flex items-center justify-center"
                 >
                     {/* Parallax background image */}
                     <motion.div
@@ -241,7 +253,13 @@ export default function StoryHealthCheckPage() {
                     <div className="absolute inset-0 shadow-[inset_0_0_80px_20px_rgba(0,0,0,0.3)] pointer-events-none z-[2]" />
 
                     {/* Content */}
-                    <div className="relative z-10 max-w-2xl mx-auto px-6 md:px-10 text-center py-20">
+                    <motion.div
+                        className="relative z-10 max-w-2xl mx-auto px-6 md:px-10 text-center py-20"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                    >
                         <p className="font-sans text-paper/50 text-[0.65rem] uppercase tracking-[0.25em] mb-6">
                             Our approach
                         </p>
@@ -254,7 +272,7 @@ export default function StoryHealthCheckPage() {
                         <p className="font-sans text-paper/60 text-sm md:text-base leading-[1.85]">
                             Protagonist Ink is a story strategy studio. We find the narrative thread that connects what you&apos;ve built to the people it&apos;s built for&mdash;then we make it impossible to ignore.
                         </p>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* ═══════════════════════════════════════════════════════
@@ -334,22 +352,22 @@ export default function StoryHealthCheckPage() {
 
                                         {/* Left — Value + what you get */}
                                         <div>
-                                            <div className="flex items-center gap-4 mb-8 reveal">
+                                            <div className="flex items-center gap-4 mb-8">
                                                 <span className="text-rust font-bold font-sans text-sm">02</span>
                                                 <div className="flex-1 h-[1px] bg-ink/20" />
                                                 <span className="font-sans text-[0.6rem] uppercase tracking-[0.2em] text-ink/40">Free</span>
                                             </div>
-                                            <div className="inline-block mb-8 px-4 py-1 border border-rust text-rust text-[0.6rem] font-sans font-bold uppercase tracking-widest bg-white reveal">
+                                            <div className="inline-block mb-8 px-4 py-1 border border-rust text-rust text-[0.6rem] font-sans font-bold uppercase tracking-widest bg-white">
                                                 Option 01 // $0
                                             </div>
-                                            <h2 className="font-display text-6xl md:text-7xl leading-[0.9] tracking-tighter text-ink mb-8 reveal reveal-delay-1">
+                                            <h2 className="font-display text-6xl md:text-7xl leading-[0.9] tracking-tighter text-ink mb-8">
                                                 The Story<br /><span className="italic text-rust">Loom.</span>
                                             </h2>
-                                            <p className="font-sans text-lg text-ink/70 leading-[1.8] mb-12 max-w-md reveal reveal-delay-2">
+                                            <p className="font-sans text-lg text-ink/70 leading-[1.8] mb-12 max-w-md">
                                                 Submit your deck or site. We record a brutal, 5-minute video teardown of your narrative architecture — exactly where the revenue is leaking. No pitch, just architecture.
                                             </p>
 
-                                            <div className="space-y-4 border-l-2 border-ink/10 pl-8 reveal reveal-delay-3">
+                                            <div className="space-y-4 border-l-2 border-ink/10 pl-8">
                                                 {[
                                                     "Asynchronous Loom video. In your inbox in 2–3 days.",
                                                     "High-level structural review of your biggest leak.",
@@ -365,7 +383,7 @@ export default function StoryHealthCheckPage() {
                                         </div>
 
                                         {/* Right — Multi-step Form */}
-                                        <div className="reveal reveal-delay-2">
+                                        <div>
                                             {loomSubmitted ? (
                                                 /* ── Success state ── */
                                                 <div className="bg-white border-2 border-rust p-12 text-center shadow-[8px_8px_0px_rgba(200,60,47,0.12)]">
@@ -730,14 +748,26 @@ export default function StoryHealthCheckPage() {
                     ═══════════════════════════════════════════════════════ */}
                 <section className="py-32 bg-paper border-y border-ink/10">
                     <div className="max-w-5xl mx-auto px-6">
-                        <div className="text-center mb-20 reveal">
+                        <motion.div
+                            className="text-center mb-20"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                        >
                             <h2 className="font-display text-5xl md:text-6xl tracking-tighter text-ink mb-4">The Choice.</h2>
                             <p className="font-sans text-ink/50 text-sm max-w-md mx-auto">Both paths lead to clarity. Pick the depth you need.</p>
-                        </div>
+                        </motion.div>
 
-                        <div className="flex flex-col md:flex-row gap-0 reveal reveal-delay-1">
+                        <div className="flex flex-col md:flex-row gap-0">
                             {/* Free Loom Column */}
-                            <div className="flex-1 py-12 md:pr-16">
+                            <motion.div
+                                className="flex-1 py-12 md:pr-16"
+                                initial={{ opacity: 0, x: -30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true, amount: 0.2 }}
+                                transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                            >
                                 <p className="font-sans text-[0.6rem] font-bold uppercase tracking-[0.2em] text-ink/40 mb-4">Free</p>
                                 <h3 className="font-display text-4xl text-ink mb-3 italic">Story Loom</h3>
                                 <p className="font-display text-lg text-ink/60 italic mb-8">A 5-minute video teardown of your narrative blind spots.</p>
@@ -759,14 +789,20 @@ export default function StoryHealthCheckPage() {
                                     Send Your URL
                                     <ArrowRight className="w-3 h-3" />
                                 </a>
-                            </div>
+                            </motion.div>
 
                             {/* Vertical Rule */}
                             <div className="hidden md:block w-px bg-ink/15 self-stretch" />
                             <div className="md:hidden h-px bg-ink/15 w-full" />
 
                             {/* Paid Audit Column */}
-                            <div className="flex-1 py-12 md:pl-16">
+                            <motion.div
+                                className="flex-1 py-12 md:pl-16"
+                                initial={{ opacity: 0, x: 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true, amount: 0.2 }}
+                                transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.15 }}
+                            >
                                 <p className="font-sans text-[0.6rem] font-bold uppercase tracking-[0.2em] text-ink/40 mb-4">$1,500</p>
                                 <h3 className="font-display text-4xl text-ink mb-3 italic">Story Audit</h3>
                                 <p className="font-display text-lg text-ink/60 italic mb-8">A 5-day deep dive that rebuilds your narrative from the spine out.</p>
@@ -791,7 +827,7 @@ export default function StoryHealthCheckPage() {
                                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                     </div>
                                 </a>
-                            </div>
+                            </motion.div>
                         </div>
                     </div>
 
@@ -832,7 +868,13 @@ export default function StoryHealthCheckPage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-paper/90 to-transparent pointer-events-none" />
                     </div>
 
-                    <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
+                    <motion.div
+                        className="max-w-5xl mx-auto px-6 relative z-10 text-center"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                    >
                         <div className="inline-block mb-10 px-4 py-1 border border-rust text-rust text-[0.6rem] font-bold uppercase tracking-widest">
                             The Decision Point
                         </div>
@@ -861,7 +903,7 @@ export default function StoryHealthCheckPage() {
                         <p className="mt-10 font-sans text-[0.6rem] text-ink/30 uppercase tracking-widest">
                             Questions? <a href="mailto:hello@protagonistink.com" className="underline hover:text-rust transition-colors">hello@protagonistink.com</a>
                         </p>
-                    </div>
+                    </motion.div>
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════
