@@ -613,19 +613,27 @@ export default function StoryHealthCheckPage() {
                     SECTION 6 — THE STORY AUDIT (PAID)
                     Dark section. Its own full spotlight.
                     Blueprint (4 layers) integrated in right column.
-                    girlontablet.jpg breaks from right edge.
-                    Risk reversal copy included.
+                    girlfounder_conference.jpg breaks from right edge.
+                    Risk reversal copy included. Scroll-triggered reveal.
                     ═══════════════════════════════════════════════════════ */}
-                <section id="story-audit" className="bg-ink text-paper py-32 relative overflow-hidden">
+                <motion.section
+                    id="story-audit"
+                    className="bg-ink text-paper py-32 relative overflow-hidden"
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                >
                     {/* Blueprint grid overlay */}
                     <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'linear-gradient(var(--color-paper) 1px, transparent 1px), linear-gradient(90deg, var(--color-paper) 1px, transparent 1px)', backgroundSize: '3rem 3rem' }} />
 
-                    {/* HUMAN PHOTOGRAPHY — girlontablet.jpg breaks right edge */}
+                    {/* HUMAN PHOTOGRAPHY — girlfounder_conference breaks right edge */}
                     <div className="absolute right-0 top-0 bottom-0 w-[32vw] max-w-[420px] z-[1] pointer-events-none">
                         <Image
-                            src="/girlontablet.jpg"
+                            src="/images/pages/girlfounder_conference.jpg"
                             alt="Founder reviewing narrative strategy"
                             fill
+                            sizes="32vw"
                             className="object-cover grayscale contrast-110"
                             style={{ objectPosition: 'center top' }}
                         />
@@ -636,22 +644,22 @@ export default function StoryHealthCheckPage() {
                     <div className="max-w-6xl mx-auto px-6 relative z-10">
 
                         {/* Header */}
-                        <div className="max-w-[62%] mb-20">
-                            <div className="flex items-center gap-4 mb-8 reveal">
+                        <div className="max-w-full md:max-w-[62%] mb-20">
+                            <div className="flex items-center gap-4 mb-8">
                                 <span className="text-rust font-bold font-sans text-sm">03</span>
                                 <div className="flex-1 h-[1px] bg-white/20 max-w-20" />
                                 <span className="font-sans text-[0.6rem] uppercase tracking-[0.2em] text-white/30">$1,500</span>
                             </div>
-                            <div className="inline-block mb-8 px-4 py-1 border border-rust text-rust text-[0.6rem] font-bold uppercase tracking-widest reveal">
-                                Option 02 // $1,500
-                            </div>
-                            <h2 className="font-display text-6xl md:text-7xl leading-[0.9] tracking-tighter text-paper mb-8 reveal reveal-delay-1">
+                            <p className="font-display text-xl md:text-2xl text-paper/50 italic mb-6">
+                                Loved the teardown? There&apos;s more where that came from.
+                            </p>
+                            <h2 className="font-display text-6xl md:text-7xl leading-[0.9] tracking-tighter text-paper mb-8">
                                 The Story<br /><span className="italic text-white/40">Audit.</span>
                             </h2>
-                            <p className="font-sans text-lg text-paper/70 leading-[1.8] max-w-xl reveal reveal-delay-2">
-                                A one-time surgical intervention. We examine your story at every layer — from your core thesis to your live website — and hand you a single, indelible message that works in your deck, your homepage, and every cold email you send.
+                            <p className="font-sans text-lg text-paper/70 leading-[1.8] max-w-xl">
+                                The free teardown shows you where the cracks are. This is the full treatment — a one-time surgical intervention where we examine your story at every layer, from your core thesis to your live website, and hand you a single, indelible message that works in your deck, your homepage, and every cold email you send.
                             </p>
-                            <p className="mt-6 font-sans text-sm text-rust/80 italic reveal reveal-delay-2">
+                            <p className="mt-6 font-sans text-sm text-rust/80 italic">
                                 If we can&apos;t identify a fixable narrative leak in your first call, you pay nothing.
                             </p>
                         </div>
@@ -660,7 +668,7 @@ export default function StoryHealthCheckPage() {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
 
                             {/* Left: Deliverables + CTA */}
-                            <div className="reveal reveal-delay-1">
+                            <div>
                                 <h3 className="font-sans text-[0.65rem] font-bold uppercase tracking-[0.2em] mb-8 text-rust flex items-center gap-3">
                                     <span className="w-2 h-2 rounded-full bg-rust animate-pulse" />
                                     Engineer-Led Surgery
@@ -689,7 +697,7 @@ export default function StoryHealthCheckPage() {
                             </div>
 
                             {/* Right: Blueprint — 4 layers */}
-                            <div className="reveal reveal-delay-2">
+                            <div>
                                 <h3 className="font-sans text-[0.65rem] font-bold uppercase tracking-[0.2em] mb-8 text-white/40 flex items-center gap-3">
                                     <span className="w-8 h-[1px] bg-white/20" />
                                     The Four Layers We Examine
@@ -714,7 +722,7 @@ export default function StoryHealthCheckPage() {
                             </div>
                         </div>
                     </div>
-                </section>
+                </motion.section>
 
                 {/* ═══════════════════════════════════════════════════════
                     SECTION 7 — THE CHOICE
