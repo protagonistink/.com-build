@@ -29,14 +29,17 @@ export default function ParallaxHeroBackground({ src, alt }: { src: string; alt:
             </motion.div>
 
             {/* Cinematic Vignette Layers */}
-            {/* 1. Subtle perimeter darkening to frame the shot naturally */}
-            <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.4)] pointer-events-none" />
+            {/* 0. Overall darkening scrim */}
+            <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
-            {/* 2. Focused dark gradient from the bottom to protect the headline text */}
-            <div className="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
+            {/* 1. Perimeter darkening */}
+            <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.5)] pointer-events-none" />
 
-            {/* 3. Left-edge fade so text stays legible against the illustration */}
-            <div className="absolute top-0 left-0 bottom-0 w-1/2 bg-gradient-to-r from-black/60 to-transparent pointer-events-none" />
+            {/* 2. Bottom gradient to protect headline text */}
+            <div className="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />
+
+            {/* 3. Left-edge fade for text legibility */}
+            <div className="absolute top-0 left-0 bottom-0 w-1/2 bg-gradient-to-r from-black/70 to-transparent pointer-events-none" />
         </div>
     );
 }

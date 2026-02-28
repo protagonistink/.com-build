@@ -113,7 +113,7 @@ export default function StoryHealthCheckPage() {
 
                     {/* Parallax background with cinematic vignette */}
                     <ParallaxHeroBackground
-                        src="/images/pages/storybook_bg2.jpg"
+                        src="/images/pages/storybook_bg3.jpg"
                         alt="Illustrated storybook pages — the craft of narrative strategy"
                     />
 
