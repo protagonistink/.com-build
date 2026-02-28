@@ -1,26 +1,340 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-satoshi: "Satoshi", "Avenir Next", "Segoe UI", system-ui, sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Fonts */
+  --font-display: var(--font-cormorant);
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-satoshi);
+
+  /* Brand Colors — STRICT PROTAGONIST INK SYSTEM */
+  --color-ink: #2C2C2C;
+  /* Primary. Deep charcoal. */
+  --color-charcoal: #2C2C2C;
+  /* Alias for component compatibility */
+  --color-warmwhite: #FAFAFA;
+  /* Background. Editorial breathing room. */
+  --color-paper: #FAFAFA;
+  --color-white: #FAFAFA;
+  /* Alias for component compatibility */
+  --color-warm-white: #FAFAFA;
+  --color-rust: #C83C2F;
+  /* CTAs, editorial punctuation, hover states. */
+  --color-red: #C83C2F;
+  /* Alias for component compatibility */
+  --color-indigo: #2E2B5F;
+  /* Secondary accent. Use once, structurally. */
+  --color-coolgray: #9B9EA4;
+  /* Captions, secondary text, structural. */
+  --color-gray: #9B9EA4;
+  /* Alias for component compatibility */
+  --color-trueblack: #0a0a0a;
+  /* Maximum depth (Screening Room). */
+
+  /* Typography */
+  --tracking-widest: 0.2em;
+  /* Buttons and microcopy */
+  --leading-tension: 0.95;
+  /* Strict editorial leading */
+
+  /* Semantic */
+  --color-background: var(--color-ink);
+  --color-foreground: var(--color-paper);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes logo-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% / 3)); }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-satoshi);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  letter-spacing: -0.015em;
+}
+
+::selection {
+  background: rgba(200, 60, 47, 0.15);
+  color: inherit;
+}
+
+a,
+button {
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Visible keyboard focus ring for accessibility */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-rust);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Texture System — film grain (dark sections), paper (light sections)
+   ========================================================================== */
+
+/* Film grain — cinematic ground for dark sections */
+.texture-grain {
+  position: relative;
+}
+
+.texture-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.055;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Paper texture — editorial surface for light sections */
+.texture-paper {
+  position: relative;
+}
+
+.texture-paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* ==========================================================================
+   Editorial crop marks — the editor's hand
+   ========================================================================== */
+
+.crop-marks {
+  position: relative;
+}
+
+/* Top-left */
+.crop-marks::before,
+.crop-marks::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.crop-marks::before {
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-top: 1px solid rgba(200, 60, 47, 0.10);
+  border-left: 1px solid rgba(200, 60, 47, 0.10);
+}
+
+.crop-marks::after {
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  border-bottom: 1px solid rgba(200, 60, 47, 0.10);
+  border-right: 1px solid rgba(200, 60, 47, 0.10);
+}
+
+/* Larger variant for viewport-scale elements */
+.crop-marks-lg::before {
+  width: 40px;
+  height: 40px;
+}
+
+.crop-marks-lg::after {
+  width: 40px;
+  height: 40px;
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes pi-logo-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-100% / 3));
+  }
+}
+
+@keyframes pi-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rec-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-rec {
+  animation: rec-blink 1s step-end infinite;
+}
+
+.text-technical {
+  font-family: var(--font-sans);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.1em;
+}
+
+.text-narrative {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Scroll-driven motion — life, not decoration
+   ========================================================================== */
+
+/* Fade-up on scroll — only hide after JS reveal system is active */
+.reveal-enabled .reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-enabled .reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays for choreographed entries */
+.reveal-delay-1 { transition-delay: 0.12s; }
+.reveal-delay-2 { transition-delay: 0.24s; }
+.reveal-delay-3 { transition-delay: 0.38s; }
+.reveal-delay-4 { transition-delay: 0.52s; }
+
+/* ==========================================================================
+   Scrollbar utilities
+   ========================================================================== */
+
+/* Hide scrollbar — Chrome, Safari, Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar — IE, Edge, Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ==========================================================================
+   Typewriter — word-by-word headline reveal
+   ========================================================================== */
+
+@keyframes typewriter-word {
+  from {
+    opacity: 0;
+    transform: translateY(0.12em);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes cursor-blink {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* ==========================================================================
+   Reveal variant — slide from left (case study rows)
+   ========================================================================== */
+
+.reveal-enabled .reveal.reveal-left {
+  opacity: 0;
+  transform: translateX(-48px);
+  transition-duration: 0.6s;
+}
+
+.reveal-enabled .reveal.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   Multi-step form — step transition
+   ========================================================================== */
+
+@keyframes stepIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Respect reduced motion preferences while keeping layout/visibility intact */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal,
+  .reveal.reveal-left {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

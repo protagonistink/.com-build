@@ -1,0 +1,363 @@
+'use client';
+
+import { motion } from 'motion/react';
+import { ArrowRight, Video, FileUp, Zap, HardHat, Ruler } from 'lucide-react';
+import Link from 'next/link';
+
+// --- Shared Components for the Blueprint Aesthetic ---
+
+function StoryArcVisual({ className = '' }: { className?: string }) {
+  return (
+    <div className={`absolute inset-0 pointer-events-none overflow-hidden opacity-20 ${className}`} aria-hidden="true">
+      <svg width="100%" height="100%" viewBox="0 0 1400 800" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        {/* The Hero's Journey Curve */}
+        <path 
+          d="M-50,600 C200,600 400,100 700,100 C1000,100 1200,600 1450,600" 
+          stroke="var(--color-rust)" 
+          strokeWidth="0.5" 
+          strokeDasharray="4 4" 
+          className="opacity-30"
+        />
+        {/* Structural Callouts */}
+        <circle cx="700" cy="100" r="3" fill="var(--color-rust)" className="opacity-50" />
+        <line x1="700" y1="100" x2="700" y2="800" stroke="var(--color-rust)" strokeWidth="0.5" strokeDasharray="2 2" className="opacity-20" />
+      </svg>
+    </div>
+  );
+}
+
+function BlueprintLine({ className = '', horizontal = true }: { className?: string; horizontal?: boolean }) {
+  return (
+    <div 
+      className={`bg-white/[0.08] ${horizontal ? 'h-px w-full' : 'w-px h-full'} ${className}`} 
+      aria-hidden="true" 
+    />
+  );
+}
+
+function GridCoordinate({ label, className = '' }: { label: string; className?: string }) {
+  return (
+    <span className={`font-mono text-[8px] tracking-[0.2em] text-white/20 uppercase whitespace-nowrap ${className}`}>
+      [{label}]
+    </span>
+  );
+}
+
+function SpecLabel({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <span className="font-mono text-[8px] tracking-[0.25em] text-rust uppercase font-bold">{label}</span>
+      <span className="font-sans text-[11px] tracking-widest text-white/40 uppercase">{value}</span>
+    </div>
+  );
+}
+
+// --- Section 1: The Story Loom (The Diagnostic Artifact) ---
+
+function LoomOffer() {
+  return (
+    <div className="bg-paper text-ink px-6 md:px-12 lg:px-24 py-24 md:py-32 relative overflow-hidden group">
+      {/* Blueprint Grid Overlay (Subtle) */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+           style={{ backgroundImage: 'radial-gradient(circle, #2C2C2C 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      
+      <div className="max-w-[1400px] mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+          
+          <div className="lg:col-span-1 hidden lg:block h-full">
+            <div className="flex flex-col justify-between h-full py-2">
+              <GridCoordinate label="A:01" />
+              <div className="h-px w-12 bg-ink/10" />
+              <GridCoordinate label="PHASE:00" />
+            </div>
+          </div>
+
+          <div className="lg:col-span-6">
+            <div className="inline-flex items-center gap-3 mb-8">
+              <div className="w-8 h-[1px] bg-rust" />
+              <span className="font-mono text-[10px] tracking-[0.3em] text-rust uppercase">The Diagnostic Artifact</span>
+            </div>
+            
+            <h2 className="font-display text-[clamp(3rem,8vw,6rem)] leading-[0.88] tracking-[-0.03em] mb-10">
+              The Story <br />
+              <em className="italic font-light">Loom.</em>
+            </h2>
+            
+            <p className="font-sans text-[clamp(16px,1.5vw,21px)] leading-[1.6] text-ink/70 max-w-xl mb-12">
+              Identify the noise. We find the 3 biggest disconnects in your narrative and record a 5-minute Loom video diagnosing your story health. Brutal honesty, zero sales pitch.
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              <Link href="#" className="flex items-center gap-3 bg-ink text-paper px-8 py-4 text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-black transition-colors">
+                <Video className="w-4 h-4" />
+                Send your Loom
+              </Link>
+              <Link href="#" className="flex items-center gap-3 border border-ink/20 px-8 py-4 text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-ink hover:text-paper transition-all">
+                <FileUp className="w-4 h-4" />
+                Send your Deck
+              </Link>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5">
+            <div className="relative aspect-video bg-ink/5 border border-ink/10 p-4">
+               {/* Visual placeholder for "The Loom Response" */}
+               <div className="w-full h-full bg-ink/10 flex items-center justify-center relative group-hover:bg-ink/20 transition-colors overflow-hidden">
+                  <div className="absolute top-4 left-4 font-mono text-[8px] text-ink/30 uppercase tracking-widest">Diagnostic Output // 48-Hour TAT</div>
+                  <Zap className="w-12 h-12 text-ink/20 group-hover:text-rust/40 transition-colors duration-700" />
+               </div>
+               
+               {/* Blueprint decorative annotations */}
+               <div className="absolute -bottom-6 -right-6 lg:-right-12 xl:-right-24 hidden md:block">
+                  <div className="flex flex-col gap-2 border-l border-ink/10 pl-4 py-2">
+                    <span className="font-mono text-[9px] text-ink/30 uppercase tracking-[0.2em]">Status: Ready for Intake</span>
+                    <span className="font-mono text-[9px] text-ink/30 uppercase tracking-[0.2em]">Input: Raw Messaging</span>
+                    <span className="font-mono text-[9px] text-ink/30 uppercase tracking-[0.2em]">Yield: Gap Analysis</span>
+                  </div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// --- Section 2: Paid Services Spread ---
+
+function ServiceSpread({ 
+  id,
+  number,
+  title,
+  subtitle,
+  spec,
+  description,
+  deliverables,
+  timeline,
+  investment,
+  cta,
+  alignment = 'left',
+  heavy = false
+}: {
+  id: string;
+  number: string;
+  title: string;
+  subtitle: string;
+  spec: string;
+  description: string;
+  deliverables: string[];
+  timeline: string;
+  investment: string;
+  cta: string;
+  alignment?: 'left' | 'center' | 'right';
+  heavy?: boolean;
+}) {
+  const isCenter = alignment === 'center';
+  const isRight = alignment === 'right';
+
+  return (
+    <div id={id} className={`w-full py-24 md:py-40 relative px-6 md:px-12 lg:px-24 overflow-hidden ${heavy ? 'bg-[#0F0F0F]' : ''}`}>
+      <div className={`max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 ${heavy ? 'pt-16 border-t-[3px] border-rust/30' : 'border-t border-white/10 pt-12'}`}>
+        
+        {/* Number & Spec Label Block */}
+        <div className={`lg:col-span-3 flex flex-col gap-12 ${isRight ? 'lg:order-3 lg:items-end text-right' : ''} ${isCenter ? 'lg:items-center text-center' : ''}`}>
+           <div className="text-[clamp(40px,8vw,120px)] font-display italic text-white/5 leading-none">{number}</div>
+           <SpecLabel label="Specifications" value={spec} />
+           <div className="flex flex-col gap-4">
+              <div className="flex flex-col">
+                <span className="font-mono text-[8px] text-white/30 uppercase tracking-widest">Timeline</span>
+                <span className="font-sans text-[13px] text-white/70">{timeline}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-mono text-[8px] text-white/30 uppercase tracking-widest">Investment</span>
+                <span className="font-sans text-[13px] text-white/70 uppercase tracking-wider">{investment}</span>
+              </div>
+           </div>
+        </div>
+
+        {/* Core Content Block */}
+        <div className={`lg:col-span-6 flex flex-col ${isCenter ? 'lg:items-center text-center' : ''} ${isRight ? 'lg:order-2' : ''}`}>
+           <span className="font-display italic text-[1.25rem] text-rust mb-2 select-none opacity-80">{subtitle}</span>
+           <h3 className="font-display text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[0.95] mb-8 text-white">{title}</h3>
+           <p className="font-sans text-[clamp(15px,1.3vw,19px)] text-white/60 leading-[1.8] mb-12 max-w-xl">{description}</p>
+           
+           <div className={`flex flex-col gap-10 w-full ${isCenter ? 'items-center' : ''}`}>
+              <ul className={`grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 w-full ${isCenter ? 'text-center' : ''}`}>
+                {deliverables.map((item, i) => (
+                  <li key={i} className="flex gap-4 items-baseline text-[14px] text-white/40 leading-[1.4]">
+                    <span className="text-rust/40 font-mono text-[10px]">//</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <Link href="#" className="group inline-flex items-center gap-4 border-b border-rust pb-2 text-[11px] font-bold uppercase tracking-[0.25em] text-white hover:text-rust transition-colors w-fit">
+                {cta}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+              </Link>
+
+              {heavy && (
+                <div className="mt-8 border border-white/5 bg-white/[0.02] p-6 text-[12px] text-white/30 italic max-w-md">
+                   This engagement isn't for everyone. We limit the number of active builds to ensure structural integrity across every touchpoint. Schedule a conversation to see if it's right for you.
+                </div>
+              )}
+           </div>
+        </div>
+
+        {/* Architectural Illustration Placeholder */}
+        <div className={`lg:col-span-3 hidden lg:flex flex-col justify-center items-center relative ${isRight ? 'lg:order-1' : ''}`}>
+           <div className="w-full aspect-square border border-white/10 flex items-center justify-center p-8 opacity-40">
+              <div className="w-full h-full border-r border-b border-dashed border-white/20 relative">
+                 <div className="absolute top-0 left-0 w-full h-px bg-white/5" />
+                 <div className="absolute top-1/2 left-4 right-4 h-px bg-rust/30" />
+                 <GridCoordinate label="X: AXIS ALIGN" className="absolute top-2 left-2" />
+                 <GridCoordinate label="Y: NARRATIVE ARC" className="absolute bottom-2 right-2" />
+              </div>
+           </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// --- Main Section ---
+
+export default function ServicesSection() {
+  return (
+    <section id="story-health-check" className="w-full bg-ink relative">
+      <StoryArcVisual />
+      
+      {/* 1. Header (The Proposition) */}
+      <div className="pt-32 pb-16 px-6 md:px-12 lg:px-24">
+        <div className="max-w-[1400px] mx-auto overflow-hidden">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2 }}
+            className="flex flex-col gap-4"
+          >
+            <span className="font-mono text-[11px] tracking-[0.4em] text-white/20 uppercase">Stage 02 // Structural Design</span>
+            <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.95] text-white max-w-4xl">
+              It&apos;s your story. <br />
+              <em className="italic font-light text-rust">Where are we starting?</em>
+            </h2>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* 2. The Story Loom (Diagnostic) */}
+      <LoomOffer />
+
+      {/* 3. The Ladder (Service Spreads) */}
+      <div className="w-full flex flex-col">
+        <ServiceSpread 
+          id="audit"
+          number="01"
+          subtitle="Identifying the Narrative Conflict"
+          title="The Story Audit"
+          spec="SPEC: NARRATIVE FRICTION"
+          description="Most messaging fails not because it's wrong, but because it's fragmented. We map your current story against market resonance to find exactly where you are leaking trust."
+          deliverables={[
+            "Full diagnostic video walkthrough",
+            "1-hour deep dive strategy session",
+            "Written Gap Analysis report",
+            "Prioritized action plan with cost metrics",
+            "30-day narrative stewardship support"
+          ]}
+          timeline="1 Week"
+          investment="$1,500"
+          cta="Initiate the Audit"
+          alignment="left"
+        />
+
+        <ServiceSpread 
+          id="strategy"
+          number="02"
+          subtitle="Designing the Structural Foundation"
+          title="Narrative Spine + Strategy"
+          spec="SPEC: STRUCTURAL ALIGNMENT"
+          description="We extract the truth of what you are building and codify it into a dominant narrative. This is the blueprint for everything you say—to investors, to customers, to yourself."
+          deliverables={[
+            "Stakeholder & Customer discovery",
+            "The Narrative Manifesto & Origin Story",
+            "Core Values & Behavioral definitions",
+            "Positioning & Audience Profiles",
+            "Comprehensive Brand Voice system",
+            "Website & Pitch messaging guide"
+          ]}
+          timeline="3–4 Weeks"
+          investment="Starting at $7,500"
+          cta="Design the Foundation"
+          alignment="center"
+        />
+
+        <ServiceSpread 
+          id="full-build"
+          number="03"
+          heavy
+          subtitle="Executing the Finished World"
+          title="The Full Build"
+          spec="SPEC: COMPLETED JOURNEY"
+          description="Total narrative stewardship. We take the blueprint and construct the entire surface. We don't just hand you a guide; we deliver the finished execution across every critical touchpoint."
+          deliverables={[
+            "Everything in Narrative Spine + Strategy",
+            "Full Website Copywriting (up to 6p)",
+            "Investor or Donor Deck Narrative",
+            "Executive Bios & Founder Narrative",
+            "3-Month Editorial Content Strategy",
+            "Collaborator & Designer Coordination",
+            "90-Day Narrative Stewardship Call"
+          ]}
+          timeline="8–12 Weeks"
+          investment="Starting at $25,000"
+          cta="Inquire for Construction"
+          alignment="right"
+        />
+      </div>
+
+      {/* 4. The Writer's Room (Workshop) */}
+      <div className="bg-paper text-ink px-6 md:px-12 lg:px-24 py-32 border-t border-ink/5 relative overflow-hidden">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-10">
+          <div className="lg:col-span-1 hidden lg:block">
+             <div className="h-[200px] w-px bg-ink/10 relative">
+                <div className="absolute top-0 -left-1 w-2 h-2 bg-rust" />
+                <GridCoordinate label="LIVE" className="absolute top-1/2 -rotate-90 origin-left ml-4" />
+             </div>
+          </div>
+          
+          <div className="lg:col-span-5">
+            <span className="font-mono text-[10px] tracking-[0.3em] text-rust uppercase block mb-4">Structural Engineering // Live</span>
+            <h3 className="font-display text-[clamp(2.5rem,5vw,4rem)] leading-[0.95] mb-8">
+              The Writer&apos;s <br />
+              <em className="italic font-light">Room.</em>
+            </h3>
+            <p className="font-sans text-[16px] text-ink/60 leading-[1.75] mb-8">
+              A leadership team that can&apos;t agree on the story is building on sand. We facilitate a half or full-day high-stakes workshop to force alignment and produce a core story spine in 48 hours.
+            </p>
+            <Link href="mailto:hello@protagonist.ink" className="flex items-center gap-4 bg-ink text-paper px-8 py-4 text-[11px] font-bold uppercase tracking-[0.2em] w-fit hover:bg-black transition-colors">
+              Request Room Access
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="lg:col-span-6 grid grid-cols-1 md:grid-cols-2 gap-8 lg:pl-12">
+             <div className="flex flex-col gap-4 border-l border-ink/10 pl-6">
+                <HardHat className="w-5 h-5 text-rust/40" />
+                <span className="font-mono text-[9px] uppercase tracking-widest text-ink/40">On-Site From</span>
+                <span className="font-display text-[1.5rem] leading-none">$7,500</span>
+                <p className="text-[12px] text-ink/50 leading-relaxed font-sans mt-2">Intensive deep dive. Face to face. Whiteboarding the future of your narrative.</p>
+             </div>
+             <div className="flex flex-col gap-4 border-l border-ink/10 pl-6">
+                <Ruler className="w-5 h-5 text-rust/40" />
+                <span className="font-mono text-[9px] uppercase tracking-widest text-ink/40">Remote From</span>
+                <span className="font-display text-[1.5rem] leading-none">$3,000</span>
+                <p className="text-[12px] text-ink/50 leading-relaxed font-sans mt-2">Focused digital session. Shared screens. Rapid structural iteration.</p>
+             </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  );
+}
