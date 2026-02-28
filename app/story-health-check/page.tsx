@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight, PlayCircle, CheckCircle2 } from "lucide-react";
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 import TypewriterHeadline from '@/components/TypewriterHeadline';
 import ParallaxHeroBackground from '@/components/ParallaxHeroBackground';
 
@@ -18,6 +18,7 @@ export default function StoryHealthCheckPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [loomSubmitted, setLoomSubmitted] = useState(false);
     const [pastLoomForm, setPastLoomForm] = useState(false);
+    const [showWelcome, setShowWelcome] = useState(true);
 
     // ── Parallax for methodology interstitial ────────────────────────────────
     const methodologyRef = useRef(null);
@@ -264,198 +265,265 @@ export default function StoryHealthCheckPage() {
                 <section id="free-loom" className="py-32 bg-paper border-y border-ink/10 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-[0.025] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, var(--color-ink) 1px, transparent 1px)', backgroundSize: '1.5rem 1.5rem' }} />
 
-                    <div className="max-w-6xl mx-auto px-6 relative z-10">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+                    <div id="story-loom" className="max-w-6xl mx-auto px-6 relative z-10">
+                        <AnimatePresence mode="wait">
+                            {showWelcome ? (
+                                /* ── Welcome Card ── */
+                                <motion.div
+                                    key="welcome"
+                                    initial={{ opacity: 0, scale: 0.97 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.97 }}
+                                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                                    className="max-w-2xl mx-auto text-center"
+                                >
+                                    <div className="bg-white border-2 border-ink shadow-[16px_16px_0px_rgba(10,10,10,0.05)] p-12 md:p-16 relative overflow-hidden">
+                                        {/* Corner accents */}
+                                        <div className="absolute top-0 right-0 w-10 h-10 border-t-2 border-r-2 border-rust/40 -translate-y-px translate-x-px pointer-events-none" />
+                                        <div className="absolute bottom-0 left-0 w-10 h-10 border-b-2 border-l-2 border-rust/40 translate-y-px -translate-x-px pointer-events-none" />
 
-                            {/* Left — Value + what you get */}
-                            <div>
-                                <div className="flex items-center gap-4 mb-8 reveal">
-                                    <span className="text-rust font-bold font-sans text-sm">02</span>
-                                    <div className="flex-1 h-[1px] bg-ink/20" />
-                                    <span className="font-sans text-[0.6rem] uppercase tracking-[0.2em] text-ink/40">Free</span>
-                                </div>
-                                <div className="inline-block mb-8 px-4 py-1 border border-rust text-rust text-[0.6rem] font-bold uppercase tracking-widest bg-white reveal">
-                                    Option 01 // $0
-                                </div>
-                                <h2 className="font-display text-6xl md:text-7xl leading-[0.9] tracking-tighter text-ink mb-8 reveal reveal-delay-1">
-                                    The Story<br /><span className="italic text-rust">Loom.</span>
-                                </h2>
-                                <p className="font-sans text-lg text-ink/70 leading-[1.8] mb-12 max-w-md reveal reveal-delay-2">
-                                    Submit your deck or site. We record a brutal, 5-minute video teardown of your narrative architecture — exactly where the revenue is leaking. No pitch, just architecture.
-                                </p>
-
-                                <div className="space-y-4 border-l-2 border-ink/10 pl-8 reveal reveal-delay-3">
-                                    {[
-                                        "Asynchronous Loom video. In your inbox in 2–3 days.",
-                                        "High-level structural review of your biggest leak.",
-                                        "Actionable quick-wins you can act on immediately.",
-                                        "No pitch. No follow-up sales call unless you want one.",
-                                    ].map((item, i) => (
-                                        <div key={i} className="flex items-start gap-3">
-                                            <CheckCircle2 className="w-4 h-4 text-rust mt-0.5 flex-shrink-0" />
-                                            <span className="font-sans text-sm text-ink/70">{item}</span>
+                                        {/* Badge */}
+                                        <div className="inline-block mb-10 px-4 py-1 border border-rust text-rust text-[0.6rem] font-sans font-bold uppercase tracking-widest bg-white">
+                                            Option 01 // $0
                                         </div>
-                                    ))}
-                                </div>
-                            </div>
 
-                            {/* Right — Multi-step Form */}
-                            <div className="reveal reveal-delay-2">
-                                {loomSubmitted ? (
-                                    /* ── Success state ── */
-                                    <div className="bg-white border-2 border-rust p-12 text-center shadow-[8px_8px_0px_rgba(200,60,47,0.12)]">
-                                        <div className="w-12 h-12 rounded-full bg-rust/10 flex items-center justify-center mx-auto mb-6">
-                                            <CheckCircle2 className="w-6 h-6 text-rust" />
-                                        </div>
-                                        <h3 className="font-display text-3xl mb-4 text-ink">Request Received.</h3>
-                                        <p className="font-sans text-sm text-ink/60 leading-relaxed max-w-sm mx-auto">
-                                            We&apos;ll record your Story Loom and send it within 2–3 business days. Watch your inbox.
+                                        {/* Heading */}
+                                        <h2 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tighter text-ink mb-8">
+                                            The 5-Minute<br />
+                                            <span className="italic text-rust">Story Loom.</span>
+                                        </h2>
+
+                                        {/* Description */}
+                                        <p className="font-sans text-base md:text-lg text-ink/60 leading-[1.85] max-w-lg mx-auto mb-4">
+                                            Answer a few questions about your brand story. Within 48 hours, you&apos;ll receive a personalized Loom video diagnosing the narrative leaks costing you conversions.
                                         </p>
-                                        <p className="mt-8 font-sans text-[0.6rem] uppercase tracking-widest text-ink/30">
-                                            Want the full surgical intervention?{" "}
-                                            <a href={DUBSADO_URL} className="underline hover:text-rust transition-colors">Book the Story Audit →</a>
+                                        <p className="font-sans text-sm text-ink/40 leading-relaxed max-w-md mx-auto mb-12">
+                                            No pitch. No follow-up unless you want one. Just a brutal, honest teardown of your story architecture.
                                         </p>
+
+                                        {/* CTA */}
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowWelcome(false)}
+                                            className="bg-rust text-paper font-sans text-[0.7rem] uppercase tracking-widest px-10 py-4 hover:bg-rust/85 transition-all duration-300 inline-flex items-center gap-3 font-bold group"
+                                        >
+                                            Begin Your Audit
+                                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                        </button>
                                     </div>
-                                ) : (
-                                    /* ── Multi-step form card ── */
-                                    <div className="bg-white border-2 border-ink shadow-[16px_16px_0px_rgba(10,10,10,0.05)] relative overflow-hidden">
 
-                                        {/* Corner accent */}
-                                        <div className="absolute top-0 right-0 w-10 h-10 border-t-2 border-r-2 border-rust/40 -translate-y-px translate-x-px pointer-events-none z-10" />
+                                    <p className="mt-8 font-sans text-[0.6rem] text-ink/30 uppercase tracking-widest">
+                                        Already know you need the full audit?{" "}
+                                        <a href={DUBSADO_URL} className="underline hover:text-rust transition-colors">Book direct — $1,500 →</a>
+                                    </p>
+                                </motion.div>
+                            ) : (
+                                /* ── Two-column Form Layout ── */
+                                <motion.div
+                                    key="form"
+                                    initial={{ opacity: 0, scale: 1.02 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 1.02 }}
+                                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                                    onAnimationComplete={() => {
+                                        const firstInput = document.querySelector<HTMLElement>('#free-loom input, #free-loom textarea, #free-loom select');
+                                        firstInput?.focus();
+                                    }}
+                                >
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
 
-                                        {/* Progress bar */}
-                                        <div className="h-[2px] bg-ink/8">
-                                            <div
-                                                className="h-full bg-rust transition-all duration-500 ease-out"
-                                                style={{ width: `${((step + 1) / steps.length) * 100}%` }}
-                                            />
+                                        {/* Left — Value + what you get */}
+                                        <div>
+                                            <div className="flex items-center gap-4 mb-8 reveal">
+                                                <span className="text-rust font-bold font-sans text-sm">02</span>
+                                                <div className="flex-1 h-[1px] bg-ink/20" />
+                                                <span className="font-sans text-[0.6rem] uppercase tracking-[0.2em] text-ink/40">Free</span>
+                                            </div>
+                                            <div className="inline-block mb-8 px-4 py-1 border border-rust text-rust text-[0.6rem] font-sans font-bold uppercase tracking-widest bg-white reveal">
+                                                Option 01 // $0
+                                            </div>
+                                            <h2 className="font-display text-6xl md:text-7xl leading-[0.9] tracking-tighter text-ink mb-8 reveal reveal-delay-1">
+                                                The Story<br /><span className="italic text-rust">Loom.</span>
+                                            </h2>
+                                            <p className="font-sans text-lg text-ink/70 leading-[1.8] mb-12 max-w-md reveal reveal-delay-2">
+                                                Submit your deck or site. We record a brutal, 5-minute video teardown of your narrative architecture — exactly where the revenue is leaking. No pitch, just architecture.
+                                            </p>
+
+                                            <div className="space-y-4 border-l-2 border-ink/10 pl-8 reveal reveal-delay-3">
+                                                {[
+                                                    "Asynchronous Loom video. In your inbox in 2–3 days.",
+                                                    "High-level structural review of your biggest leak.",
+                                                    "Actionable quick-wins you can act on immediately.",
+                                                    "No pitch. No follow-up sales call unless you want one.",
+                                                ].map((item, i) => (
+                                                    <div key={i} className="flex items-start gap-3">
+                                                        <CheckCircle2 className="w-4 h-4 text-rust mt-0.5 flex-shrink-0" />
+                                                        <span className="font-sans text-sm text-ink/70">{item}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
 
-                                        <div className="p-10">
-                                            {/* Step counter + pulse */}
-                                            <div className="flex items-center justify-between mb-10">
-                                                <span className="font-sans text-[0.6rem] font-bold uppercase tracking-widest text-rust">
-                                                    {String(step + 1).padStart(2, '0')}{' '}
-                                                    <span className="text-ink/20 mx-1">/</span>{' '}
-                                                    {String(steps.length).padStart(2, '0')}
-                                                </span>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="w-1.5 h-1.5 rounded-full bg-rust animate-pulse" />
-                                                    <span className="font-sans text-[0.55rem] uppercase tracking-widest text-ink/30">Free Diagnostic</span>
+                                        {/* Right — Multi-step Form */}
+                                        <div className="reveal reveal-delay-2">
+                                            {loomSubmitted ? (
+                                                /* ── Success state ── */
+                                                <div className="bg-white border-2 border-rust p-12 text-center shadow-[8px_8px_0px_rgba(200,60,47,0.12)]">
+                                                    <div className="w-12 h-12 rounded-full bg-rust/10 flex items-center justify-center mx-auto mb-6">
+                                                        <CheckCircle2 className="w-6 h-6 text-rust" />
+                                                    </div>
+                                                    <h3 className="font-display text-3xl mb-4 text-ink">Request Received.</h3>
+                                                    <p className="font-sans text-sm text-ink/60 leading-relaxed max-w-sm mx-auto">
+                                                        We&apos;ll record your Story Loom and send it within 2–3 business days. Watch your inbox.
+                                                    </p>
+                                                    <p className="mt-8 font-sans text-[0.6rem] uppercase tracking-widest text-ink/30">
+                                                        Want the full surgical intervention?{" "}
+                                                        <a href={DUBSADO_URL} className="underline hover:text-rust transition-colors">Book the Story Audit →</a>
+                                                    </p>
                                                 </div>
-                                            </div>
+                                            ) : (
+                                                /* ── Multi-step form card ── */
+                                                <div className="bg-white border-2 border-ink shadow-[16px_16px_0px_rgba(10,10,10,0.05)] relative overflow-hidden">
 
-                                            {/* Step content — key forces remount → triggers stepIn animation */}
-                                            <div key={step} style={{ animation: 'stepIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both' }}>
+                                                    {/* Corner accent */}
+                                                    <div className="absolute top-0 right-0 w-10 h-10 border-t-2 border-r-2 border-rust/40 -translate-y-px translate-x-px pointer-events-none z-10" />
 
-                                                {/* Question */}
-                                                <h3 className="font-display text-3xl md:text-4xl text-ink leading-tight mb-8">
-                                                    {currentStep.label}
-                                                </h3>
+                                                    {/* Progress bar */}
+                                                    <div className="h-[2px] bg-ink/8">
+                                                        <div
+                                                            className="h-full bg-rust transition-all duration-500 ease-out"
+                                                            style={{ width: `${((step + 1) / steps.length) * 100}%` }}
+                                                        />
+                                                    </div>
 
-                                                {/* ── Textarea ── */}
-                                                {currentStep.type === 'textarea' && (
-                                                    <textarea
-                                                        rows={4}
-                                                        value={formData[currentField]}
-                                                        onChange={e => setFormData(f => ({ ...f, [currentField]: e.target.value }))}
-                                                        placeholder={currentStep.placeholder || ''}
-                                                        autoFocus
-                                                        className="w-full bg-paper border-0 border-b-2 border-ink/20 font-sans text-base px-0 pt-8 pb-3 focus:outline-none focus:border-rust placeholder:text-ink/30 text-ink transition-colors resize-none"
-                                                    />
-                                                )}
-
-                                                {/* ── Stage button grid ── */}
-                                                {currentStep.type === 'select' && (
-                                                    <>
-                                                        <div className="grid grid-cols-2 gap-3">
-                                                            {currentStep.options?.map(option => (
-                                                                <button
-                                                                    key={option}
-                                                                    type="button"
-                                                                    onClick={() => handleSubmit(option)}
-                                                                    disabled={isSubmitting}
-                                                                    className="px-4 py-4 border border-ink/20 font-sans text-sm text-ink hover:border-rust hover:text-rust hover:bg-rust/5 transition-all duration-200 text-left disabled:opacity-50"
-                                                                >
-                                                                    {option}
-                                                                </button>
-                                                            ))}
+                                                    <div className="p-10">
+                                                        {/* Step counter + pulse */}
+                                                        <div className="flex items-center justify-between mb-10">
+                                                            <span className="font-sans text-[0.6rem] font-bold uppercase tracking-widest text-rust">
+                                                                {String(step + 1).padStart(2, '0')}{' '}
+                                                                <span className="text-ink/20 mx-1">/</span>{' '}
+                                                                {String(steps.length).padStart(2, '0')}
+                                                            </span>
+                                                            <div className="flex items-center gap-2">
+                                                                <span className="w-1.5 h-1.5 rounded-full bg-rust animate-pulse" />
+                                                                <span className="font-sans text-[0.55rem] uppercase tracking-widest text-ink/30">Free Diagnostic</span>
+                                                            </div>
                                                         </div>
-                                                        <div className="flex items-center justify-between mt-6">
-                                                            <button
-                                                                type="button"
-                                                                onClick={handleBack}
-                                                                className="font-sans text-[0.65rem] uppercase tracking-widest text-ink/40 hover:text-ink transition-colors"
-                                                            >
-                                                                ← Back
-                                                            </button>
-                                                            {isSubmitting && (
-                                                                <span className="font-sans text-[0.6rem] uppercase tracking-widest text-ink/40 animate-pulse">
-                                                                    Submitting…
-                                                                </span>
+
+                                                        {/* Step content — key forces remount → triggers stepIn animation */}
+                                                        <div key={step} style={{ animation: 'stepIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both' }}>
+
+                                                            {/* Question */}
+                                                            <h3 className="font-display text-3xl md:text-4xl text-ink leading-tight mb-8">
+                                                                {currentStep.label}
+                                                            </h3>
+
+                                                            {/* ── Textarea ── */}
+                                                            {currentStep.type === 'textarea' && (
+                                                                <textarea
+                                                                    rows={4}
+                                                                    value={formData[currentField]}
+                                                                    onChange={e => setFormData(f => ({ ...f, [currentField]: e.target.value }))}
+                                                                    placeholder={currentStep.placeholder || ''}
+                                                                    autoFocus
+                                                                    className="w-full bg-paper border-0 border-b-2 border-ink/20 font-sans text-base px-0 pt-8 pb-3 focus:outline-none focus:border-rust placeholder:text-ink/30 text-ink transition-colors resize-none"
+                                                                />
                                                             )}
-                                                        </div>
-                                                    </>
-                                                )}
 
-                                                {/* ── Text / email / url inputs ── */}
-                                                {currentStep.type !== 'textarea' && currentStep.type !== 'select' && (
-                                                    <input
-                                                        type={currentStep.type}
-                                                        value={formData[currentField]}
-                                                        onChange={e => setFormData(f => ({ ...f, [currentField]: e.target.value }))}
-                                                        onKeyDown={handleKeyDown}
-                                                        placeholder={currentStep.placeholder || ''}
-                                                        autoFocus
-                                                        className="w-full bg-transparent border-0 border-b-2 border-ink/20 font-sans text-xl px-0 py-3 focus:outline-none focus:border-rust placeholder:text-ink/30 text-ink transition-colors"
-                                                    />
-                                                )}
-
-                                                {/* ── Navigation (all types except select) ── */}
-                                                {currentStep.type !== 'select' && (
-                                                    <div className="flex items-center justify-between mt-10">
-                                                        {/* Back */}
-                                                        {step > 0 ? (
-                                                            <button
-                                                                type="button"
-                                                                onClick={handleBack}
-                                                                className="font-sans text-[0.65rem] uppercase tracking-widest text-ink/40 hover:text-ink transition-colors"
-                                                            >
-                                                                ← Back
-                                                            </button>
-                                                        ) : <span />}
-
-                                                        <div className="flex items-center gap-4">
-                                                            {/* Enter hint — single-line only */}
-                                                            {currentStep.type !== 'textarea' && (
-                                                                <span className="font-sans text-[0.55rem] text-ink/25 uppercase tracking-wider hidden sm:block">
-                                                                    Press Enter ↵
-                                                                </span>
+                                                            {/* ── Stage button grid ── */}
+                                                            {currentStep.type === 'select' && (
+                                                                <>
+                                                                    <div className="grid grid-cols-2 gap-3">
+                                                                        {currentStep.options?.map(option => (
+                                                                            <button
+                                                                                key={option}
+                                                                                type="button"
+                                                                                onClick={() => handleSubmit(option)}
+                                                                                disabled={isSubmitting}
+                                                                                className="px-4 py-4 border border-ink/20 font-sans text-sm text-ink hover:border-rust hover:text-rust hover:bg-rust/5 transition-all duration-200 text-left disabled:opacity-50"
+                                                                            >
+                                                                                {option}
+                                                                            </button>
+                                                                        ))}
+                                                                    </div>
+                                                                    <div className="flex items-center justify-between mt-6">
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={handleBack}
+                                                                            className="font-sans text-[0.65rem] uppercase tracking-widest text-ink/40 hover:text-ink transition-colors"
+                                                                        >
+                                                                            ← Back
+                                                                        </button>
+                                                                        {isSubmitting && (
+                                                                            <span className="font-sans text-[0.6rem] uppercase tracking-widest text-ink/40 animate-pulse">
+                                                                                Submitting…
+                                                                            </span>
+                                                                        )}
+                                                                    </div>
+                                                                </>
                                                             )}
-                                                            {/* Next button */}
-                                                            <button
-                                                                type="button"
-                                                                onClick={handleNext}
-                                                                disabled={currentStep.required && !formData[currentField]}
-                                                                className="bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-widest px-6 py-3 hover:bg-rust/85 transition-all duration-300 flex items-center gap-2 font-bold group disabled:opacity-30 disabled:cursor-not-allowed"
-                                                            >
-                                                                Next
-                                                                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                                                            </button>
+
+                                                            {/* ── Text / email / url inputs ── */}
+                                                            {currentStep.type !== 'textarea' && currentStep.type !== 'select' && (
+                                                                <input
+                                                                    type={currentStep.type}
+                                                                    value={formData[currentField]}
+                                                                    onChange={e => setFormData(f => ({ ...f, [currentField]: e.target.value }))}
+                                                                    onKeyDown={handleKeyDown}
+                                                                    placeholder={currentStep.placeholder || ''}
+                                                                    autoFocus
+                                                                    className="w-full bg-transparent border-0 border-b-2 border-ink/20 font-sans text-xl px-0 py-3 focus:outline-none focus:border-rust placeholder:text-ink/30 text-ink transition-colors"
+                                                                />
+                                                            )}
+
+                                                            {/* ── Navigation (all types except select) ── */}
+                                                            {currentStep.type !== 'select' && (
+                                                                <div className="flex items-center justify-between mt-10">
+                                                                    {/* Back */}
+                                                                    {step > 0 ? (
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={handleBack}
+                                                                            className="font-sans text-[0.65rem] uppercase tracking-widest text-ink/40 hover:text-ink transition-colors"
+                                                                        >
+                                                                            ← Back
+                                                                        </button>
+                                                                    ) : <span />}
+
+                                                                    <div className="flex items-center gap-4">
+                                                                        {/* Enter hint — single-line only */}
+                                                                        {currentStep.type !== 'textarea' && (
+                                                                            <span className="font-sans text-[0.55rem] text-ink/25 uppercase tracking-wider hidden sm:block">
+                                                                                Press Enter ↵
+                                                                            </span>
+                                                                        )}
+                                                                        {/* Next button */}
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={handleNext}
+                                                                            disabled={currentStep.required && !formData[currentField]}
+                                                                            className="bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-widest px-6 py-3 hover:bg-rust/85 transition-all duration-300 flex items-center gap-2 font-bold group disabled:opacity-30 disabled:cursor-not-allowed"
+                                                                        >
+                                                                            Next
+                                                                            <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     </div>
-                                                )}
-                                            </div>
+                                                </div>
+                                            )}
+
+                                            <p className="mt-6 font-sans text-[0.6rem] text-ink/30 uppercase tracking-widest text-center">
+                                                Already know you need the full audit?{" "}
+                                                <a href={DUBSADO_URL} className="underline hover:text-rust transition-colors">Book direct — $1,500 →</a>
+                                            </p>
                                         </div>
                                     </div>
-                                )}
-
-                                <p className="mt-6 font-sans text-[0.6rem] text-ink/30 uppercase tracking-widest text-center">
-                                    Already know you need the full audit?{" "}
-                                    <a href={DUBSADO_URL} className="underline hover:text-rust transition-colors">Book direct — $1,500 →</a>
-                                </p>
-                            </div>
-                        </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 </section>
 
