@@ -9,6 +9,7 @@
   --font-display: var(--font-cormorant);
   --font-serif: var(--font-cormorant);
   --font-sans: var(--font-satoshi);
+  --font-hand: var(--font-permanent-marker);
 
   /* Brand Colors — STRICT PROTAGONIST INK SYSTEM */
   --color-ink: #2C2C2C;
@@ -329,7 +330,25 @@ button:focus-visible,
   }
 }
 
-/* Respect reduced motion preferences while keeping layout/visibility intact */
+/* ==========================================================================
+   Hand / tape utilities — Director's Notebook aesthetic
+   ========================================================================== */
+
+/* Handwritten annotation style — Permanent Marker */
+.font-hand {
+  font-family: var(--font-permanent-marker), 'Permanent Marker', cursive;
+}
+
+/* Tape strip — aged masking tape holding a note in place */
+.tape-strip {
+  background-color: rgba(232, 224, 213, 0.6);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  transform: rotate(-2deg);
+}
+
+/* ==========================================================================
+   Respect reduced motion preferences while keeping layout/visibility intact */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

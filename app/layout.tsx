@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond } from "next/font/google";
+import { Cormorant_Garamond, Permanent_Marker } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -10,6 +10,12 @@ const cormorant = Cormorant_Garamond({
   weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-cormorant",
+});
+
+const permanentMarker = Permanent_Marker({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-permanent-marker",
 });
 
 export const metadata: Metadata = {
@@ -37,7 +43,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${cormorant.variable} font-sans bg-ink text-warmwhite antialiased selection:bg-rust selection:text-warmwhite`}
+        className={`${cormorant.variable} ${permanentMarker.variable} font-sans bg-ink text-warmwhite antialiased selection:bg-rust selection:text-warmwhite`}
       >
         <Navbar />
         <ScrollReveal />
