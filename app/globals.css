@@ -225,6 +225,17 @@ button:focus-visible,
   font-style: italic;
 }
 
+/* Drop cap — first letter of opening paragraph */
+.drop-cap::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 3.5em;
+  line-height: 0.8;
+  padding-right: 0.08em;
+  padding-top: 0.05em;
+  color: var(--color-ink);
+}
+
 /* ==========================================================================
    Scroll-driven motion — life, not decoration
    ========================================================================== */
