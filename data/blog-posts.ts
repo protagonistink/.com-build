@@ -19,6 +19,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'How structural engineering principles apply to storytelling in the modern digital age.',
     category: 'Narrative Architecture',
     mainImage: 'https://picsum.photos/seed/architecture/1920/1080',
+    readTime: '7 min read',
   },
   {
     id: '2',
@@ -29,6 +30,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'Identifying the unseen forces that shape user behavior and brand perception.',
     category: 'Founder Psychology',
     mainImage: null,
+    readTime: '5 min read',
   },
   {
     id: '3',
@@ -39,6 +41,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'Why the era of marketing fluff is dead, and exactitude is the new currency.',
     category: 'AI & Human Craft',
     mainImage: 'https://picsum.photos/seed/noir2/1600/900',
+    readTime: '6 min read',
   },
   {
     id: '4',
@@ -49,6 +52,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'Mapping the coordinates where brand promises meet consumer reality.',
     category: 'Narrative Architecture',
     mainImage: null,
+    readTime: '4 min read',
   },
   {
     id: '5',
@@ -59,6 +63,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'When a brand speaks but no one listens: diagnosing the silent disconnect.',
     category: 'Founder Psychology',
     mainImage: 'https://picsum.photos/seed/noir5/1400/900',
+    readTime: '5 min read',
   },
   {
     id: '6',
@@ -68,5 +73,6 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt: 'A mathematical approach to creative leaps and brand evolution.',
     category: 'Field Notes',
     mainImage: 'https://picsum.photos/seed/noir3/1200/800',
+    readTime: '3 min read',
   },
 ];
