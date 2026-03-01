@@ -10,7 +10,7 @@ const ALLOWED_STAGES = new Set([
 
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX_REQUESTS = 10;
-const NOTION_TIMEOUT_MS = 8_000;
+const CRAFT_TIMEOUT_MS = 8_000;
 const RETRY_DELAY_MS = 400;
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 
@@ -59,21 +59,21 @@ async function delay(ms: number) {
   await new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function notionRequestWithRetry(
+async function craftRequestWithRetry(
   url: string,
   options: RequestInit,
   correlationId: string
 ) {
   for (let attempt = 1; attempt <= 2; attempt += 1) {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), NOTION_TIMEOUT_MS);
+    const timeout = setTimeout(() => controller.abort(), CRAFT_TIMEOUT_MS);
     try {
       const response = await fetch(url, { ...options, signal: controller.signal });
       return response;
     } catch (error) {
       const isLastAttempt = attempt === 2;
       if (isLastAttempt) {
-        console.error(`[loom-submit:${correlationId}] Notion request failed`, error);
+        console.error(`[loom-submit:${correlationId}] Craft request failed`, error);
         throw error;
       }
       await delay(RETRY_DELAY_MS);
@@ -81,7 +81,7 @@ async function notionRequestWithRetry(
       clearTimeout(timeout);
     }
   }
-  throw new Error('Notion request failed after retries');
+  throw new Error('Craft request failed after retries');
 }
 
 export async function POST(request: Request) {
@@ -130,48 +130,37 @@ export async function POST(request: Request) {
       );
     }
 
-    const notionToken = process.env.NOTION_TOKEN;
-    const notionDatabase = process.env.NOTION_DATABASE_ID;
+    const craftLinkId = process.env.CRAFT_LINK_ID;
+    const craftCollectionId = process.env.CRAFT_COLLECTION_ID;
 
-    if (!notionToken || !notionDatabase) {
-      console.error(`[loom-submit:${correlationId}] Missing Notion credentials in environment variables`);
+    if (!craftLinkId || !craftCollectionId) {
+      console.error(`[loom-submit:${correlationId}] Missing Craft credentials in environment variables`);
       return NextResponse.json(
         { error: 'Server configuration error.', correlationId },
         { status: 500 }
       );
     }
 
-    const response = await notionRequestWithRetry(
-      'https://api.notion.com/v1/pages',
+    const response = await craftRequestWithRetry(
+      `https://connect.craft.do/links/${craftLinkId}/api/v1/collections/${craftCollectionId}/items`,
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${notionToken}`,
           'Content-Type': 'application/json',
-          'Notion-Version': '2022-06-28',
         },
         body: JSON.stringify({
-          parent: { database_id: notionDatabase },
-          properties: {
-            Name: {
-              title: [{ text: { content: name } }],
+          items: [
+            {
+              name,
+              properties: {
+                email,
+                company__one_line: company || '',
+                url,
+                what_prospects_miss: miss || '',
+                stage,
+              },
             },
-            Email: {
-              email: email,
-            },
-            'Company & One-liner': {
-              rich_text: [{ text: { content: company || '' } }],
-            },
-            'Review URL': {
-              url: url,
-            },
-            'What Prospects Miss': {
-              rich_text: [{ text: { content: miss || '' } }],
-            },
-            Stage: {
-              select: { name: stage },
-            },
-          },
+          ],
         }),
       },
       correlationId
@@ -179,9 +168,9 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const errorBody = await response.json();
-      console.error(`[loom-submit:${correlationId}] Notion API error`, errorBody);
+      console.error(`[loom-submit:${correlationId}] Craft API error`, errorBody);
       return NextResponse.json(
-        { error: 'Failed to submit to Notion.', correlationId },
+        { error: 'Failed to submit.', correlationId },
         { status: 500 }
       );
     }
