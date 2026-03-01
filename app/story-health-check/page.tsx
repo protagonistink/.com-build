@@ -7,7 +7,7 @@ import { motion, useScroll, useTransform, AnimatePresence, MotionConfig } from '
 import TypewriterHeadline from '@/components/TypewriterHeadline';
 import ParallaxHeroBackground from '@/components/ParallaxHeroBackground';
 
-const DUBSADO_URL = "#"; // TODO: Replace with Dubsado booking URL
+const BOOKING_ACTION = "mailto:hello@protagonist.ink";
 
 // ── Shared animation presets ─────────────────────────────────────────────────
 const FADE_UP = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 } } as const;
@@ -91,8 +91,8 @@ export default function StoryHealthCheckPage() {
                 body: JSON.stringify(data),
             });
             if (res.ok) setLoomSubmitted(true);
-        } catch (err) {
-            console.error('loom-submit:', err);
+        } catch {
+            // Error state is surfaced in the UI via loomSubmitted remaining false
         } finally {
             setIsSubmitting(false);
         }
@@ -159,7 +159,7 @@ export default function StoryHealthCheckPage() {
                                         Get a Free Story Analysis
                                     </div>
                                 </a>
-                                <a href={DUBSADO_URL} className="font-sans text-[0.6rem] uppercase tracking-[0.15em] text-paper/40 hover:text-rust transition-colors">
+                                <a href={BOOKING_ACTION} className="font-sans text-[0.6rem] uppercase tracking-[0.15em] text-paper/40 hover:text-rust transition-colors">
                                     or skip to the paid audit →
                                 </a>
                             </div>
@@ -337,7 +337,7 @@ export default function StoryHealthCheckPage() {
 
                                     <p className="mt-8 font-sans text-[0.6rem] text-ink/30 uppercase tracking-widest">
                                         Already know you need the full audit?{" "}
-                                        <a href={DUBSADO_URL} className="underline hover:text-rust transition-colors">Book direct — $1,500 →</a>
+                                        <a href={BOOKING_ACTION} className="underline hover:text-rust transition-colors">Book direct — $1,500 →</a>
                                     </p>
                                 </motion.div>
                             ) : (
@@ -401,7 +401,7 @@ export default function StoryHealthCheckPage() {
                                                     </p>
                                                     <p className="mt-8 font-sans text-[0.6rem] uppercase tracking-widest text-ink/30">
                                                         Want the full surgical intervention?{" "}
-                                                        <a href={DUBSADO_URL} className="underline hover:text-rust transition-colors">Book the Story Audit →</a>
+                                                        <a href={BOOKING_ACTION} className="underline hover:text-rust transition-colors">Book the Story Audit →</a>
                                                     </p>
                                                 </div>
                                             ) : (
@@ -540,7 +540,7 @@ export default function StoryHealthCheckPage() {
 
                                             <p className="mt-6 font-sans text-[0.6rem] text-ink/30 uppercase tracking-widest text-center">
                                                 Already know you need the full audit?{" "}
-                                                <a href={DUBSADO_URL} className="underline hover:text-rust transition-colors">Book direct — $1,500 →</a>
+                                                <a href={BOOKING_ACTION} className="underline hover:text-rust transition-colors">Book direct — $1,500 →</a>
                                             </p>
                                         </div>
                                     </div>
@@ -710,7 +710,7 @@ export default function StoryHealthCheckPage() {
                                     ))}
                                 </div>
 
-                                <a href={DUBSADO_URL} className="group relative inline-flex">
+                                <a href={BOOKING_ACTION} className="group relative inline-flex">
                                     <div className="absolute inset-0 bg-rust transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
                                     <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-8 py-4 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                                         Secure Your Spot — $1,500
@@ -822,7 +822,7 @@ export default function StoryHealthCheckPage() {
                                         <span>The Stage — content strategy and channel playbook</span>
                                     </li>
                                 </ul>
-                                <a href={DUBSADO_URL} className="group relative inline-flex">
+                                <a href={BOOKING_ACTION} className="group relative inline-flex">
                                     <div className="absolute inset-0 bg-rust transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
                                     <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-8 py-4 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                                         Book the Story Audit
@@ -887,7 +887,7 @@ export default function StoryHealthCheckPage() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <a href={DUBSADO_URL} className="group relative flex">
+                            <a href={BOOKING_ACTION} className="group relative flex">
                                 <div className="absolute inset-0 bg-black/50 transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
                                 <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-10 py-5 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                                     Book the Story Audit — $1,500
@@ -902,7 +902,7 @@ export default function StoryHealthCheckPage() {
                         </div>
 
                         <p className="mt-10 font-sans text-[0.6rem] text-paper/30 uppercase tracking-widest">
-                            Questions? <a href="mailto:hello@protagonistink.com" className="underline hover:text-rust transition-colors">hello@protagonistink.com</a>
+                            Questions? <a href="mailto:hello@protagonist.ink" className="underline hover:text-rust transition-colors">hello@protagonist.ink</a>
                         </p>
                     </motion.div>
                 </section>
@@ -961,7 +961,7 @@ export default function StoryHealthCheckPage() {
                         <span className="font-display font-light text-xl tracking-tighter text-ink italic">Stop the bleeding.</span>
                     </div>
                     <a
-                        href={pastLoomForm ? DUBSADO_URL : '#free-loom'}
+                        href={pastLoomForm ? BOOKING_ACTION : '#free-loom'}
                         className="bg-rust hover:bg-rust/85 text-paper px-6 py-4 md:px-10 md:py-4 font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold flex items-center gap-4 transition-all hover:pr-8 shadow-sm group"
                     >
                         {pastLoomForm ? 'Book the Story Audit' : 'Send Your URL'}

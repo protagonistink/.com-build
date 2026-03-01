@@ -13,12 +13,11 @@ export default function Navbar() {
   const isWorkIndex = pathname === '/work';
   const isWorkDetail = pathname?.startsWith('/work/') && pathname !== '/work';
   const isStoryHealthCheck = pathname === '/story-health-check';
-  const isBlog = pathname === '/blog';
   const isBlogDetail = pathname?.startsWith('/blog/') && pathname !== '/blog';
-  // On work detail, story-health-check, and blog pages, the hero is dark.
+  // On work detail, story-health-check, and blog detail pages, the hero is dark.
   // We want the navbar to start transparent/light-text, then
   // switch to light bg/dark text once we scroll past the hero.
-  const useDarkHero = isWorkDetail || isStoryHealthCheck || isBlog || isBlogDetail;
+  const useDarkHero = isWorkDetail || isStoryHealthCheck || isBlogDetail;
   const heroThreshold = useDarkHero ? (isStoryHealthCheck ? 550 : 400) : 20;
 
   useEffect(() => {
@@ -90,14 +89,8 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8 lg:gap-12">
-          <Link href="/work" className={`text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] transition-colors duration-300 ${linkTone}`}>
-            Work
-          </Link>
           <Link href="/about" className={`text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] transition-colors duration-300 ${linkTone}`}>
             About
-          </Link>
-          <Link href="/blog" className={`text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] transition-colors duration-300 ${linkTone}`}>
-            Journal
           </Link>
           <Link
             href="/story-health-check"
@@ -126,9 +119,7 @@ export default function Navbar() {
         className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${menuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <div className={`border-t px-6 py-10 flex flex-col gap-7 ${useLightTheme ? 'bg-[#FAFAFA] border-ink/10' : 'bg-[var(--color-ink)] border-white/[0.04]'}`}>
-          <Link href="/work" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>Work</Link>
           <Link href="/about" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>About</Link>
-          <Link href="/blog" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>Journal</Link>
           <div className={`w-8 h-px my-1 ${useLightTheme ? 'bg-ink/20' : 'bg-white/10'}`} />
           <Link
             href="/story-health-check"

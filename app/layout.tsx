@@ -19,6 +19,7 @@ const permanentMarker = Permanent_Marker({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://protagonist.ink"),
   title: "Protagonist Ink",
   description:
     "We translate complex organizational shifts into language that moves markets.",
@@ -37,6 +38,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
+        <link
+          rel="preload"
+          as="style"
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"
+        />
         <link
           rel="stylesheet"
           href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"

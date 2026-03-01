@@ -28,7 +28,7 @@ export const BLOG_POSTS: BlogPost[] = [
       <>
         <Prose>
           <p className="drop-cap">
-            There is a moment in every building's life when it stops being a
+            There is a moment in every building&apos;s life when it stops being a
             collection of materials and starts being a structure. Steel becomes
             skeleton. Glass becomes skin. Concrete becomes the quiet confidence
             that holds everything aloft. The same phase transition happens in
@@ -68,7 +68,7 @@ export const BLOG_POSTS: BlogPost[] = [
         <Prose>
           <p>
             Structural engineering has a concept called the moment of inertia: a
-            measure of an object's resistance to bending. The higher the moment,
+            measure of an object&apos;s resistance to bending. The higher the moment,
             the more force required to deform the structure. Brand narratives
             have their own moment of inertia. A well-constructed story resists
             distortion. It holds its shape under competitive pressure, under
@@ -103,7 +103,7 @@ export const BLOG_POSTS: BlogPost[] = [
           </p>
           <p>
             Most of the time, the answer is uncomfortable. The load paths run
-            through the founder's personal story, and the founder has never
+            through the founder&apos;s personal story, and the founder has never
             articulated it. Or the brand has accumulated contradictory messages
             over the years, and the structure is riddled with micro-fractures
             that no one has bothered to inspect.
@@ -124,8 +124,8 @@ export const BLOG_POSTS: BlogPost[] = [
           <p>
             Architecture is not what a building looks like. Architecture is what
             a building does. The same is true of narrative. The question is never
-            "does this story sound good?" The question is: "can this story bear
-            the load?"
+            &ldquo;does this story sound good?&rdquo; The question is: &ldquo;can this story bear
+            the load?&rdquo;
           </p>
         </Prose>
       </>
@@ -262,7 +262,7 @@ export const BLOG_POSTS: BlogPost[] = [
           <p className="drop-cap">
             Every creative decision is a bet. The color you choose, the word you
             lead with, the silence you leave in the white space — each one is a
-            wager against the audience's attention and the market's memory. The
+            wager against the audience&apos;s attention and the market&apos;s memory. The
             question is never whether to take risks, but which risks to take.
           </p>
           <p>

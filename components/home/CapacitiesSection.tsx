@@ -29,9 +29,7 @@ const capacities = [
 import { useState, useRef, useEffect } from 'react';
 
 export default function CapacitiesSection() {
-  const [isHovered, setIsHovered] = useState(false);
   const [isInView, setIsInView] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const provocationRef = useRef<HTMLDivElement>(null);
 
   // Intersection Observer to trigger the background color snap
@@ -65,17 +63,6 @@ export default function CapacitiesSection() {
     }
   }, [isInView]);
 
-  // When provocation is hovered, play the video
-  useEffect(() => {
-    if (isHovered && videoRef.current) {
-      videoRef.current.play();
-    } else if (!isHovered && videoRef.current) {
-      videoRef.current.pause();
-      // Reset to beginning or leave at current frame based on preference
-      videoRef.current.currentTime = 0;
-    }
-  }, [isHovered]);
-
   return (
     <section
       className="texture-paper bg-transparent text-[var(--color-ink)] px-6 md:px-12 py-28 md:py-40 transition-colors duration-500 will-change-[background-color]"
@@ -102,16 +89,10 @@ export default function CapacitiesSection() {
               <div
                 key={capacity.number}
                 ref={isProvocation ? provocationRef : null}
-                onMouseEnter={() => isProvocation && setIsHovered(true)}
-                onMouseLeave={() => isProvocation && setIsHovered(false)}
                 className={`reveal border-t ${!isProvocation ? 'border-[var(--color-charcoal)]/10' : ''} grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 overflow-hidden transition-all duration-500 ${isProvocation
                   ? 'py-32 md:py-48 relative text-white bg-black group cursor-crosshair'
                   : 'py-16 md:py-24'
                   }`}
-                style={{
-                  borderColor: isHovered && !isProvocation ? 'rgba(255,255,255,0.1)' : undefined,
-                  color: isHovered && !isProvocation ? 'var(--color-paper)' : undefined
-                }}
               >
                 {/* Background Texture for Provocation */}
                 {isProvocation && (
@@ -121,7 +102,7 @@ export default function CapacitiesSection() {
                       aria-hidden="true"
                     />
                     <div
-                      className={`absolute inset-0 z-[-2] transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-80 mix-blend-luminosity grayscale contrast-150 transition-transform duration-[20s] group-hover:scale-105'}`}
+                      className="absolute inset-0 z-[-2] opacity-80 mix-blend-luminosity grayscale contrast-150 transition-transform duration-[20s] group-hover:scale-105"
                       style={{
                         backgroundImage: 'url("https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2698&auto=format&fit=crop")',
                         backgroundSize: 'cover',
@@ -129,18 +110,6 @@ export default function CapacitiesSection() {
                       }}
                       aria-hidden="true"
                     />
-
-                    {/* Google Flow Video Element (Plays on Hover) */}
-                    <video
-                      ref={videoRef}
-                      muted
-                      loop
-                      playsInline
-                      className={`absolute inset-0 z-[-1] w-full h-full object-cover transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
-                    >
-                      {/* Placeholder for the user-provided Google Flow MP4 */}
-                      <source src="/google_flow_provocation.mp4" type="video/mp4" />
-                    </video>
 
                     {/* Film grain on the dark panel */}
                     <div
@@ -185,7 +154,7 @@ export default function CapacitiesSection() {
                       {capacity.diagnosis}
                     </p>
                   ) : (
-                    <p className="font-[family-name:var(--font-cormorant)] text-xl md:text-2xl italic leading-[1.35] opacity-80" style={{ color: isHovered && !isProvocation ? 'var(--color-paper)' : 'var(--color-red)' }}>
+                    <p className="font-[family-name:var(--font-cormorant)] text-xl md:text-2xl italic leading-[1.35] opacity-80 text-[var(--color-red)]">
                       {capacity.diagnosis}
                     </p>
                   )}
