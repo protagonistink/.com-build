@@ -19,6 +19,7 @@ export interface BlogPost {
   excerpt: string;
   category: string;
   mainImage: string | null;
+  mainImageAlt?: string;
   readTime: string;
   body?: ReactNode;
   sanityBody?: PortableTextBlock[];

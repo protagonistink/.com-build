@@ -39,6 +39,12 @@ export const post = defineType({
       description: 'Optional external image URL fallback when no uploaded asset is set.',
     }),
     defineField({
+      name: 'mainImageAlt',
+      title: 'Main Image Alt Text',
+      type: 'string',
+      description: 'Alternative text for the main image URL fallback.',
+    }),
+    defineField({
       name: 'categories',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'category' }] }],

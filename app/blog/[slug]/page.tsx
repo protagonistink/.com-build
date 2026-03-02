@@ -108,7 +108,7 @@ export default async function BlogDetailPage({
             <div className="relative aspect-[16/9] rounded-lg overflow-hidden border border-ink/[0.06]">
               <Image
                 src={post.mainImage}
-                alt={post.title}
+                alt={post.mainImageAlt || post.title}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 960px"
