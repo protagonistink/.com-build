@@ -26,6 +26,19 @@ export const post = defineType({
       type: 'text',
     }),
     defineField({
+      name: 'mainImage',
+      title: 'Main Image',
+      type: 'image',
+      options: { hotspot: true },
+      fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
+    }),
+    defineField({
+      name: 'mainImageUrl',
+      title: 'Main Image URL',
+      type: 'url',
+      description: 'Optional external image URL fallback when no uploaded asset is set.',
+    }),
+    defineField({
       name: 'categories',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'category' }] }],
