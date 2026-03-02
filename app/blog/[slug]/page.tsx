@@ -132,10 +132,10 @@ export default async function BlogDetailPage({
             <Image
               src="/icon.png"
               alt=""
-              width={72}
-              height={120}
+              width={96}
+              height={160}
               aria-hidden
-              className="opacity-70"
+              className="opacity-35 contrast-[260%] brightness-0 saturate-0"
             />
           </div>
         </div>
