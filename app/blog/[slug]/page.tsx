@@ -130,12 +130,12 @@ export default async function BlogDetailPage({
         <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-8 md:pb-10">
           <div className="mx-auto w-fit flex items-center justify-center">
             <Image
-              src="/icon.png"
+              src="/images/brand/transparent_black_symbol.png"
               alt=""
-              width={96}
-              height={160}
+              width={132}
+              height={132}
               aria-hidden
-              className="opacity-35 contrast-[260%] brightness-0 saturate-0"
+              className="opacity-25"
             />
           </div>
         </div>
