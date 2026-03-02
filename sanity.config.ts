@@ -8,6 +8,7 @@ import { schemaTypes } from './sanity/schemaTypes';
 export default defineConfig({
   name: 'protagonist-ink',
   title: 'Protagonist Ink',
+  basePath: '/studio',
 
   projectId: 'dkok2iir',
   dataset: 'production',
