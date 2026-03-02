@@ -55,7 +55,7 @@ export default async function BlogDetailPage({
   return (
     <main className="min-h-screen">
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-[50vh] md:min-h-[55vh] bg-trueblack texture-grain flex flex-col justify-end pb-16 md:pb-20">
+      <section className="relative min-h-[50vh] md:min-h-[55vh] bg-trueblack texture-grain flex flex-col justify-end pt-28 md:pt-36 lg:pt-40 pb-16 md:pb-20">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12 w-full">
           {/* Breadcrumb */}
           <nav className="mb-8 md:mb-10">
@@ -138,19 +138,6 @@ export default async function BlogDetailPage({
               </p>
             </Prose>
           )}
-        </div>
-
-        {/* ═══ POST FOOTER ═══ */}
-
-        {/* Sign-off */}
-        <div className="max-w-[680px] mx-auto px-6 md:px-10 pt-16 md:pt-24">
-          <div className="w-10 h-px bg-rust mb-6" />
-          <p className="text-technical text-[11px] tracking-[0.15em] text-ink/30">
-            Written by Protagonist Ink
-          </p>
-          <p className="text-technical text-[11px] tracking-[0.15em] text-ink/20 mt-1">
-            {post.publishedAt}
-          </p>
         </div>
 
         {/* More Ink */}
