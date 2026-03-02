@@ -25,7 +25,7 @@ export default function MoreInk({ posts }: MoreInkProps) {
               <span className="text-technical text-[10px] tracking-[0.2em] text-rust/90 block mb-3">
                 {post.category}
               </span>
-              <span className="block w-6 max-w-full h-px bg-rust/70 mb-4 group-hover:w-full transition-all duration-500 ease-out" />
+              <span className="block w-6 max-w-full h-px bg-rust/70 mb-4 group-hover:w-[80%] transition-all duration-500 ease-out" />
               <h4 className="font-display text-xl md:text-2xl text-ink leading-tight mb-3 group-hover:text-rust transition-colors duration-300">
                 {post.title}
               </h4>

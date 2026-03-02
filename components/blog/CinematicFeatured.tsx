@@ -18,7 +18,7 @@ export default function CinematicFeatured({ post }: { post: BlogPost }) {
             src={post.mainImage}
             alt=""
             fill
-            className="object-cover object-center opacity-[0.45] grayscale contrast-125 group-hover:opacity-[0.55] group-hover:scale-[1.02] transition-all duration-[1.2s] ease-out"
+            className="object-cover object-center opacity-[0.45] contrast-125 group-hover:opacity-[0.55] group-hover:scale-[1.02] transition-all duration-[1.2s] ease-out"
             sizes="100vw"
             priority
             referrerPolicy="no-referrer"
@@ -90,7 +90,7 @@ export default function CinematicFeatured({ post }: { post: BlogPost }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.7, delay: 0.4 }}
-              className="font-serif italic text-lg md:text-xl text-warmwhite/50 leading-relaxed max-w-xl mb-8 md:mb-10"
+              className="font-serif text-lg md:text-xl text-warmwhite/50 leading-relaxed max-w-xl mb-6 md:mb-7"
             >
               {post.excerpt}
             </motion.p>
@@ -102,8 +102,8 @@ export default function CinematicFeatured({ post }: { post: BlogPost }) {
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.6, delay: 0.55 }}
             >
-              <span className="text-technical text-[10px] tracking-[0.25em] uppercase text-warmwhite/40 border-b border-warmwhite/20 pb-1 group-hover:text-rust group-hover:border-rust/40 transition-colors duration-500">
-                Read
+              <span className="text-technical text-[13px] tracking-[0.18em] uppercase text-warmwhite/55 border-b border-warmwhite/20 pb-1 group-hover:text-rust group-hover:border-rust/40 transition-colors duration-500">
+                Read the latest ink
               </span>
             </motion.div>
           </div>

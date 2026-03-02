@@ -57,30 +57,16 @@ export default async function BlogDetailPage({
       {/* ═══ HERO ═══ */}
       <section className="relative min-h-[62vh] md:min-h-[70vh] bg-trueblack texture-grain flex flex-col justify-start pt-40 md:pt-48 lg:pt-52 pb-16 md:pb-20">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12 w-full">
-          {/* Breadcrumb */}
-          <nav className="mb-8 md:mb-10">
-            <span className="text-technical text-[10px] tracking-[0.2em]">
-              <Link
-                href="/blog"
-                className="text-warmwhite/40 hover:text-rust transition-colors duration-300"
-              >
-                Journal
-              </Link>
-              <span className="text-warmwhite/20 mx-2">/</span>
-              <span className="text-warmwhite/40">{post.category}</span>
-            </span>
-          </nav>
-
           {/* Meta row */}
           <div className="flex flex-wrap items-center gap-3 mb-6 md:mb-8">
-            <span className="text-technical text-[10px] tracking-[0.2em] text-rust border border-rust/50 px-3 py-1 rounded-full">
+            <span className="text-technical text-[12px] tracking-[0.2em] text-rust border border-rust/50 px-3 py-1 rounded-full">
               {post.category}
             </span>
-            <span className="text-technical text-[10px] tracking-[0.2em] text-rust/90">
+            <span className="text-technical text-[12px] tracking-[0.2em] text-rust/90">
               {post.publishedAt}
             </span>
             <span className="text-rust/70">·</span>
-            <span className="text-technical text-[10px] tracking-[0.2em] text-rust/90">
+            <span className="text-technical text-[12px] tracking-[0.2em] text-rust/90">
               {post.readTime}
             </span>
           </div>
@@ -146,10 +132,10 @@ export default async function BlogDetailPage({
             <Image
               src="/icon.png"
               alt=""
-              width={60}
-              height={100}
+              width={72}
+              height={120}
               aria-hidden
-              className="opacity-50"
+              className="opacity-70"
             />
           </div>
         </div>
