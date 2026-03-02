@@ -73,14 +73,14 @@ export default async function BlogDetailPage({
 
           {/* Meta row */}
           <div className="flex flex-wrap items-center gap-3 mb-6 md:mb-8">
-            <span className="text-technical text-[10px] tracking-[0.2em] text-warmwhite/50 border border-warmwhite/20 px-3 py-1 rounded-full">
+            <span className="text-technical text-[10px] tracking-[0.2em] text-rust border border-rust/50 px-3 py-1 rounded-full">
               {post.category}
             </span>
-            <span className="text-technical text-[10px] tracking-[0.2em] text-warmwhite/30">
+            <span className="text-technical text-[10px] tracking-[0.2em] text-rust/90">
               {post.publishedAt}
             </span>
-            <span className="text-warmwhite/20">·</span>
-            <span className="text-technical text-[10px] tracking-[0.2em] text-warmwhite/30">
+            <span className="text-rust/70">·</span>
+            <span className="text-technical text-[10px] tracking-[0.2em] text-rust/90">
               {post.readTime}
             </span>
           </div>
@@ -91,7 +91,7 @@ export default async function BlogDetailPage({
           </h1>
 
           {/* Excerpt */}
-          <p className="font-serif italic text-xl md:text-2xl text-warmwhite/60 max-w-3xl leading-relaxed">
+          <p className="font-serif text-xl md:text-2xl text-warmwhite/60 max-w-3xl leading-relaxed">
             {post.excerpt}
           </p>
 

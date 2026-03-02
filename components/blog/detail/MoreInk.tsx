@@ -13,10 +13,13 @@ export default function MoreInk({ posts }: MoreInkProps) {
   return (
     <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-8">
       <ScrollRevealWrapper>
-        <div className="h-px w-full mb-8 md:mb-10" style={{ backgroundColor: '#282828' }} />
-        <h3 className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-10 md:mb-14">
+        <div
+          className="w-full mb-8 md:mb-10"
+          style={{ height: '0.5px', backgroundColor: 'rgba(40, 40, 40, 0.75)' }}
+        />
+        <h2 className="font-display text-4xl md:text-5xl text-ink mb-5 md:mb-6">
           MORE INK
-        </h3>
+        </h2>
         <p className="font-serif italic text-base md:text-lg text-ink/45 leading-relaxed mb-8 md:mb-10">
           A few more essays you might want next.
         </p>
