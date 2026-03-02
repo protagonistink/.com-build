@@ -1,7 +1,10 @@
 import type { MetadataRoute } from "next";
+import { PROJECTS } from "@/data/work-projects";
+import { getBlogPosts } from "@/lib/blog";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const blogPosts = await getBlogPosts();
+  const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: "https://protagonist.ink",
       lastModified: new Date(),
@@ -33,4 +36,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
   ];
+
+  const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `https://protagonist.ink/blog/${post.slug}`,
+    lastModified: new Date(post.publishedAt || Date.now()),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  const workRoutes: MetadataRoute.Sitemap = PROJECTS.map((project) => ({
+    url: `https://protagonist.ink/work/${project.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.65,
+  }));
+
+  return [...staticRoutes, ...blogRoutes, ...workRoutes];
 }

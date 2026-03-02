@@ -12,6 +12,7 @@ const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX_REQUESTS = 10;
 const CRAFT_TIMEOUT_MS = 8_000;
 const RETRY_DELAY_MS = 400;
+const RATE_LIMIT_MAX_KEYS = 5_000;
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 
 function asTrimmedString(value: unknown) {
@@ -40,8 +41,24 @@ function getClientIp(request: Request) {
   return request.headers.get('x-real-ip') || 'unknown';
 }
 
+function getClientKey(request: Request) {
+  const ip = getClientIp(request);
+  const userAgent = request.headers.get('user-agent') || 'unknown';
+  return `${ip}:${userAgent.slice(0, 120)}`;
+}
+
+function cleanupRateLimitStore(now: number) {
+  if (rateLimitStore.size < RATE_LIMIT_MAX_KEYS) return;
+  for (const [key, value] of rateLimitStore) {
+    if (value.resetAt <= now) {
+      rateLimitStore.delete(key);
+    }
+  }
+}
+
 function isRateLimited(clientKey: string) {
   const now = Date.now();
+  cleanupRateLimitStore(now);
   const entry = rateLimitStore.get(clientKey);
   if (!entry || now > entry.resetAt) {
     rateLimitStore.set(clientKey, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
@@ -53,6 +70,21 @@ function isRateLimited(clientKey: string) {
   entry.count += 1;
   rateLimitStore.set(clientKey, entry);
   return false;
+}
+
+function isSameOriginRequest(request: Request) {
+  const origin = request.headers.get('origin');
+  if (!origin) return true;
+
+  const host = request.headers.get('host');
+  if (!host) return false;
+
+  try {
+    const originHost = new URL(origin).host;
+    return originHost === host;
+  } catch {
+    return false;
+  }
 }
 
 async function delay(ms: number) {
@@ -87,21 +119,38 @@ async function craftRequestWithRetry(
 export async function POST(request: Request) {
   const correlationId = crypto.randomUUID();
   try {
-    const clientIp = getClientIp(request);
-    if (isRateLimited(clientIp)) {
+    if (!isSameOriginRequest(request)) {
       return NextResponse.json(
-        { error: 'Too many submissions. Please wait a minute and try again.', correlationId },
-        { status: 429 }
+        { error: 'Invalid request origin.', correlationId },
+        { status: 403 }
       );
     }
 
-    const body = await request.json();
-    const name = asTrimmedString(body?.name);
-    const email = asTrimmedString(body?.email);
-    const company = asTrimmedString(body?.company);
-    const url = asTrimmedString(body?.url);
-    const miss = asTrimmedString(body?.miss);
-    const stageInput = asTrimmedString(body?.stage);
+    const clientKey = getClientKey(request);
+    if (isRateLimited(clientKey)) {
+      return NextResponse.json(
+        { error: 'Too many submissions. Please wait a minute and try again.', correlationId },
+        { status: 429, headers: { 'Retry-After': '60' } }
+      );
+    }
+
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { error: 'Invalid JSON payload.', correlationId },
+        { status: 400 }
+      );
+    }
+
+    const payload = (body ?? {}) as Record<string, unknown>;
+    const name = asTrimmedString(payload.name);
+    const email = asTrimmedString(payload.email);
+    const company = asTrimmedString(payload.company);
+    const url = asTrimmedString(payload.url);
+    const miss = asTrimmedString(payload.miss);
+    const stageInput = asTrimmedString(payload.stage);
     const stage = ALLOWED_STAGES.has(stageInput) ? stageInput : 'Other';
 
     // Validate required fields

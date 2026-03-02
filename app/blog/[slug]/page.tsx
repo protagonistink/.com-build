@@ -2,14 +2,16 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BLOG_POSTS } from '@/data/blog-posts';
 import MoreInk from '@/components/blog/detail/MoreInk';
 import Prose from '@/components/blog/detail/Prose';
+import { getBlogPostBySlug, getBlogPosts } from '@/lib/blog';
+import type { BlogPost } from '@/types/blog';
 
 // --- Static generation ---
 
-export function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({ slug: post.slug }));
+export async function generateStaticParams() {
+  const posts = await getBlogPosts();
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({
@@ -18,7 +20,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const post = await getBlogPostBySlug(slug);
   if (!post) return { title: 'Post Not Found' };
 
   return {
@@ -29,8 +31,8 @@ export async function generateMetadata({
 
 // --- Related posts logic ---
 
-function getRelatedPosts(currentSlug: string, category: string) {
-  const others = BLOG_POSTS.filter((p) => p.slug !== currentSlug);
+function getRelatedPosts(posts: BlogPost[], currentSlug: string, category: string) {
+  const others = posts.filter((p) => p.slug !== currentSlug);
   const sameCategory = others.filter((p) => p.category === category);
   const different = others.filter((p) => p.category !== category);
   return [...sameCategory, ...different].slice(0, 3);
@@ -44,10 +46,11 @@ export default async function BlogDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const posts = await getBlogPosts();
+  const post = posts.find((p) => p.slug === slug);
   if (!post) notFound();
 
-  const relatedPosts = getRelatedPosts(post.slug, post.category);
+  const relatedPosts = getRelatedPosts(posts, post.slug, post.category);
 
   return (
     <main className="min-h-screen">
@@ -116,7 +119,19 @@ export default async function BlogDetailPage({
 
         {/* Body content */}
         <div className="pt-12 md:pt-16">
-          {post.body || (
+          {post.body ? (
+            post.body
+          ) : post.sanityBody && post.sanityBody.length > 0 ? (
+            <Prose>
+              {post.sanityBody
+                .filter((block) => block._type === 'block')
+                .map((block, index) => {
+                  const text = block.children?.map((child) => child.text).join('') || '';
+                  if (!text.trim()) return null;
+                  return <p key={`${block._type}-${index}`}>{text}</p>;
+                })}
+            </Prose>
+          ) : (
             <Prose>
               <p className="text-ink/40 italic">
                 Full article content coming soon.

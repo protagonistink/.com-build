@@ -1,0 +1,69 @@
+import { defineField, defineType } from 'sanity';
+
+export const post = defineType({
+  name: 'post',
+  title: 'Blog Posts',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'slug',
+      type: 'slug',
+      options: { source: 'title', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'publishedAt',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'excerpt',
+      type: 'text',
+    }),
+    defineField({
+      name: 'categories',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'category' }] }],
+    }),
+    defineField({
+      name: 'body',
+      type: 'array',
+      of: [{ type: 'block' }, { type: 'image', options: { hotspot: true } }],
+    }),
+    defineField({
+      name: 'seo',
+      type: 'object',
+      fields: [
+        defineField({ name: 'metaTitle', type: 'string' }),
+        defineField({ name: 'metaDescription', type: 'text' }),
+        defineField({ name: 'focusKeyword', type: 'string' }),
+        defineField({ name: 'canonicalUrl', type: 'url' }),
+      ],
+    }),
+    defineField({
+      name: 'schema',
+      type: 'object',
+      fields: [defineField({ name: 'type', type: 'string' })],
+    }),
+    defineField({
+      name: 'readingTime',
+      type: 'number',
+      title: 'Reading Time (Minutes)',
+    }),
+    defineField({
+      name: 'featured',
+      type: 'boolean',
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'publishedAt',
+    },
+  },
+});

@@ -1,5 +1,16 @@
 import type { ReactNode } from 'react';
 
+export interface PortableTextSpan {
+  _type: 'span';
+  text: string;
+}
+
+export interface PortableTextBlock {
+  _type: 'block';
+  style?: string;
+  children?: PortableTextSpan[];
+}
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -10,4 +21,5 @@ export interface BlogPost {
   mainImage: string | null;
   readTime: string;
   body?: ReactNode;
+  sanityBody?: PortableTextBlock[];
 }
