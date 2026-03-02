@@ -13,7 +13,7 @@ interface CmsPost {
   publishedAt?: string;
   excerpt?: string;
   mainImageUrl?: string;
-  seoOgImageAlt?: string;
+  mainImageAlt?: string;
   categories?: Array<{ title?: string }>;
   readingTime?: number;
   body?: PortableTextBlock[];
@@ -52,7 +52,7 @@ function mapCmsPost(post: CmsPost): BlogPost | null {
     excerpt: post.excerpt || '',
     category: post.categories?.[0]?.title || 'Field Notes',
     mainImage: post.mainImageUrl || null,
-    mainImageAlt: post.seoOgImageAlt || undefined,
+    mainImageAlt: post.mainImageAlt || undefined,
     readTime: `${Math.max(1, Number(post.readingTime || 5))} min read`,
     sanityBody: Array.isArray(post.body) ? post.body : [],
   };
@@ -70,8 +70,8 @@ async function getCmsPosts(): Promise<BlogPost[]> {
         slug,
         publishedAt,
         excerpt,
-        "mainImageUrl": coalesce(mainImage.asset->url, mainImageUrl, seo.ogImage.asset->url),
-        "seoOgImageAlt": coalesce(mainImage.alt, seo.ogImage.alt),
+        "mainImageUrl": coalesce(mainImage.asset->url, mainImageUrl),
+        "mainImageAlt": mainImage.alt,
         readingTime,
         body,
         categories[]->{

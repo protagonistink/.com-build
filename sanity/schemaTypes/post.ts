@@ -54,12 +54,6 @@ export const post = defineType({
       fields: [
         defineField({ name: 'metaTitle', type: 'string' }),
         defineField({ name: 'metaDescription', type: 'text' }),
-        defineField({
-          name: 'ogImage',
-          type: 'image',
-          options: { hotspot: true },
-          fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
-        }),
         defineField({ name: 'focusKeyword', type: 'string' }),
         defineField({ name: 'canonicalUrl', type: 'url' }),
       ],
