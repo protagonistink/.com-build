@@ -147,9 +147,9 @@ export default async function BlogDetailPage({
               src="/icon.png"
               alt=""
               width={60}
-              height={84}
+              height={100}
               aria-hidden
-              className="opacity-35"
+              className="opacity-50"
             />
           </div>
         </div>
