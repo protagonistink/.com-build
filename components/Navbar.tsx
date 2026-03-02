@@ -93,7 +93,7 @@ export default function Navbar() {
             About
           </Link>
           <Link href="/work" className={`text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] transition-colors duration-300 ${linkTone}`}>
-            Work
+            The Work
           </Link>
           <Link href="/blog" className={`text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] transition-colors duration-300 ${linkTone}`}>
             The Ink
@@ -126,7 +126,7 @@ export default function Navbar() {
       >
         <div className={`border-t px-6 py-10 flex flex-col gap-7 ${useLightTheme ? 'bg-[#FAFAFA] border-ink/10' : 'bg-[var(--color-ink)] border-white/[0.04]'}`}>
           <Link href="/about" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>About</Link>
-          <Link href="/work" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>Work</Link>
+          <Link href="/work" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>The Work</Link>
           <Link href="/blog" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>The Ink</Link>
           <div className={`w-8 h-px my-1 ${useLightTheme ? 'bg-ink/20' : 'bg-white/10'}`} />
           <Link

@@ -4,7 +4,7 @@ import PostRow from '@/components/blog/PostRow';
 import { getBlogPosts } from '@/lib/blog';
 
 export const metadata = {
-  title: 'The Ink — Protagonist Ink',
+  title: 'The Ink',
   description:
     'Frameworks, analyses, and architectural blueprints for brands that refuse to be ignored. Strictly signal. Zero noise.',
 };

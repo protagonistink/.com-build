@@ -20,7 +20,10 @@ const permanentMarker = Permanent_Marker({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://protagonist.ink"),
-  title: "Protagonist Ink",
+  title: {
+    default: "Protagonist Ink",
+    template: "%s | Protagonist Ink",
+  },
   description:
     "We translate complex organizational shifts into language that moves markets.",
 };

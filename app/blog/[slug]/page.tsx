@@ -24,7 +24,7 @@ export async function generateMetadata({
   if (!post) return { title: 'Post Not Found' };
 
   return {
-    title: `${post.title} — Protagonist Ink`,
+    title: post.title,
     description: post.excerpt,
   };
 }
@@ -135,7 +135,7 @@ export default async function BlogDetailPage({
               width={132}
               height={132}
               aria-hidden
-              className="opacity-25"
+              className="opacity-[0.18]"
             />
           </div>
         </div>

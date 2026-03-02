@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { getWorkProjects } from '@/lib/work';
 
 export const metadata = {
-  title: 'The Work — Protagonist Ink',
+  title: 'The Work',
   description: 'Narrative architecture in action. Case studies in brand strategy, story, and structure.',
 };
 
@@ -14,6 +14,18 @@ export default async function WorkPage() {
     <main>
       {/* Masthead */}
       <section className="w-full bg-trueblack text-warmwhite min-h-[60vh] md:min-h-[65vh] flex flex-col justify-end relative overflow-hidden texture-grain">
+        {/* Motion plate */}
+        <div className="absolute inset-0 pointer-events-none">
+          <iframe
+            src="https://player.vimeo.com/video/1169650739?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&dnt=1"
+            className="absolute inset-0 w-full h-full scale-[1.18]"
+            allow="autoplay; fullscreen; picture-in-picture"
+            loading="lazy"
+            aria-hidden
+          />
+        </div>
+        <div className="absolute inset-0 bg-trueblack/58" />
+
         {/* Faint editorial grid */}
         <div
           className="absolute inset-0 opacity-[0.04] pointer-events-none"
@@ -73,7 +85,7 @@ export default async function WorkPage() {
           <Link
             key={project.id}
             href={`/work/${project.slug}`}
-            className="group block border-b border-ink/[0.06] relative overflow-hidden"
+            className={`group block relative overflow-hidden ${i < projects.length - 1 ? 'border-b border-ink/[0.06]' : ''}`}
           >
             {/* Hover image background */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-700 ease-out">
@@ -99,25 +111,25 @@ export default async function WorkPage() {
             <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12 py-12 md:py-16 lg:py-20 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start relative z-10">
               {/* Metadata column */}
               <div className="md:col-span-3 flex md:flex-col gap-4 md:gap-3 pt-1">
-                <span className="text-technical text-[11px] tracking-[0.2em] italic text-ink/25 group-hover:text-warmwhite/50 transition-colors duration-500">
-                  {project.scene}
+                <span className="text-technical text-[13px] tracking-[0.14em] text-ink/60 group-hover:text-warmwhite/80 transition-colors duration-500">
+                  {(project.campaignCategory || project.category || 'Brand Strategy').toUpperCase()}
                 </span>
                 <span className="hidden md:block w-0 h-px bg-rust group-hover:w-10 transition-all duration-500 ease-out" />
                 <span className="md:hidden w-4 h-px bg-rust/40 self-center" />
-                <span className="text-technical text-[11px] tracking-[0.2em] italic text-ink/25 group-hover:text-warmwhite/50 transition-colors duration-500">
-                  {project.client}
+                <span className="text-technical text-[13px] tracking-[0.12em] text-ink/55 group-hover:text-warmwhite/75 transition-colors duration-500">
+                  CAMPAIGN: {(project.campaignTitle || project.title).toUpperCase()}
                 </span>
-                <span className="text-technical text-[11px] tracking-[0.2em] italic text-ink/25 group-hover:text-warmwhite/50 transition-colors duration-500">
-                  {project.year}
+                <span className="text-technical text-[13px] tracking-[0.12em] text-ink/55 group-hover:text-warmwhite/75 transition-colors duration-500">
+                  BUSINESS: {(project.businessCategory || project.sector || 'Brand & Culture').toUpperCase()}
                 </span>
               </div>
 
               {/* Content column */}
               <div className="md:col-span-8 md:col-start-5 group-hover:translate-x-2 transition-transform duration-500 ease-out">
                 <h2 className="font-display text-4xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tight mb-5 md:mb-6 text-ink/80 group-hover:text-warmwhite transition-colors duration-500">
-                  {project.title}
+                  {project.client}
                 </h2>
-                <p className="font-serif italic text-base md:text-lg leading-relaxed max-w-2xl text-ink/45 group-hover:text-warmwhite/60 transition-colors duration-500">
+                <p className="font-serif text-lg md:text-xl leading-relaxed max-w-2xl text-ink/62 group-hover:text-warmwhite/72 transition-colors duration-500">
                   {project.tagline}
                 </p>
               </div>

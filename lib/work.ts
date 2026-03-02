@@ -28,6 +28,10 @@ interface CmsCaseStudy {
   approach?: PortableTextBlock[];
   outcome?: PortableTextBlock[];
   fullStory?: PortableTextBlock[];
+  ctaVariant?: string;
+  industry?: string;
+  businessCategory?: string;
+  campaignCategory?: string;
   seoDescription?: string;
   heroImageUrl?: string;
   heroImageAlt?: string;
@@ -86,22 +90,37 @@ function mapCmsCaseStudy(item: CmsCaseStudy, index: number): Project | null {
   const fallbackProblem = challengeText || summary || storyText || 'Narrative alignment challenge.';
   const fallbackApproach =
     approachText || storyText || 'Narrative architecture and messaging system design.';
+  const campaignTitle = title;
+  const businessCategory = (
+    item.businessCategory ||
+    item.industry ||
+    'Brand & Culture'
+  ).trim();
+  const campaignCategory = (
+    item.campaignCategory ||
+    item.ctaVariant ||
+    'Brand Strategy'
+  ).trim();
+
   return {
     id: index + 1,
     slug,
     scene: `SCENE ${String(index + 1).padStart(2, '0')}`,
     ref: `CASE-${String(index + 1).padStart(2, '0')}`,
-    title,
+    title: campaignTitle,
     tagline: toFirstSentence(summary || approachText || challengeText || title),
     client: (item.clientName || 'Client').trim(),
-    category: 'Case Study',
+    campaignTitle,
+    businessCategory,
+    campaignCategory,
+    category: campaignCategory,
     description: item.seoDescription || fallbackDescription || title,
     year: toYear(item.publishedAt),
     image,
     imageLabel: 'Case Study',
     imageDescription: item.heroImageAlt || title,
     tensionStatement: toFirstSentence(challengeText || summary || title),
-    sector: 'Narrative Strategy',
+    sector: businessCategory,
     situation: summary || storyText || fallbackProblem,
     problem: fallbackProblem,
     engagementSummary: fallbackApproach,
@@ -135,6 +154,10 @@ async function getCmsCaseStudies(): Promise<Project[]> {
         approach,
         outcome,
         fullStory,
+        ctaVariant,
+        industry,
+        businessCategory,
+        campaignCategory,
         seoDescription,
         "heroImageUrl": heroImage.asset->url,
         "heroImageAlt": heroImage.alt,

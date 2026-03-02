@@ -16,11 +16,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const project = await getWorkProjectBySlug(slug);
 
   if (!project) {
-    return { title: 'Case Study — Protagonist Ink' };
+    return { title: 'Case Study' };
   }
 
   return {
-    title: `${project.title} — Protagonist Ink`,
+    title: project.title,
     description: project.description,
   };
 }
@@ -68,7 +68,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
           <div className="max-w-[1400px] mx-auto w-full">
             {/* Breadcrumb */}
             <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-white/50 mb-10 md:mb-14 drop-shadow-md">
-              <Link href="/work" className="hover:text-white transition-colors duration-300">Work</Link>
+              <Link href="/work" className="hover:text-white transition-colors duration-300">The Work</Link>
               <span>/</span>
               <span className="text-white/80">{project.title}</span>
             </div>

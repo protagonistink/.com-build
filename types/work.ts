@@ -12,6 +12,9 @@ export interface Project {
   title: string;
   tagline: string;
   client: string;
+  campaignTitle?: string;
+  businessCategory?: string;
+  campaignCategory?: string;
   category: string;
   description: string;
   year: string;

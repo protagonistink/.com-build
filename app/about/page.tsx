@@ -7,7 +7,7 @@ import CastAndCrew from '@/components/about/CastAndCrew';
 import FadeInCta from '@/components/about/FadeInCta';
 
 export const metadata = {
-  title: 'About — Protagonist Ink',
+  title: 'About',
   description: 'Every brand is living a story. The question is which character you are.',
 };
 
