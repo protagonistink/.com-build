@@ -140,6 +140,22 @@ export default async function BlogDetailPage({
           )}
         </div>
 
+        {/* Transition marker */}
+        <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-8 md:pb-10">
+          <div className="mx-auto w-fit flex flex-col items-center">
+            <span className="w-px h-12" style={{ backgroundColor: 'rgba(40, 40, 40, 0.35)' }} />
+            <Image
+              src="/icon.png"
+              alt=""
+              width={34}
+              height={34}
+              aria-hidden
+              className="my-5 opacity-10"
+            />
+            <span className="w-px h-12" style={{ backgroundColor: 'rgba(40, 40, 40, 0.35)' }} />
+          </div>
+        </div>
+
         {/* More Ink */}
         <MoreInk posts={relatedPosts} />
 
