@@ -13,10 +13,6 @@ export default function MoreInk({ posts }: MoreInkProps) {
   return (
     <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-8">
       <ScrollRevealWrapper>
-        <div
-          className="w-full mb-8 md:mb-10"
-          style={{ height: '0.5px', backgroundColor: 'rgba(40, 40, 40, 0.5)' }}
-        />
         <h2 className="font-display text-4xl md:text-5xl text-ink mb-5 md:mb-6">
           MORE INK
         </h2>
@@ -29,7 +25,7 @@ export default function MoreInk({ posts }: MoreInkProps) {
               <span className="text-technical text-[10px] tracking-[0.2em] text-rust/90 block mb-3">
                 {post.category}
               </span>
-              <span className="block w-6 h-px bg-rust/70 mb-4 group-hover:w-10 transition-all duration-300" />
+              <span className="block w-6 max-w-full h-px bg-rust/70 mb-4 group-hover:w-full transition-all duration-500 ease-out" />
               <h4 className="font-display text-xl md:text-2xl text-ink leading-tight mb-3 group-hover:text-rust transition-colors duration-300">
                 {post.title}
               </h4>
