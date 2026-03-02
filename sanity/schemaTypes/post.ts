@@ -39,12 +39,6 @@ export const post = defineType({
       description: 'Optional external image URL fallback when no uploaded asset is set.',
     }),
     defineField({
-      name: 'mainImageAlt',
-      title: 'Main Image Alt Text',
-      type: 'string',
-      description: 'Alternative text for the main image URL fallback.',
-    }),
-    defineField({
       name: 'categories',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'category' }] }],
@@ -53,14 +47,6 @@ export const post = defineType({
       name: 'body',
       type: 'array',
       of: [{ type: 'block' }, { type: 'image', options: { hotspot: true } }],
-    }),
-    defineField({
-      name: 'ogImage',
-      title: 'OG Image (Legacy)',
-      type: 'image',
-      options: { hotspot: true },
-      fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
-      description: 'Legacy top-level OG image field kept for backwards compatibility.',
     }),
     defineField({
       name: 'seo',
