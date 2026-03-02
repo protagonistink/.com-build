@@ -4,10 +4,17 @@ import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './sanity/schemaTypes';
-import { getRequiredEnv } from './lib/env';
+import { normalizeEnvValue } from './lib/env';
 
-function requiredPublicEnv(name: 'NEXT_PUBLIC_SANITY_PROJECT_ID' | 'NEXT_PUBLIC_SANITY_DATASET') {
-  return getRequiredEnv(name);
+const DEFAULT_SANITY_PROJECT_ID = 'dkok2iir';
+const DEFAULT_SANITY_DATASET = 'production';
+
+function getPublicEnvWithDefault(name: 'NEXT_PUBLIC_SANITY_PROJECT_ID' | 'NEXT_PUBLIC_SANITY_DATASET') {
+  const value = normalizeEnvValue(process.env[name]);
+  if (value) return value;
+  return name === 'NEXT_PUBLIC_SANITY_PROJECT_ID'
+    ? DEFAULT_SANITY_PROJECT_ID
+    : DEFAULT_SANITY_DATASET;
 }
 
 export default defineConfig({
@@ -15,8 +22,8 @@ export default defineConfig({
   title: 'Protagonist Ink',
   basePath: '/studio',
 
-  projectId: requiredPublicEnv('NEXT_PUBLIC_SANITY_PROJECT_ID'),
-  dataset: requiredPublicEnv('NEXT_PUBLIC_SANITY_DATASET'),
+  projectId: getPublicEnvWithDefault('NEXT_PUBLIC_SANITY_PROJECT_ID'),
+  dataset: getPublicEnvWithDefault('NEXT_PUBLIC_SANITY_DATASET'),
 
   plugins: [
     structureTool(),

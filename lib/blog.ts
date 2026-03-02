@@ -3,6 +3,9 @@ import { BLOG_POSTS } from '@/data/blog-posts';
 import type { BlogPost, PortableTextBlock } from '@/types/blog';
 import { normalizeEnvValue } from '@/lib/env';
 
+const DEFAULT_SANITY_PROJECT_ID = 'dkok2iir';
+const DEFAULT_SANITY_DATASET = 'production';
+
 interface CmsPost {
   _id: string;
   title: string;
@@ -15,9 +18,10 @@ interface CmsPost {
 }
 
 function getSanityClient() {
-  const projectId = normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID);
-  const dataset = normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_DATASET);
-  if (!projectId || !dataset) return null;
+  const projectId =
+    normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) || DEFAULT_SANITY_PROJECT_ID;
+  const dataset =
+    normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_DATASET) || DEFAULT_SANITY_DATASET;
 
   return createClient({
     projectId,

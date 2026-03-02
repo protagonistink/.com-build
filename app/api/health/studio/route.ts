@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { normalizeEnvValue } from '@/lib/env';
 
 const REQUIRED_STUDIO_ENV_VARS = [
-  'NEXT_PUBLIC_SANITY_PROJECT_ID',
-  'NEXT_PUBLIC_SANITY_DATASET',
   'STUDIO_BASIC_AUTH_USERNAME',
   'STUDIO_BASIC_AUTH_PASSWORD',
 ] as const;
