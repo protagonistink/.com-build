@@ -152,7 +152,7 @@ export default function StoryHealthCheckPage() {
 
                             {/* Single rust CTA + quiet text-link */}
                             <div className="flex flex-col sm:flex-row gap-4 justify-start items-center reveal reveal-delay-4">
-                                <a href="#story-loom" className="group relative flex">
+                                <a href="#free-loom" className="group relative flex">
                                     <div className="absolute inset-0 bg-black/50 transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
                                     <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-8 py-4 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                                         <PlayCircle className="w-4 h-4" />
@@ -285,7 +285,7 @@ export default function StoryHealthCheckPage() {
                     Its own full spotlight. Light background.
                     Form with useState submission state.
                     ═══════════════════════════════════════════════════════ */}
-                <section id="free-loom" className="py-32 bg-paper border-y border-ink/10 relative overflow-hidden">
+                <section id="free-loom" className="scroll-mt-24 md:scroll-mt-28 py-32 bg-paper border-y border-ink/10 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-[0.025] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, var(--color-ink) 1px, transparent 1px)', backgroundSize: '1.5rem 1.5rem' }} />
 
                     <div id="story-loom" className="max-w-6xl mx-auto px-6 relative z-10">
@@ -337,7 +337,7 @@ export default function StoryHealthCheckPage() {
 
                                     <p className="mt-8 font-sans text-[0.6rem] text-ink/30 uppercase tracking-widest">
                                         Already know you need the full audit?{" "}
-                                        <a href={BOOKING_ACTION} className="underline hover:text-rust transition-colors">Book direct — $1,500 →</a>
+                                        <a href={BOOKING_ACTION} className="underline hover:text-rust transition-colors">Book direct →</a>
                                     </p>
                                 </motion.div>
                             ) : (
@@ -890,7 +890,7 @@ export default function StoryHealthCheckPage() {
                             <a href={BOOKING_ACTION} className="group relative flex">
                                 <div className="absolute inset-0 bg-black/50 transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
                                 <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-10 py-5 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-                                    Book the Story Audit — $1,500
+                                    Book the Story Audit
                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </div>
                             </a>
