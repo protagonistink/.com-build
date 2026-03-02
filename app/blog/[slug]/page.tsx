@@ -55,7 +55,7 @@ export default async function BlogDetailPage({
   return (
     <main className="min-h-screen">
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-[50vh] md:min-h-[55vh] bg-trueblack texture-grain flex flex-col justify-end pt-28 md:pt-36 lg:pt-40 pb-16 md:pb-20">
+      <section className="relative min-h-[62vh] md:min-h-[70vh] bg-trueblack texture-grain flex flex-col justify-start pt-40 md:pt-48 lg:pt-52 pb-16 md:pb-20">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12 w-full">
           {/* Breadcrumb */}
           <nav className="mb-8 md:mb-10">
