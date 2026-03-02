@@ -13,11 +13,11 @@ export default function Navbar() {
   const isWorkIndex = pathname === '/work';
   const isWorkDetail = pathname?.startsWith('/work/') && pathname !== '/work';
   const isStoryHealthCheck = pathname === '/story-health-check';
+  const isBlogIndex = pathname === '/blog';
   const isBlogDetail = pathname?.startsWith('/blog/') && pathname !== '/blog';
-  // On work detail, story-health-check, and blog detail pages, the hero is dark.
-  // We want the navbar to start transparent/light-text, then
-  // switch to light bg/dark text once we scroll past the hero.
-  const useDarkHero = isWorkDetail || isStoryHealthCheck || isBlogDetail;
+  // All pages with a dark hero: work index/detail, blog index/detail, story health check.
+  // Navbar starts transparent with light text, switches to light bg/dark text on scroll.
+  const useDarkHero = isWorkIndex || isWorkDetail || isStoryHealthCheck || isBlogIndex || isBlogDetail;
   const heroThreshold = useDarkHero ? (isStoryHealthCheck ? 550 : 400) : 20;
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Navbar() {
   // Detail page & health check: dark hero (transparent → light on scroll)
   // Work index: always light bg
   // Everything else: dark bg (homepage, about, etc.)
-  const useLightTheme = isWorkIndex || (useDarkHero && isScrolled);
+  const useLightTheme = useDarkHero && isScrolled;
 
   let baseShell: string;
   if (useLightTheme) {
@@ -92,6 +92,12 @@ export default function Navbar() {
           <Link href="/about" className={`text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] transition-colors duration-300 ${linkTone}`}>
             About
           </Link>
+          <Link href="/work" className={`text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] transition-colors duration-300 ${linkTone}`}>
+            Work
+          </Link>
+          <Link href="/blog" className={`text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] transition-colors duration-300 ${linkTone}`}>
+            The Ink
+          </Link>
           <Link
             href="/story-health-check"
             onClick={handleStoryHealthCheckClick}
@@ -120,6 +126,8 @@ export default function Navbar() {
       >
         <div className={`border-t px-6 py-10 flex flex-col gap-7 ${useLightTheme ? 'bg-[#FAFAFA] border-ink/10' : 'bg-[var(--color-ink)] border-white/[0.04]'}`}>
           <Link href="/about" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>About</Link>
+          <Link href="/work" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>Work</Link>
+          <Link href="/blog" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>The Ink</Link>
           <div className={`w-8 h-px my-1 ${useLightTheme ? 'bg-ink/20' : 'bg-white/10'}`} />
           <Link
             href="/story-health-check"
