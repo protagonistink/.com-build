@@ -49,11 +49,25 @@ export const post = defineType({
       of: [{ type: 'block' }, { type: 'image', options: { hotspot: true } }],
     }),
     defineField({
+      name: 'ogImage',
+      title: 'OG Image (Legacy)',
+      type: 'image',
+      options: { hotspot: true },
+      fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
+      description: 'Legacy top-level OG image field kept for backwards compatibility.',
+    }),
+    defineField({
       name: 'seo',
       type: 'object',
       fields: [
         defineField({ name: 'metaTitle', type: 'string' }),
         defineField({ name: 'metaDescription', type: 'text' }),
+        defineField({
+          name: 'ogImage',
+          type: 'image',
+          options: { hotspot: true },
+          fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
+        }),
         defineField({ name: 'focusKeyword', type: 'string' }),
         defineField({ name: 'canonicalUrl', type: 'url' }),
       ],
