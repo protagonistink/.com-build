@@ -1,18 +1,19 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { PROJECTS, getProjectBySlug } from '@/data/work-projects';
+import { getWorkProjectBySlug, getWorkProjects } from '@/lib/work';
 import TypewriterHeadline from '@/components/TypewriterHeadline';
 import ScrollRevealWrapper from '@/components/ScrollRevealWrapper';
 import ParallaxHeroBackground from '@/components/ParallaxHeroBackground';
 
 export async function generateStaticParams() {
-  return PROJECTS.map((project) => ({ slug: project.slug }));
+  const projects = await getWorkProjects();
+  return projects.map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await getWorkProjectBySlug(slug);
 
   if (!project) {
     return { title: 'Case Study — Protagonist Ink' };
@@ -26,14 +27,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function WorkDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const projects = await getWorkProjects();
+  const project = projects.find((p) => p.slug === slug);
 
   if (!project) {
     notFound();
   }
 
-  const currentIndex = PROJECTS.findIndex((p) => p.slug === slug);
-  const nextProject = PROJECTS[(currentIndex + 1) % PROJECTS.length];
+  const currentIndex = projects.findIndex((p) => p.slug === slug);
+  const nextProject = projects[(currentIndex + 1) % projects.length];
 
   return (
     <>

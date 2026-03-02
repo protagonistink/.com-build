@@ -1,13 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { PROJECTS } from '@/data/work-projects';
+import { getWorkProjects } from '@/lib/work';
 
 export const metadata = {
   title: 'The Work — Protagonist Ink',
   description: 'Narrative architecture in action. Case studies in brand strategy, story, and structure.',
 };
 
-export default function WorkPage() {
+export default async function WorkPage() {
+  const projects = await getWorkProjects();
+
   return (
     <main>
       {/* Masthead */}
@@ -67,7 +69,7 @@ export default function WorkPage() {
 
       {/* Project list */}
       <section className="bg-[#FAFAFA]">
-        {PROJECTS.map((project, i) => (
+        {projects.map((project, i) => (
           <Link
             key={project.id}
             href={`/work/${project.slug}`}

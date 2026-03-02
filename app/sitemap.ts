@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
-import { PROJECTS } from "@/data/work-projects";
 import { getBlogPosts } from "@/lib/blog";
+import { getWorkProjects } from "@/lib/work";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogPosts = await getBlogPosts();
+  const workProjects = await getWorkProjects();
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: "https://protagonist.ink",
@@ -44,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  const workRoutes: MetadataRoute.Sitemap = PROJECTS.map((project) => ({
+  const workRoutes: MetadataRoute.Sitemap = workProjects.map((project) => ({
     url: `https://protagonist.ink/work/${project.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
