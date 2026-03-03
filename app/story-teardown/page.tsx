@@ -7,7 +7,7 @@ import { motion, useScroll, useTransform, AnimatePresence, MotionConfig } from '
 import TypewriterHeadline from '@/components/TypewriterHeadline';
 import ParallaxHeroBackground from '@/components/ParallaxHeroBackground';
 
-const BOOKING_ACTION = "mailto:hello@protagonist.ink";
+const BOOKING_ACTION = process.env.NEXT_PUBLIC_DUBSADO_URL ?? "mailto:hello@protagonist.ink";
 
 // ── Shared animation presets ─────────────────────────────────────────────────
 const FADE_UP = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 } } as const;
