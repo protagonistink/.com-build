@@ -17,16 +17,23 @@ type GuideParts = {
 };
 
 async function readGuideParts(): Promise<GuideParts> {
-  const filePath = path.join(process.cwd(), 'public/brand-guide/protagonist-ink-style-guide.html');
-  const html = await fs.readFile(filePath, 'utf8');
+  try {
+    const filePath = path.join(process.cwd(), 'public/brand-guide/protagonist-ink-style-guide.html');
+    const html = await fs.readFile(filePath, 'utf8');
 
-  const styleMatch = html.match(/<style>([\s\S]*?)<\/style>/i);
-  const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+    const styleMatch = html.match(/<style>([\s\S]*?)<\/style>/i);
+    const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
 
-  return {
-    style: styleMatch?.[1] ?? '',
-    body: bodyMatch?.[1] ?? '',
-  };
+    return {
+      style: styleMatch?.[1] ?? '',
+      body: bodyMatch?.[1] ?? '',
+    };
+  } catch {
+    return {
+      style: '',
+      body: '<p style="font-family:sans-serif;padding:2rem">Brand guide unavailable.</p>',
+    };
+  }
 }
 
 export default async function BrandGuidePage() {
