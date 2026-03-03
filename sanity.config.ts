@@ -6,7 +6,6 @@ import { visionTool } from '@sanity/vision';
 import { assist } from '@sanity/assist';
 import { media } from 'sanity-plugin-media';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
-import { youtubeInput } from 'sanity-plugin-youtube-input';
 import { schemaTypes } from './sanity/schemaTypes';
 import { normalizeEnvValue } from './lib/env';
 
@@ -21,8 +20,6 @@ function getPublicEnvWithDefault(name: 'NEXT_PUBLIC_SANITY_PROJECT_ID' | 'NEXT_P
     : DEFAULT_SANITY_DATASET;
 }
 
-const youtubeApiKey = normalizeEnvValue(process.env.NEXT_PUBLIC_YOUTUBE_API_KEY);
-
 export default defineConfig({
   name: 'protagonist-ink',
   title: 'Protagonist Ink',
@@ -36,7 +33,6 @@ export default defineConfig({
     visionTool(),
     media(),
     unsplashImageAsset(),
-    youtubeInput({ apiKey: youtubeApiKey }),
     assist(),
   ],
 
