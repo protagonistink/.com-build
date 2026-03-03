@@ -117,6 +117,21 @@ export const caseStudy = defineType({
       name: 'noIndex',
       type: 'boolean',
     }),
+    defineField({
+      name: 'industry',
+      type: 'string',
+      title: 'Industry',
+    }),
+    defineField({
+      name: 'businessCategory',
+      type: 'string',
+      title: 'Business Category',
+    }),
+    defineField({
+      name: 'campaignCategory',
+      type: 'string',
+      title: 'Campaign Category',
+    }),
   ],
   preview: {
     select: {
