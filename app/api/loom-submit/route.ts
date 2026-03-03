@@ -5,6 +5,7 @@ const RATE_LIMIT_MAX_REQUESTS = 10;
 const MIN_SUBMIT_MS = 2500;
 const NOTION_API_VERSION = '2022-06-28';
 const NOTION_PAGES_ENDPOINT = 'https://api.notion.com/v1/pages';
+const ASANA_API_ENDPOINT = 'https://app.asana.com/api/1.0/tasks';
 const NOTION_STAGE_OPTIONS = new Set(['New', 'Reviewing', 'Follow-up', 'Passed', 'Accepted', 'Seed', 'Series A', 'Bootstrapped']);
 
 type RateLimitEntry = {
@@ -50,6 +51,35 @@ function normalizeNotionStage(stage: string) {
   if (!trimmed) return 'New';
   if (NOTION_STAGE_OPTIONS.has(trimmed)) return trimmed;
   return 'New';
+}
+
+function asanaTaskName(name: string, company: string) {
+  const trimmedName = name.trim() || 'New Loom submission';
+  const trimmedCompany = company.trim();
+  if (!trimmedCompany) return `Story Loom | ${trimmedName}`;
+  return `Story Loom | ${trimmedCompany} | ${trimmedName}`;
+}
+
+function asanaTaskNotes(fields: {
+  name: string;
+  email: string;
+  company: string;
+  url: string;
+  miss: string;
+  stage: string;
+}) {
+  return [
+    'New Story Loom submission',
+    '',
+    `Name: ${fields.name || 'N/A'}`,
+    `Email: ${fields.email}`,
+    `Company: ${fields.company || 'N/A'}`,
+    `Review URL: ${fields.url}`,
+    `Stage: ${fields.stage}`,
+    '',
+    'What prospects miss:',
+    fields.miss || 'N/A',
+  ].join('\n');
 }
 
 function getClientIp(request: Request) {
@@ -145,6 +175,9 @@ export async function POST(request: Request) {
   const email = asTrimmedString(payload.email);
   const url = normalizeWebUrl(asTrimmedString(payload.url));
   const stage = normalizeNotionStage(asTrimmedString(payload.stage));
+  const name = asTrimmedString(payload.name);
+  const company = asTrimmedString(payload.company);
+  const miss = asTrimmedString(payload.miss);
 
   if (!EMAIL_PATTERN.test(email)) {
     return NextResponse.json({ error: 'Invalid email address.' }, { status: 400 });
@@ -154,57 +187,94 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid URL.' }, { status: 400 });
   }
 
-  const notionToken = process.env.NOTION_TOKEN;
-  const notionDatabaseId = process.env.NOTION_DATABASE_ID;
-  if (!notionToken || !notionDatabaseId) {
-    console.error('[loom-submit] Missing Notion config');
+  const asanaToken = process.env.ASANA_ACCESS_TOKEN;
+  const asanaProjectId = process.env.ASANA_PROJECT_ID;
+  const asanaSectionId = process.env.ASANA_SECTION_ID;
+  if (!asanaToken || !asanaProjectId) {
+    console.error('[loom-submit] Missing Asana config');
     return NextResponse.json({ error: 'Server configuration error.' }, { status: 500 });
   }
 
   try {
-    const notionResponse = await fetch(NOTION_PAGES_ENDPOINT, {
+    const data: Record<string, unknown> = {
+      name: asanaTaskName(name, company),
+      notes: asanaTaskNotes({ name, email, company, url, miss, stage }),
+      projects: [asanaProjectId],
+    };
+
+    if (asanaSectionId) {
+      data.memberships = [{ project: asanaProjectId, section: asanaSectionId }];
+    }
+
+    const asanaResponse = await fetch(ASANA_API_ENDPOINT, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${notionToken}`,
+        Authorization: `Bearer ${asanaToken}`,
         'Content-Type': 'application/json',
-        'Notion-Version': NOTION_API_VERSION,
       },
-      body: JSON.stringify({
-        parent: {
-          database_id: notionDatabaseId,
-        },
-        properties: {
-          Name: {
-            title: [{
-              type: 'text',
-              text: { content: asTrimmedString(payload.name) || 'Anonymous submission' },
-            }],
-          },
-          Email: { email },
-          'Company & One-liner': {
-            rich_text: asNotionRichText(asTrimmedString(payload.company)),
-          },
-          'Review URL': { url },
-          Stage: { select: { name: stage } },
-          'What Prospects Miss': {
-            rich_text: asNotionRichText(asTrimmedString(payload.miss)),
-          },
-        },
-      }),
+      body: JSON.stringify({ data }),
     });
 
-    if (!notionResponse.ok) {
-      const responseBody = await notionResponse.text().catch(() => '');
-      console.error('[loom-submit] Notion create page failed', {
-        status: notionResponse.status,
-        statusText: notionResponse.statusText,
+    if (!asanaResponse.ok) {
+      const responseBody = await asanaResponse.text().catch(() => '');
+      console.error('[loom-submit] Asana task creation failed', {
+        status: asanaResponse.status,
+        statusText: asanaResponse.statusText,
         body: responseBody.slice(0, 500),
       });
-      return NextResponse.json({ error: 'Notion rejected the submission.' }, { status: 502 });
+      return NextResponse.json({ error: 'Asana rejected the submission.' }, { status: 502 });
     }
   } catch (err) {
-    console.error('[loom-submit] Notion request error', err);
-    return NextResponse.json({ error: 'Notion delivery failed.' }, { status: 500 });
+    console.error('[loom-submit] Asana request error', err);
+    return NextResponse.json({ error: 'Asana delivery failed.' }, { status: 500 });
+  }
+
+  const notionToken = process.env.NOTION_TOKEN;
+  const notionDatabaseId = process.env.NOTION_DATABASE_ID;
+  if (notionToken && notionDatabaseId) {
+    try {
+      const notionResponse = await fetch(NOTION_PAGES_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${notionToken}`,
+          'Content-Type': 'application/json',
+          'Notion-Version': NOTION_API_VERSION,
+        },
+        body: JSON.stringify({
+          parent: {
+            database_id: notionDatabaseId,
+          },
+          properties: {
+            Name: {
+              title: [{
+                type: 'text',
+                text: { content: name || 'Anonymous submission' },
+              }],
+            },
+            Email: { email },
+            'Company & One-liner': {
+              rich_text: asNotionRichText(company),
+            },
+            'Review URL': { url },
+            Stage: { select: { name: stage } },
+            'What Prospects Miss': {
+              rich_text: asNotionRichText(miss),
+            },
+          },
+        }),
+      });
+
+      if (!notionResponse.ok) {
+        const responseBody = await notionResponse.text().catch(() => '');
+        console.error('[loom-submit] Optional Notion create page failed', {
+          status: notionResponse.status,
+          statusText: notionResponse.statusText,
+          body: responseBody.slice(0, 500),
+        });
+      }
+    } catch (err) {
+      console.error('[loom-submit] Optional Notion request error', err);
+    }
   }
 
   const webhookUrl = process.env.MAKE_LOOM_WEBHOOK_URL;
@@ -214,12 +284,12 @@ export async function POST(request: Request) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name:                     asTrimmedString(payload.name),
+          name,
           email,
-          company:                  asTrimmedString(payload.company),
+          company,
           url,
           reviewUrl:                url,
-          wishProspectsUnderstood:  asTrimmedString(payload.miss),
+          wishProspectsUnderstood:  miss,
           stage,
         }),
       });
