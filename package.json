@@ -20,7 +20,8 @@
     "sanity": "^5.12.0",
     "sanity-plugin-asset-source-unsplash": "^7.0.3",
     "sanity-plugin-media": "^4.1.1",
-    "sanity-plugin-youtube-input": "^0.2.0"
+    "sanity-plugin-youtube-input": "^0.2.0",
+    "styled-components": "^6.3.11"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
