@@ -24,6 +24,7 @@
 .DS_Store
 *.pem
 .zip_temp/
+COPY_INDEX_404.docx
 
 # debug
 npm-debug.log*
