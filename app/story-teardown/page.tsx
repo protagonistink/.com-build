@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight, PlayCircle, CheckCircle2 } from "lucide-react";
 import Image from 'next/image';
+import Script from 'next/script';
 import { motion, useScroll, useTransform, AnimatePresence, MotionConfig } from 'motion/react';
 import TypewriterHeadline from '@/components/TypewriterHeadline';
 import ParallaxHeroBackground from '@/components/ParallaxHeroBackground';
@@ -15,6 +16,39 @@ const SLIDE_LEFT = { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1,
 const SLIDE_RIGHT = { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 } } as const;
 const MOTION_TRANSITION = { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] } as const;
 const MOTION_VIEWPORT = { once: true, amount: 0.2 } as const;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? '';
+
+declare global {
+    interface Window {
+        onTurnstileSuccess?: (token: string) => void;
+        onTurnstileExpired?: () => void;
+        onTurnstileError?: () => void;
+    }
+}
+
+function normalizeWebUrl(value: string) {
+    const trimmed = value.trim();
+    if (!trimmed) return '';
+    return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+}
+
+function isValidEmail(value: string) {
+    return EMAIL_PATTERN.test(value.trim());
+}
+
+function isValidWebUrl(value: string) {
+    const normalized = normalizeWebUrl(value);
+    if (!normalized) return false;
+
+    try {
+        const parsed = new URL(normalized);
+        if (!['http:', 'https:'].includes(parsed.protocol)) return false;
+        return parsed.hostname.includes('.') && !parsed.hostname.startsWith('.') && !parsed.hostname.endsWith('.');
+    } catch {
+        return false;
+    }
+}
 
 export default function StoryHealthCheckPage() {
     // ── Multi-step Story Loom form ──────────────────────────────────────────
@@ -24,6 +58,9 @@ export default function StoryHealthCheckPage() {
     });
     const [pastLoomForm, setPastLoomForm] = useState(false);
     const [showWelcome, setShowWelcome] = useState(true);
+    const [turnstileToken, setTurnstileToken] = useState('');
+    const [honeypot, setHoneypot] = useState('');
+    const [formStartedAt, setFormStartedAt] = useState<number | null>(null);
 
     // ── Parallax for methodology interstitial ────────────────────────────────
     const methodologyRef = useRef(null);
@@ -52,6 +89,28 @@ export default function StoryHealthCheckPage() {
         return () => observer.disconnect();
     }, []);
 
+    useEffect(() => {
+        if (!TURNSTILE_SITE_KEY) return;
+
+        window.onTurnstileSuccess = (token: string) => {
+            setTurnstileToken(token);
+            setSubmitError('');
+        };
+        window.onTurnstileExpired = () => {
+            setTurnstileToken('');
+        };
+        window.onTurnstileError = () => {
+            setTurnstileToken('');
+            setSubmitError('Verification failed. Please retry the captcha.');
+        };
+
+        return () => {
+            delete window.onTurnstileSuccess;
+            delete window.onTurnstileExpired;
+            delete window.onTurnstileError;
+        };
+    }, []);
+
     const steps = [
         { field: 'name',    label: "What's your name?",                                   type: 'text',     placeholder: 'First name is fine.',                                         required: true  },
         { field: 'email',   label: "Where should we send the Loom?",                       type: 'email',    placeholder: 'you@company.com',                                             required: true  },
@@ -63,9 +122,21 @@ export default function StoryHealthCheckPage() {
 
     const currentStep  = steps[step];
     const currentField = currentStep.field as keyof typeof formData;
+    const currentFieldValue = formData[currentField];
+
+    const getFieldError = (field: keyof typeof formData, value: string) => {
+        const trimmed = value.trim();
+        if (!trimmed) return '';
+        if (field === 'email' && !isValidEmail(trimmed)) return 'Enter a valid email address.';
+        if (field === 'url' && !isValidWebUrl(trimmed)) return 'Enter a valid URL (example: yoursite.com or https://yoursite.com).';
+        return '';
+    };
+
+    const currentFieldError = getFieldError(currentField, currentFieldValue);
+    const canProceed = (!currentStep.required || Boolean(currentFieldValue.trim())) && !currentFieldError;
 
     const handleNext = () => {
-        if (step < steps.length - 1) setStep(s => s + 1);
+        if (step < steps.length - 1 && canProceed) setStep(s => s + 1);
     };
 
     const handleBack = () => {
@@ -75,20 +146,48 @@ export default function StoryHealthCheckPage() {
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && currentStep.type !== 'textarea' && currentStep.type !== 'select') {
             e.preventDefault();
-            if (!currentStep.required || formData[currentField]) handleNext();
+            if (canProceed) handleNext();
         }
     };
 
     const [submitState, setSubmitState] = useState<'idle' | 'submitting' | 'submitted'>('idle');
     const [submitError, setSubmitError] = useState('');
     const loomSubmitted = submitState === 'submitted';
+    const beginForm = () => {
+        setShowWelcome(false);
+        setFormStartedAt(Date.now());
+        setSubmitError('');
+    };
 
     const handleSubmit = async (stageValue?: string) => {
         if (submitState === 'submitting') return;
 
+        if (!isValidEmail(formData.email)) {
+            setSubmitError('Enter a valid email address before submitting.');
+            return;
+        }
+
+        if (!isValidWebUrl(formData.url)) {
+            setSubmitError('Enter a valid URL before submitting.');
+            return;
+        }
+
+        if (TURNSTILE_SITE_KEY && !turnstileToken) {
+            setSubmitError('Complete the verification before submitting.');
+            return;
+        }
+
         setSubmitError('');
         setSubmitState('submitting');
-        const data = { ...formData, ...(stageValue ? { stage: stageValue } : {}) };
+        const data = {
+            ...formData,
+            email: formData.email.trim(),
+            url: normalizeWebUrl(formData.url),
+            companyFax: honeypot,
+            formStartedAt: formStartedAt ?? Date.now(),
+            turnstileToken,
+            ...(stageValue ? { stage: stageValue } : {}),
+        };
 
         try {
             const response = await fetch('/api/loom-submit', {
@@ -115,6 +214,12 @@ export default function StoryHealthCheckPage() {
 
     return (
         <MotionConfig reducedMotion="user">
+        {TURNSTILE_SITE_KEY && (
+            <Script
+                src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+                strategy="afterInteractive"
+            />
+        )}
         <div className="flex flex-col overflow-x-hidden bg-paper text-ink font-sans selection:bg-rust/20 selection:text-ink">
             <main className="pt-0 pb-0 isolate">
 
@@ -342,7 +447,7 @@ export default function StoryHealthCheckPage() {
                                         {/* CTA */}
                                         <button
                                             type="button"
-                                            onClick={() => setShowWelcome(false)}
+                                            onClick={beginForm}
                                             className="bg-rust text-paper font-sans text-[0.7rem] uppercase tracking-widest px-10 py-4 hover:bg-rust/85 transition-all duration-300 inline-flex items-center gap-3 font-bold group"
                                         >
                                             Begin Your Audit
@@ -435,6 +540,18 @@ export default function StoryHealthCheckPage() {
                                                     </div>
 
                                                     <div className="p-10">
+                                                        <div className="sr-only" aria-hidden="true">
+                                                            <label htmlFor="companyFax">Do not fill this field</label>
+                                                            <input
+                                                                id="companyFax"
+                                                                name="companyFax"
+                                                                tabIndex={-1}
+                                                                autoComplete="off"
+                                                                value={honeypot}
+                                                                onChange={e => setHoneypot(e.target.value)}
+                                                            />
+                                                        </div>
+
                                                         {/* Step counter + pulse */}
                                                         <div className="flex items-center justify-between mb-10">
                                                             <span className="font-sans text-[0.6rem] font-bold uppercase tracking-widest text-rust">
@@ -471,13 +588,30 @@ export default function StoryHealthCheckPage() {
                                                             {/* ── Stage button grid ── */}
                                                             {currentStep.type === 'select' && (
                                                                 <>
+                                                                    {TURNSTILE_SITE_KEY && (
+                                                                        <div className="mb-6">
+                                                                            <div
+                                                                                className="cf-turnstile"
+                                                                                data-sitekey={TURNSTILE_SITE_KEY}
+                                                                                data-theme="light"
+                                                                                data-callback="onTurnstileSuccess"
+                                                                                data-expired-callback="onTurnstileExpired"
+                                                                                data-error-callback="onTurnstileError"
+                                                                            />
+                                                                            {!turnstileToken && (
+                                                                                <p className="mt-3 font-sans text-[0.6rem] uppercase tracking-widest text-ink/35">
+                                                                                    Complete verification to submit.
+                                                                                </p>
+                                                                            )}
+                                                                        </div>
+                                                                    )}
                                                                     <div className="grid grid-cols-2 gap-3">
                                                                         {currentStep.options?.map(option => (
                                                                             <button
                                                                                 key={option}
                                                                                 type="button"
                                                                                 onClick={() => void handleSubmit(option)}
-                                                                                disabled={submitState === 'submitting'}
+                                                                                disabled={submitState === 'submitting' || (Boolean(TURNSTILE_SITE_KEY) && !turnstileToken)}
                                                                                 className="px-4 py-4 border border-ink/20 font-sans text-sm text-ink hover:border-rust hover:text-rust hover:bg-rust/5 transition-all duration-200 text-left disabled:opacity-50 disabled:cursor-not-allowed"
                                                                             >
                                                                                 {option}
@@ -503,16 +637,21 @@ export default function StoryHealthCheckPage() {
                                                             )}
 
                                                             {/* ── Text / email / url inputs ── */}
-                                                            {currentStep.type !== 'textarea' && currentStep.type !== 'select' && (
-                                                                <input
-                                                                    type={currentStep.type}
-                                                                    value={formData[currentField]}
-                                                                    onChange={e => setFormData(f => ({ ...f, [currentField]: e.target.value }))}
-                                                                    onKeyDown={handleKeyDown}
-                                                                    placeholder={currentStep.placeholder || ''}
-                                                                    autoFocus
-                                                                    className="w-full bg-transparent border-0 border-b-2 border-ink/20 font-sans text-xl px-0 py-3 focus:outline-none focus:border-rust placeholder:text-ink/30 text-ink transition-colors"
-                                                                />
+                                                                    {currentStep.type !== 'textarea' && currentStep.type !== 'select' && (
+                                                                        <input
+                                                                            type={currentStep.type}
+                                                                            value={currentFieldValue}
+                                                                            onChange={e => setFormData(f => ({ ...f, [currentField]: e.target.value }))}
+                                                                            onKeyDown={handleKeyDown}
+                                                                            placeholder={currentStep.placeholder || ''}
+                                                                            autoFocus
+                                                                            className="w-full bg-transparent border-0 border-b-2 border-ink/20 font-sans text-xl px-0 py-3 focus:outline-none focus:border-rust placeholder:text-ink/30 text-ink transition-colors"
+                                                                        />
+                                                                    )}
+                                                            {currentFieldError && currentStep.type !== 'select' && (
+                                                                <p className="mt-4 font-sans text-[0.65rem] tracking-wide text-rust">
+                                                                    {currentFieldError}
+                                                                </p>
                                                             )}
 
                                                             {/* ── Navigation (all types except select) ── */}
@@ -541,7 +680,7 @@ export default function StoryHealthCheckPage() {
                                                                         <button
                                                                             type="button"
                                                                             onClick={handleNext}
-                                                                            disabled={submitState === 'submitting' || (currentStep.required && !formData[currentField])}
+                                                                            disabled={submitState === 'submitting' || !canProceed}
                                                                             className="bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-widest px-6 py-3 hover:bg-rust/85 transition-all duration-300 flex items-center gap-2 font-bold group disabled:opacity-30 disabled:cursor-not-allowed"
                                                                         >
                                                                             Next
