@@ -232,7 +232,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Server configuration error.' }, { status: 500 });
   }
 
-  if (asanaConfigured) {
+  if (asanaConfigured && asanaToken && asanaProjectId) {
     try {
       let asanaResponse = await createAsanaTask({
         asanaToken,
