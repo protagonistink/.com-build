@@ -232,6 +232,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Server configuration error.' }, { status: 500 });
   }
 
+  let deliveredToAsana = false;
+  let deliveredToNotion = false;
+  let asanaFailure: string | null = null;
+  let notionFailure: string | null = null;
+
   if (asanaConfigured && asanaToken && asanaProjectId) {
     try {
       let asanaResponse = await createAsanaTask({
@@ -274,11 +279,13 @@ export async function POST(request: Request) {
           statusText: asanaResponse.statusText,
           body: responseBody.slice(0, 500),
         });
-        return NextResponse.json({ error: 'Asana rejected the submission.' }, { status: 502 });
+        asanaFailure = `Asana rejected the submission (${asanaResponse.status}).`;
+      } else {
+        deliveredToAsana = true;
       }
     } catch (err) {
       console.error('[loom-submit] Asana request error', err);
-      return NextResponse.json({ error: 'Asana delivery failed.' }, { status: 500 });
+      asanaFailure = 'Asana delivery failed.';
     }
   }
 
@@ -322,9 +329,13 @@ export async function POST(request: Request) {
           statusText: notionResponse.statusText,
           body: responseBody.slice(0, 500),
         });
+        notionFailure = `Notion rejected the submission (${notionResponse.status}).`;
+      } else {
+        deliveredToNotion = true;
       }
     } catch (err) {
       console.error('[loom-submit] Optional Notion request error', err);
+      notionFailure = 'Notion delivery failed.';
     }
   }
 
@@ -356,6 +367,13 @@ export async function POST(request: Request) {
     } catch (err) {
       console.error('[loom-submit] Optional Make webhook error', err);
     }
+  }
+
+  if (!deliveredToAsana && !deliveredToNotion) {
+    return NextResponse.json(
+      { error: asanaFailure ?? notionFailure ?? 'Submission could not be delivered to any destination.' },
+      { status: 502 }
+    );
   }
 
   return NextResponse.json({ success: true });
