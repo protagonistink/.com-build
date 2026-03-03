@@ -11,7 +11,8 @@ export const metadata = {
 
 export default async function BlogPage() {
   const posts = await getBlogPosts();
-  const [featured, ...rest] = posts;
+  const featured = posts.find((post) => post.featured) ?? posts[0];
+  const rest = featured ? posts.filter((post) => post.id !== featured.id) : [];
 
   return (
     <main>

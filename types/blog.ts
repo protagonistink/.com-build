@@ -16,6 +16,7 @@ export interface BlogPost {
   title: string;
   slug: string;
   publishedAt: string;
+  featured?: boolean;
   excerpt: string;
   category: string;
   mainImage: string | null;

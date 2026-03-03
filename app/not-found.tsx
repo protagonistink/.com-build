@@ -109,7 +109,7 @@ export default function NotFound() {
                 Journal
               </Link>
               <Link href="/story-health-check" className="font-sans text-sm text-rust/80 hover:text-rust transition-colors">
-                Story Health Check
+                The Story Teardown
               </Link>
             </div>
           </div>

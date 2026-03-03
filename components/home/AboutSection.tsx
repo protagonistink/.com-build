@@ -61,14 +61,11 @@ export default function AboutSection() {
               </div>
               {/* Caption */}
               <div className="mt-4 space-y-0.5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ink/40">
-                  Fig. 01
-                </p>
                 <p className="font-sans text-[11px] tracking-[0.15em] uppercase text-ink/60 font-medium">
                   Amy Kirkland
                 </p>
                 <p className="font-sans text-[10px] tracking-[0.1em] text-ink/30 uppercase">
-                  Partner
+                  Co-Founder, Executive Producer &amp; Impact
                 </p>
               </div>
             </motion.div>
@@ -92,14 +89,11 @@ export default function AboutSection() {
               </div>
               {/* Caption */}
               <div className="mt-4 space-y-0.5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ink/40">
-                  Fig. 02
-                </p>
                 <p className="font-sans text-[11px] tracking-[0.15em] uppercase text-ink/60 font-medium">
                   Patrick Kirkland
                 </p>
                 <p className="font-sans text-[10px] tracking-[0.1em] text-ink/30 uppercase">
-                  Founder
+                  Co-Founder, Chief Narrative Architect
                 </p>
               </div>
             </motion.div>

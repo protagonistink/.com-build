@@ -15,6 +15,7 @@ export default function Navbar() {
   const isStoryHealthCheck = pathname === '/story-health-check';
   const isBlogIndex = pathname === '/blog';
   const isBlogDetail = pathname?.startsWith('/blog/') && pathname !== '/blog';
+  const isBrandGuide = pathname?.startsWith('/brand-guide');
   // All pages with a dark hero: work index/detail, blog index/detail, story health check.
   // Navbar starts transparent with light text, switches to light bg/dark text on scroll.
   const useDarkHero = isWorkIndex || isWorkDetail || isStoryHealthCheck || isBlogIndex || isBlogDetail;
@@ -74,6 +75,10 @@ export default function Navbar() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  if (isBrandGuide) {
+    return null;
+  }
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${baseShell}`}>
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 flex justify-between items-center h-[4.25rem] md:h-20 lg:h-[5.5rem]">
@@ -93,7 +98,7 @@ export default function Navbar() {
             About
           </Link>
           <Link href="/work" className={`text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] transition-colors duration-300 ${linkTone}`}>
-            The Work
+            Work
           </Link>
           <Link href="/blog" className={`text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] transition-colors duration-300 ${linkTone}`}>
             The Ink
@@ -101,9 +106,9 @@ export default function Navbar() {
           <Link
             href="/story-health-check"
             onClick={handleStoryHealthCheckClick}
-            className={`text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] transition-colors duration-300 font-bold border-b pb-px ${useLightTheme ? 'text-ink border-rust/70 hover:text-ink/80 hover:border-rust' : 'text-white/80 border-[var(--color-rust)]/60 hover:text-white hover:border-[var(--color-rust)]'}`}
+            className="text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] font-bold border border-[var(--color-rust)] text-white px-3 py-[7px] transition-colors duration-300 hover:bg-[var(--color-rust)]/15"
           >
-            Story Health Check
+            The Story Teardown
           </Link>
         </div>
 
@@ -126,15 +131,15 @@ export default function Navbar() {
       >
         <div className={`border-t px-6 py-10 flex flex-col gap-7 ${useLightTheme ? 'bg-[#FAFAFA] border-ink/10' : 'bg-[var(--color-ink)] border-white/[0.04]'}`}>
           <Link href="/about" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>About</Link>
-          <Link href="/work" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>The Work</Link>
+          <Link href="/work" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>Work</Link>
           <Link href="/blog" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>The Ink</Link>
           <div className={`w-8 h-px my-1 ${useLightTheme ? 'bg-ink/20' : 'bg-white/10'}`} />
           <Link
             href="/story-health-check"
             onClick={handleStoryHealthCheckClick}
-            className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-red)]"
+            className="text-[11px] uppercase tracking-[0.25em] font-bold border border-[var(--color-rust)] text-white px-3 py-[7px] transition-colors duration-300 hover:bg-[var(--color-rust)]/15 self-start"
           >
-            Story Health Check
+            The Story Teardown
           </Link>
         </div>
       </div>

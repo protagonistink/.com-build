@@ -117,12 +117,19 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.4, duration: 0.7 }}
+              className="flex flex-col items-start gap-3"
             >
+              <span
+                className="font-[family-name:var(--font-satoshi)] text-[#9B9EA4] leading-[1.75]"
+                style={{ fontSize: 'clamp(14px, 1.4vw, 19px)' }}
+              >
+                Curious if your story hits? Give us five minutes.
+              </span>
               <Link
                 href="/story-health-check"
                 className="inline-flex items-center gap-4 bg-[var(--color-rust)] hover:bg-[#a83020] text-white pl-8 pr-6 py-[15px] font-[family-name:var(--font-satoshi)] font-bold text-[13px] uppercase tracking-[0.18em] transition-all duration-300 group shadow-lg shadow-black/20"
               >
-                Story Health Check
+                Get your free story teardown
                 <span className="group-hover:translate-x-2 transition-transform duration-300 text-[17px]">→</span>
               </Link>
             </motion.div>

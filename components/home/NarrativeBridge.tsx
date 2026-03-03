@@ -46,7 +46,7 @@ export default function NarrativeBridge() {
               href="/#story-health-check"
               className="inline-flex items-center gap-3 text-[#C83C2F] text-[13px] font-bold tracking-[0.2em] uppercase mt-4 group transition-all duration-300"
             >
-              Get the Story Health Check
+              Get your Story Teardown
               <span className="group-hover:translate-x-2 transition-transform duration-300">
                 <ArrowRight size={16} />
               </span>

@@ -39,7 +39,7 @@ export default function CtaBlock() {
         </p>
 
         <a
-          href="mailto:hello@protagonist.ink?subject=Story Health Check"
+          href="mailto:hello@protagonist.ink?subject=Story Teardown"
           className="inline-flex items-center gap-4 bg-[var(--color-rust)] hover:bg-[#a83020] text-white px-10 py-5 font-[family-name:var(--font-satoshi)] font-bold text-[11px] uppercase tracking-[0.2em] transition-colors duration-300 group mb-16"
         >
           Book Assessment

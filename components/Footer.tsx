@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
 
 const navLinks = [
   { label: 'Work', href: '/work' },
   { label: 'About', href: '/about' },
   { label: 'Journal', href: '/journal' },
-  { label: 'Story Health Check', href: '/story-health-check' },
+  { label: 'The Story Teardown', href: '/story-health-check' },
 ];
 
 const socialLinks = [
@@ -17,6 +18,13 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isBrandGuide = pathname?.startsWith('/brand-guide');
+
+  if (isBrandGuide) {
+    return null;
+  }
+
   return (
     <footer className="bg-trueblack text-white relative overflow-hidden">
 

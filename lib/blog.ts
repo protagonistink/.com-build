@@ -1,5 +1,4 @@
 import { createClient } from 'next-sanity';
-import { BLOG_POSTS } from '@/data/blog-posts';
 import type { BlogPost, PortableTextBlock } from '@/types/blog';
 import { normalizeEnvValue } from '@/lib/env';
 
@@ -11,6 +10,7 @@ interface CmsPost {
   title: string;
   slug?: { current?: string };
   publishedAt?: string;
+  featured?: boolean;
   excerpt?: string;
   mainImageUrl?: string;
   mainImageAlt?: string;
@@ -49,6 +49,7 @@ function mapCmsPost(post: CmsPost): BlogPost | null {
     title: post.title,
     slug,
     publishedAt: toIsoDate(post.publishedAt),
+    featured: Boolean(post.featured),
     excerpt: post.excerpt || '',
     category: post.categories?.[0]?.title || 'Field Notes',
     mainImage: post.mainImageUrl || null,
@@ -64,11 +65,12 @@ async function getCmsPosts(): Promise<BlogPost[]> {
 
   try {
     const posts = await client.fetch<CmsPost[]>(
-      `*[_type == "post"] | order(publishedAt desc) {
+      `*[_type == "post"] | order(featured desc, publishedAt desc) {
         _id,
         title,
         slug,
         publishedAt,
+        featured,
         excerpt,
         "mainImageUrl": coalesce(mainImage.asset->url, mainImageUrl),
         "mainImageAlt": mainImage.alt,
@@ -101,7 +103,7 @@ function dedupeBySlug(posts: BlogPost[]) {
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
   const cmsPosts = await getCmsPosts();
-  return dedupeBySlug([...cmsPosts, ...BLOG_POSTS]);
+  return dedupeBySlug(cmsPosts);
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {

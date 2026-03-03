@@ -695,7 +695,7 @@ export default function ServicesSection() {
             viewport={{ once: true }}
             transition={{ duration: 1 }}
           >
-            Stage 02 // Structural Design
+            Stage 02 // Copywriting &amp; Narrative Services
           </motion.span>
 
           {/* Manifesto — staggered lines, each its own motion beat */}
@@ -771,9 +771,6 @@ export default function ServicesSection() {
                 We give that story structure, voice, and conviction — across every surface, every
                 touchpoint, every room you walk into. So when you speak, people lean in. When they
                 read, they remember. When they share, they&apos;re selling for you.
-              </p>
-              <p className="font-mono text-[12px] tracking-[0.3em] uppercase text-white/25">
-                Pick where you are.&nbsp;&nbsp;We&apos;ll meet you there.
               </p>
             </motion.div>
           </div>
