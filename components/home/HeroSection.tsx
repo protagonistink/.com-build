@@ -126,7 +126,7 @@ export default function HeroSection() {
                 Curious if your story hits? Give us five minutes.
               </span>
               <Link
-                href="/story-health-check"
+                href="/story-teardown"
                 className="inline-flex items-center gap-4 bg-[var(--color-rust)] hover:bg-[#a83020] text-white pl-8 pr-6 py-[15px] font-[family-name:var(--font-satoshi)] font-bold text-[13px] uppercase tracking-[0.18em] transition-all duration-300 group shadow-lg shadow-black/20"
               >
                 Get your free story teardown

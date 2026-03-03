@@ -144,7 +144,7 @@ export default function AboutSection() {
               className="mt-16 lg:mt-0"
             >
               <Link
-                href="/#story-health-check"
+                href="/#story-teardown"
                 className="inline-flex items-center gap-3 group"
               >
                 <span className="font-display italic text-2xl lg:text-3xl text-rust border-b border-rust/20 pb-1 group-hover:border-rust/60 transition-colors">

@@ -69,7 +69,7 @@ export default function FadeInCta() {
 
         {/* CTA — text link with trailing rust rule (not a button) */}
         <Link
-          href="/story-health-check"
+          href="/story-teardown"
           className="inline-flex items-center gap-4 text-rust hover:text-paper transition-colors duration-300 group"
         >
           <span className="font-mono text-sm uppercase tracking-[0.2em]">

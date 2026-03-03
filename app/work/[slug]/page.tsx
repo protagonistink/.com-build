@@ -279,7 +279,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
               &larr; All Work
             </Link>
             <Link
-              href="/#story-health-check"
+              href="/#story-teardown"
               className="text-[11px] uppercase tracking-[0.25em] text-rust hover:text-ink transition-colors duration-300"
             >
               Book a Call &rarr;

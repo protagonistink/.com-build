@@ -58,7 +58,7 @@ export default function BlogFeed({ posts }: { posts: BlogPost[] }) {
                 </p>
               </div>
               <Link
-                href="/story-health-check"
+                href="/story-teardown"
                 className="text-[12px] uppercase tracking-[0.25em] text-rust hover:text-ink transition-colors duration-500 border-b border-rust/40 hover:border-ink/40 pb-1 shrink-0"
               >
                 The Story Teardown &rarr;

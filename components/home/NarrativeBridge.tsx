@@ -43,7 +43,7 @@ export default function NarrativeBridge() {
             </p>
 
             <Link
-              href="/#story-health-check"
+              href="/#story-teardown"
               className="inline-flex items-center gap-3 text-[#C83C2F] text-[13px] font-bold tracking-[0.2em] uppercase mt-4 group transition-all duration-300"
             >
               Get your Story Teardown

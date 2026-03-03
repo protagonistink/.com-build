@@ -12,14 +12,14 @@ export default function Navbar() {
 
   const isWorkIndex = pathname === '/work';
   const isWorkDetail = pathname?.startsWith('/work/') && pathname !== '/work';
-  const isStoryHealthCheck = pathname === '/story-health-check';
+  const isStoryTeardown = pathname === '/story-teardown';
   const isBlogIndex = pathname === '/blog';
   const isBlogDetail = pathname?.startsWith('/blog/') && pathname !== '/blog';
   const isBrandGuide = pathname?.startsWith('/brand-guide');
   // All pages with a dark hero: work index/detail, blog index/detail, story health check.
   // Navbar starts transparent with light text, switches to light bg/dark text on scroll.
-  const useDarkHero = isWorkIndex || isWorkDetail || isStoryHealthCheck || isBlogIndex || isBlogDetail;
-  const heroThreshold = useDarkHero ? (isStoryHealthCheck ? 550 : 400) : 20;
+  const useDarkHero = isWorkIndex || isWorkDetail || isStoryTeardown || isBlogIndex || isBlogDetail;
+  const heroThreshold = useDarkHero ? (isStoryTeardown ? 550 : 400) : 20;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > heroThreshold);
@@ -63,14 +63,14 @@ export default function Navbar() {
 
   const logoInvert = useLightTheme;
 
-  const handleStoryHealthCheckClick = (event: MouseEvent<HTMLAnchorElement>) => {
+  const handleStoryTeardownClick = (event: MouseEvent<HTMLAnchorElement>) => {
     setMenuOpen(false);
 
-    if (pathname !== '/story-health-check') return;
+    if (pathname !== '/story-teardown') return;
 
     event.preventDefault();
     if (window.location.hash) {
-      window.history.replaceState(null, '', '/story-health-check');
+      window.history.replaceState(null, '', '/story-teardown');
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -104,8 +104,8 @@ export default function Navbar() {
             The Ink
           </Link>
           <Link
-            href="/story-health-check"
-            onClick={handleStoryHealthCheckClick}
+            href="/story-teardown"
+            onClick={handleStoryTeardownClick}
             className="text-[11px] lg:text-[13px] uppercase tracking-[0.22em] lg:tracking-[0.25em] font-bold border border-[var(--color-rust)] text-white px-3 py-[7px] transition-colors duration-300 hover:bg-[var(--color-rust)]/15"
           >
             The Story Teardown
@@ -135,8 +135,8 @@ export default function Navbar() {
           <Link href="/blog" className={`text-[11px] uppercase tracking-[0.25em] ${useLightTheme ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>The Ink</Link>
           <div className={`w-8 h-px my-1 ${useLightTheme ? 'bg-ink/20' : 'bg-white/10'}`} />
           <Link
-            href="/story-health-check"
-            onClick={handleStoryHealthCheckClick}
+            href="/story-teardown"
+            onClick={handleStoryTeardownClick}
             className="text-[11px] uppercase tracking-[0.25em] font-bold border border-[var(--color-rust)] text-white px-3 py-[7px] transition-colors duration-300 hover:bg-[var(--color-rust)]/15 self-start"
           >
             The Story Teardown

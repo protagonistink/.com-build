@@ -667,7 +667,7 @@ export default function ServicesSection() {
   const glowY = useTransform(scrollYProgress, [0, 1], ['8%', '-8%']);
 
   return (
-    <section id="story-health-check" className="w-full bg-trueblack relative">
+    <section id="story-teardown" className="w-full bg-trueblack relative">
       {/* ── Blueprint line separator from section above ── */}
       <BlueprintSeparator />
 

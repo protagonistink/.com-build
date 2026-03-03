@@ -9,7 +9,7 @@ const navLinks = [
   { label: 'Work', href: '/work' },
   { label: 'About', href: '/about' },
   { label: 'The Ink', href: '/blog' },
-  { label: 'The Story Teardown', href: '/story-health-check' },
+  { label: 'The Story Teardown', href: '/story-teardown' },
 ];
 
 const socialLinks = [

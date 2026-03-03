@@ -108,7 +108,7 @@ export default function NotFound() {
               <Link href="/blog" className="font-sans text-sm text-white/45 hover:text-white/75 transition-colors">
                 Journal
               </Link>
-              <Link href="/story-health-check" className="font-sans text-sm text-rust/80 hover:text-rust transition-colors">
+              <Link href="/story-teardown" className="font-sans text-sm text-rust/80 hover:text-rust transition-colors">
                 The Story Teardown
               </Link>
             </div>

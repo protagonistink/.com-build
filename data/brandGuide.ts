@@ -73,7 +73,7 @@ export const sections: GuideSection[] = [
     title: 'Narrative First',
     body: 'Everything starts with the story architecture: tension, movement, stakes, and earned resolution. Visual style is in service of narrative clarity, never a replacement for it.',
     links: [
-      { label: 'Story Principles', href: '/story-health-check' },
+      { label: 'Story Principles', href: '/story-teardown' },
       { label: 'Founder Positioning', href: '/about' },
     ],
   },
