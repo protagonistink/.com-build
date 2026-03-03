@@ -53,7 +53,7 @@ export const post = defineType({
       type: 'array',
       of: [
         { type: 'block' },
-        defineField({
+        {
           type: 'image',
           options: {
             hotspot: true,
@@ -65,7 +65,7 @@ export const post = defineType({
             defineField({ name: 'alt', type: 'string', title: 'Alt Text' }),
             defineField({ name: 'caption', type: 'string', title: 'Caption' }),
           ],
-        }),
+        },
       ],
     }),
     defineField({

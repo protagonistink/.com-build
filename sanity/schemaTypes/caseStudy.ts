@@ -71,7 +71,7 @@ export const caseStudy = defineType({
       type: 'array',
       of: [
         { type: 'block' },
-        defineField({
+        {
           type: 'image',
           options: {
             hotspot: true,
@@ -83,7 +83,7 @@ export const caseStudy = defineType({
             defineField({ name: 'alt', type: 'string', title: 'Alt Text' }),
             defineField({ name: 'caption', type: 'string', title: 'Caption' }),
           ],
-        }),
+        },
       ],
     }),
     defineField({
