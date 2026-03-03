@@ -39,7 +39,12 @@ export const caseStudy = defineType({
     defineField({
       name: 'heroImage',
       type: 'image',
-      options: { hotspot: true },
+      options: {
+        hotspot: true,
+        aiAssist: {
+          imageDescriptionField: 'alt',
+        },
+      },
       fields: [defineField({ name: 'alt', type: 'string' })],
     }),
     defineField({
@@ -64,7 +69,22 @@ export const caseStudy = defineType({
     defineField({
       name: 'fullStory',
       type: 'array',
-      of: [{ type: 'block' }, { type: 'image', options: { hotspot: true } }],
+      of: [
+        { type: 'block' },
+        defineField({
+          type: 'image',
+          options: {
+            hotspot: true,
+            aiAssist: {
+              imageDescriptionField: 'alt',
+            },
+          },
+          fields: [
+            defineField({ name: 'alt', type: 'string', title: 'Alt Text' }),
+            defineField({ name: 'caption', type: 'string', title: 'Caption' }),
+          ],
+        }),
+      ],
     }),
     defineField({
       name: 'ctaVariant',
@@ -81,7 +101,12 @@ export const caseStudy = defineType({
     defineField({
       name: 'ogImage',
       type: 'image',
-      options: { hotspot: true },
+      options: {
+        hotspot: true,
+        aiAssist: {
+          imageDescriptionField: 'alt',
+        },
+      },
       fields: [defineField({ name: 'alt', type: 'string' })],
     }),
     defineField({

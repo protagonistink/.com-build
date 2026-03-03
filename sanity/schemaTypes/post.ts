@@ -29,7 +29,12 @@ export const post = defineType({
       name: 'mainImage',
       title: 'Main Image',
       type: 'image',
-      options: { hotspot: true },
+      options: {
+        hotspot: true,
+        aiAssist: {
+          imageDescriptionField: 'alt',
+        },
+      },
       fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
     }),
     defineField({
@@ -46,7 +51,22 @@ export const post = defineType({
     defineField({
       name: 'body',
       type: 'array',
-      of: [{ type: 'block' }, { type: 'image', options: { hotspot: true } }],
+      of: [
+        { type: 'block' },
+        defineField({
+          type: 'image',
+          options: {
+            hotspot: true,
+            aiAssist: {
+              imageDescriptionField: 'alt',
+            },
+          },
+          fields: [
+            defineField({ name: 'alt', type: 'string', title: 'Alt Text' }),
+            defineField({ name: 'caption', type: 'string', title: 'Caption' }),
+          ],
+        }),
+      ],
     }),
     defineField({
       name: 'seo',
