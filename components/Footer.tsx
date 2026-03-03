@@ -8,7 +8,7 @@ import { ArrowUpRight } from 'lucide-react';
 const navLinks = [
   { label: 'Work', href: '/work' },
   { label: 'About', href: '/about' },
-  { label: 'Journal', href: '/journal' },
+  { label: 'The Ink', href: '/blog' },
   { label: 'The Story Teardown', href: '/story-health-check' },
 ];
 
