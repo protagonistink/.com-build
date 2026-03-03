@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import MoreInk from '@/components/blog/detail/MoreInk';
 import Prose from '@/components/blog/detail/Prose';
-import { getBlogPostBySlug, getBlogPosts } from '@/lib/blog';
+import { getBlogPosts } from '@/lib/blog';
 import type { BlogPost } from '@/types/blog';
 
 // --- Static generation ---
@@ -20,7 +20,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await getBlogPostBySlug(slug);
+  const posts = await getBlogPosts();
+  const post = posts.find((p) => p.slug === slug) ?? null;
   if (!post) return { title: 'Post Not Found' };
 
   return {
