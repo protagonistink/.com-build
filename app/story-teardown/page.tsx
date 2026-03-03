@@ -22,8 +22,6 @@ export default function StoryHealthCheckPage() {
     const [formData, setFormData] = useState({
         name: '', email: '', company: '', url: '', miss: '', stage: '',
     });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [loomSubmitted, setLoomSubmitted] = useState(false);
     const [pastLoomForm, setPastLoomForm] = useState(false);
     const [showWelcome, setShowWelcome] = useState(true);
 
@@ -81,20 +79,37 @@ export default function StoryHealthCheckPage() {
         }
     };
 
+    const [submitState, setSubmitState] = useState<'idle' | 'submitting' | 'submitted'>('idle');
+    const [submitError, setSubmitError] = useState('');
+    const loomSubmitted = submitState === 'submitted';
+
     const handleSubmit = async (stageValue?: string) => {
-        setIsSubmitting(true);
+        if (submitState === 'submitting') return;
+
+        setSubmitError('');
+        setSubmitState('submitting');
         const data = { ...formData, ...(stageValue ? { stage: stageValue } : {}) };
+
         try {
-            const res = await fetch('/api/loom-submit', {
+            const response = await fetch('/api/loom-submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
             });
-            if (res.ok) setLoomSubmitted(true);
-        } catch {
-            // Error state is surfaced in the UI via loomSubmitted remaining false
-        } finally {
-            setIsSubmitting(false);
+
+            if (!response.ok) {
+                const responseData = await response.json().catch(() => null);
+                const message = responseData && typeof responseData.error === 'string'
+                    ? responseData.error
+                    : 'Submission failed. Please try again in a minute.';
+                throw new Error(message);
+            }
+
+            setSubmitState('submitted');
+        } catch (error) {
+            console.error('[story-teardown] Loom submit failed', error);
+            setSubmitError(error instanceof Error ? error.message : 'Submission failed. Please try again in a minute.');
+            setSubmitState('idle');
         }
     };
 
@@ -461,9 +476,9 @@ export default function StoryHealthCheckPage() {
                                                                             <button
                                                                                 key={option}
                                                                                 type="button"
-                                                                                onClick={() => handleSubmit(option)}
-                                                                                disabled={isSubmitting}
-                                                                                className="px-4 py-4 border border-ink/20 font-sans text-sm text-ink hover:border-rust hover:text-rust hover:bg-rust/5 transition-all duration-200 text-left disabled:opacity-50"
+                                                                                onClick={() => void handleSubmit(option)}
+                                                                                disabled={submitState === 'submitting'}
+                                                                                className="px-4 py-4 border border-ink/20 font-sans text-sm text-ink hover:border-rust hover:text-rust hover:bg-rust/5 transition-all duration-200 text-left disabled:opacity-50 disabled:cursor-not-allowed"
                                                                             >
                                                                                 {option}
                                                                             </button>
@@ -473,13 +488,14 @@ export default function StoryHealthCheckPage() {
                                                                         <button
                                                                             type="button"
                                                                             onClick={handleBack}
+                                                                            disabled={submitState === 'submitting'}
                                                                             className="font-sans text-[0.65rem] uppercase tracking-widest text-ink/40 hover:text-ink transition-colors"
                                                                         >
                                                                             ← Back
                                                                         </button>
-                                                                        {isSubmitting && (
-                                                                            <span className="font-sans text-[0.6rem] uppercase tracking-widest text-ink/40 animate-pulse">
-                                                                                Submitting…
+                                                                        {submitState === 'submitting' && (
+                                                                            <span className="font-sans text-[0.55rem] uppercase tracking-widest text-ink/40">
+                                                                                Submitting...
                                                                             </span>
                                                                         )}
                                                                     </div>
@@ -507,6 +523,7 @@ export default function StoryHealthCheckPage() {
                                                                         <button
                                                                             type="button"
                                                                             onClick={handleBack}
+                                                                            disabled={submitState === 'submitting'}
                                                                             className="font-sans text-[0.65rem] uppercase tracking-widest text-ink/40 hover:text-ink transition-colors"
                                                                         >
                                                                             ← Back
@@ -524,7 +541,7 @@ export default function StoryHealthCheckPage() {
                                                                         <button
                                                                             type="button"
                                                                             onClick={handleNext}
-                                                                            disabled={currentStep.required && !formData[currentField]}
+                                                                            disabled={submitState === 'submitting' || (currentStep.required && !formData[currentField])}
                                                                             className="bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-widest px-6 py-3 hover:bg-rust/85 transition-all duration-300 flex items-center gap-2 font-bold group disabled:opacity-30 disabled:cursor-not-allowed"
                                                                         >
                                                                             Next
@@ -532,6 +549,11 @@ export default function StoryHealthCheckPage() {
                                                                         </button>
                                                                     </div>
                                                                 </div>
+                                                            )}
+                                                            {submitError && (
+                                                                <p className="mt-6 font-sans text-[0.65rem] tracking-wide text-rust">
+                                                                    {submitError}
+                                                                </p>
                                                             )}
                                                         </div>
                                                     </div>
