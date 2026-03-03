@@ -178,6 +178,14 @@ export async function POST(request: Request) {
   const name = asTrimmedString(payload.name);
   const company = asTrimmedString(payload.company);
   const miss = asTrimmedString(payload.miss);
+  const asanaToken = process.env.ASANA_ACCESS_TOKEN;
+  const asanaProjectId = process.env.ASANA_PROJECT_ID;
+  const asanaSectionId = process.env.ASANA_SECTION_ID;
+  const notionToken = process.env.NOTION_TOKEN;
+  const notionDatabaseId = process.env.NOTION_DATABASE_ID;
+
+  const asanaConfigured = Boolean(asanaToken && asanaProjectId);
+  const notionConfigured = Boolean(notionToken && notionDatabaseId);
 
   if (!EMAIL_PATTERN.test(email)) {
     return NextResponse.json({ error: 'Invalid email address.' }, { status: 400 });
@@ -187,51 +195,48 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid URL.' }, { status: 400 });
   }
 
-  const asanaToken = process.env.ASANA_ACCESS_TOKEN;
-  const asanaProjectId = process.env.ASANA_PROJECT_ID;
-  const asanaSectionId = process.env.ASANA_SECTION_ID;
-  if (!asanaToken || !asanaProjectId) {
-    console.error('[loom-submit] Missing Asana config');
+  if (!asanaConfigured && !notionConfigured) {
+    console.error('[loom-submit] Missing destination config');
     return NextResponse.json({ error: 'Server configuration error.' }, { status: 500 });
   }
 
-  try {
-    const data: Record<string, unknown> = {
-      name: asanaTaskName(name, company),
-      notes: asanaTaskNotes({ name, email, company, url, miss, stage }),
-      projects: [asanaProjectId],
-    };
+  if (asanaConfigured) {
+    try {
+      const data: Record<string, unknown> = {
+        name: asanaTaskName(name, company),
+        notes: asanaTaskNotes({ name, email, company, url, miss, stage }),
+        projects: [asanaProjectId],
+      };
 
-    if (asanaSectionId) {
-      data.memberships = [{ project: asanaProjectId, section: asanaSectionId }];
-    }
+      if (asanaSectionId) {
+        data.memberships = [{ project: asanaProjectId, section: asanaSectionId }];
+      }
 
-    const asanaResponse = await fetch(ASANA_API_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${asanaToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ data }),
-    });
-
-    if (!asanaResponse.ok) {
-      const responseBody = await asanaResponse.text().catch(() => '');
-      console.error('[loom-submit] Asana task creation failed', {
-        status: asanaResponse.status,
-        statusText: asanaResponse.statusText,
-        body: responseBody.slice(0, 500),
+      const asanaResponse = await fetch(ASANA_API_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${asanaToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data }),
       });
-      return NextResponse.json({ error: 'Asana rejected the submission.' }, { status: 502 });
+
+      if (!asanaResponse.ok) {
+        const responseBody = await asanaResponse.text().catch(() => '');
+        console.error('[loom-submit] Asana task creation failed', {
+          status: asanaResponse.status,
+          statusText: asanaResponse.statusText,
+          body: responseBody.slice(0, 500),
+        });
+        return NextResponse.json({ error: 'Asana rejected the submission.' }, { status: 502 });
+      }
+    } catch (err) {
+      console.error('[loom-submit] Asana request error', err);
+      return NextResponse.json({ error: 'Asana delivery failed.' }, { status: 500 });
     }
-  } catch (err) {
-    console.error('[loom-submit] Asana request error', err);
-    return NextResponse.json({ error: 'Asana delivery failed.' }, { status: 500 });
   }
 
-  const notionToken = process.env.NOTION_TOKEN;
-  const notionDatabaseId = process.env.NOTION_DATABASE_ID;
-  if (notionToken && notionDatabaseId) {
+  if (notionConfigured) {
     try {
       const notionResponse = await fetch(NOTION_PAGES_ENDPOINT, {
         method: 'POST',

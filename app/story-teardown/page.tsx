@@ -221,7 +221,7 @@ export default function StoryHealthCheckPage() {
             />
         )}
         <div className="flex flex-col overflow-x-hidden bg-paper text-ink font-sans selection:bg-rust/20 selection:text-ink">
-            <main className="pt-0 pb-0 isolate">
+            <main className="pt-0 pb-24 md:pb-28 isolate">
 
                 {/* ═══════════════════════════════════════════════════════
                     SECTION 1 — HERO
@@ -229,7 +229,7 @@ export default function StoryHealthCheckPage() {
                     Illustration: storybook_bg3.jpg as parallax background
                     with vignette overlays.
                     ═══════════════════════════════════════════════════════ */}
-                <section className="relative min-h-[90vh] flex flex-col justify-center items-center px-6 mb-32 bg-ink overflow-hidden">
+                <section className="relative min-h-[100svh] md:min-h-[90vh] flex flex-col justify-center items-center px-6 pt-24 md:pt-0 mb-24 md:mb-32 bg-ink overflow-hidden">
 
                     {/* Parallax background with cinematic vignette */}
                     <ParallaxHeroBackground
@@ -238,15 +238,15 @@ export default function StoryHealthCheckPage() {
                     />
 
                     {/* Content — left-aligned over the parallax background */}
-                    <div className="max-w-6xl mx-auto z-10 w-full flex flex-col items-center md:items-start relative">
+                    <div className="max-w-6xl mx-auto z-10 w-full flex flex-col items-start relative">
                         <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-rust/30 pointer-events-none" />
 
                         <div className="text-left max-w-4xl md:max-w-[58%]">
-                            <div className="inline-block mb-10 px-6 py-2 border border-rust/50 text-rust text-[0.65rem] font-bold uppercase tracking-[0.25em] bg-ink/50 backdrop-blur-sm reveal reveal-delay-1 shadow-[4px_4px_0px_rgba(200,60,47,0.15)]">
+                            <div className="inline-block mb-8 md:mb-10 px-4 md:px-6 py-2 border border-rust/50 text-rust text-[0.58rem] md:text-[0.65rem] font-bold uppercase tracking-[0.2em] md:tracking-[0.25em] bg-ink/50 backdrop-blur-sm reveal reveal-delay-1 shadow-[4px_4px_0px_rgba(200,60,47,0.15)]">
                                 Story Audit
                             </div>
 
-                            <h1 className="font-display text-6xl md:text-[8.5rem] leading-[0.85] mb-12 text-paper tracking-tighter">
+                            <h1 className="font-display text-5xl sm:text-6xl md:text-[8.5rem] leading-[0.9] md:leading-[0.85] mb-10 md:mb-12 text-paper tracking-tight md:tracking-tighter">
                                 <TypewriterHeadline
                                     text="Your Story is"
                                     initialDelay={400}
@@ -263,23 +263,23 @@ export default function StoryHealthCheckPage() {
                                 </span>
                             </h1>
 
-                            <div className="w-full flex justify-start mb-16 reveal reveal-delay-3">
-                                <p className="font-sans text-lg md:text-xl max-w-lg text-paper/70 leading-[1.8] font-light border-l-2 border-rust/50 pl-8 text-left backdrop-blur-sm p-4">
+                            <div className="w-full flex justify-start mb-10 md:mb-16 reveal reveal-delay-3">
+                                <p className="font-sans text-base md:text-xl max-w-lg text-paper/70 leading-[1.75] md:leading-[1.8] font-light border-l-2 border-rust/50 pl-5 md:pl-8 text-left backdrop-blur-sm p-3 md:p-4">
                                     Founders don&apos;t fail because their product is broken. They fail because their narrative is unrecognizable.<br />
                                     <span className="text-paper font-bold mt-4 block uppercase tracking-widest text-[0.65rem]">We apply engineering rigor to your brand story.</span>
                                 </p>
                             </div>
 
                             {/* Single rust CTA + quiet text-link */}
-                            <div className="flex flex-col sm:flex-row gap-4 justify-start items-center reveal reveal-delay-4">
-                                <a href="#free-loom" className="group relative flex">
+                            <div className="flex flex-col sm:flex-row gap-4 justify-start items-start sm:items-center reveal reveal-delay-4 w-full max-w-lg">
+                                <a href="#free-loom" className="group relative flex w-full sm:w-auto">
                                     <div className="absolute inset-0 bg-black/50 transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
-                                    <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-8 py-4 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+                                    <div className="relative bg-rust text-paper font-sans text-[0.62rem] md:text-[0.65rem] uppercase tracking-[0.16em] md:tracking-[0.2em] font-bold px-6 md:px-8 py-4 flex items-center justify-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform w-full">
                                         <PlayCircle className="w-4 h-4" />
                                         Get a Free Story Analysis
                                     </div>
                                 </a>
-                                <a href={BOOKING_ACTION} className="font-sans text-[0.6rem] uppercase tracking-[0.15em] text-paper/40 hover:text-rust transition-colors">
+                                <a href={BOOKING_ACTION} className="font-sans text-[0.58rem] md:text-[0.6rem] uppercase tracking-[0.12em] md:tracking-[0.15em] text-paper/40 hover:text-rust transition-colors pl-1 sm:pl-0">
                                     or skip to the paid audit →
                                 </a>
                             </div>
@@ -1112,18 +1112,18 @@ export default function StoryHealthCheckPage() {
                 "Spots Available This Week" — not form language.
                 ═══════════════════════════════════════════════════════ */}
             <div className="fixed bottom-0 left-0 w-full z-40 bg-white text-ink border-t-2 border-rust shadow-[0_-20px_50px_rgba(0,0,0,0.05)]">
-                <div className="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto px-4 md:px-6 h-20 md:h-24 flex items-center justify-between gap-3 md:gap-6">
                     <div className="hidden md:flex flex-col">
                         <span className="text-[0.6rem] font-sans text-rust uppercase tracking-[0.2em] mb-1 font-bold">Spots Available This Week</span>
                         <span className="font-display font-light text-2xl tracking-tighter text-ink italic">What is your confusion costing?</span>
                     </div>
-                    <div className="md:hidden flex flex-col justify-center">
+                    <div className="md:hidden flex flex-col justify-center min-w-0">
                         <span className="text-[0.6rem] font-sans text-rust uppercase tracking-[0.2em] mb-1 font-bold">Spots Available</span>
-                        <span className="font-display font-light text-xl tracking-tighter text-ink italic">Stop the bleeding.</span>
+                        <span className="font-display font-light text-lg tracking-tight text-ink italic truncate">Stop the bleeding.</span>
                     </div>
                     <a
                         href={pastLoomForm ? BOOKING_ACTION : '#free-loom'}
-                        className="bg-rust hover:bg-rust/85 text-paper px-6 py-4 md:px-10 md:py-4 font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold flex items-center gap-4 transition-all hover:pr-8 shadow-sm group"
+                        className="bg-rust hover:bg-rust/85 text-paper px-4 py-3 md:px-10 md:py-4 font-sans text-[0.58rem] md:text-[0.65rem] uppercase tracking-[0.14em] md:tracking-[0.2em] font-bold flex items-center gap-2 md:gap-4 transition-all md:hover:pr-8 shadow-sm group whitespace-nowrap"
                     >
                         {pastLoomForm ? 'Book the Story Audit' : 'Send Your URL'}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
