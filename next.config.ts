@@ -9,8 +9,13 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/story-health-check',
+        destination: '/story-teardown',
+        permanent: true,
+      },
+      {
         source: '/contact',
-        destination: '/#story-health-check',
+        destination: '/#story-teardown',
         permanent: false,
       },
     ];
