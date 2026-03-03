@@ -4,6 +4,16 @@ import TransformationSection from '@/components/home/TransformationSection';
 import ServicesSection from '@/components/home/ServicesSection';
 import AboutSection from '@/components/home/AboutSection';
 
+export const metadata = {
+  title: 'Protagonist Ink — Where Stories Get Their Edge',
+  description: 'Story strategy, narrative consulting, and editorial craft for founders and brand-led companies who need language that moves markets.',
+  openGraph: {
+    title: 'Protagonist Ink — Where Stories Get Their Edge',
+    description: 'Story strategy, narrative consulting, and editorial craft for founders and brand-led companies.',
+    url: 'https://protagonist.ink',
+  },
+};
+
 export default function Home() {
   return (
     <main>
