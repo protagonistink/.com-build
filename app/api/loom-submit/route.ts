@@ -82,6 +82,38 @@ function asanaTaskNotes(fields: {
   ].join('\n');
 }
 
+async function createAsanaTask(params: {
+  asanaToken: string;
+  asanaProjectId: string;
+  asanaSectionId?: string;
+  name: string;
+  email: string;
+  company: string;
+  url: string;
+  miss: string;
+  stage: string;
+}) {
+  const { asanaToken, asanaProjectId, asanaSectionId, name, email, company, url, miss, stage } = params;
+  const data: Record<string, unknown> = {
+    name: asanaTaskName(name, company),
+    notes: asanaTaskNotes({ name, email, company, url, miss, stage }),
+    projects: [asanaProjectId],
+  };
+
+  if (asanaSectionId) {
+    data.memberships = [{ project: asanaProjectId, section: asanaSectionId }];
+  }
+
+  return fetch(ASANA_API_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${asanaToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ data }),
+  });
+}
+
 function getClientIp(request: Request) {
   const forwardedFor = request.headers.get('x-forwarded-for');
   if (forwardedFor) return forwardedFor.split(',')[0]?.trim() || 'unknown';
@@ -202,24 +234,38 @@ export async function POST(request: Request) {
 
   if (asanaConfigured) {
     try {
-      const data: Record<string, unknown> = {
-        name: asanaTaskName(name, company),
-        notes: asanaTaskNotes({ name, email, company, url, miss, stage }),
-        projects: [asanaProjectId],
-      };
-
-      if (asanaSectionId) {
-        data.memberships = [{ project: asanaProjectId, section: asanaSectionId }];
-      }
-
-      const asanaResponse = await fetch(ASANA_API_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${asanaToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ data }),
+      let asanaResponse = await createAsanaTask({
+        asanaToken,
+        asanaProjectId,
+        asanaSectionId,
+        name,
+        email,
+        company,
+        url,
+        miss,
+        stage,
       });
+
+      // If section placement is invalid, retry without section so the lead is not dropped.
+      if (!asanaResponse.ok && asanaSectionId) {
+        const firstErrorBody = await asanaResponse.text().catch(() => '');
+        console.error('[loom-submit] Asana section placement failed; retrying without section', {
+          status: asanaResponse.status,
+          statusText: asanaResponse.statusText,
+          body: firstErrorBody.slice(0, 500),
+        });
+
+        asanaResponse = await createAsanaTask({
+          asanaToken,
+          asanaProjectId,
+          name,
+          email,
+          company,
+          url,
+          miss,
+          stage,
+        });
+      }
 
       if (!asanaResponse.ok) {
         const responseBody = await asanaResponse.text().catch(() => '');
