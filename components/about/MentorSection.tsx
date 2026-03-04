@@ -19,22 +19,21 @@ export default function MentorSection() {
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* IMAGE: Two people in conversation — warm light, candid, not posed. No faces needed.
-              Unsplash search: "mentor student coffee", "candid conversation warm light", "two people talking window light"
-              REPLACE: Commission or source final image, add to /public/images/about/mentor.jpg */}
+          {/* IMAGE: Atlanta skyline at night — moody, cinematic, editorial
+              REPLACE: Commission or source final image, add to /public/images/about/atlanta.jpg */}
           <Image
-            src="https://images.unsplash.com/photo-1521747116042-5a810fda9664?w=1200&q=80"
-            alt="Two people in conversation — warm light"
+            src="https://images.unsplash.com/photo-1575917649135-5c92eb5b3b60?w=1200&q=80"
+            alt="Atlanta skyline at night — city lights"
             fill
-            className="object-cover sepia-[0.2] contrast-125 transition-transform duration-1000 group-hover:scale-105"
+            className="object-cover sepia-[0.08] contrast-[1.3] brightness-[0.9] transition-transform duration-1000 group-hover:scale-105"
           />
           {/* Film grain + warm tint overlay */}
           <div className="absolute inset-0 texture-grain opacity-60 mix-blend-overlay" />
-          <div className="absolute inset-0 bg-amber-900/10" />
+          <div className="absolute inset-0 bg-amber-900/5" />
 
           {/* Figure caption */}
           <p className="absolute bottom-4 left-4 text-technical text-white/40 text-[10px] tracking-[0.15em] uppercase">
-            Fig 1. The Rough Draft
+            Fig 1. Atlanta, GA — Home Base
           </p>
         </motion.div>
 

@@ -1,151 +1,164 @@
 'use client';
 
-import { motion, useInView } from 'motion/react';
-import { useRef } from 'react';
+import { useState, useRef, type KeyboardEvent } from 'react';
+import { motion, AnimatePresence, useInView } from 'motion/react';
 
-// Service cards — the methodology made visible
-const SERVICE_CARDS = [
+/* ─────────────────────────────────────────────
+   DATA
+   ───────────────────────────────────────────── */
+
+const METHODOLOGY_STEPS = [
   {
     num: '01',
-    type: 'note' as const,
     scene: 'EXT. THE BEGINNING — DAY',
     title: 'Discovery',
     body: 'We start by listening. Brand audit, stakeholder conversations, audience mapping. We find the story hiding in plain sight — the one you\'ve been living but haven\'t named yet.',
-    rotation: -2,
-    accent: true,
   },
   {
     num: '02',
-    type: 'standard' as const,
     scene: 'INT. THE WRITING ROOM',
     title: 'Architecture',
     body: 'Strategy meets screenplay. We build the narrative framework: your brand\'s protagonist, conflict, stakes, and arc. The structure that every touchpoint can live inside.',
-    rotation: 1.5,
-    accent: false,
   },
   {
     num: '03',
-    type: 'polaroid' as const,
     scene: 'EXT. INTO THE WORLD — DAY',
     title: 'Integration',
     body: 'Story without execution is just daydreaming. We help you carry the narrative into identity, messaging, campaigns, and culture — so the story actually lands.',
-    rotation: -1,
-    accent: false,
   },
   {
-    num: '→',
-    type: 'wide' as const,
+    num: '04',
     scene: 'INT. THE SHIFT',
     title: 'The Result',
-    body: 'Invisibility → Recognition. Confusion → Conviction. Vendor → Ally. Noise → Narrative. Same organization. New story. Different future.',
-    rotation: 1,
-    accent: false,
+    body: 'Invisibility becomes recognition. Confusion becomes conviction. Vendor becomes ally. Noise becomes narrative. Same organization. New story. Different future.',
   },
 ];
 
-type CardType = 'polaroid' | 'note' | 'standard' | 'crisis' | 'wide';
+/* ─────────────────────────────────────────────
+   METHODOLOGY ROW
+   ───────────────────────────────────────────── */
 
-interface Stage {
-  num: string;
-  type: CardType;
-  scene: string;
-  title: string;
-  body: string;
-  rotation: number;
-  accent: boolean;
-}
-
-function ArtifactCard({
-  stage,
+function MethodologyRow({
+  step,
   index,
+  isOpen,
+  onToggle,
   inView,
 }: {
-  stage: Stage;
+  step: (typeof METHODOLOGY_STEPS)[0];
   index: number;
+  isOpen: boolean;
+  onToggle: () => void;
   inView: boolean;
 }) {
-  const isPolaroid = stage.type === 'polaroid';
-  const isNote = stage.type === 'note';
-  const isCrisis = stage.type === 'crisis';
-  const isWide = stage.type === 'wide';
-
-  const baseClasses = `relative p-6 cursor-pointer${isWide ? ' sm:col-span-2' : ''}`;
-  const cardClasses = isPolaroid
-    ? `${baseClasses} bg-white pb-12 shadow-lg`
-    : isNote
-    ? `${baseClasses} bg-amber-50 border-l-4 border-amber-400`
-    : isCrisis
-    ? `${baseClasses} bg-ink text-paper border border-white/10`
-    : `${baseClasses} bg-warmwhite border border-ink/10`;
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onToggle();
+    }
+  };
 
   return (
     <motion.div
-      className={cardClasses}
-      style={{
-        boxShadow: isPolaroid
-          ? '3px 4px 16px rgba(0,0,0,0.12)'
-          : '2px 3px 12px rgba(0,0,0,0.06)',
-      }}
-      initial={{ opacity: 0, y: 20, rotate: stage.rotation - 3 }}
-      animate={inView ? { opacity: 1, y: 0, rotate: stage.rotation } : {}}
-      transition={{ duration: 0.7, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ rotate: 0, scale: 1.02, zIndex: 10, transition: { duration: 0.2 } }}
+      className="relative border-t border-ink/10 group"
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Polaroid tape strip — .tape-strip CSS utility added in globals.css */}
-      {isPolaroid && (
-        <div className="tape-strip absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-6" />
-      )}
-
-      {/* Scene heading — screenplay courier feel */}
-      <p
-        className={`mb-3 uppercase tracking-wide ${isCrisis ? 'text-paper/40' : 'text-coolgray'}`}
-        style={{ fontSize: '0.6rem', fontFamily: 'Courier New, monospace' }}
+      {/* Main row — always visible */}
+      <div
+        className="relative flex items-center gap-4 md:gap-8 lg:gap-12 px-6 md:px-12 py-8 md:py-10 cursor-pointer select-none"
+        role="button"
+        tabIndex={0}
+        aria-expanded={isOpen}
+        onClick={onToggle}
+        onKeyDown={handleKeyDown}
       >
-        {stage.scene}
-      </p>
+        {/* Large overlapping number */}
+        <span
+          className="font-display font-bold text-ink/[0.05] leading-none flex-shrink-0 transition-colors duration-500 group-hover:text-ink/[0.10]"
+          style={{ fontSize: 'clamp(4rem, 10vw, 8rem)' }}
+          aria-hidden
+        >
+          {step.num}
+        </span>
 
-      {/* Stage number */}
-      <span
-        className={`font-display font-light text-rust${isCrisis ? ' animate-pulse' : ''}`}
-        style={{ fontSize: '1.75rem', lineHeight: 1 }}
-      >
-        {stage.num}.
-      </span>
+        {/* Title block */}
+        <div className="flex-1 min-w-0">
+          {/* Scene heading — screenplay courier feel */}
+          <p
+            className="text-coolgray/50 uppercase tracking-wide mb-2"
+            style={{ fontSize: '0.6rem', fontFamily: 'Courier New, monospace' }}
+          >
+            {step.scene}
+          </p>
 
-      {/* Title */}
-      <h3
-        className={`font-display font-light mt-1 mb-3 ${isCrisis ? 'text-paper' : 'text-ink'}`}
-        style={{ fontSize: '1.15rem', lineHeight: 1.1 }}
-      >
-        {stage.title}
-      </h3>
+          {/* Step title */}
+          <h3
+            className="font-display font-light text-ink transition-colors duration-300 group-hover:text-rust"
+            style={{ fontSize: 'clamp(1.35rem, 2.5vw, 2.25rem)', lineHeight: 1.1 }}
+          >
+            {step.title}
+          </h3>
+        </div>
 
-      {/* Body */}
-      <p
-        className={`font-sans leading-relaxed ${isCrisis ? 'text-paper/60' : 'text-ink/60'}`}
-        style={{ fontSize: '0.8rem' }}
-      >
-        {stage.body}
-      </p>
+        {/* Expand indicator — + rotates to × */}
+        <motion.div
+          className="relative flex-shrink-0 w-8 h-8 flex items-center justify-center"
+          animate={{ rotate: isOpen ? 45 : 0 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <span className="absolute w-4 h-px bg-rust" />
+          <span className="absolute w-px h-4 bg-rust" />
+        </motion.div>
+      </div>
 
-      {/* Handwritten annotation on note cards — font-hand = Permanent Marker (added in globals.css) */}
-      {isNote && (
-        <p className="font-hand text-amber-600/70 mt-3 text-xs" style={{ transform: 'rotate(-1deg)' }}>
-          ← start here
-        </p>
-      )}
+      {/* Expandable content area */}
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            className="overflow-hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="px-6 md:px-12 pb-10 md:pb-14 md:pl-[calc(clamp(4rem,10vw,8rem)+5rem)]">
+              {/* Rust accent line */}
+              <div className="w-12 h-px bg-rust mb-6" />
+
+              {/* Body text */}
+              <p
+                className="font-sans text-ink/55 leading-relaxed max-w-xl"
+                style={{ fontSize: 'clamp(0.875rem, 1.2vw, 1.05rem)' }}
+              >
+                {step.body}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
 
+/* ─────────────────────────────────────────────
+   MAIN COMPONENT
+   ───────────────────────────────────────────── */
+
 export default function ProductionNotes() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-10%' });
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const handleToggle = (index: number) => {
+    setOpenIndex((prev) => (prev === index ? null : index));
+  };
 
   return (
     <section
       ref={ref}
-      className="relative bg-paper texture-paper bg-texture py-32 md:py-48 px-6 md:px-12 overflow-hidden"
+      className="relative bg-paper texture-paper py-32 md:py-48 overflow-hidden"
     >
       {/* Watermark label — bleeds off left edge, very faint */}
       <div
@@ -153,7 +166,7 @@ export default function ProductionNotes() {
         aria-hidden
       >
         <span
-          className="font-display font-bold text-ink/[0.06] uppercase tracking-[0.3em] block"
+          className="font-display font-bold text-ink/[0.04] uppercase tracking-[0.3em] block"
           style={{ fontSize: 'clamp(5rem, 15vw, 14rem)', whiteSpace: 'nowrap' }}
         >
           METHOD
@@ -165,10 +178,9 @@ export default function ProductionNotes() {
         </span>
       </div>
 
-      <div className="relative max-w-[1400px] mx-auto">
-        {/* Section header */}
+      {/* Section header */}
+      <div className="relative max-w-[1400px] mx-auto px-6 md:px-12 mb-16">
         <motion.div
-          className="mb-16"
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
@@ -176,7 +188,6 @@ export default function ProductionNotes() {
           <p className="text-technical text-coolgray text-xs tracking-[0.2em] uppercase mb-3">
             Methodology &amp; Process
           </p>
-          {/* COPY: Section headline */}
           <h2
             className="font-display font-light text-ink"
             style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.05 }}
@@ -184,18 +195,26 @@ export default function ProductionNotes() {
             Production{' '}
             <em className="italic text-rust">Notes</em>
           </h2>
-          {/* COPY: Section sub-label */}
           <p className="font-sans text-coolgray mt-3 text-sm">
             Three acts. One through-line. A brand story built to last.
           </p>
         </motion.div>
+      </div>
 
-        {/* Service artifact cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-          {SERVICE_CARDS.map((stage, i) => (
-            <ArtifactCard key={stage.num} stage={stage} index={i} inView={inView} />
-          ))}
-        </div>
+      {/* Methodology accordion */}
+      <div className="relative max-w-[1400px] mx-auto">
+        {METHODOLOGY_STEPS.map((step, i) => (
+          <MethodologyRow
+            key={step.num}
+            step={step}
+            index={i}
+            isOpen={openIndex === i}
+            onToggle={() => handleToggle(i)}
+            inView={inView}
+          />
+        ))}
+        {/* Final bottom border */}
+        <div className="border-t border-ink/10" />
       </div>
     </section>
   );
