@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/brand-guide"],
     },
-    sitemap: "https://protagonist.ink/sitemap.xml",
+    sitemap: "https://www.protagonist.ink/sitemap.xml",
   };
 }

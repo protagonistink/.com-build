@@ -7,31 +7,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const workProjects = await getWorkProjects();
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: "https://protagonist.ink",
+      url: "https://www.protagonist.ink",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1.0,
     },
     {
-      url: "https://protagonist.ink/about",
+      url: "https://www.protagonist.ink/about",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://protagonist.ink/work",
+      url: "https://www.protagonist.ink/work",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://protagonist.ink/blog",
+      url: "https://www.protagonist.ink/blog",
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.7,
     },
     {
-      url: "https://protagonist.ink/story-teardown",
+      url: "https://www.protagonist.ink/story-teardown",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
@@ -39,14 +39,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-    url: `https://protagonist.ink/blog/${post.slug}`,
+    url: `https://www.protagonist.ink/blog/${post.slug}`,
     lastModified: new Date(post.publishedAt || Date.now()),
     changeFrequency: "monthly",
     priority: 0.6,
   }));
 
   const workRoutes: MetadataRoute.Sitemap = workProjects.map((project) => ({
-    url: `https://protagonist.ink/work/${project.slug}`,
+    url: `https://www.protagonist.ink/work/${project.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 0.65,
