@@ -19,9 +19,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return { title: 'Case Study' };
   }
 
+  const ogImage = project.image || '/images/og-default.jpg';
   return {
     title: project.title,
     description: project.description,
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      images: [{ url: ogImage, alt: project.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: [ogImage],
+    },
   };
 }
 

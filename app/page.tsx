@@ -10,7 +10,8 @@ export const metadata = {
   openGraph: {
     title: 'Protagonist Ink — Where Stories Get Their Edge',
     description: 'Story strategy, narrative consulting, and editorial craft for founders and brand-led companies.',
-    url: 'https://protagonist.ink',
+    url: 'https://www.protagonist.ink',
+    images: [{ url: '/images/og-default.jpg', width: 914, height: 512, alt: 'Protagonist Ink — Where Stories Get Their Edge' }],
   },
 };
 

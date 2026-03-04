@@ -21,13 +21,28 @@ const permanentMarker = Permanent_Marker({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://protagonist.ink"),
+  metadataBase: new URL("https://www.protagonist.ink"),
   title: {
     default: "Protagonist Ink",
     template: "%s | Protagonist Ink",
   },
   description:
     "We translate complex organizational shifts into language that moves markets.",
+  openGraph: {
+    siteName: "Protagonist Ink",
+    images: [
+      {
+        url: "/images/og-default.jpg",
+        width: 914,
+        height: 512,
+        alt: "Protagonist Ink — Where Stories Get Their Edge",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/images/og-default.jpg"],
+  },
 };
 
 export const viewport: Viewport = {
