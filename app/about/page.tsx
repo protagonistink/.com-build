@@ -1,26 +1,27 @@
-import AboutHero from '@/components/about/AboutHero';
-import VillainSection from '@/components/about/VillainSection';
-import BeliefSection from '@/components/about/BeliefSection';
-import MentorSection from '@/components/about/MentorSection';
-import ProductionNotes from '@/components/about/ProductionNotes';
-import CastAndCrew from '@/components/about/CastAndCrew';
-import FadeInCta from '@/components/about/FadeInCta';
+import ActOne from '@/components/about/ActOne';
+import ActTwo from '@/components/about/ActTwo';
+import ActThree from '@/components/about/ActThree';
+import ActFour from '@/components/about/ActFour';
+import ActFive from '@/components/about/ActFive';
+import Breath from '@/components/about/Breath';
 
 export const metadata = {
   title: 'About',
-  description: 'Every brand is living a story. The question is which character you are.',
+  description: 'Every brand is living a story. Most are losing theirs.',
 };
 
 export default function AboutPage() {
   return (
     <main>
-      <AboutHero />
-      <VillainSection />
-      <BeliefSection />
-      <MentorSection />
-      <ProductionNotes />
-      <CastAndCrew />
-      <FadeInCta />
+      <ActOne />
+      <Breath variant="void" />
+      <ActTwo />
+      <Breath variant="rule" />
+      <ActThree />
+      <Breath variant="timecode" timecode="INT. THE METHOD — CONTINUOUS" />
+      <ActFour />
+      <Breath variant="deep" />
+      <ActFive />
     </main>
   );
 }
