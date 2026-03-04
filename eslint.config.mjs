@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Local archives/scratch files not part of shipped app code:
     ".zip_temp/**",
+    "tmp_founders/**",
     "**/*.new",
   ]),
 ]);

@@ -10,19 +10,20 @@ export default function ActFive() {
   const ref = useRef(null);
   const prefersReduced = useReducedMotion();
   const inView = useInView(ref, { once: true, margin: '-10%' });
-  const [phase, setPhase] = useState(prefersReduced ? 4 : 0);
-  // phase 0 = nothing, 1 = label + typewriter, 2 = typewriter done, 3 = second line, 4 = CTA
+  const [phase, setPhase] = useState(prefersReduced ? 5 : 0);
+  // phase 0 = waiting, 2 = typewriter done, 3 = second line, 4 = CTA text, 5 = cursor drop & button glow
 
   useEffect(() => {
     if (prefersReduced || !inView) return;
-    setPhase(1);
-    const t1 = setTimeout(() => setPhase(2), 1800);
-    const t2 = setTimeout(() => setPhase(3), 2600);
-    const t3 = setTimeout(() => setPhase(4), 4200);
+    const t1 = setTimeout(() => setPhase(2), 1600);
+    const t2 = setTimeout(() => setPhase(3), 2200);
+    const t3 = setTimeout(() => setPhase(4), 3200);
+    const t4 = setTimeout(() => setPhase(5), 3800); // Cursor drop starts
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
+      clearTimeout(t4);
     };
   }, [inView, prefersReduced]);
 
@@ -44,17 +45,17 @@ export default function ActFive() {
         <motion.p
           className="about-scene-label text-paper/45 mb-10"
           initial={{ opacity: 0 }}
-          animate={phase >= 1 ? { opacity: 1 } : {}}
+          animate={prefersReduced || inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, ease: ABOUT_EASE }}
         >
-          SCENE 5 — FADE IN
+          The Resolution
         </motion.p>
 
         {/* Typewriter headline */}
         <h2
           className="font-display font-light text-paper"
           style={{
-            fontSize: 'clamp(3rem, 8vw, 6.5rem)',
+            fontSize: 'var(--step-4)',
             lineHeight: 0.95,
             letterSpacing: '-0.02em',
           }}
@@ -69,9 +70,9 @@ export default function ActFive() {
 
         {/* Second line — fade, not typewriter */}
         <motion.p
-          className="font-display font-light italic text-paper mt-4"
+          className="font-display font-light italic text-paper mt-6"
           style={{
-            fontSize: 'clamp(3rem, 8vw, 6.5rem)',
+            fontSize: 'var(--step-4)',
             lineHeight: 0.95,
             letterSpacing: '-0.02em',
           }}
@@ -83,33 +84,60 @@ export default function ActFive() {
         </motion.p>
 
         {/* CTA block */}
-        <motion.div
-          className="mt-16"
-          initial={{ opacity: 0, y: 12 }}
-          animate={phase >= 4 ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9, ease: ABOUT_EASE }}
-        >
-          <p
-            className="font-sans text-paper/58 mb-8 max-w-md mx-auto"
-            style={{ fontSize: '1rem', lineHeight: 1.6 }}
+        <div className="mt-20 relative">
+          <motion.p
+            className="font-sans text-paper/58 mb-10 max-w-md mx-auto"
+            style={{ fontSize: 'var(--step-0)', lineHeight: 1.6 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={phase >= 4 ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, ease: ABOUT_EASE }}
           >
             Let&apos;s find it together.
-          </p>
+          </motion.p>
 
-          <Link
-            href="/story-teardown"
-            className="inline-flex items-center gap-4 bg-[var(--color-rust)] hover:bg-[#a83020] text-white pl-8 pr-6 py-[15px] font-[family-name:var(--font-satoshi)] font-bold text-[13px] uppercase tracking-[0.18em] transition-all duration-300 group shadow-lg shadow-black/20"
+          <div className="relative inline-block">
+            {/* The dropping cursor line */}
+            <motion.div
+              className="absolute top-0 left-1/2 w-[2.5px] h-[50px] bg-rust -translate-x-1/2 z-20 origin-bottom"
+              initial={{ opacity: 0, y: -160, scaleY: 1 }}
+              animate={
+                phase >= 5
+                  ? { opacity: [0, 1, 1, 0], y: [-160, -10, 0, 0], scaleY: [1, 1, 0.5, 0] }
+                  : {}
+              }
+              transition={{ duration: 0.9, ease: 'easeIn', times: [0, 0.2, 0.8, 1] }}
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={phase >= 4 ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.9, delay: 0.2, ease: ABOUT_EASE }}
+            >
+              <Link
+                href="/story-teardown"
+                className={`inline-flex items-center gap-5 text-white pl-10 pr-8 py-5 font-sans font-bold text-xs uppercase tracking-[0.22em] transition-all duration-700 group shadow-2xl ${phase >= 5 ? 'bg-rust shadow-rust/20' : 'bg-transparent border border-white/10'}`}
+              >
+                <span>Start your story teardown</span>
+                <motion.span
+                  className="text-lg"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                >
+                  →
+                </motion.span>
+              </Link>
+            </motion.div>
+          </div>
+
+          <motion.p
+            className="about-timecode text-paper/35 mt-10"
+            initial={{ opacity: 0 }}
+            animate={phase >= 4 ? { opacity: 1 } : {}}
+            transition={{ duration: 0.9, delay: 0.4, ease: ABOUT_EASE }}
           >
-            <span>Start your story teardown</span>
-            <span className="group-hover:translate-x-2 transition-transform duration-300 text-[17px]">
-              →
-            </span>
-          </Link>
-
-          <p className="about-timecode text-paper/35 mt-10">
             INT. YOUR BRAND — NOW
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
       </div>
     </section>
   );

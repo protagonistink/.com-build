@@ -41,6 +41,10 @@ yarn-error.log*
 
 # claude
 .claude/
+.agents/
+
+# temp / scratch projects
+tmp_founders/
 
 # typescript
 *.tsbuildinfo

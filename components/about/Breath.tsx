@@ -2,6 +2,7 @@
 
 import { motion, useInView, useReducedMotion } from 'motion/react';
 import { useRef } from 'react';
+import Image from 'next/image';
 import { ABOUT_EASE } from '@/components/about/motion';
 
 interface BreathProps {
@@ -32,14 +33,32 @@ export default function Breath({ variant, timecode }: BreathProps) {
     );
   }
 
-  const isDeep = variant === 'deep';
-  const minHeight =
-    variant === 'deep'
-      ? 'min-h-[55vh]'
-      : variant === 'timecode'
-        ? 'min-h-[40vh]'
-        : 'min-h-[45vh]';
-  const grainOpacity = isDeep ? 'opacity-[0.08]' : 'opacity-[0.06]';
+  if (variant === 'deep') {
+    return (
+      <section ref={ref} className="relative min-h-[45vh] md:min-h-[52vh] overflow-hidden" aria-hidden="true">
+        <Image
+          src="/hero-bg.jpg"
+          alt=""
+          fill
+          className="object-cover object-center grayscale contrast-[1.08] brightness-[0.36]"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-paper/80 via-trueblack/68 to-trueblack" />
+        <div className="absolute inset-0 texture-grain opacity-[0.08] mix-blend-overlay" />
+
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ opacity: 0, y: 8 }}
+          animate={show ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.9, ease: ABOUT_EASE }}
+        >
+          <p className="about-timecode text-paper/45">FADE IN</p>
+        </motion.div>
+      </section>
+    );
+  }
+
+  const minHeight = variant === 'timecode' ? 'min-h-[40vh]' : 'min-h-[28vh]';
 
   return (
     <div
@@ -48,7 +67,7 @@ export default function Breath({ variant, timecode }: BreathProps) {
       aria-hidden="true"
     >
       <div
-        className={`absolute inset-0 ${grainOpacity} pointer-events-none mix-blend-overlay`}
+        className="absolute inset-0 opacity-[0.06] pointer-events-none mix-blend-overlay"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
         }}

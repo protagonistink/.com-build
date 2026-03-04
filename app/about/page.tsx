@@ -1,7 +1,11 @@
 import ActOne from '@/components/about/ActOne';
 import ActTwo from '@/components/about/ActTwo';
 import ActThree from '@/components/about/ActThree';
+import ActProof from '@/components/about/ActProof';
 import ActFour from '@/components/about/ActFour';
+import ActTransform from '@/components/about/ActTransform';
+import ActFoundersIntro from '@/components/about/ActFoundersIntro';
+import ActFounders from '@/components/about/ActFounders';
 import ActFive from '@/components/about/ActFive';
 import Breath from '@/components/about/Breath';
 
@@ -14,12 +18,13 @@ export default function AboutPage() {
   return (
     <main>
       <ActOne />
-      <Breath variant="void" />
       <ActTwo />
-      <Breath variant="rule" />
       <ActThree />
-      <Breath variant="timecode" timecode="INT. THE METHOD — CONTINUOUS" />
+      <ActProof />
       <ActFour />
+      <ActTransform />
+      <ActFoundersIntro />
+      <ActFounders />
       <Breath variant="deep" />
       <ActFive />
     </main>

@@ -17,25 +17,14 @@ export default function Navbar() {
   const isBlogDetail = pathname?.startsWith('/blog/') && pathname !== '/blog';
   const isBrandGuide = pathname?.startsWith('/brand-guide');
   const isAbout = pathname === '/about';
-  // All pages with a dark hero: work index/detail, blog index/detail, story health check.
+
+  // All pages with a dark hero: work index/detail, blog index/detail, story health check, about
   // Navbar starts transparent with light text, switches to light bg/dark text on scroll.
-  const useDarkHero = isWorkIndex || isWorkDetail || isStoryTeardown || isBlogIndex || isBlogDetail;
-
-  // About page: hero is white/paper, so we need a higher threshold (~85vh)
-  // to flip from dark-text to light-text when the dark VillainSection starts.
-  const [aboutThreshold, setAboutThreshold] = useState(700);
-
-  useEffect(() => {
-    if (!isAbout) return;
-    const update = () => setAboutThreshold(Math.round(window.innerHeight * 0.85));
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, [isAbout]);
+  const useDarkHero = isWorkIndex || isWorkDetail || isStoryTeardown || isBlogIndex || isBlogDetail || isAbout;
 
   const heroThreshold = useDarkHero
     ? (isStoryTeardown ? 550 : 400)
-    : isAbout ? aboutThreshold : 20;
+    : 20;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > heroThreshold);
@@ -55,16 +44,12 @@ export default function Navbar() {
     return () => window.removeEventListener('keydown', handleEscape);
   }, [menuOpen]);
 
-  // Detail page & health check: dark hero (transparent → light on scroll)
-  // About page: INVERTED — white hero (dark text on load) → dark sections (light text on scroll)
+  // Detail page & health check & about: dark hero (transparent → light on scroll)
   // Everything else: dark bg (homepage, etc.)
   const useLightTheme = useDarkHero && isScrolled;
-  const useAboutLightOnLoad = isAbout && !isScrolled;
 
   let baseShell: string;
-  if (useAboutLightOnLoad) {
-    baseShell = 'bg-transparent';
-  } else if (useLightTheme) {
+  if (useLightTheme) {
     baseShell = isScrolled
       ? 'bg-[#FAFAFA]/92 backdrop-blur-md'
       : 'bg-[#FAFAFA]/88 backdrop-blur-md';
@@ -76,7 +61,7 @@ export default function Navbar() {
       : 'bg-transparent';
   }
 
-  const showDarkText = useLightTheme || useAboutLightOnLoad;
+  const showDarkText = useLightTheme;
 
   const linkTone = showDarkText
     ? 'text-ink/70 hover:text-ink'

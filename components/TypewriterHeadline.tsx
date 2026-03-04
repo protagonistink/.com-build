@@ -47,11 +47,11 @@ export default function TypewriterHeadline({
     return () => observer.disconnect();
   }, []);
 
-  // After 4 blink cycles, smoothly fade the cursor away
+  // After 2 blink cycles, smoothly fade the cursor away
   useEffect(() => {
     if (!triggered || !showCursor) return;
     const BLINK_DURATION = 1400; // matches cursor-blink keyframe duration (ms)
-    const BLINK_CYCLES = 4;
+    const BLINK_CYCLES = 2;
     const delay = totalDuration + 300 + BLINK_DURATION * BLINK_CYCLES + 200;
     const timer = setTimeout(() => setCursorGone(true), delay);
     return () => clearTimeout(timer);

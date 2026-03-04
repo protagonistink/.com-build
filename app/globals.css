@@ -1,8 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,300,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 @import "tailwindcss";
+
+/* 
+ * FONTS — The Editorial & Cinematic Engine
+ * Satoshi: Sharp, technical, modern (Fontshare)
+ * Cormorant Garamond: Classical, literary, high-contrast (Google)
+ */
 
 :root {
   --font-satoshi: "Satoshi", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-cormorant: "Cormorant Garamond", Georgia, serif;
+  --font-permanent-marker: "Permanent Marker", cursive;
+  
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Fluid Typography (UTopia-style clamps) */
+  --step--2: clamp(0.61rem, 0.61rem + 0.01vw, 0.62rem);
+  --step--1: clamp(0.8rem, 0.77rem + 0.15vw, 0.88rem);
+  --step-0: clamp(1rem, 0.96rem + 0.22vw, 1.13rem);
+  --step-1: clamp(1.25rem, 1.18rem + 0.33vw, 1.41rem);
+  --step-2: clamp(1.5625rem, 1.45rem + 0.55vw, 1.875rem);
+  --step-3: clamp(1.9531rem, 1.78rem + 0.86vw, 2.5rem);
+  --step-4: clamp(2.4414rem, 2.18rem + 1.3vw, 3.125rem);
+  --step-5: clamp(3.0518rem, 2.66rem + 1.94vw, 4.375rem);
 }
 
 @theme inline {
@@ -328,7 +350,7 @@ button:focus-visible,
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 0.85;
-  color: color-mix(in srgb, var(--color-ink) 6%, transparent);
+  color: color-mix(in srgb, var(--color-paper) 4%, transparent);
 }
 
 /* ==========================================================================
@@ -367,6 +389,63 @@ button:focus-visible,
   0%, 45% { opacity: 1; }
   50%, 95% { opacity: 0; }
   100% { opacity: 1; }
+}
+
+@keyframes reel-flicker {
+  0%, 16%, 19%, 52%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  17%, 18% {
+    opacity: 0.7;
+    filter: brightness(0.75);
+  }
+  53% {
+    opacity: 0.82;
+    filter: brightness(1.25);
+  }
+}
+
+.reel-flicker {
+  animation: reel-flicker 1.8s steps(1, end) infinite;
+}
+
+@keyframes reel-sprocket-run {
+  from { background-position-y: 0; }
+  to { background-position-y: 22px; }
+}
+
+@keyframes reel-gate-jitter {
+  0%, 100% { transform: translateX(0); }
+  18% { transform: translateX(0.18px); }
+  22% { transform: translateX(-0.2px); }
+  51% { transform: translateX(0.12px); }
+  73% { transform: translateX(-0.16px); }
+}
+
+@keyframes reel-scanline-run {
+  from { background-position-y: 0; opacity: 0.28; }
+  50% { opacity: 0.2; }
+  to { background-position-y: 24px; opacity: 0.28; }
+}
+
+.reel-sprocket-run {
+  animation: reel-sprocket-run 0.26s steps(5, end) infinite;
+}
+
+.reel-gate-jitter {
+  animation: reel-gate-jitter 0.36s steps(1, end) infinite;
+}
+
+.reel-scanline-run {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(236, 230, 221, 0.12) 0px,
+    rgba(236, 230, 221, 0.12) 1px,
+    transparent 1px,
+    transparent 6px
+  );
+  animation: reel-scanline-run 0.28s linear infinite;
 }
 
 /* ==========================================================================
