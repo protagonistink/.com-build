@@ -8,7 +8,7 @@ import { motion, useScroll, useTransform, AnimatePresence, MotionConfig } from '
 import TypewriterHeadline from '@/components/TypewriterHeadline';
 import ParallaxHeroBackground from '@/components/ParallaxHeroBackground';
 
-const BOOKING_ACTION = process.env.NEXT_PUBLIC_DUBSADO_URL ?? "mailto:hello@protagonist.ink";
+const BOOKING_ACTION = process.env.NEXT_PUBLIC_DUBSADO_URL ?? "https://elixirs.protagonist.ink/public/form/view/69a8e2029373e6642f6a2642";
 
 // ── Shared animation presets ─────────────────────────────────────────────────
 const FADE_UP = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 } } as const;
