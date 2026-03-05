@@ -88,7 +88,7 @@ export default function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${baseShell}`}>
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 flex justify-between items-center h-[4.25rem] md:h-20 lg:h-[5.5rem]">
-        <Link href="/" className="flex items-center">
+        <Link href="/" scroll={true} className="flex items-center">
           <Image
             src="/logo.png"
             alt="Protagonist Ink"
