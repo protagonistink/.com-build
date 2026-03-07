@@ -37,17 +37,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Sanity Studio Setup
 
-Studio is embedded at `/studio`.
+Studio is hosted at `https://protagonistink.sanity.studio`.
+`/studio` on this site redirects to that hosted Studio.
 
 Required environment variables:
 
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - `NEXT_PUBLIC_SANITY_DATASET`
-
-Studio route protection (required in production):
-
-- `STUDIO_BASIC_AUTH_USERNAME`
-- `STUDIO_BASIC_AUTH_PASSWORD`
 
 Additional API variables used by this app:
 

@@ -2,6 +2,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import FaqAccordion from '@/components/blog/detail/FaqAccordion';
 import MoreInk from '@/components/blog/detail/MoreInk';
 import Prose from '@/components/blog/detail/Prose';
 import { getBlogPosts } from '@/lib/blog';
@@ -136,6 +137,11 @@ export default async function BlogDetailPage({
             </Prose>
           )}
         </div>
+
+        {/* FAQ accordion (only renders if post has faqItems) */}
+        {post.faqItems && post.faqItems.length > 0 && (
+          <FaqAccordion items={post.faqItems} />
+        )}
 
         {/* Transition marker */}
         <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-8 md:pb-10">

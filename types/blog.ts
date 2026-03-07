@@ -11,6 +11,11 @@ export interface PortableTextBlock {
   children?: PortableTextSpan[];
 }
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -24,4 +29,5 @@ export interface BlogPost {
   readTime: string;
   body?: ReactNode;
   sanityBody?: PortableTextBlock[];
+  faqItems?: FaqItem[];
 }

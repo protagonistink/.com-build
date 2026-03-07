@@ -1,5 +1,5 @@
 import { createClient } from 'next-sanity';
-import type { BlogPost, PortableTextBlock } from '@/types/blog';
+import type { BlogPost, FaqItem, PortableTextBlock } from '@/types/blog';
 import { normalizeEnvValue } from '@/lib/env';
 
 const DEFAULT_SANITY_PROJECT_ID = 'dkok2iir';
@@ -17,6 +17,7 @@ interface CmsPost {
   categories?: Array<{ title?: string }>;
   readingTime?: number;
   body?: PortableTextBlock[];
+  faqItems?: FaqItem[];
 }
 
 function getSanityClient() {
@@ -56,6 +57,7 @@ function mapCmsPost(post: CmsPost): BlogPost | null {
     mainImageAlt: post.mainImageAlt || undefined,
     readTime: `${Math.max(1, Number(post.readingTime || 5))} min read`,
     sanityBody: Array.isArray(post.body) ? post.body : [],
+    faqItems: post.faqItems?.length ? post.faqItems : undefined,
   };
 }
 
@@ -72,10 +74,11 @@ async function getCmsPosts(): Promise<BlogPost[]> {
         publishedAt,
         featured,
         excerpt,
-        "mainImageUrl": coalesce(mainImage.asset->url, mainImageUrl),
-        "mainImageAlt": mainImage.alt,
+        "mainImageUrl": coalesce(mainImage.asset->url, mainImageUrl, seo.ogImage.asset->url),
+        "mainImageAlt": coalesce(mainImage.alt, seo.ogImage.alt),
         readingTime,
         body,
+        "faqItems": schema.faqItems[]{question, answer},
         categories[]->{
           title
         }

@@ -7,7 +7,7 @@ This is the exact pre-launch sequence for the current Next.js + Sanity + Vercel 
 - `npm run lint`: PASS
 - `npm run build`: PASS
 - Sitemap and robots routes exist and build (`/sitemap.xml`, `/robots.txt`)
-- Studio auth middleware exists for `/studio/*` and `/brand-guide/*`
+- `/studio/*` redirects to hosted Studio (`https://protagonistink.sanity.studio`)
 
 ## 1) Freeze and branch hygiene
 
@@ -25,8 +25,6 @@ Set and verify these before deploy:
 
 - [ ] `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - [ ] `NEXT_PUBLIC_SANITY_DATASET`
-- [ ] `STUDIO_BASIC_AUTH_USERNAME`
-- [ ] `STUDIO_BASIC_AUTH_PASSWORD`
 - [ ] `ASANA_ACCESS_TOKEN`
 - [ ] `ASANA_PROJECT_ID`
 - [ ] `ASANA_SECTION_ID` (optional)
@@ -66,8 +64,8 @@ Go/no-go gate:
 - [ ] One case-study detail page loads (`/work/<slug>`).
 - [ ] One blog detail page loads (`/blog/<slug>`).
 - [ ] `/robots.txt` and `/sitemap.xml` return 200.
-- [ ] `/studio` requires auth (not publicly accessible).
-- [ ] `/brand-guide` is not indexed and is access-controlled.
+- [ ] `/studio` redirects to `https://protagonistink.sanity.studio/`.
+- [ ] `/brand-guide` is not indexed.
 - [ ] `/journal` redirects to `/blog`.
 - [ ] `/story-health-check` redirects to `/story-teardown`.
 
