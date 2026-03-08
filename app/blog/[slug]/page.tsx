@@ -1,9 +1,9 @@
 // app/blog/[slug]/page.tsx
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import Image from 'next/image';
 import PostCredits from '@/components/blog/detail/PostCredits';
-import MoreInk from '@/components/blog/detail/MoreInk';
+import BlogContinuation from '@/components/blog/detail/BlogContinuation';
+import EditorialFooter from '@/components/blog/detail/EditorialFooter';
 import Prose from '@/components/blog/detail/Prose';
 import { getBlogPosts } from '@/lib/blog';
 import type { BlogPost } from '@/types/blog';
@@ -42,13 +42,12 @@ export async function generateMetadata({
   };
 }
 
-// --- Related posts logic ---
+// --- Catalogue posts logic ---
 
-function getRelatedPosts(posts: BlogPost[], currentSlug: string, category: string) {
-  const others = posts.filter((p) => p.slug !== currentSlug);
-  const sameCategory = others.filter((p) => p.category === category);
-  const different = others.filter((p) => p.category !== category);
-  return [...sameCategory, ...different].slice(0, 3);
+function getCataloguePosts(posts: BlogPost[], currentSlug: string): BlogPost[] {
+  return posts
+    .filter((p) => p.slug !== currentSlug)
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 }
 
 // --- Page ---
@@ -63,7 +62,7 @@ export default async function BlogDetailPage({
   const post = posts.find((p) => p.slug === slug);
   if (!post) notFound();
 
-  const relatedPosts = getRelatedPosts(posts, post.slug, post.category);
+  const cataloguePosts = getCataloguePosts(posts, post.slug);
 
   return (
     <main className="min-h-screen">
@@ -139,11 +138,6 @@ export default async function BlogDetailPage({
           )}
         </div>
 
-        {/* FAQ accordion (only renders if post has faqItems) */}
-        {post.faqItems && post.faqItems.length > 0 && (
-          <PostCredits items={post.faqItems} />
-        )}
-
         {/* Transition marker */}
         <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-8 md:pb-10">
           <div className="mx-auto w-fit flex items-center justify-center">
@@ -158,19 +152,18 @@ export default async function BlogDetailPage({
           </div>
         </div>
 
-        {/* More Ink */}
-        <MoreInk posts={relatedPosts} />
+        {/* Post Credits (only renders if post has faqItems) */}
+        {post.faqItems && post.faqItems.length > 0 && (
+          <PostCredits items={post.faqItems} />
+        )}
 
-        {/* Back link */}
-        <div className="text-center pt-10 md:pt-14 pb-4">
-          <Link
-            href="/blog"
-            className="text-technical text-[11px] tracking-[0.2em] text-rust hover:text-ink transition-colors duration-300"
-          >
-            Back to The Ink →
-          </Link>
-        </div>
       </section>
+
+      {/* The Ink — PostRow catalogue */}
+      <BlogContinuation posts={cataloguePosts} />
+
+      {/* Editorial footer — newsletter, Story Teardown, PI mark */}
+      <EditorialFooter />
     </main>
   );
 }
