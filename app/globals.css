@@ -37,6 +37,7 @@
   --font-serif: var(--font-cormorant);
   --font-sans: var(--font-satoshi);
   --font-hand: var(--font-reenie);
+  --font-hand-bold: var(--font-nothing);
 
   /* Brand Colors — STRICT PROTAGONIST INK SYSTEM */
   --color-ink: #2C2C2C;
