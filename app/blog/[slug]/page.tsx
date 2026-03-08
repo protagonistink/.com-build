@@ -2,7 +2,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import FaqAccordion from '@/components/blog/detail/FaqAccordion';
+import PostCredits from '@/components/blog/detail/PostCredits';
 import MoreInk from '@/components/blog/detail/MoreInk';
 import Prose from '@/components/blog/detail/Prose';
 import { getBlogPosts } from '@/lib/blog';
@@ -25,18 +25,19 @@ export async function generateMetadata({
   const post = posts.find((p) => p.slug === slug) ?? null;
   if (!post) return { title: 'Post Not Found' };
 
-  const ogImage = post.mainImage || '/images/og-default.jpg';
+  const openGraphImage = post.openGraphImage || post.mainImage || '/images/og-default.jpg';
+  const openGraphAlt = post.openGraphImageAlt || post.mainImageAlt || post.title;
   return {
     title: post.title,
     description: post.excerpt,
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      images: [{ url: ogImage, alt: post.title }],
+      images: [{ url: openGraphImage, alt: openGraphAlt }],
     },
     twitter: {
       card: 'summary_large_image',
-      images: [ogImage],
+      images: [openGraphImage],
     },
   };
 }
@@ -140,7 +141,7 @@ export default async function BlogDetailPage({
 
         {/* FAQ accordion (only renders if post has faqItems) */}
         {post.faqItems && post.faqItems.length > 0 && (
-          <FaqAccordion items={post.faqItems} />
+          <PostCredits items={post.faqItems} />
         )}
 
         {/* Transition marker */}
