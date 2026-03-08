@@ -18,7 +18,7 @@ export default function CinematicFeatured({ post }: { post: BlogPost }) {
             src={post.mainImage}
             alt=""
             fill
-            className="object-cover object-center opacity-[0.45] contrast-125 group-hover:opacity-[0.55] group-hover:scale-[1.02] transition-all duration-[1.2s] ease-out"
+            className="object-cover object-center opacity-[0.45] contrast-125 md:group-hover:opacity-[0.55] md:group-hover:scale-[1.02] transition-all duration-[1.2s] ease-out"
             sizes="100vw"
             priority
             referrerPolicy="no-referrer"
@@ -74,7 +74,7 @@ export default function CinematicFeatured({ post }: { post: BlogPost }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.8, delay: 0.25 }}
-              className="font-display uppercase leading-[0.85] tracking-tighter text-warmwhite max-w-4xl mb-6 md:mb-8 group-hover:text-warmwhite/90 transition-colors duration-500"
+              className="font-display uppercase leading-[0.85] tracking-tighter text-warmwhite max-w-4xl mb-6 md:mb-8 md:group-hover:text-warmwhite/90 transition-colors duration-500"
               style={{
                 fontSize: 'clamp(2.2rem, 6.5vw, 5.5rem)',
                 textShadow:
@@ -102,14 +102,14 @@ export default function CinematicFeatured({ post }: { post: BlogPost }) {
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.6, delay: 0.55 }}
             >
-              <span className="text-technical text-[13px] tracking-[0.18em] uppercase text-warmwhite/55 border-b border-warmwhite/20 pb-1 group-hover:text-rust group-hover:border-rust/40 transition-colors duration-500">
+              <span className="text-technical text-[13px] tracking-[0.18em] uppercase text-warmwhite/55 border-b border-warmwhite/20 pb-1 md:group-hover:text-rust md:group-hover:border-rust/40 transition-colors duration-500">
                 Read the latest ink
               </span>
             </motion.div>
           </div>
 
           {/* Rust accent line — bottom edge, scales on hover */}
-          <div className="h-[3px] bg-rust origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out" />
+          <div className="h-[3px] bg-rust origin-left scale-x-0 md:group-hover:scale-x-100 transition-transform duration-700 ease-out" />
         </div>
       </div>
     </Link>
