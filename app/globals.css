@@ -565,6 +565,11 @@ button:focus-visible,
   font-family: var(--font-hand), cursive;
 }
 
+/* Handwritten annotation style — Nothing You Could Do (Hybrid Engine) */
+.font-hand-bold {
+  font-family: var(--font-hand-bold), cursive;
+}
+
 /* Tape strip — aged masking tape holding a note in place */
 .tape-strip {
   background-color: rgba(232, 224, 213, 0.6);
