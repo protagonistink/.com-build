@@ -102,14 +102,14 @@ export default function CinematicFeatured({ post }: { post: BlogPost }) {
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.6, delay: 0.55 }}
             >
-              <span className="text-technical text-[13px] tracking-[0.18em] uppercase text-warmwhite/55 border-b border-warmwhite/20 pb-1 md:group-hover:text-rust md:group-hover:border-rust/40 transition-colors duration-500">
+              <span className="text-technical text-[13px] tracking-[0.18em] uppercase text-warmwhite/55 border-b border-warmwhite/20 pb-1 group-hover:text-rust group-hover:border-rust/40 transition-colors duration-500">
                 Read the latest ink
               </span>
             </motion.div>
           </div>
 
           {/* Rust accent line — bottom edge, scales on hover */}
-          <div className="h-[3px] bg-rust origin-left scale-x-0 md:group-hover:scale-x-100 transition-transform duration-700 ease-out" />
+          <div className="h-[3px] bg-rust origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out" />
         </div>
       </div>
     </Link>
