@@ -185,7 +185,7 @@ export default function Navbar() {
           <Link
             href="/story-teardown"
             onClick={handleStoryTeardownClick}
-            className={`text-technical text-[11px] uppercase tracking-[0.25em] font-bold border border-rust/60 text-warmwhite/80 px-5 py-2.5 hover:bg-rust/15 hover:text-warmwhite transition-all duration-300 self-start ${
+            className={`text-technical text-[13px] uppercase tracking-[0.25em] font-bold border border-rust/60 text-warmwhite/80 px-6 py-3 hover:bg-rust/15 hover:text-warmwhite transition-all duration-300 self-start ${
               menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             } transition-all duration-500 delay-300`}
           >
