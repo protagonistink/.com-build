@@ -1,6 +1,3 @@
-'use client';
-
-import { useRef, useEffect, useState } from 'react';
 import type { FaqItem } from '@/types/blog';
 
 interface PostCreditsProps {
@@ -8,84 +5,67 @@ interface PostCreditsProps {
 }
 
 export default function PostCredits({ items }: PostCreditsProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    const handleScroll = () => {
-      const maxScroll = el.scrollWidth - el.clientWidth;
-      if (maxScroll <= 0) return;
-      requestAnimationFrame(() => {
-        setProgress(el.scrollLeft / maxScroll);
-      });
-    };
-
-    el.addEventListener('scroll', handleScroll, { passive: true });
-    return () => el.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <section
-      className="max-w-[1180px] mx-auto px-6 md:px-10 pt-16"
+      className="bg-[#f9f7f2] py-24 md:py-32 px-6 md:px-10 lg:px-12"
       itemScope
       itemType="https://schema.org/FAQPage"
     >
-      {/* Section header */}
-      <h2 className="font-display italic text-ink text-[1.75rem] md:text-[2.1rem] tracking-tight leading-none mb-3">
-        Post Credits
-      </h2>
-      <div className="w-10 h-px bg-rust/60 mb-8" />
+      <div className="max-w-[1400px] mx-auto">
+        {/* Section Header */}
+        <div className="border-b border-ink/[0.20] pb-6 mb-12 md:mb-16 flex justify-between items-end">
+          <h2 className="text-technical text-[11px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] text-ink/90 font-semibold">
+            POST CREDITS
+          </h2>
+          <span className="text-technical text-[10px] tracking-widest text-ink/40 hidden md:block">
+            FREQUENTLY ASKED QUESTIONS
+          </span>
+        </div>
 
-      {/* Scroll strip */}
-      <div
-        ref={scrollRef}
-        className="flex gap-4 overflow-x-scroll overflow-y-hidden h-[320px] [scroll-snap-type:x_mandatory] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {items.map((item, i) => (
-          <article
-            key={i}
-            className="relative flex-shrink-0 w-[82vw] md:w-[80%] md:max-w-[900px] overflow-hidden [scroll-snap-align:start]"
-            itemScope
-            itemType="https://schema.org/Question"
-          >
-            {/* Ghost layer — decorative only */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 flex items-center p-6 pointer-events-none select-none overflow-hidden"
-            >
-              <span className="font-display italic text-ink opacity-[0.04] leading-[0.9] tracking-tight text-[clamp(72px,10vw,116px)]">
-                {item.question}
-              </span>
-            </div>
+        {/* FAQ Items */}
+        <div className="flex flex-col">
+          {items.map((item, i) => {
+            const num = String(i + 1).padStart(2, '0');
+            return (
+              <article
+                key={i}
+                className="grid grid-cols-1 md:grid-cols-[1fr_1px_1.5fr] gap-8 md:gap-16 lg:gap-24 items-start py-12 md:py-16 border-b border-ink/[0.10] last:border-0"
+                itemScope
+                itemType="https://schema.org/Question"
+              >
+                {/* Question Column */}
+                <div className="flex flex-col gap-6 md:gap-8">
+                  <span className="text-technical text-[11px] tracking-widest text-ink/40">
+                    {num}
+                  </span>
+                  <h3
+                    className="font-display text-4xl md:text-5xl lg:text-[56px] tracking-[-0.02em] leading-[1.05] text-ink"
+                    itemProp="name"
+                  >
+                    {item.question}
+                  </h3>
+                </div>
 
-            {/* Foreground */}
-            <div className="relative z-10 flex flex-col justify-end h-full p-8 md:p-10">
-              <meta itemProp="name" content={item.question} />
+                {/* Desktop Divider */}
+                <div className="hidden md:block w-px bg-ink/[0.10] h-full self-stretch" />
 
-              <p className="font-serif italic text-[1.05rem] md:text-[1.15rem] text-ink/70 mb-4 max-w-[42ch]">
-                {item.question}
-              </p>
-
-              <div itemScope itemType="https://schema.org/Answer">
-                <meta itemProp="text" content={item.answer} />
-                <p className="font-serif text-[1.05rem] md:text-[1.15rem] text-ink/80 leading-relaxed md:leading-[1.8] max-w-[48ch]">
-                  {item.answer}
-                </p>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      {/* Progress bar */}
-      <div className="mt-5 h-px w-full bg-rust/15">
-        <div
-          className="h-full bg-rust/50"
-          style={{ width: `${progress * 100}%`, transition: 'none' }}
-        />
+                {/* Answer Column */}
+                <div
+                  className="flex flex-col gap-6 md:pt-8"
+                  itemScope
+                  itemType="https://schema.org/Answer"
+                >
+                  <p
+                    className="font-sans text-base md:text-lg text-ink/70 leading-relaxed max-w-2xl"
+                    itemProp="text"
+                  >
+                    {item.answer}
+                  </p>
+                </div>
+              </article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
