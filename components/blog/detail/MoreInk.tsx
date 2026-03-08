@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import type { BlogPost } from '@/types/blog';
 import ScrollRevealWrapper from '@/components/ScrollRevealWrapper';
+import InkDisplay from '@/components/InkDisplay';
 
 interface MoreInkProps {
   posts: BlogPost[];
@@ -13,7 +14,7 @@ export default function MoreInk({ posts }: MoreInkProps) {
   return (
     <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-10 md:pt-14 pb-8">
       <ScrollRevealWrapper>
-        <h2 className="font-hand text-3xl md:text-4xl text-ink mb-5 md:mb-6 leading-none">
+        <h2 className="font-hand text-[3rem] md:text-[4.5rem] lg:text-[6rem] text-ink mb-6 md:mb-8 leading-none rotate-[1deg]">
           More Ink...
         </h2>
       </ScrollRevealWrapper>

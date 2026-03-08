@@ -36,7 +36,7 @@
   --font-display: var(--font-cormorant);
   --font-serif: var(--font-cormorant);
   --font-sans: var(--font-satoshi);
-  --font-hand: var(--font-nothing);
+  --font-hand: var(--font-reenie);
 
   /* Brand Colors — STRICT PROTAGONIST INK SYSTEM */
   --color-ink: #2C2C2C;
@@ -559,7 +559,7 @@ button:focus-visible,
    Hand / tape utilities — Director's Notebook aesthetic
    ========================================================================== */
 
-/* Handwritten annotation style — Dynamic Theme Variable */
+/* Handwritten annotation style — Reenie Beanie (Hybrid Engine) */
 .font-hand {
   font-family: var(--font-hand), cursive;
 }

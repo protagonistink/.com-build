@@ -15,7 +15,7 @@ export default function SuggestedReading({ posts }: SuggestedReadingProps) {
       <div className="max-w-[1400px] mx-auto">
         {/* Section Header */}
         <div className="border-t border-ink/[0.20] pt-6 mb-16 md:mb-24 flex justify-between items-start">
-          <h2 className="font-hand text-3xl md:text-4xl text-ink leading-none">
+          <h2 className="font-hand text-3xl md:text-4xl text-ink leading-none rotate-2">
             More Ink...
           </h2>
           <span className="text-technical text-[12px] tracking-widest text-rust/40 hidden md:block">
