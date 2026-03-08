@@ -13,9 +13,9 @@ export default function BlogContinuation({ posts }: BlogContinuationProps) {
       {/* THE INK transition band */}
       <div className="bg-trueblack texture-grain py-6 md:py-8">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12">
-          <p className="text-technical text-[11px] tracking-[0.24em] text-warmwhite/50 mb-2">
+          <span className="text-technical text-[11px] tracking-[0.24em] text-warmwhite/50 mb-2 block">
             THE INK
-          </p>
+          </span>
           <div className="w-4 h-px bg-rust/60" />
         </div>
       </div>
