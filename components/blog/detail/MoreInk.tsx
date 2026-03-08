@@ -13,7 +13,7 @@ export default function MoreInk({ posts }: MoreInkProps) {
   return (
     <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-10 md:pt-14 pb-8">
       <ScrollRevealWrapper>
-        <h2 className="font-display text-4xl md:text-5xl text-ink mb-5 md:mb-6">
+        <h2 className="font-hand text-3xl md:text-4xl text-ink mb-5 md:mb-6 leading-none">
           More Ink...
         </h2>
       </ScrollRevealWrapper>
