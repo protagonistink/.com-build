@@ -34,9 +34,9 @@ export default function PostCredits({ items }: PostCreditsProps) {
       itemType="https://schema.org/FAQPage"
     >
       {/* Section header */}
-      <p className="text-technical text-[11px] tracking-[0.24em] text-rust/70 mb-3">
-        POST-CREDITS
-      </p>
+      <h2 className="font-display italic text-ink text-[1.75rem] md:text-[2.1rem] tracking-tight leading-none mb-3">
+        Post Credits
+      </h2>
       <div className="w-10 h-px bg-rust/60 mb-8" />
 
       {/* Scroll strip */}
@@ -65,7 +65,7 @@ export default function PostCredits({ items }: PostCreditsProps) {
             <div className="relative z-10 flex flex-col justify-end h-full p-8 md:p-10">
               <meta itemProp="name" content={item.question} />
 
-              <p className="font-serif italic text-[1rem] md:text-[1.05rem] text-ink/55 mb-4 max-w-[42ch]">
+              <p className="font-serif italic text-[1.05rem] md:text-[1.15rem] text-ink/70 mb-4 max-w-[42ch]">
                 {item.question}
               </p>
 

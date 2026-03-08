@@ -14,6 +14,8 @@ interface CmsPost {
   excerpt?: string;
   mainImageUrl?: string;
   mainImageAlt?: string;
+  openGraphImageUrl?: string;
+  openGraphImageAlt?: string;
   categories?: Array<{ title?: string }>;
   readingTime?: number;
   body?: PortableTextBlock[];
@@ -55,6 +57,8 @@ function mapCmsPost(post: CmsPost): BlogPost | null {
     category: post.categories?.[0]?.title || 'Field Notes',
     mainImage: post.mainImageUrl || null,
     mainImageAlt: post.mainImageAlt || undefined,
+    openGraphImage: post.openGraphImageUrl || post.mainImageUrl || null,
+    openGraphImageAlt: post.openGraphImageAlt || post.mainImageAlt || undefined,
     readTime: `${Math.max(1, Number(post.readingTime || 5))} min read`,
     sanityBody: Array.isArray(post.body) ? post.body : [],
     faqItems: post.faqItems?.length ? post.faqItems : undefined,
@@ -74,8 +78,10 @@ async function getCmsPosts(): Promise<BlogPost[]> {
         publishedAt,
         featured,
         excerpt,
-        "mainImageUrl": coalesce(mainImage.asset->url, mainImageUrl, seo.ogImage.asset->url),
-        "mainImageAlt": coalesce(mainImage.alt, seo.ogImage.alt),
+        "mainImageUrl": coalesce(mainImage.asset->url, mainImageUrl),
+        "mainImageAlt": mainImage.alt,
+        "openGraphImageUrl": seo.ogImage.asset->url,
+        "openGraphImageAlt": seo.ogImage.alt,
         readingTime,
         body,
         "faqItems": schema.faqItems[]{question, answer},

@@ -74,6 +74,19 @@ export const post = defineType({
       fields: [
         defineField({ name: 'metaTitle', type: 'string' }),
         defineField({ name: 'metaDescription', type: 'text' }),
+        defineField({
+          name: 'ogImage',
+          title: 'Open Graph Image',
+          type: 'image',
+          description: 'Optional social-sharing override. If empty, the main image will be used.',
+          options: {
+            hotspot: true,
+            aiAssist: {
+              imageDescriptionField: 'alt',
+            },
+          },
+          fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
+        }),
         defineField({ name: 'focusKeyword', type: 'string' }),
         defineField({ name: 'canonicalUrl', type: 'url' }),
       ],

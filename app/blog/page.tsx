@@ -3,6 +3,8 @@ import CinematicFeatured from '@/components/blog/CinematicFeatured';
 import PostRow from '@/components/blog/PostRow';
 import { getBlogPosts } from '@/lib/blog';
 
+export const revalidate = 60;
+
 export const metadata = {
   title: 'The Ink',
   description:
