@@ -4,6 +4,7 @@ export interface PortableTextMarkDef {
   _key: string;
   _type: string;
   href?: string;
+  blank?: boolean;
 }
 
 export interface PortableTextSpan {
@@ -23,9 +24,11 @@ export interface PortableTextBlock {
   markDefs?: PortableTextMarkDef[];
   alt?: string;
   caption?: string;
+  externalUrl?: string;
   asset?: {
     _ref?: string;
     _type?: string;
+    url?: string;
   };
 }
 

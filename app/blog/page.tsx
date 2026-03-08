@@ -1,6 +1,7 @@
 import BlogHero from '@/components/blog/BlogHero';
 import CinematicFeatured from '@/components/blog/CinematicFeatured';
 import PostRow from '@/components/blog/PostRow';
+import EditorialFooter from '@/components/blog/detail/EditorialFooter';
 import { getBlogPosts } from '@/lib/blog';
 
 export const revalidate = 60;
@@ -33,6 +34,7 @@ export default async function BlogPage() {
           <PostRow key={post.id} post={post} displayNumber={i + 2} index={i} />
         ))}
       </section>
+      <EditorialFooter />
     </main>
   );
 }

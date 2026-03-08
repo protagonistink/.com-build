@@ -20,9 +20,9 @@ const socialLinks = [
 export default function Footer() {
   const pathname = usePathname();
   const isBrandGuide = pathname?.startsWith('/brand-guide');
-  const isBlogDetail = /^\/blog\/.+/.test(pathname ?? '');
+  const isBlog = pathname === '/blog' || /^\/blog\/.+/.test(pathname ?? '');
 
-  if (isBrandGuide || isBlogDetail) {
+  if (isBrandGuide || isBlog) {
     return null;
   }
 

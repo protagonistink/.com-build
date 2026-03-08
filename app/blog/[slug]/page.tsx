@@ -78,12 +78,12 @@ export default async function BlogDetailPage({
                 src={post.mainImage}
                 alt={post.mainImageAlt || post.title}
                 fill
-                className="object-cover opacity-[0.22]"
+                className="object-cover opacity-[0.40]"
                 sizes="100vw"
                 priority
               />
             </div>
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.62)_0%,rgba(10,10,10,0.74)_36%,rgba(10,10,10,0.9)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.30)_0%,rgba(10,10,10,0.52)_36%,rgba(10,10,10,0.85)_100%)]" />
           </>
         )}
 
@@ -118,7 +118,7 @@ export default async function BlogDetailPage({
       </section>
 
       {/* ═══ BODY ═══ */}
-      <section className="relative z-20 -mt-8 md:-mt-12 bg-[#FAFAFA] texture-paper rounded-t-[2rem] md:rounded-t-[2.5rem] shadow-[0_-8px_30px_rgba(0,0,0,0.12)] pb-20 md:pb-32">
+      <section className="relative z-20 -mt-8 md:-mt-12 bg-[#f9f7f2] texture-paper rounded-t-[2rem] md:rounded-t-[2.5rem] shadow-[0_-8px_30px_rgba(0,0,0,0.12)] pb-10 md:pb-16">
         {/* Body content */}
         <div className="pt-12 md:pt-16">
           {post.body ? (
@@ -135,13 +135,13 @@ export default async function BlogDetailPage({
         </div>
 
         {/* Transition marker */}
-        <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-8 md:pb-10">
+        <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-8 md:pt-12 pb-4 md:pb-6">
           <div className="mx-auto w-fit flex items-center justify-center">
             <Image
               src="/images/brand/transparent_black_symbol.png"
               alt=""
-              width={132}
-              height={132}
+              width={96}
+              height={96}
               aria-hidden
               className="opacity-[0.18]"
             />

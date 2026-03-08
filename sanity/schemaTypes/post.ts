@@ -64,6 +64,13 @@ export const post = defineType({
           fields: [
             defineField({ name: 'alt', type: 'string', title: 'Alt Text' }),
             defineField({ name: 'caption', type: 'string', title: 'Caption' }),
+            defineField({
+              name: 'externalUrl',
+              type: 'url',
+              title: 'External Image URL',
+              description:
+                'Optional fallback for externally hosted images when no Sanity asset is attached.',
+            }),
           ],
         },
       ],

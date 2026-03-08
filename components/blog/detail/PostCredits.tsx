@@ -7,20 +7,23 @@ interface PostCreditsProps {
 export default function PostCredits({ items }: PostCreditsProps) {
   return (
     <section
-      className="bg-[#f9f7f2] py-24 md:py-32 px-6 md:px-10 lg:px-12"
+      className="bg-[#f9f7f2] pt-16 md:pt-20 pb-24 md:pb-32 px-6 md:px-10 lg:px-12"
       itemScope
       itemType="https://schema.org/FAQPage"
     >
       <div className="max-w-[1400px] mx-auto">
         {/* Section Header */}
-        <div className="border-b border-ink/[0.20] pb-6 mb-12 md:mb-16 flex justify-between items-end">
-          <h2 className="text-technical text-[11px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] text-ink/90 font-semibold">
+        <div className="border-b border-ink/[0.20] pb-6 mb-6 md:mb-8 flex justify-between items-end">
+          <h2 className="text-technical text-[15px] md:text-base tracking-[0.2em] md:tracking-[0.3em] text-ink/90 font-semibold">
             POST CREDITS
           </h2>
-          <span className="text-technical text-[10px] tracking-widest text-ink/40 hidden md:block">
+          <span className="text-technical text-[12px] tracking-widest text-ink/40 hidden md:block">
             FREQUENTLY ASKED QUESTIONS
           </span>
         </div>
+
+        {/* Rust accent rule */}
+        <div className="w-10 h-px bg-rust/70 mb-10 md:mb-14" />
 
         {/* FAQ Items */}
         <div className="flex flex-col">
@@ -35,7 +38,7 @@ export default function PostCredits({ items }: PostCreditsProps) {
               >
                 {/* Question Column */}
                 <div className="flex flex-col gap-6 md:gap-8">
-                  <span className="text-technical text-[11px] tracking-widest text-ink/40">
+                  <span className="text-technical text-[11px] tracking-widest text-rust/65">
                     {num}
                   </span>
                   <h3
