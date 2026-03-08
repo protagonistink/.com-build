@@ -15,9 +15,13 @@ export default function PostCredits({ items }: PostCreditsProps) {
         {/* Section Header */}
         <div className="mb-24 md:mb-40 flex flex-col md:flex-row md:items-end justify-between gap-16">
           <div className="relative group">
-            <h2 className="font-hand text-[6.5rem] md:text-[10rem] lg:text-[14rem] text-rust -rotate-1 leading-[0.8] tracking-normal selection:bg-ink/10 selection:text-rust flex flex-col">
-              <span>Post</span>
-              <span className="ml-16 md:ml-32 mt-[-0.1em]">Credits</span>
+            <h2 className="flex flex-col select-none">
+              <span className="font-serif text-[7.5rem] md:text-[11rem] lg:text-[15rem] leading-[0.8] text-ink uppercase tracking-tight">
+                Post
+              </span>
+              <span className="font-hand text-[6.5rem] md:text-[10rem] lg:text-[13.5rem] text-rust -rotate-1 leading-[0.8] ml-12 md:ml-24 mt-[-0.12em] flex items-baseline group-hover:rotate-0 transition-transform duration-500">
+                Credits<span className="inline-block transform translate-y-[0.02em] ml-1">.</span>
+              </span>
             </h2>
           </div>
           <div className="pb-8 md:pb-12 flex flex-col md:items-end gap-5 text-left md:text-right">
