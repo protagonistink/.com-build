@@ -139,7 +139,7 @@ export default function WorkRow({ project, index = 0 }: { project: Project; inde
         <div className="relative mt-6 aspect-[16/9] overflow-hidden bg-ink/[0.03]">
           <Image
             src={project.image}
-            alt={project.imageDescription || project.title}
+            alt={project.imageAlt || project.title}
             fill
             className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700 ease-out"
             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -147,7 +147,7 @@ export default function WorkRow({ project, index = 0 }: { project: Project; inde
           <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-[#FAFAFA] to-transparent" />
           <div className="absolute bottom-3 left-4">
             <span className="text-technical text-[9px] text-ink/30">
-              {project.imageLabel}
+              {project.scene}
             </span>
           </div>
         </div>
