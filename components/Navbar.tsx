@@ -36,12 +36,16 @@ export default function Navbar() {
   useEffect(() => {
     if (!menuOpen) return;
 
+    document.body.style.overflow = 'hidden';
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setMenuOpen(false);
     };
 
     window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleEscape);
+    };
   }, [menuOpen]);
 
   // Detail page & health check & about: dark hero (transparent → light on scroll)
@@ -86,7 +90,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${baseShell}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${menuOpen ? 'bg-transparent' : baseShell}`}>
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 flex justify-between items-center h-[4.25rem] md:h-20 lg:h-[5.5rem]">
         <Link href="/" scroll={true} className="flex items-center">
           <Image
@@ -94,7 +98,7 @@ export default function Navbar() {
             alt="Protagonist Ink"
             width={280}
             height={56}
-            className={`h-[28px] md:h-[34px] lg:h-[40px] w-auto transition-all duration-700 ${logoInvert ? 'invert opacity-80' : 'opacity-95'}`}
+            className={`h-[28px] md:h-[34px] lg:h-[40px] w-auto transition-all duration-700 ${logoInvert && !menuOpen ? 'invert opacity-80' : 'opacity-95'}`}
             priority
           />
         </Link>
@@ -125,28 +129,66 @@ export default function Navbar() {
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
         >
-          <span className={`w-5 h-px transition-all duration-300 origin-center ${showDarkText ? 'bg-ink/70' : 'bg-white/70'} ${menuOpen ? 'rotate-45 translate-y-[3px]' : ''}`} />
-          <span className={`w-5 h-px transition-all duration-300 ${showDarkText ? 'bg-ink/70' : 'bg-white/70'} ${menuOpen ? 'opacity-0 scale-x-0' : ''}`} />
-          <span className={`w-5 h-px transition-all duration-300 origin-center ${showDarkText ? 'bg-ink/70' : 'bg-white/70'} ${menuOpen ? '-rotate-45 -translate-y-[3px]' : ''}`} />
+          <span className={`w-5 h-px transition-all duration-300 origin-center ${menuOpen ? 'bg-white/70' : showDarkText ? 'bg-ink/70' : 'bg-white/70'} ${menuOpen ? 'rotate-45 translate-y-[3px]' : ''}`} />
+          <span className={`w-5 h-px transition-all duration-300 ${menuOpen ? 'bg-white/70' : showDarkText ? 'bg-ink/70' : 'bg-white/70'} ${menuOpen ? 'opacity-0 scale-x-0' : ''}`} />
+          <span className={`w-5 h-px transition-all duration-300 origin-center ${menuOpen ? 'bg-white/70' : showDarkText ? 'bg-ink/70' : 'bg-white/70'} ${menuOpen ? '-rotate-45 -translate-y-[3px]' : ''}`} />
         </button>
       </div>
 
+      {/* Full-screen mobile menu */}
       <div
         id="mobile-menu"
-        className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${menuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'}`}
+        className={`md:hidden fixed inset-0 top-0 z-40 transition-all duration-500 ease-out ${
+          menuOpen
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
+        } bg-[var(--color-ink)]`}
       >
-        <div className={`border-t px-6 py-10 flex flex-col gap-7 ${showDarkText ? 'bg-[#FAFAFA] border-ink/10' : 'bg-[var(--color-ink)] border-white/[0.04]'}`}>
-          <Link href="/about" className={`text-[11px] uppercase tracking-[0.25em] ${showDarkText ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>About</Link>
-          <Link href="/work" className={`text-[11px] uppercase tracking-[0.25em] ${showDarkText ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>Work</Link>
-          <Link href="/blog" className={`text-[11px] uppercase tracking-[0.25em] ${showDarkText ? 'text-ink/70' : 'text-white/60'}`} onClick={() => setMenuOpen(false)}>The Ink</Link>
-          <div className={`w-8 h-px my-1 ${showDarkText ? 'bg-ink/20' : 'bg-white/10'}`} />
-          <Link
-            href="/story-teardown"
-            onClick={handleStoryTeardownClick}
-            className={`text-[11px] uppercase tracking-[0.25em] font-bold border border-[var(--color-rust)] px-3 py-[7px] transition-colors duration-300 hover:bg-[var(--color-rust)]/15 self-start ${showDarkText ? 'text-ink' : 'text-white'}`}
-          >
-            The Story Teardown
-          </Link>
+        {/* Grain texture overlay */}
+        <div className="absolute inset-0 texture-grain opacity-30 pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col justify-center items-start h-full px-8 pb-16">
+          <nav className="flex flex-col gap-8">
+            <Link
+              href="/about"
+              className={`font-display text-4xl tracking-tight text-warmwhite/70 hover:text-warmwhite transition-colors duration-300 ${
+                menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              } transition-all duration-500 delay-100`}
+              onClick={() => setMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              href="/work"
+              className={`font-display text-4xl tracking-tight text-warmwhite/70 hover:text-warmwhite transition-colors duration-300 ${
+                menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              } transition-all duration-500 delay-150`}
+              onClick={() => setMenuOpen(false)}
+            >
+              Work
+            </Link>
+            <Link
+              href="/blog"
+              className={`font-display text-4xl tracking-tight text-warmwhite/70 hover:text-warmwhite transition-colors duration-300 ${
+                menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              } transition-all duration-500 delay-200`}
+              onClick={() => setMenuOpen(false)}
+            >
+              The Ink
+            </Link>
+
+            <div className="w-10 h-px bg-rust/40 my-2" />
+
+            <Link
+              href="/story-teardown"
+              onClick={handleStoryTeardownClick}
+              className={`text-[11px] uppercase tracking-[0.25em] font-bold border border-[var(--color-rust)] text-warmwhite px-4 py-2 transition-colors duration-300 hover:bg-[var(--color-rust)]/15 self-start ${
+                menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              } transition-all duration-500 delay-300`}
+            >
+              The Story Teardown
+            </Link>
+          </nav>
         </div>
       </div>
     </nav>
