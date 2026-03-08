@@ -13,7 +13,7 @@ export default function PostCredits({ items }: PostCreditsProps) {
     >
       <div className="max-w-[1400px] mx-auto">
         {/* Section Header */}
-        <div className="border-b border-ink/[0.20] pb-6 mb-6 md:mb-8 flex justify-between items-end">
+        <div className="border-t border-ink/[0.20] pt-6 mb-16 md:mb-24 flex justify-between items-start">
           <h2 className="text-technical text-[15px] md:text-base tracking-[0.2em] md:tracking-[0.3em] text-ink/90 font-semibold">
             POST CREDITS
           </h2>
@@ -22,9 +22,6 @@ export default function PostCredits({ items }: PostCreditsProps) {
           </span>
         </div>
 
-        {/* Rust accent rule */}
-        <div className="w-10 h-px bg-rust/70 mb-10 md:mb-14" />
-
         {/* FAQ Items */}
         <div className="flex flex-col">
           {items.map((item, i) => {
@@ -32,7 +29,7 @@ export default function PostCredits({ items }: PostCreditsProps) {
             return (
               <article
                 key={i}
-                className="grid grid-cols-1 md:grid-cols-[1fr_1px_1.5fr] gap-8 md:gap-16 lg:gap-24 items-start py-12 md:py-16 border-b border-ink/[0.10] last:border-0"
+                className="grid grid-cols-1 md:grid-cols-[1fr_1px_1.5fr] gap-8 md:gap-16 lg:gap-24 items-start py-12 md:py-16 border-b border-rust/20 last:border-0"
                 itemScope
                 itemType="https://schema.org/Question"
               >
@@ -50,7 +47,7 @@ export default function PostCredits({ items }: PostCreditsProps) {
                 </div>
 
                 {/* Desktop Divider */}
-                <div className="hidden md:block w-px bg-ink/[0.10] h-full self-stretch" />
+                <div className="hidden md:block w-px bg-rust/20 h-full self-stretch" />
 
                 {/* Answer Column */}
                 <div

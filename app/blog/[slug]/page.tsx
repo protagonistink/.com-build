@@ -118,7 +118,7 @@ export default async function BlogDetailPage({
       </section>
 
       {/* ═══ BODY ═══ */}
-      <section className="relative z-20 -mt-8 md:-mt-12 bg-[#f9f7f2] texture-paper rounded-t-[2rem] md:rounded-t-[2.5rem] shadow-[0_-8px_30px_rgba(0,0,0,0.12)] pb-10 md:pb-16">
+      <section className="relative z-20 -mt-8 md:-mt-12 bg-[#f9f7f2] texture-paper rounded-t-[2rem] md:rounded-t-[2.5rem] shadow-[0_-12px_24px_-12px_rgba(0,0,0,0.12)] pb-10 md:pb-16">
         {/* Body content */}
         <div className="pt-12 md:pt-16">
           {post.body ? (
