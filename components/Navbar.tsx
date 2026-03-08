@@ -142,53 +142,60 @@ export default function Navbar() {
           menuOpen
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
-        } bg-[var(--color-ink)]`}
+        } bg-trueblack`}
       >
         {/* Grain texture overlay */}
-        <div className="absolute inset-0 texture-grain opacity-30 pointer-events-none" />
+        <div className="absolute inset-0 texture-grain opacity-40 pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col justify-center items-start h-full px-8 pb-16">
-          <nav className="flex flex-col gap-8">
-            <Link
-              href="/about"
-              className={`font-display text-4xl tracking-tight text-warmwhite/70 hover:text-warmwhite transition-colors duration-300 ${
-                menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              } transition-all duration-500 delay-100`}
-              onClick={() => setMenuOpen(false)}
-            >
-              About
-            </Link>
-            <Link
-              href="/work"
-              className={`font-display text-4xl tracking-tight text-warmwhite/70 hover:text-warmwhite transition-colors duration-300 ${
-                menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              } transition-all duration-500 delay-150`}
-              onClick={() => setMenuOpen(false)}
-            >
-              Work
-            </Link>
-            <Link
-              href="/blog"
-              className={`font-display text-4xl tracking-tight text-warmwhite/70 hover:text-warmwhite transition-colors duration-300 ${
-                menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              } transition-all duration-500 delay-200`}
-              onClick={() => setMenuOpen(false)}
-            >
-              The Ink
-            </Link>
+        {/* Ghost number — brutalist background element */}
+        <div className="absolute -right-6 top-1/2 -translate-y-1/2 font-serif text-[18rem] italic text-warmwhite/[0.02] leading-none pointer-events-none select-none">
+          PI
+        </div>
 
-            <div className="w-10 h-px bg-rust/40 my-2" />
+        {/* Vertical rust accent — left edge */}
+        <div className={`absolute left-0 top-0 bottom-0 w-[3px] bg-rust origin-top transition-transform duration-700 ease-out ${menuOpen ? 'scale-y-100' : 'scale-y-0'}`} />
 
-            <Link
-              href="/story-teardown"
-              onClick={handleStoryTeardownClick}
-              className={`text-[11px] uppercase tracking-[0.25em] font-bold border border-[var(--color-rust)] text-warmwhite px-4 py-2 transition-colors duration-300 hover:bg-[var(--color-rust)]/15 self-start ${
-                menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              } transition-all duration-500 delay-300`}
-            >
-              The Story Teardown
-            </Link>
+        <div className="relative z-10 flex flex-col justify-end h-full px-8 pb-24">
+          <nav className="flex flex-col gap-1">
+            {[
+              { href: '/about', label: 'About', num: '01', delay: 'delay-100' },
+              { href: '/work', label: 'Work', num: '02', delay: 'delay-150' },
+              { href: '/blog', label: 'The Ink', num: '03', delay: 'delay-200' },
+            ].map(({ href, label, num, delay }) => (
+              <Link
+                key={href}
+                href={href}
+                className={`group/link relative block py-3 ${
+                  menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                } transition-all duration-500 ${delay}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                <span className="text-technical text-[10px] tracking-[0.3em] text-rust/50 block mb-1">
+                  {num}
+                </span>
+                <span className="font-display text-6xl uppercase leading-[0.85] tracking-tight text-warmwhite/80 group-hover/link:text-warmwhite transition-colors duration-300">
+                  {label}
+                </span>
+              </Link>
+            ))}
           </nav>
+
+          <div className={`w-12 h-px bg-rust/60 mt-8 mb-6 ${menuOpen ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500 delay-250`} />
+
+          <Link
+            href="/story-teardown"
+            onClick={handleStoryTeardownClick}
+            className={`text-technical text-[11px] uppercase tracking-[0.25em] font-bold border border-rust/60 text-warmwhite/80 px-5 py-2.5 hover:bg-rust/15 hover:text-warmwhite transition-all duration-300 self-start ${
+              menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+            } transition-all duration-500 delay-300`}
+          >
+            The Story Teardown
+          </Link>
+
+          {/* Bottom technical caption */}
+          <span className={`text-technical text-[9px] tracking-[0.3em] uppercase text-warmwhite/15 mt-auto pt-8 ${menuOpen ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500 delay-500`}>
+            Protagonist Ink — Story-Led Brand Studio
+          </span>
         </div>
       </div>
     </nav>
