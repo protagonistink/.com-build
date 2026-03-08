@@ -1,37 +1,33 @@
 import { createClient } from 'next-sanity';
 import { PROJECTS } from '@/data/work-projects';
 import { normalizeEnvValue } from '@/lib/env';
-import type { Project } from '@/types/work';
+import type { CaseStudy } from '@/types/work';
 
 const DEFAULT_SANITY_PROJECT_ID = 'dkok2iir';
 const DEFAULT_SANITY_DATASET = 'production';
 
-interface PortableTextSpan {
-  _type: 'span';
-  text?: string;
-}
-
-interface PortableTextBlock {
-  _type: 'block';
-  children?: PortableTextSpan[];
-}
-
 interface CmsCaseStudy {
   _id: string;
   title?: string;
+  subtitle?: string;
   slug?: { current?: string };
   clientName?: string;
+  sector?: string;
+  engagementType?: string;
   publishedAt?: string;
-  summary?: string;
   status?: string;
-  challenge?: PortableTextBlock[];
-  approach?: PortableTextBlock[];
-  outcome?: PortableTextBlock[];
-  fullStory?: PortableTextBlock[];
-  ctaVariant?: string;
-  industry?: string;
-  businessCategory?: string;
-  campaignCategory?: string;
+  coldOpen?: string;
+  internalStory?: string;
+  externalPerception?: string;
+  consequences?: string;
+  mentors?: Array<{ name?: string; observation?: string }>;
+  villains?: Array<{ name?: string; observation?: string }>;
+  reframe?: string;
+  reframeAnnotation?: string;
+  artifacts?: Array<{ label?: string; description?: string; alt?: string; assetUrl?: string }>;
+  executionSurfaces?: Array<{ surface?: string; description?: string; imageUrl?: string; imageAlt?: string }>;
+  shifts?: Array<{ dimension?: string; change?: string }>;
+  metrics?: Array<{ label?: string; value?: string }>;
   seoDescription?: string;
   heroImageUrl?: string;
   heroImageAlt?: string;
@@ -52,22 +48,6 @@ function getSanityClient() {
   });
 }
 
-function toText(blocks?: PortableTextBlock[]) {
-  if (!Array.isArray(blocks)) return '';
-  return blocks
-    .filter((block) => block?._type === 'block')
-    .map((block) => (block.children || []).map((child) => child.text || '').join(''))
-    .map((text) => text.trim())
-    .filter(Boolean)
-    .join(' ');
-}
-
-function toFirstSentence(value: string) {
-  if (!value) return '';
-  const [sentence] = value.split(/(?<=[.!?])\s+/);
-  return sentence?.trim() || value.trim();
-}
-
 function toYear(value?: string) {
   if (!value) return String(new Date().getUTCFullYear());
   const date = new Date(value);
@@ -75,110 +55,124 @@ function toYear(value?: string) {
   return String(date.getUTCFullYear());
 }
 
-function mapCmsCaseStudy(item: CmsCaseStudy, index: number): Project | null {
+function mapCmsCaseStudy(item: CmsCaseStudy, index: number): CaseStudy | null {
   const title = item.title?.trim();
   const slug = item.slug?.current?.trim();
   if (!title || !slug) return null;
 
-  const summary = (item.summary || '').trim();
-  const challengeText = toText(item.challenge);
-  const approachText = toText(item.approach);
-  const outcomeText = toText(item.outcome);
-  const storyText = toText(item.fullStory);
   const image = item.heroImageUrl || item.ogImageUrl || '/images/work/scene-01.png';
-  const fallbackDescription = summary || storyText || challengeText || approachText || outcomeText;
-  const fallbackProblem = challengeText || summary || storyText || 'Narrative alignment challenge.';
-  const fallbackApproach =
-    approachText || storyText || 'Narrative architecture and messaging system design.';
-  const campaignTitle = title;
-  const businessCategory = (
-    item.businessCategory ||
-    item.industry ||
-    'Brand & Culture'
-  ).trim();
-  const campaignCategory = (
-    item.campaignCategory ||
-    item.ctaVariant ||
-    'Brand Strategy'
-  ).trim();
 
   return {
     id: index + 1,
     slug,
     scene: `SCENE ${String(index + 1).padStart(2, '0')}`,
     ref: `CASE-${String(index + 1).padStart(2, '0')}`,
-    title: campaignTitle,
-    tagline: toFirstSentence(summary || approachText || challengeText || title),
+    title,
+    subtitle: item.subtitle?.trim() || undefined,
     client: (item.clientName || 'Client').trim(),
-    campaignTitle,
-    businessCategory,
-    campaignCategory,
-    category: campaignCategory,
-    description: item.seoDescription || fallbackDescription || title,
+    sector: item.sector?.trim() || undefined,
+    engagementType: item.engagementType?.trim() || undefined,
     year: toYear(item.publishedAt),
     image,
-    imageLabel: 'Case Study',
-    imageDescription: item.heroImageAlt || title,
-    tensionStatement: toFirstSentence(challengeText || summary || title),
-    sector: businessCategory,
-    situation: summary || storyText || fallbackProblem,
-    problem: fallbackProblem,
-    engagementSummary: fallbackApproach,
-    before: toFirstSentence(challengeText || summary || title),
-    after: toFirstSentence(outcomeText || approachText || summary || title),
-    galleryImages: [
-      {
-        src: image,
-        label: `FIG. 01 // ${String(index + 1).padStart(3, '0')}`,
-        description: title,
-      },
-    ],
+    imageAlt: item.heroImageAlt || title,
+    coldOpen: item.coldOpen?.trim() || undefined,
+    internalStory: item.internalStory?.trim() || undefined,
+    externalPerception: item.externalPerception?.trim() || undefined,
+    consequences: item.consequences?.trim() || undefined,
+    mentors: item.mentors
+      ?.filter((m) => m.name?.trim())
+      .map((m) => ({ name: m.name!.trim(), observation: (m.observation || '').trim() })),
+    villains: item.villains
+      ?.filter((v) => v.name?.trim())
+      .map((v) => ({ name: v.name!.trim(), observation: (v.observation || '').trim() })),
+    reframe: item.reframe?.trim() || undefined,
+    reframeAnnotation: item.reframeAnnotation?.trim() || undefined,
+    artifacts: item.artifacts
+      ?.filter((a) => a.assetUrl)
+      .map((a, i) => ({
+        src: a.assetUrl!,
+        alt: a.alt || undefined,
+        label: a.label || `FIG. ${String(i + 1).padStart(2, '0')}`,
+        description: a.description || undefined,
+      })),
+    executionSurfaces: item.executionSurfaces
+      ?.filter((e) => e.surface?.trim())
+      .map((e) => ({
+        surface: e.surface!.trim(),
+        description: (e.description || '').trim(),
+        image: e.imageUrl ? { src: e.imageUrl, alt: e.imageAlt || undefined } : undefined,
+      })),
+    shifts: item.shifts
+      ?.filter((s) => s.dimension?.trim())
+      .map((s) => ({ dimension: s.dimension!.trim(), change: (s.change || '').trim() })),
+    metrics: item.metrics
+      ?.filter((m) => m.label?.trim())
+      .map((m) => ({ label: m.label!.trim(), value: (m.value || '').trim() })),
+    description: item.seoDescription || item.coldOpen || title,
+    category: item.engagementType || item.sector || 'Brand Strategy',
+    tagline: item.subtitle || item.coldOpen?.split(/[.!?]/)[0]?.trim() || title,
   };
 }
 
-async function getCmsCaseStudies(): Promise<Project[]> {
+const CASE_STUDY_QUERY = `
+  *[_type == "caseStudy" && defined(slug.current) && coalesce(status, "published") == "published"]
+  | order(coalesce(publishedAt, _updatedAt) desc) {
+    _id,
+    title,
+    subtitle,
+    slug,
+    clientName,
+    sector,
+    engagementType,
+    publishedAt,
+    status,
+    coldOpen,
+    internalStory,
+    externalPerception,
+    consequences,
+    mentors,
+    villains,
+    reframe,
+    reframeAnnotation,
+    "artifacts": artifacts[] {
+      label,
+      description,
+      "alt": alt,
+      "assetUrl": asset->url
+    },
+    executionSurfaces[] {
+      surface,
+      description,
+      "imageUrl": image.asset->url,
+      "imageAlt": image.alt
+    },
+    shifts,
+    metrics,
+    seoDescription,
+    "heroImageUrl": heroImage.asset->url,
+    "heroImageAlt": heroImage.alt,
+    "ogImageUrl": ogImage.asset->url
+  }
+`;
+
+async function getCmsCaseStudies(): Promise<CaseStudy[]> {
   const client = getSanityClient();
-
   try {
-    const records = await client.fetch<CmsCaseStudy[]>(
-      `*[_type == "caseStudy" && defined(slug.current) && coalesce(status, "published") == "published"]
-      | order(coalesce(publishedAt, _updatedAt) desc) {
-        _id,
-        title,
-        slug,
-        clientName,
-        publishedAt,
-        summary,
-        status,
-        challenge,
-        approach,
-        outcome,
-        fullStory,
-        ctaVariant,
-        industry,
-        businessCategory,
-        campaignCategory,
-        seoDescription,
-        "heroImageUrl": heroImage.asset->url,
-        "heroImageAlt": heroImage.alt,
-        "ogImageUrl": ogImage.asset->url
-      }`
-    );
-
+    const records = await client.fetch<CmsCaseStudy[]>(CASE_STUDY_QUERY);
     return records
       .map(mapCmsCaseStudy)
-      .filter((item): item is Project => Boolean(item));
+      .filter((item): item is CaseStudy => Boolean(item));
   } catch {
     return [];
   }
 }
 
-export async function getWorkProjects(): Promise<Project[]> {
+export async function getWorkProjects(): Promise<CaseStudy[]> {
   const cmsProjects = await getCmsCaseStudies();
   return cmsProjects.length > 0 ? cmsProjects : PROJECTS;
 }
 
-export async function getWorkProjectBySlug(slug: string): Promise<Project | undefined> {
+export async function getWorkProjectBySlug(slug: string): Promise<CaseStudy | undefined> {
   const projects = await getWorkProjects();
   return projects.find((project) => project.slug === slug);
 }

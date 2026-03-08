@@ -20,16 +20,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   const ogImage = project.image || '/images/og-default.jpg';
+  const description = project.subtitle || project.description;
   return {
     title: project.title,
-    description: project.description,
+    description,
     openGraph: {
       title: project.title,
-      description: project.description,
-      images: [{ url: ogImage, alt: project.title }],
+      description,
+      images: [{ url: ogImage, alt: project.imageAlt || project.title }],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: 'summary_large_image' as const,
       images: [ogImage],
     },
   };
@@ -47,16 +48,38 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
   const currentIndex = projects.findIndex((p) => p.slug === slug);
   const nextProject = projects[(currentIndex + 1) % projects.length];
 
+  // Derived booleans for beat visibility
+  const hasColdOpen = Boolean(project.coldOpen);
+  const hasStoryProblem = Boolean(project.internalStory || project.externalPerception || project.consequences);
+  const hasWorld = Boolean((project.mentors && project.mentors.length > 0) || (project.villains && project.villains.length > 0));
+  const hasReframe = Boolean(project.reframe);
+  const hasArtifacts = Boolean(project.artifacts && project.artifacts.length > 0);
+  const hasExecution = Boolean(project.executionSurfaces && project.executionSurfaces.length > 0);
+  const hasShift = Boolean(project.shifts && project.shifts.length > 0);
+  const hasMetrics = Boolean(project.metrics && project.metrics.length > 0);
+  const hasExecutionOrShift = hasExecution || hasShift;
+
+  // Meta pills for hero
+  const heroPills = [
+    project.engagementType,
+    project.client,
+    project.sector,
+    project.year,
+  ].filter(Boolean);
+
+  // Cold Open metadata row
+  const coldOpenMeta = [project.client, project.sector, project.engagementType].filter(Boolean).join(' \u00b7 ');
+
   return (
     <>
       {/* ================================================================
-          DARK HERO — Cinematic opening
+          BEAT 1: HERO — Cinematic opening
           ================================================================ */}
       <section className="relative min-h-[90vh] md:min-h-screen bg-trueblack text-warmwhite overflow-hidden texture-grain">
         {/* Hero image */}
         <ParallaxHeroBackground
           src={project.image}
-          alt={project.imageDescription || project.title}
+          alt={project.imageAlt || project.title}
         />
 
         {/* Camera metadata overlay — top right */}
@@ -85,15 +108,14 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
 
             {/* Meta pills */}
             <div className="flex flex-wrap gap-3 mb-8 drop-shadow-md">
-              <span className="text-[10px] uppercase tracking-[0.2em] text-white/50 border border-white/20 px-3 py-1.5 bg-black/10 backdrop-blur-sm">
-                {project.category}
-              </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] text-white/50 border border-white/20 px-3 py-1.5 bg-black/10 backdrop-blur-sm">
-                {project.client}
-              </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] text-white/50 border border-white/20 px-3 py-1.5 bg-black/10 backdrop-blur-sm">
-                {project.year}
-              </span>
+              {heroPills.map((pill) => (
+                <span
+                  key={pill}
+                  className="text-[10px] uppercase tracking-[0.2em] text-white/50 border border-white/20 px-3 py-1.5 bg-black/10 backdrop-blur-sm"
+                >
+                  {pill}
+                </span>
+              ))}
             </div>
 
             {/* Title */}
@@ -101,10 +123,12 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
               <TypewriterHeadline text={project.title} initialDelay={400} />
             </h1>
 
-            {/* Tagline */}
-            <p className="font-serif text-xl md:text-2xl italic text-white/80 max-w-lg leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
-              {project.tagline}
-            </p>
+            {/* Subtitle */}
+            {project.subtitle && (
+              <p className="font-serif text-xl md:text-2xl italic text-white/70 max-w-2xl leading-relaxed mt-6 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
+                {project.subtitle}
+              </p>
+            )}
           </div>
         </div>
 
@@ -116,152 +140,315 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
       </section>
 
       {/* ================================================================
-          LIGHT BODY — Editorial reading experience
+          BEATS 2–5: LIGHT BODY — Cold Open, Story Problem, World, Reframe
           ================================================================ */}
-      <section className="relative z-20 -mt-12 md:-mt-16 bg-[#FAFAFA] text-ink texture-paper rounded-t-[2.5rem] md:rounded-t-[3rem] shadow-[0_-8px_30px_rgba(0,0,0,0.12)]">
-        {/* Tension statement — the bridge */}
-        <div className="px-6 md:px-10 lg:px-12 py-20 md:py-28">
-          <ScrollRevealWrapper direction="up" className="max-w-[1400px] mx-auto">
-            <div className="max-w-3xl mx-auto text-center">
-              <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-8">
-                THE TENSION
-              </p>
-              <p className="font-serif text-3xl md:text-4xl lg:text-5xl italic text-ink/70 leading-[1.2]">
-                &ldquo;{project.tensionStatement}&rdquo;
-              </p>
-            </div>
-          </ScrollRevealWrapper>
-        </div>
+      {(hasColdOpen || hasStoryProblem || hasWorld || hasReframe) && (
+        <section className="relative z-20 -mt-12 md:-mt-16 bg-[#FAFAFA] text-ink texture-paper rounded-t-[2.5rem] md:rounded-t-[3rem] shadow-[0_-8px_30px_rgba(0,0,0,0.12)]">
 
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12">
-          <div className="h-px bg-ink/[0.06]" />
-        </div>
-
-        {/* Situation / Problem / Engagement — three-column narrative */}
-        <div className="px-6 md:px-10 lg:px-12 py-20 md:py-28">
-          <div className="max-w-[1400px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-              <ScrollRevealWrapper delay={0}>
-                <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-5">
-                  THE SITUATION
-                </p>
-                <p className="text-[14px] md:text-[15px] text-ink/55 leading-[1.8]">
-                  {project.situation}
-                </p>
-              </ScrollRevealWrapper>
-              <ScrollRevealWrapper delay={0.15}>
-                <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-5">
-                  THE PROBLEM
-                </p>
-                <p className="text-[14px] md:text-[15px] text-ink/55 leading-[1.8]">
-                  {project.problem}
-                </p>
-              </ScrollRevealWrapper>
-              <ScrollRevealWrapper delay={0.3}>
-                <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-5">
-                  THE ENGAGEMENT
-                </p>
-                <p className="text-[14px] md:text-[15px] text-ink/55 leading-[1.8]">
-                  {project.engagementSummary}
-                </p>
+          {/* ── Beat 2: Cold Open ── */}
+          {hasColdOpen && (
+            <div className="px-6 md:px-10 lg:px-12 py-20 md:py-28">
+              <ScrollRevealWrapper direction="up" className="max-w-[1400px] mx-auto">
+                <div className="max-w-3xl mx-auto text-center">
+                  <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-4">
+                    THE COLD OPEN
+                  </p>
+                  {coldOpenMeta && (
+                    <p className="text-[12px] text-ink/35 tracking-[0.1em] mb-8">
+                      {coldOpenMeta}
+                    </p>
+                  )}
+                  <p className="font-serif text-lg md:text-xl text-ink/70 leading-[1.8] max-w-3xl">
+                    {project.coldOpen}
+                  </p>
+                </div>
               </ScrollRevealWrapper>
             </div>
-          </div>
-        </div>
+          )}
 
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12">
-          <div className="h-px bg-ink/[0.06]" />
-        </div>
+          {/* ── Beat 3: Story Problem ── */}
+          {hasStoryProblem && (
+            <>
+              <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12">
+                <div className="h-px bg-ink/[0.06]" />
+              </div>
 
-        {/* Before / After — the transformation */}
-        <div className="px-6 md:px-10 lg:px-12 py-20 md:py-28">
-          <div className="max-w-[1400px] mx-auto">
-            <ScrollRevealWrapper direction="up" className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-ink/[0.06]">
-              <div className="p-10 md:p-14 border-b md:border-b-0 md:border-r border-ink/[0.06]">
-                <p className="text-technical text-[10px] tracking-[0.25em] text-ink/20 mb-8">
-                  BEFORE
-                </p>
-                <p className="font-serif text-xl md:text-2xl italic text-ink/30 leading-relaxed">
-                  &ldquo;{project.before}&rdquo;
-                </p>
-                <p className="text-[11px] text-ink/15 mt-6 tracking-wide">
-                  Category language. Low distinction.
-                </p>
+              <div className="px-6 md:px-10 lg:px-12 py-20 md:py-28">
+                <div className="max-w-[1400px] mx-auto">
+                  <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-12">
+                    THE STORY PROBLEM
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+                    {project.internalStory && (
+                      <ScrollRevealWrapper delay={0}>
+                        <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-5">
+                          INTERNAL STORY
+                        </p>
+                        <p className="text-[14px] md:text-[15px] text-ink/55 leading-[1.8]">
+                          {project.internalStory}
+                        </p>
+                      </ScrollRevealWrapper>
+                    )}
+                    {project.externalPerception && (
+                      <ScrollRevealWrapper delay={0.15}>
+                        <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-5">
+                          EXTERNAL PERCEPTION
+                        </p>
+                        <p className="text-[14px] md:text-[15px] text-ink/55 leading-[1.8]">
+                          {project.externalPerception}
+                        </p>
+                      </ScrollRevealWrapper>
+                    )}
+                    {project.consequences && (
+                      <ScrollRevealWrapper delay={0.3}>
+                        <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-5">
+                          CONSEQUENCES
+                        </p>
+                        <p className="text-[14px] md:text-[15px] text-ink/55 leading-[1.8]">
+                          {project.consequences}
+                        </p>
+                      </ScrollRevealWrapper>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="p-10 md:p-14">
-                <p className="text-technical text-[10px] tracking-[0.25em] text-rust mb-8">
-                  AFTER
-                </p>
-                <p className="font-serif text-xl md:text-2xl italic text-ink/80 leading-relaxed">
-                  &ldquo;{project.after}&rdquo;
-                </p>
-                <p className="text-[11px] text-ink/35 mt-6 tracking-wide">
-                  Clear stakes. Clear position.
-                </p>
+            </>
+          )}
+
+          {/* ── Beat 4: The World ── */}
+          {hasWorld && (
+            <>
+              <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12">
+                <div className="h-px bg-ink/[0.06]" />
               </div>
-            </ScrollRevealWrapper>
-          </div>
-        </div>
-      </section>
+
+              <div className="px-6 md:px-10 lg:px-12 py-20 md:py-28">
+                <div className="max-w-[1400px] mx-auto">
+                  <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-12">
+                    THE WORLD
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+                    {project.mentors && project.mentors.length > 0 && (
+                      <ScrollRevealWrapper delay={0}>
+                        <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-6">
+                          WHO&apos;S GETTING IT RIGHT
+                        </p>
+                        <div>
+                          {project.mentors.map((mentor) => (
+                            <div key={mentor.name} className="mb-6 last:mb-0">
+                              <p className="text-[15px] font-medium text-ink/70 mb-1">{mentor.name}</p>
+                              <p className="text-[14px] text-ink/45 leading-[1.7]">{mentor.observation}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </ScrollRevealWrapper>
+                    )}
+                    {project.villains && project.villains.length > 0 && (
+                      <ScrollRevealWrapper delay={0.15}>
+                        <div className="border-l-2 border-rust/30 pl-6">
+                          <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-6">
+                            WHAT YOU&apos;RE UP AGAINST
+                          </p>
+                          <div>
+                            {project.villains.map((villain) => (
+                              <div key={villain.name} className="mb-6 last:mb-0">
+                                <p className="text-[15px] font-medium text-ink/70 mb-1">{villain.name}</p>
+                                <p className="text-[14px] text-ink/45 leading-[1.7]">{villain.observation}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </ScrollRevealWrapper>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* ── Beat 5: The Reframe ── */}
+          {hasReframe && (
+            <>
+              <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12">
+                <div className="h-px bg-ink/[0.06]" />
+              </div>
+
+              <div className="px-6 md:px-10 lg:px-12 py-24 md:py-32">
+                <div className="max-w-[1400px] mx-auto">
+                  <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-12">
+                    THE REFRAME
+                  </p>
+                  <ScrollRevealWrapper direction="up">
+                    <p className="font-serif text-3xl md:text-4xl lg:text-5xl italic text-ink/80 leading-[1.2] text-center max-w-4xl mx-auto">
+                      {project.reframe}
+                    </p>
+                    {project.reframeAnnotation && (
+                      <p className="font-hand text-lg md:text-xl text-rust/60 -rotate-2 mt-8 text-center">
+                        {project.reframeAnnotation}
+                      </p>
+                    )}
+                  </ScrollRevealWrapper>
+                </div>
+              </div>
+            </>
+          )}
+        </section>
+      )}
 
       {/* ================================================================
-          THE ROLLS — Film-strip image gallery
+          BEAT 6: NARRATIVE ARCHITECTURE — Dark gallery
           ================================================================ */}
-      {project.galleryImages && project.galleryImages.length > 0 && (
-        <section className="bg-trueblack text-warmwhite py-20 md:py-28 texture-grain overflow-hidden">
+      {hasArtifacts && (
+        <section className="bg-trueblack text-warmwhite py-20 md:py-28 texture-grain">
           <div className="px-6 md:px-10 lg:px-12 mb-12 md:mb-16">
-            <div className="max-w-[1400px] mx-auto flex items-end justify-between">
-              <div>
-                <p className="text-technical text-[10px] tracking-[0.25em] text-white/20 mb-3">
-                  THE ROLLS
-                </p>
-                <p className="font-serif text-lg italic text-white/30">
-                  Visual artifacts from the engagement
-                </p>
-              </div>
-              <p className="text-[9px] tracking-[0.15em] text-white/15 font-mono hidden md:block">
-                {project.galleryImages.length} FRAMES // {project.scene}
+            <div className="max-w-[1400px] mx-auto">
+              <p className="text-technical text-[10px] tracking-[0.25em] text-white/20 mb-3">
+                NARRATIVE ARCHITECTURE
+              </p>
+              <p className="font-serif text-lg italic text-white/30">
+                Visual artifacts from the engagement
               </p>
             </div>
           </div>
 
-          {/* Horizontal scroll gallery */}
-          <div className="flex gap-6 md:gap-8 overflow-x-auto no-scrollbar px-6 md:px-10 lg:px-12 pb-8 snap-x snap-mandatory">
-            {project.galleryImages.map((img, i) => (
-              <ScrollRevealWrapper direction="left" delay={i * 0.1} key={i} className="shrink-0 w-[80vw] md:w-[55vw] lg:w-[40vw] group snap-center">
-                <div className="relative aspect-[3/2] overflow-hidden bg-white/[0.03] cursor-grab active:cursor-grabbing">
-                  <Image
-                    src={img.src}
-                    alt={img.description}
-                    fill
-                    className="object-cover opacity-75 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-1000 ease-out"
-                    sizes="(max-width: 768px) 80vw, (max-width: 1024px) 55vw, 40vw"
-                  />
-                  {/* Film-strip perforations */}
-                  <div className="absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-black/40 to-transparent pointer-events-none" />
-                  <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
-                </div>
-                <div className="flex items-start justify-between mt-4 gap-4">
-                  <div>
-                    <p className="text-[9px] tracking-[0.15em] text-white/20 font-mono mb-1">
-                      {img.label}
-                    </p>
-                    <p className="text-[12px] text-white/35 leading-relaxed">
-                      {img.description}
-                    </p>
+          <div className="px-6 md:px-10 lg:px-12">
+            <div className="max-w-[1400px] mx-auto">
+              {project.artifacts!.length === 1 ? (
+                <ScrollRevealWrapper delay={0} className="max-w-2xl mx-auto">
+                  <div className="relative aspect-[3/2] overflow-hidden bg-white/[0.03]">
+                    <Image
+                      src={project.artifacts![0].src}
+                      alt={project.artifacts![0].alt || project.artifacts![0].label || 'Artifact'}
+                      fill
+                      className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-700"
+                      sizes="(max-width: 768px) 100vw, 672px"
+                    />
                   </div>
-                  <span className="text-[9px] text-white/10 font-mono shrink-0 mt-0.5">
-                    FIG. {String(i + 1).padStart(2, '0')}
-                  </span>
+                  <div className="mt-4">
+                    <p className="text-[9px] tracking-[0.15em] text-white/25 font-mono mb-1">
+                      {project.artifacts![0].label || 'FIG. 01'}
+                    </p>
+                    {project.artifacts![0].description && (
+                      <p className="text-[12px] text-white/40 leading-relaxed">
+                        {project.artifacts![0].description}
+                      </p>
+                    )}
+                  </div>
+                </ScrollRevealWrapper>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {project.artifacts!.map((artifact, i) => (
+                    <ScrollRevealWrapper key={artifact.src} delay={i * 0.1}>
+                      <div className="relative aspect-[3/2] overflow-hidden bg-white/[0.03]">
+                        <Image
+                          src={artifact.src}
+                          alt={artifact.alt || artifact.label || `Artifact ${i + 1}`}
+                          fill
+                          className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-700"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      </div>
+                      <div className="mt-4">
+                        <p className="text-[9px] tracking-[0.15em] text-white/25 font-mono mb-1">
+                          {artifact.label || `FIG. ${String(i + 1).padStart(2, '0')}`}
+                        </p>
+                        {artifact.description && (
+                          <p className="text-[12px] text-white/40 leading-relaxed">
+                            {artifact.description}
+                          </p>
+                        )}
+                      </div>
+                    </ScrollRevealWrapper>
+                  ))}
                 </div>
-              </ScrollRevealWrapper>
-            ))}
+              )}
+            </div>
           </div>
         </section>
       )}
 
       {/* ================================================================
-          NEXT PROJECT + BACK NAV — white bg, editorial
+          BEATS 7–8: EXECUTION + THE SHIFT — Light section
+          ================================================================ */}
+      {hasExecutionOrShift && (
+        <section className="bg-[#FAFAFA] text-ink texture-paper">
+
+          {/* ── Beat 7: Execution ── */}
+          {hasExecution && (
+            <div className="px-6 md:px-10 lg:px-12 py-20 md:py-28">
+              <div className="max-w-[1400px] mx-auto">
+                <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-12">
+                  THE EXECUTION
+                </p>
+                <ScrollRevealWrapper direction="up">
+                  <div>
+                    {project.executionSurfaces!.map((surface) => (
+                      <div
+                        key={surface.surface}
+                        className="flex items-start gap-6 py-6 border-b border-ink/[0.06] last:border-b-0"
+                      >
+                        <span className="text-technical text-[11px] tracking-[0.2em] text-ink/40 w-32 shrink-0 pt-0.5">
+                          {surface.surface}
+                        </span>
+                        <p className="text-[14px] text-ink/55 leading-[1.7]">
+                          {surface.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollRevealWrapper>
+              </div>
+            </div>
+          )}
+
+          {/* ── Beat 8: The Shift ── */}
+          {hasShift && (
+            <>
+              <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12">
+                <div className="h-px bg-ink/[0.06]" />
+              </div>
+
+              <div className="px-6 md:px-10 lg:px-12 py-20 md:py-28">
+                <div className="max-w-[1400px] mx-auto">
+                  <p className="text-technical text-[10px] tracking-[0.25em] text-ink/25 mb-12">
+                    THE SHIFT
+                  </p>
+                  <div className="border-l-2 border-rust/20 pl-8 ml-2">
+                    {project.shifts!.map((shift) => (
+                      <div key={shift.dimension} className="mb-8 last:mb-0">
+                        <p className="text-technical text-[10px] tracking-[0.25em] text-ink/30 mb-2">
+                          {shift.dimension.toUpperCase()}
+                        </p>
+                        <p className="text-[15px] text-ink/60 leading-[1.7]">
+                          {shift.change}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {hasMetrics && (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 pt-12 border-t border-ink/[0.06]">
+                      {project.metrics!.map((metric) => (
+                        <div key={metric.label}>
+                          <p className="text-2xl md:text-3xl font-display font-medium text-ink/80">
+                            {metric.value}
+                          </p>
+                          <p className="text-[11px] tracking-[0.15em] text-ink/30 mt-2">
+                            {metric.label}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        </section>
+      )}
+
+      {/* ================================================================
+          NAVIGATION FOOTER
           ================================================================ */}
       <section className="bg-[#FAFAFA] text-ink px-6 md:px-10 lg:px-12 pt-16 md:pt-24 pb-12">
         <ScrollRevealWrapper direction="up" className="max-w-[1400px] mx-auto">

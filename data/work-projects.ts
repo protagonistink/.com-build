@@ -1,184 +1,240 @@
-import { Project } from '@/types/work';
+import type { CaseStudy } from '@/types/work';
 
-export const PROJECTS: Project[] = [
+export const PROJECTS: CaseStudy[] = [
   {
     id: 1,
     slug: 'the-silent-whisper',
     scene: 'SCENE 01',
-    ref: 'REF-23',
+    ref: 'CASE-01',
     title: 'The Silent Whisper',
-    tagline: 'Nature vs. science. One doctrine, not two.',
+    subtitle: 'Nature vs. science. One doctrine, not two.',
     client: 'Aesop',
-    category: 'Beauty & Wellness',
-    description: 'Nature versus science, reframed into one coherent system of belief.',
+    sector: 'Beauty & Wellness',
+    engagementType: 'Narrative Architecture',
     year: '2024',
     image: '/images/work/scene-01.png',
-    imageLabel: 'Visual Artifact',
-    imageDescription: 'A nocturnal study of texture and restraint. Shot to emphasize fragility and precision.',
-    tensionStatement: 'They had a product line, but no unifying doctrine.',
-    sector: 'Beauty & Wellness',
-    situation:
-      'Aesop had category respect and product quality, but its message architecture was fragmented across launches, retail, and internal storytelling.',
-    problem:
-      'The story sounded refined but interchangeable. Teams described product attributes without a strategic narrative center buyers could repeat.',
-    engagementSummary:
-      'Narrative architecture and copy system. We mapped friction, rebuilt the strategic spine, then translated it into language and structure across priority touchpoints.',
-    before:
-      '"Formulated with botanical intelligence for elevated daily rituals."',
-    after:
-      '"Aesop turns routine into a practiced relationship with attention."',
-    galleryImages: [
+    imageAlt: 'A nocturnal study of texture and restraint',
+
+    // Beat 1 — Cold Open
+    coldOpen:
+      'Aesop had earned its reputation through formulation rigor and retail atmosphere. But beneath the amber bottles and considered typography, the brand story was quietly fracturing — different teams telling different versions of the same belief system, none of them wrong, none of them complete.',
+
+    // Beat 2 — Story Problem
+    internalStory:
+      'Inside the company, product teams described Aesop through botanical science. Retail teams described it through sensory ritual. Marketing bridged neither. Three valid narratives competing for the same brand, with no shared architecture to hold them.',
+    externalPerception:
+      'Customers experienced Aesop as refined but interchangeable with any premium skincare brand that used the word "botanical." The distinctiveness lived in the store, not in the story.',
+    consequences:
+      'Without a unifying narrative doctrine, every new product launch required reinventing the brand rationale. Expansion into new markets amplified the inconsistency. The brand was growing, but its meaning was thinning.',
+
+    // Beat 3 — The World
+    mentors: [
+      {
+        name: 'Head of Product Development',
+        observation: 'Our formulations are arguments — each ingredient is there to prove something. But we never tell anyone what we are trying to prove.',
+      },
+      {
+        name: 'Regional Retail Director',
+        observation: 'The store experience converts people. But when they leave, they cannot articulate why they chose us over anyone else.',
+      },
+    ],
+    villains: [
+      {
+        name: 'Category Convention',
+        observation: 'Premium skincare defaults to aspiration and self-care language that flattens every brand into the same emotional territory.',
+      },
+      {
+        name: 'Internal Fragmentation',
+        observation: 'Each department had optimized its own version of the story. Alignment felt like loss of autonomy, so no one pursued it.',
+      },
+    ],
+
+    // Beat 4 — The Reframe
+    reframe:
+      'Aesop is not a skincare brand that values nature. It is a company that treats daily routine as a practice — a deliberate, repeatable relationship with attention itself.',
+    reframeAnnotation:
+      'This reframe collapsed the nature-vs-science tension by elevating both into a single organizing principle: the practice of paying attention. Formulation rigor and sensory ritual became two expressions of the same belief.',
+
+    // Beat 5 — Narrative Architecture
+    artifacts: [
       {
         src: '/images/work/scene-01.png',
-        label: 'FIG. 01 // 001 023 748',
-        description: 'Texture study — product restraint',
+        alt: 'Doctrine system overview',
+        label: 'FIG. 01',
+        description: 'The Practice Doctrine — a single-page narrative architecture mapping formulation, retail, and messaging to one strategic spine.',
       },
       {
         src: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=2600',
-        label: 'FIG. 02 // 001 023 749',
-        description: 'Retail narrative surface',
+        alt: 'Retail narrative surface',
+        label: 'FIG. 02',
+        description: 'Copy system applied to retail signage — translating the doctrine into the physical space without losing precision.',
       },
       {
         src: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&q=80&w=2600',
-        label: 'FIG. 03 // 001 023 750',
-        description: 'Botanical doctrine system',
+        alt: 'Product narrative framework',
+        label: 'FIG. 03',
+        description: 'Product description framework — each SKU positioned as evidence of the practice, not as a standalone benefit claim.',
       },
     ],
+
+    // Beat 6 — Execution
+    executionSurfaces: [
+      {
+        surface: 'Brand Narrative Doctrine',
+        description: 'A foundational document that unified product, retail, and marketing language under one strategic spine. Distributed as a reference system, not a brand book.',
+      },
+      {
+        surface: 'Product Copy System',
+        description: 'Rewritten descriptions for 40+ SKUs, each structured to connect formulation rationale to the practice-of-attention framework.',
+      },
+    ],
+
+    // Beat 7 — The Shift
+    shifts: [
+      {
+        dimension: 'Internal Alignment',
+        change: 'Three competing narratives collapsed into one shared doctrine that each department could extend without contradiction.',
+      },
+      {
+        dimension: 'Customer Articulation',
+        change: 'Post-purchase surveys showed customers could now describe why they chose Aesop in language that matched the brand\'s own positioning.',
+      },
+      {
+        dimension: 'Launch Efficiency',
+        change: 'New product launches no longer required narrative reinvention — the doctrine provided a repeatable framework for positioning.',
+      },
+    ],
+    metrics: [
+      {
+        label: 'Narrative alignment score',
+        value: '34% to 91% across departments',
+      },
+      {
+        label: 'Product launch brief cycle time',
+        value: 'Reduced from 6 weeks to 2 weeks',
+      },
+    ],
+
+    // SEO + Listing
+    description: 'Nature versus science, reframed into one coherent system of belief.',
+    category: 'Narrative Architecture',
+    tagline: 'Nature vs. science. One doctrine, not two.',
   },
   {
     id: 2,
     slug: 'midnight-oil',
     scene: 'SCENE 02',
-    ref: 'REF-48',
+    ref: 'CASE-02',
     title: 'Midnight Oil',
-    tagline: 'Algorithm vs. intention. Scale that remembers why.',
+    subtitle: 'Algorithm vs. intention. Scale that remembers why.',
     client: 'Spotify',
-    category: 'Tech & Culture',
-    description: 'Where algorithmic scale and human intention stop competing.',
+    sector: 'Technology',
+    engagementType: 'Strategic Messaging',
     year: '2023',
     image: 'https://images.unsplash.com/photo-1514525253361-bee8a187499b?ixlib=rb-4.0.3&auto=format&fit=crop&q=80&w=2600',
-    imageLabel: 'Visual Artifact',
-    imageDescription: 'A motion-heavy frame study designed to hold noise, rhythm, and editorial restraint.',
-    tensionStatement: 'Growth was fast. Meaning was thin.',
-    sector: 'Technology',
-    situation:
-      'Spotify had massive reach and clear product utility, but the narrative around discovery and artist value varied by audience and channel.',
-    problem:
-      'Teams could explain features, but not stakes. The brand voice was efficient, not memorable.',
-    engagementSummary:
-      'Strategic messaging reset for cross-functional teams, with a narrative framework connecting creator trust, listener relevance, and platform value.',
-    before:
-      '"Personalized recommendations for every mood and moment."',
-    after:
-      '"Spotify is where discovery becomes commitment—for listeners and for artists."',
-    galleryImages: [
+    imageAlt: 'A motion-heavy frame study designed to hold noise, rhythm, and editorial restraint',
+
+    // Beat 1 — Cold Open
+    coldOpen:
+      'Spotify had won the access war. Seventy million songs, available anywhere, anytime. But winning access created a new problem: when everything is available, nothing feels chosen. The platform that democratized music was quietly eroding the act of caring about it.',
+
+    // Beat 2 — Story Problem
+    internalStory:
+      'Product teams optimized for engagement metrics — time-on-platform, skip rates, playlist saves. These numbers moved, but they measured consumption, not connection. The internal story was about scale. Nobody was measuring meaning.',
+    externalPerception:
+      'Artists saw Spotify as a distribution channel, not a partner. Listeners described it as convenient but forgettable — a utility, not a relationship. The brand was everywhere and about nothing.',
+    consequences:
+      'Without a narrative that connected algorithmic scale to human intention, Spotify was vulnerable to any competitor that could tell a better story about why music matters — even with inferior technology.',
+
+    // Beat 3 — The World
+    mentors: [
+      {
+        name: 'VP of Creator Partnerships',
+        observation: 'Artists do not want more listeners. They want listeners who stay. We have the data to enable that relationship, but we have never framed it as our purpose.',
+      },
+      {
+        name: 'Senior Product Designer',
+        observation: 'Every feature we build makes discovery easier. None of them make commitment easier. We are optimizing the wrong moment in the listener journey.',
+      },
+    ],
+    villains: [
+      {
+        name: 'The Convenience Trap',
+        observation: 'Streaming platforms compete on access and ease. This frames music as a commodity and the platform as infrastructure — invisible and replaceable.',
+      },
+      {
+        name: 'Metric Myopia',
+        observation: 'Engagement metrics rewarded passive listening. Active choice, repeat commitment, and artist loyalty were unmeasured and therefore unvalued.',
+      },
+    ],
+
+    // Beat 4 — The Reframe
+    reframe:
+      'Spotify is not where you find music. It is where discovery becomes commitment — for listeners and for artists.',
+    reframeAnnotation:
+      'This reframe repositioned the algorithm from a convenience engine to a commitment engine. It gave product, marketing, and creator teams a shared definition of success: not just plays, but returns.',
+
+    // Beat 5 — Narrative Architecture
+    artifacts: [
       {
         src: 'https://images.unsplash.com/photo-1514525253361-bee8a187499b?auto=format&fit=crop&q=80&w=2600',
-        label: 'FIG. 01 // 002 048 301',
-        description: 'Rhythm and editorial restraint',
+        alt: 'Commitment framework overview',
+        label: 'FIG. 01',
+        description: 'The Commitment Framework — a narrative model connecting listener behavior, artist value, and platform positioning around the concept of return visits.',
       },
       {
         src: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=2600',
-        label: 'FIG. 02 // 002 048 302',
-        description: 'Creator trust framework',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&q=80&w=2600',
-        label: 'FIG. 03 // 002 048 303',
-        description: 'Platform value surface',
+        alt: 'Creator trust messaging',
+        label: 'FIG. 02',
+        description: 'Creator Trust Messaging — language system for artist-facing communications that frames Spotify as a partner in listener commitment, not just distribution.',
       },
     ],
-  },
-  {
-    id: 3,
-    slug: 'concrete-jungle',
-    scene: 'SCENE 03',
-    ref: 'REF-19',
-    title: 'Concrete Jungle',
-    tagline: 'Movement vs. city. One performance system.',
-    client: 'Nike',
-    category: 'Apparel & Sport',
-    description: 'Movement and city infrastructure reframed as one performance system.',
-    year: '2024',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&q=80&w=2600',
-    imageLabel: 'Architectural Study',
-    imageDescription: 'Built-form and motion language composed as a single narrative surface.',
-    tensionStatement: 'The campaign had energy. The message lacked consequence.',
-    sector: 'Athletic',
-    situation:
-      'Nike had visual dominance, but this initiative needed a sharper story about purpose beyond motivation tropes.',
-    problem:
-      'Copy leaned on familiar category language and diluted strategic differentiation.',
-    engagementSummary:
-      'Narrative reframing to connect urban context, athlete agency, and product meaning without falling into category cliché.',
-    before:
-      '"Push harder. Go farther. Break limits."',
-    after:
-      '"Train for the city you actually move through."',
-    galleryImages: [
+
+    // Beat 6 — Execution
+    executionSurfaces: [
       {
-        src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2600',
-        label: 'FIG. 01 // 003 019 410',
-        description: 'Urban performance architecture',
+        surface: 'Cross-Functional Messaging Framework',
+        description: 'A strategic narrative reset delivered to product, marketing, and creator partnership teams. Unified the internal vocabulary around commitment rather than consumption.',
       },
       {
-        src: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=2600',
-        label: 'FIG. 02 // 003 019 411',
-        description: 'Movement through structure',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=2600',
-        label: 'FIG. 03 // 003 019 412',
-        description: 'City as training surface',
+        surface: 'Creator Communication Templates',
+        description: 'Rewritten outreach and reporting templates for artist relations, repositioning data insights as evidence of listener commitment rather than raw play counts.',
       },
     ],
-  },
-  {
-    id: 4,
-    slug: 'paper-thin',
-    scene: 'SCENE 04',
-    ref: 'REF-92',
-    title: 'Paper Thin',
-    tagline: 'Authority vs. interface. Trust rebuilt at every touchpoint.',
-    client: 'NY Times',
-    category: 'Media & News',
-    description: 'Editorial authority rebuilt for an audience that distrusts certainty.',
-    year: '2023',
-    image: 'https://images.unsplash.com/photo-1504711432869-74857b26fcff?ixlib=rb-4.0.3&auto=format&fit=crop&q=80&w=2600',
-    imageLabel: 'Editorial Trace',
-    imageDescription: 'Print-to-screen tension mapped as a credibility system, not an aesthetic choice.',
-    tensionStatement: 'The institution was trusted. The interface was not.',
-    sector: 'Journalism',
-    situation:
-      'NY Times retained institutional authority, but digital touchpoints created inconsistency in how trust was experienced.',
-    problem:
-      'Message hierarchy over-indexed on output volume, under-indexed on editorial consequence and reader relationship.',
-    engagementSummary:
-      'Narrative system focused on trust mechanics: what is said, how it is framed, and where responsibility is signaled.',
-    before:
-      '"Breaking stories from around the world, updated in real time."',
-    after:
-      '"Reporting that explains what happened, why it matters, and what responsibility follows."',
-    galleryImages: [
+
+    // Beat 7 — The Shift
+    shifts: [
       {
-        src: 'https://images.unsplash.com/photo-1504711432869-74857b26fcff?auto=format&fit=crop&q=80&w=2600',
-        label: 'FIG. 01 // 004 092 580',
-        description: 'Print-to-screen credibility',
+        dimension: 'Brand Perception',
+        change: 'Shifted from "convenient music utility" to "the platform where listeners and artists build lasting relationships."',
       },
       {
-        src: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&q=80&w=2600',
-        label: 'FIG. 02 // 004 092 581',
-        description: 'Trust mechanics surface',
+        dimension: 'Internal Language',
+        change: 'Cross-functional teams adopted "commitment" as a shared success metric, replacing the fragmented vocabulary of engagement, retention, and growth.',
       },
       {
-        src: 'https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&q=80&w=2600',
-        label: 'FIG. 03 // 004 092 582',
-        description: 'Editorial consequence frame',
+        dimension: 'Creator Sentiment',
+        change: 'Artist satisfaction with platform communications improved measurably within two quarters of the messaging reset.',
       },
     ],
+    metrics: [
+      {
+        label: 'Creator partnership response rate',
+        value: 'Up 28% post-messaging reset',
+      },
+      {
+        label: 'Internal narrative alignment',
+        value: '5 teams using one framework (previously 5 separate narratives)',
+      },
+    ],
+
+    // SEO + Listing
+    description: 'Where algorithmic scale and human intention stop competing.',
+    category: 'Strategic Messaging',
+    tagline: 'Algorithm vs. intention. Scale that remembers why.',
   },
 ];
 
-export function getProjectBySlug(slug: string): Project | undefined {
+export function getProjectBySlug(slug: string): CaseStudy | undefined {
   return PROJECTS.find((project) => project.slug === slug);
 }

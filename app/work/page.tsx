@@ -18,7 +18,11 @@ export default async function WorkPage() {
         <div className="absolute inset-0 pointer-events-none">
           <iframe
             src="https://player.vimeo.com/video/1169650739?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&dnt=1"
-            className="absolute inset-0 w-full h-full scale-[1.18]"
+            className="absolute left-1/2 top-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2"
+            style={{
+              width: 'max(100vw, 116.67vh)',
+              height: 'max(60vh, 56.25vw)',
+            }}
             allow="autoplay; fullscreen; picture-in-picture"
             loading="lazy"
             aria-hidden
@@ -112,15 +116,15 @@ export default async function WorkPage() {
               {/* Metadata column */}
               <div className="md:col-span-3 flex md:flex-col gap-4 md:gap-3 pt-1">
                 <span className="text-technical text-[13px] tracking-[0.14em] text-ink/60 group-hover:text-warmwhite/80 transition-colors duration-500">
-                  {(project.campaignCategory || project.category || 'Brand Strategy').toUpperCase()}
+                  {(project.engagementType || project.category || 'Brand Strategy').toUpperCase()}
                 </span>
                 <span className="hidden md:block w-0 h-px bg-rust group-hover:w-10 transition-all duration-500 ease-out" />
                 <span className="md:hidden w-4 h-px bg-rust/40 self-center" />
                 <span className="text-technical text-[13px] tracking-[0.12em] text-ink/55 group-hover:text-warmwhite/75 transition-colors duration-500">
-                  CAMPAIGN: {(project.campaignTitle || project.title).toUpperCase()}
+                  CAMPAIGN: {project.title.toUpperCase()}
                 </span>
                 <span className="text-technical text-[13px] tracking-[0.12em] text-ink/55 group-hover:text-warmwhite/75 transition-colors duration-500">
-                  BUSINESS: {(project.businessCategory || project.sector || 'Brand & Culture').toUpperCase()}
+                  BUSINESS: {(project.sector || 'Brand & Culture').toUpperCase()}
                 </span>
               </div>
 
