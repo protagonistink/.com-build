@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,300,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rock+Salt&family=Covered+By+Your+Grace&family=Nothing+You+Could+Do&display=swap');
 @import "tailwindcss";
 
 /* 
@@ -13,7 +13,10 @@
   --font-satoshi: "Satoshi", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --font-cormorant: "Cormorant Garamond", Georgia, serif;
   --font-permanent-marker: "Permanent Marker", cursive;
-  
+  --font-rock-salt: "Rock Salt", cursive;
+  --font-covered: "Covered By Your Grace", cursive;
+  --font-nothing: "Nothing You Could Do", cursive;
+
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Fluid Typography (UTopia-style clamps) */
@@ -32,7 +35,7 @@
   --font-display: var(--font-cormorant);
   --font-serif: var(--font-cormorant);
   --font-sans: var(--font-satoshi);
-  --font-hand: var(--font-permanent-marker);
+  --font-hand: var(--font-nothing);
 
   /* Brand Colors — STRICT PROTAGONIST INK SYSTEM */
   --color-ink: #2C2C2C;
@@ -70,8 +73,13 @@
 }
 
 @keyframes logo-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(calc(-100% / 3)); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-100% / 3));
+  }
 }
 
 * {
@@ -230,8 +238,15 @@ button:focus-visible,
 }
 
 @keyframes rec-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 .animate-rec {
@@ -269,7 +284,7 @@ button:focus-visible,
   opacity: 0;
   transform: translateY(32px);
   transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal-enabled .reveal.revealed {
@@ -278,9 +293,17 @@ button:focus-visible,
 }
 
 /* Stagger delays for choreographed entries */
-.reveal-delay-1 { transition-delay: 0.12s; }
-.reveal-delay-2 { transition-delay: 0.24s; }
-.reveal-delay-3 { transition-delay: 0.38s; }
+.reveal-delay-1 {
+  transition-delay: 0.12s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.24s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.38s;
+}
 
 .about-scene-label {
   font-family: var(--font-sans);
@@ -325,16 +348,17 @@ button:focus-visible,
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    color-mix(in srgb, var(--color-rust) 20%, transparent) 20%,
-    color-mix(in srgb, var(--color-rust) 20%, transparent) 80%,
-    transparent 100%
-  );
+  background: linear-gradient(to right,
+      transparent 0%,
+      color-mix(in srgb, var(--color-rust) 20%, transparent) 20%,
+      color-mix(in srgb, var(--color-rust) 20%, transparent) 80%,
+      transparent 100%);
   pointer-events: none;
 }
-.reveal-delay-4 { transition-delay: 0.52s; }
+
+.reveal-delay-4 {
+  transition-delay: 0.52s;
+}
 
 /* Full-viewport belief word */
 .about-belief-word {
@@ -378,6 +402,7 @@ button:focus-visible,
     transform: translateY(0.12em);
     filter: blur(3px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -386,20 +411,39 @@ button:focus-visible,
 }
 
 @keyframes cursor-blink {
-  0%, 45% { opacity: 1; }
-  50%, 95% { opacity: 0; }
-  100% { opacity: 1; }
+
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  50%,
+  95% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes reel-flicker {
-  0%, 16%, 19%, 52%, 100% {
+
+  0%,
+  16%,
+  19%,
+  52%,
+  100% {
     opacity: 1;
     filter: brightness(1);
   }
-  17%, 18% {
+
+  17%,
+  18% {
     opacity: 0.7;
     filter: brightness(0.75);
   }
+
   53% {
     opacity: 0.82;
     filter: brightness(1.25);
@@ -411,22 +455,53 @@ button:focus-visible,
 }
 
 @keyframes reel-sprocket-run {
-  from { background-position-y: 0; }
-  to { background-position-y: 22px; }
+  from {
+    background-position-y: 0;
+  }
+
+  to {
+    background-position-y: 22px;
+  }
 }
 
 @keyframes reel-gate-jitter {
-  0%, 100% { transform: translateX(0); }
-  18% { transform: translateX(0.18px); }
-  22% { transform: translateX(-0.2px); }
-  51% { transform: translateX(0.12px); }
-  73% { transform: translateX(-0.16px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  18% {
+    transform: translateX(0.18px);
+  }
+
+  22% {
+    transform: translateX(-0.2px);
+  }
+
+  51% {
+    transform: translateX(0.12px);
+  }
+
+  73% {
+    transform: translateX(-0.16px);
+  }
 }
 
 @keyframes reel-scanline-run {
-  from { background-position-y: 0; opacity: 0.28; }
-  50% { opacity: 0.2; }
-  to { background-position-y: 24px; opacity: 0.28; }
+  from {
+    background-position-y: 0;
+    opacity: 0.28;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+
+  to {
+    background-position-y: 24px;
+    opacity: 0.28;
+  }
 }
 
 .reel-sprocket-run {
@@ -438,13 +513,11 @@ button:focus-visible,
 }
 
 .reel-scanline-run {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(236, 230, 221, 0.12) 0px,
-    rgba(236, 230, 221, 0.12) 1px,
-    transparent 1px,
-    transparent 6px
-  );
+  background-image: repeating-linear-gradient(to bottom,
+      rgba(236, 230, 221, 0.12) 0px,
+      rgba(236, 230, 221, 0.12) 1px,
+      transparent 1px,
+      transparent 6px);
   animation: reel-scanline-run 0.28s linear infinite;
 }
 
@@ -473,6 +546,7 @@ button:focus-visible,
     transform: translateY(10px);
     filter: blur(2px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

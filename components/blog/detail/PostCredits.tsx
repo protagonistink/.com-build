@@ -7,19 +7,25 @@ interface PostCreditsProps {
 export default function PostCredits({ items }: PostCreditsProps) {
   return (
     <section
-      className="bg-[#f9f7f2] pt-16 md:pt-20 pb-24 md:pb-32 px-6 md:px-10 lg:px-12"
+      className="bg-[#f9f7f2] pt-0 pb-24 md:pb-32 px-6 md:px-10 lg:px-12"
       itemScope
       itemType="https://schema.org/FAQPage"
     >
       <div className="max-w-[1400px] mx-auto">
         {/* Section Header */}
-        <div className="border-t border-ink/[0.20] pt-6 mb-16 md:mb-24 flex justify-between items-start">
-          <h2 className="text-technical text-[15px] md:text-base tracking-[0.2em] md:tracking-[0.3em] text-ink/90 font-semibold">
-            POST CREDITS
-          </h2>
-          <span className="text-technical text-[12px] tracking-widest text-ink/40 hidden md:block">
-            FREQUENTLY ASKED QUESTIONS
-          </span>
+        <div className="mb-24 md:mb-40 flex flex-col md:flex-row md:items-end justify-between gap-16">
+          <div className="relative group">
+            <h2 className="font-hand text-[6.5rem] md:text-[10rem] lg:text-[14rem] text-rust -rotate-1 leading-[0.8] tracking-normal selection:bg-ink/10 selection:text-rust flex flex-col">
+              <span>Post</span>
+              <span className="ml-16 md:ml-32 mt-[-0.1em]">Credits</span>
+            </h2>
+          </div>
+          <div className="pb-8 md:pb-12 flex flex-col md:items-end gap-5 text-left md:text-right">
+            <span className="text-technical text-[11px] md:text-[12px] tracking-widest text-ink/40">
+              FREQUENTLY ASKED QUESTIONS
+            </span>
+            <div className="w-16 md:w-24 h-px bg-ink/20 hidden md:block" />
+          </div>
         </div>
 
         {/* FAQ Items */}
@@ -51,7 +57,7 @@ export default function PostCredits({ items }: PostCreditsProps) {
 
                 {/* Answer Column */}
                 <div
-                  className="flex flex-col gap-6 md:pt-8"
+                  className="flex flex-col gap-6 md:pt-12"
                   itemScope
                   itemType="https://schema.org/Answer"
                 >

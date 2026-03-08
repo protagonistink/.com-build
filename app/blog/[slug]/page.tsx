@@ -118,7 +118,7 @@ export default async function BlogDetailPage({
       </section>
 
       {/* ═══ BODY ═══ */}
-      <section className="relative z-20 -mt-8 md:-mt-12 bg-[#f9f7f2] texture-paper rounded-t-[2rem] md:rounded-t-[2.5rem] shadow-[0_-12px_24px_-12px_rgba(0,0,0,0.12)] pb-10 md:pb-16">
+      <section className="relative z-20 -mt-8 md:-mt-12 bg-[#f9f7f2] texture-paper rounded-t-[2rem] md:rounded-t-[2.5rem] shadow-[0_-12px_24px_-12px_rgba(0,0,0,0.12)]">
         {/* Body content */}
         <div className="pt-12 md:pt-16">
           {post.body ? (
@@ -135,7 +135,7 @@ export default async function BlogDetailPage({
         </div>
 
         {/* Transition marker */}
-        <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-8 md:pt-12 pb-4 md:pb-6">
+        <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-16 md:pb-24">
           <div className="mx-auto w-fit flex items-center justify-center">
             <Image
               src="/images/brand/transparent_black_symbol.png"
