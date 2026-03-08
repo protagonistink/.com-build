@@ -25,8 +25,8 @@ export async function generateMetadata({
   const post = posts.find((p) => p.slug === slug) ?? null;
   if (!post) return { title: 'Post Not Found' };
 
-  const openGraphImage = post.openGraphImage || post.mainImage || '/images/og-default.jpg';
-  const openGraphAlt = post.openGraphImageAlt || post.mainImageAlt || post.title;
+  const openGraphImage = post.mainImage || '/images/og-default.jpg';
+  const openGraphAlt = post.mainImageAlt || post.title;
   return {
     title: post.title,
     description: post.excerpt,
