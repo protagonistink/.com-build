@@ -2,7 +2,7 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import PostCredits from '@/components/blog/detail/PostCredits';
-import BlogContinuation from '@/components/blog/detail/BlogContinuation';
+import SuggestedReading from '@/components/blog/detail/SuggestedReading';
 import EditorialFooter from '@/components/blog/detail/EditorialFooter';
 import Prose from '@/components/blog/detail/Prose';
 import SanityPortableText from '@/components/blog/detail/SanityPortableText';
@@ -148,15 +148,15 @@ export default async function BlogDetailPage({
           </div>
         </div>
 
-        {/* Post Credits (only renders if post has faqItems) */}
-        {post.faqItems && post.faqItems.length > 0 && (
-          <PostCredits items={post.faqItems} />
-        )}
-
       </section>
 
-      {/* The Ink — PostRow catalogue */}
-      <BlogContinuation posts={cataloguePosts} />
+      {/* ═══ POST CREDITS — FAQ ═══ */}
+      {post.faqItems && post.faqItems.length > 0 && (
+        <PostCredits items={post.faqItems} />
+      )}
+
+      {/* ═══ FURTHER READING ═══ */}
+      <SuggestedReading posts={cataloguePosts} />
 
       {/* Editorial footer — newsletter, Story Teardown, PI mark */}
       <EditorialFooter />
