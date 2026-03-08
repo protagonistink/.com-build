@@ -65,7 +65,8 @@ export default function PostRow({ post, displayNumber, index }: PostRowProps) {
         whileInView={{ scaleY: 1 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.5, delay: index * 0.06 + 0.2 }}
-        className="absolute left-0 top-0 bottom-0 w-[3px] bg-rust origin-top z-10"
+        style={{ transformOrigin: 'top' }}
+        className="absolute left-0 top-0 bottom-0 w-[3px] bg-rust z-10"
       />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-12 py-12 md:py-16 lg:py-20 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start relative z-10">
