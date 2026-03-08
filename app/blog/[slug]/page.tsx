@@ -60,7 +60,7 @@ export default async function BlogDetailPage({
   const { slug } = await params;
   const posts = await getBlogPosts();
   const post = posts.find((p) => p.slug === slug);
-  if (!post) notFound();
+  if (!post) return notFound();
 
   const cataloguePosts = getCataloguePosts(posts, post.slug);
 
