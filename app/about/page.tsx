@@ -3,11 +3,9 @@ import ActTwo from '@/components/about/ActTwo';
 import ActThree from '@/components/about/ActThree';
 import ActProof from '@/components/about/ActProof';
 import ActFour from '@/components/about/ActFour';
-import ActTransform from '@/components/about/ActTransform';
 import ActFoundersIntro from '@/components/about/ActFoundersIntro';
 import ActFounders from '@/components/about/ActFounders';
 import ActFive from '@/components/about/ActFive';
-import Breath from '@/components/about/Breath';
 
 export const metadata = {
   title: 'About',
@@ -22,10 +20,8 @@ export default function AboutPage() {
       <ActThree />
       <ActProof />
       <ActFour />
-      <ActTransform />
       <ActFoundersIntro />
       <ActFounders />
-      <Breath variant="deep" />
       <ActFive />
     </main>
   );

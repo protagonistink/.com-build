@@ -5,10 +5,10 @@ import { motion, useInView, useReducedMotion } from 'motion/react';
 import { ABOUT_EASE } from '@/components/about/motion';
 
 const PAIRS = [
-  { old: 'Invisibility', new: 'Recognition' },
-  { old: 'Confusion', new: 'Conviction' },
-  { old: 'Vendor', new: 'Ally' },
-  { old: 'Noise', new: 'Narrative' },
+  { old: 'Audit', new: 'Clarity' },
+  { old: 'Framework', new: 'Identity' },
+  { old: 'Messaging', new: 'Campaigns' },
+  { old: 'Creative', new: 'Transformation' },
 ] as const;
 
 function Arrow({ delay, show }: { delay: number; show: boolean }) {

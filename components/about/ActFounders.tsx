@@ -23,15 +23,15 @@ function NameOverlay({
   return (
     <div
       className={`absolute z-20 pointer-events-none ${isRight ? 'bottom-8 right-6 md:bottom-[11%] md:-right-[18%]' : 'bottom-8 left-6 md:top-[30%] md:-left-[18%]'}`}
+      aria-hidden="true"
     >
-      <h2
+      <span
         className={`font-display font-light leading-[0.9] tracking-tighter whitespace-nowrap ${stroke}`}
         style={{ fontSize: 'clamp(4rem, 12vw, 12.8rem)' }}
-        aria-hidden
       >
         {lines[0]}<br />{lines[1]}
-      </h2>
-      <h2
+      </span>
+      <span
         className={`absolute inset-0 font-display font-light leading-[0.9] tracking-tighter whitespace-nowrap ${fill}`}
         style={{
           fontSize: 'clamp(4rem, 12vw, 12.8rem)',
@@ -39,7 +39,7 @@ function NameOverlay({
         }}
       >
         {lines[0]}<br />{lines[1]}
-      </h2>
+      </span>
     </div>
   );
 }
@@ -81,15 +81,15 @@ export default function ActFounders() {
             transition={{ duration: 0.85, delay: 0.25, ease: ABOUT_EASE }}
           >
             <div className="w-12 h-px bg-rust mb-7" />
-            <p className="text-rust text-[10px] tracking-[0.32em] uppercase mb-7 font-sans font-medium">Co-Founder, Executive Producer</p>
+            <p className="text-rust text-[10px] tracking-[0.32em] uppercase mb-7 font-sans font-medium">Co-Founder &amp; Executive Producer</p>
 
             <p className="font-display font-light italic text-ink mb-8" style={{ fontSize: 'var(--step-3)', lineHeight: 1.24 }}>
-              {'\u201C'}The architect of narrative structure at Protagonist Ink. Amy redefined digital storytelling by blending classical prose with disruptive cinematic techniques.{"\u201D"}
+              {'\u201C'}Amy shapes partnerships, guides programs and live events, and makes sure the story lands in the real world.{"\u201D"}
             </p>
 
-            <div className="font-sans text-ink/70 leading-relaxed space-y-4 text-[0.92rem] md:text-[step-0]">
-              <p>After fifteen years shaping editorial strategy for brands across healthcare, education, and nonprofit, Amy recognized that most organizations didn&apos;t have a story problem. They had a structure problem.</p>
-              <p>Her leadership turns manuscripts into movements. By viewing the written word through a 35mm lens, she bridges the gap between the page and the screen.</p>
+            <div className="font-sans text-ink/70 leading-relaxed space-y-4 text-[0.92rem] md:text-[length:var(--step-0)]">
+              <p>With more than two decades working across arts, education, and cultural institutions, Amy has led national partnerships, built education programs, and produced performances and initiatives with organizations including Carnegie Hall, the Los Angeles Philharmonic, Cirque du Soleil, Disney, Lincoln Center, and The Getty.</p>
+              <p>Amy&apos;s passion lies at the intersection of artists, institutions, and communities. From early story conversations through real-world execution, Amy shapes partnerships, guides programs and live events, and ensures a foundation&apos;s story hits with impact.</p>
             </div>
           </motion.div>
         </div>
@@ -125,15 +125,15 @@ export default function ActFounders() {
             transition={{ duration: 0.85, delay: 0.38, ease: ABOUT_EASE }}
           >
             <div className="w-12 h-px bg-rust mb-7" />
-            <p className="text-rust text-[10px] tracking-[0.32em] uppercase mb-7 font-sans font-medium">Co-Founder, Narrative Architect</p>
+            <p className="text-rust text-[10px] tracking-[0.32em] uppercase mb-7 font-sans font-medium">Co-Founder &amp; Chief Storyteller</p>
 
             <p className="font-display font-light italic text-ink mb-8" style={{ fontSize: 'var(--step-3)', lineHeight: 1.24 }}>
-              {'\u201C'}Master of the atmospheric. Patrick operates where the light hits the smoke, turning operations into an art form.{"\u201D"}
+              {'\u201C'}Patrick approaches brand storytelling the way screenwriters approach story: protagonist, tension, transformation.{"\u201D"}
             </p>
 
-            <div className="font-sans text-ink/70 leading-relaxed space-y-4 text-[0.92rem] md:text-[step-0]">
-              <p>A decade in agency creative, from Chevron&apos;s global redesign at Elephant to conceptual campaigns for enterprise brands, taught Patrick that great writing without great execution is just a mood board.</p>
-              <p>His philosophy of {'\u2018'}crushed blacks and high stakes{"\u2019"} has become the signature visual DNA of the collective.</p>
+            <div className="font-sans text-ink/70 leading-relaxed space-y-4 text-[0.92rem] md:text-[length:var(--step-0)]">
+              <p>Patrick spent more than two decades in agencies and brand teams shaping campaigns, platforms, and product narratives for companies including Verizon, AT&amp;T, Intel, Airtable, Beats by Dre, and Warner Brothers. His work spans brand storytelling, UX writing, campaign development, and narrative strategy across digital, product, and cultural initiatives.</p>
+              <p>Patrick approaches brand and organizational storytelling the way screenwriters approach story: every narrative needs a protagonist, a tension worth resolving, and a transformation that matters. Because when the story is clear, the work moves.</p>
             </div>
           </motion.div>
         </div>

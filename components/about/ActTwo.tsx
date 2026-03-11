@@ -45,7 +45,7 @@ export default function ActTwo() {
         </motion.div>
       </div>
 
-      {/* Content */}
+      {/* Content — first beat overlaps illustration */}
       <div className="max-w-[1400px] w-full mx-auto grid grid-cols-1 md:grid-cols-2 relative z-10 px-6 md:px-12 h-[120svh]">
         <motion.div
           className="flex flex-col justify-end pb-14 md:pb-24"
@@ -64,8 +64,8 @@ export default function ActTwo() {
               letterSpacing: '-0.02em',
             }}
           >
-            It started with<br />
-            <em className="italic text-rust">a realization.</em>
+            You&apos;re already fighting<br />
+            <em className="italic text-rust">orcs.</em> We make you Frodo.
           </h2>
 
           <div className="about-rule mt-8 mb-8 !bg-ink/15" />
@@ -74,26 +74,61 @@ export default function ActTwo() {
             className="font-sans text-ink/65 leading-relaxed mb-6 max-w-lg"
             style={{ fontSize: '1.05rem' }}
           >
-            Two careers — one in editorial strategy, one in agency creative.
-            A late conversation that kept circling the same frustration:
-            exceptional organizations were being overlooked not because they lacked merit,
-            but because their narrative couldn&apos;t carry the weight of their work.
+            Yes. You need copy. We&apos;ll give you copy. But without story, copy is motionless.
+            Logos, websites, and content are expensive executions without meaning.
           </p>
 
           <p
             className="font-sans text-ink/65 leading-relaxed max-w-lg"
             style={{ fontSize: '1.05rem' }}
           >
-            So we did what any two people on the edge of something do: we built a raft.
+            If you&apos;ve never heard of the Hero&apos;s Journey, you&apos;re in for a ride. Because
+            that&apos;s how people have told the glory of every book, movie, tale, campfire setting,
+            phone call, and text thread since the dawn of time. One good guy. One bad guy. One goal.
           </p>
-
-          <Link
-            href="/story-teardown"
-            className="inline-flex items-center font-sans text-sm tracking-wide text-ink/30 hover:text-ink/60 transition-colors mt-10"
-          >
-            Ready to talk? Start a story teardown <span className="ml-2 text-rust/60">→</span>
-          </Link>
         </motion.div>
+      </div>
+
+      {/* Second beat — below the illustration */}
+      <div className="relative z-10 bg-paper">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-24">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-10 md:gap-20 items-start">
+            <p
+              className="font-display italic text-ink"
+              style={{ fontSize: 'clamp(1.6rem, 3vw, 2.15rem)', lineHeight: 1.15 }}
+            >
+              And no, you&apos;re not the Guide.
+            </p>
+
+            <div>
+              <p
+                className="font-sans text-ink/65 leading-relaxed mb-6 max-w-lg"
+                style={{ fontSize: '1.05rem' }}
+              >
+                Not right now. We&apos;re not selling ads, we&apos;re crafting identity. We&apos;re creating
+                the building blocks of your story. You&apos;re who started something new. Who saw
+                something others missed. Who had a mission to follow.
+              </p>
+
+              <p
+                className="font-sans text-ink/65 leading-relaxed max-w-lg"
+                style={{ fontSize: '1.05rem' }}
+              >
+                We&apos;ll take you through the process used in Hollywood writers&apos; rooms, Madison Ave
+                whiteboards, and world-class arts organizations to clarify your goal, strengthen your
+                characters, and rediscover your why. You&apos;re the hero. Maybe not the one you thought,
+                but the one they need right now.
+              </p>
+
+              <Link
+                href="/story-teardown"
+                className="inline-flex items-center font-sans text-sm tracking-wide text-ink/50 hover:text-rust transition-colors mt-10"
+              >
+                Ready to talk? Start a story teardown <span className="ml-2 text-rust/60">→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

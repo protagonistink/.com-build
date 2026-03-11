@@ -15,7 +15,6 @@ export default function ActOne() {
 
   const imageOpacity = useTransform(scrollYProgress, [0, 0.2, 0.5], [0, 0.15, 0.35]);
   const headlineOpacity = useTransform(scrollYProgress, [0.1, 0.2], [0, 1]);
-  const punchlineOpacity = useTransform(scrollYProgress, [0.3, 0.38], [0, 1]);
   const bodyOpacity = useTransform(scrollYProgress, [0.45, 0.55], [0, 1]);
   const timecodeOpacity = useTransform(scrollYProgress, [0.55, 0.65], [0, 1]);
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.22], [1, 0]);
@@ -115,39 +114,47 @@ export default function ActOne() {
             }}
           >
             <TypewriterHeadline
-              text="Every brand is living a story."
+              text="It's your story."
               wordDelay={80}
               initialDelay={200}
               showCursor
               cursorColor="bg-[var(--color-rust)]"
             />
           </h1>
+
+          <h2
+            className="font-display font-light text-paper/88 tracking-tight mt-5 md:mt-6"
+            style={{
+              fontSize: 'clamp(1.6rem, 4.3vw, 3.5rem)',
+              lineHeight: 0.98,
+            }}
+          >
+            Why aren&apos;t you the <span className="italic text-rust">hero?</span>
+          </h2>
         </motion.div>
 
         {/* Gut punch */}
-        <motion.p
-          className="font-sans uppercase tracking-[0.2em] text-paper/55 mt-8 md:mt-12"
-          style={{
-            opacity: prefersReduced ? 1 : punchlineOpacity,
-            fontSize: 'var(--step-0)',
-          }}
+        <motion.div
+          className="max-w-2xl mt-10 md:mt-12 space-y-5"
+          style={{ opacity: prefersReduced ? 1 : bodyOpacity }}
         >
-          Most are losing theirs.
-        </motion.p>
+          <p
+            className="font-sans text-paper/45 leading-[1.72]"
+            style={{ fontSize: 'var(--step--1)' }}
+          >
+            Founders, dreamers, and cultural leaders operate from an idea. A mission. We work at
+            the edge of what&apos;s possible. But ideas are fragile. Today&apos;s audiences are tired
+            of ideas. They want a story.
+          </p>
 
-        {/* Villain body text */}
-        <motion.p
-          className="font-sans text-paper/45 max-w-xl mt-8 md:mt-10 leading-[1.72]"
-          style={{
-            opacity: prefersReduced ? 1 : bodyOpacity,
-            fontSize: 'var(--step--1)',
-          }}
-        >
-          You&apos;ve felt it — the pitch that should have landed, the positioning that reads
-          like everyone else&apos;s, the brand story that gets a polite nod but never a callback.
-          Vision gets buried by noise, drift, and generic language. You don&apos;t lose because
-          you&apos;re wrong. You lose because no one could place the stakes fast enough.
-        </motion.p>
+          <p
+            className="font-sans text-paper/45 leading-[1.72]"
+            style={{ fontSize: 'var(--step--1)' }}
+          >
+            You built something real. Something that matters. And you&apos;ve got a story to tell.
+            You just have to make your audience choose to listen.
+          </p>
+        </motion.div>
       </motion.div>
     </section>
   );
