@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react';
 import Image from 'next/image';
 
@@ -277,7 +277,7 @@ function ScrollProgress({ progress }: { progress: MotionValue<number> }) {
 }
 
 function renderBlockSequence(
-  renderPanel: (belief: (typeof BELIEFS)[number]) => JSX.Element,
+  renderPanel: (belief: (typeof BELIEFS)[number]) => React.ReactElement,
 ) {
   return BELIEFS.map((belief, index) => {
     const connector = getConnector(index);
