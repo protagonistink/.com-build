@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, Fragment } from 'react';
+import { useRef } from 'react';
 import Image from 'next/image';
 import {
   motion,
@@ -14,11 +14,15 @@ import { ABOUT_EASE } from '@/components/about/motion';
 const STATEMENT_LINES = [
   {
     color: 'paper' as const,
-    words: ['We', 'build', 'the', 'blueprint.', 'The', 'narrative.', 'The', 'creative.'],
+    words: ['We', 'build', 'the', 'blueprint.'],
+  },
+  {
+    color: 'paper' as const,
+    words: ['The', 'narrative.', 'The', 'creative.'],
   },
   {
     color: 'rust' as const,
-    words: ['You', 'build', 'the', 'transformation.'],
+    words: ['So', 'you', 'can', 'build', 'the', 'transformation.'],
   },
 ] as const;
 
@@ -32,7 +36,7 @@ const METHODOLOGY_BEATS = [
     meta: 'PHASE 01 // THE AUDIT',
     head1: 'WE START',
     head2: 'by listening.',
-    body: 'Brand audit, stakeholder conversations, audience mapping. Our Narrative Audit reveals the story hiding in plain sight.',
+    body: 'We start by listening. We audit your current brand and marketing materials, speak to stakeholders, map your audiences. We want to discover the story hiding in plain sight.',
     img: 'https://images.unsplash.com/photo-1513470270416-d3ff6f16b22f?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=80&w=2400',
     alt: 'Two women in conversation across a table by a window',
     imagePosition: 'center bottom',
@@ -41,9 +45,9 @@ const METHODOLOGY_BEATS = [
   {
     num: '02',
     meta: 'PHASE 02 // ARCHITECTURE',
-    head1: 'STRATEGY',
-    head2: 'meets structure.',
-    body: 'We build the narrative framework, your main characters, and your top-level messaging. Authority is quiet. Claims are concrete.',
+    head1: 'WE BUILD',
+    head2: 'the foundation.',
+    body: 'We\'re not going by vibes. We treat your brand like an Oscar-winning screenplay. We build the framework, flesh out the characters, and pull forward the scenes that get you noticed.',
     img: '/images/about/phase-architecture.jpg',
     alt: 'Hands writing in notebook, the making process',
     imagePosition: 'center center',
@@ -159,13 +163,13 @@ function Showstopper() {
         </span>
 
         {/* Dual-headline: massive Satoshi black + Cormorant italic rust */}
-        <h3 className="font-sans font-black text-5xl md:text-7xl lg:text-[8rem] leading-[0.85] text-paper uppercase tracking-tighter mix-blend-difference relative">
-          WE ROLL OUT
+        <h3 className="font-sans font-black text-4xl md:text-6xl lg:text-[6.5rem] leading-[0.9] text-paper uppercase tracking-tighter mix-blend-difference relative">
+          WE BRING
           {/* Abstract rust glow behind text */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-full max-w-lg h-12 bg-rust opacity-20 -z-10 blur-xl group-hover:opacity-40 transition-opacity duration-1000" />
         </h3>
-        <h4 className="font-display text-5xl md:text-7xl lg:text-[9rem] text-rust italic font-light leading-[0.8] tracking-normal lowercase mt-2 lg:mt-0">
-          the red carpet.
+        <h4 className="font-display text-5xl md:text-7xl lg:text-[8rem] text-rust italic font-light leading-[0.82] tracking-normal lowercase mt-2 lg:mt-0">
+          your story to life.
         </h4>
 
         {/* Editorial pull quote */}
@@ -174,8 +178,7 @@ function Showstopper() {
             &ldquo;
           </div>
           <p className="font-sans text-paper text-[16px] lg:text-[20px] leading-[1.8] font-light">
-            Identity, messaging, copy, campaigns, and culture. Because story
-            without execution is just daydreaming.
+            Once it&apos;s built, we put it out into the world just how you need it told. Identity, messaging, campaigns, content, and culture. Because story without execution is just daydreaming.
           </p>
           <div className="w-full h-px bg-gradient-to-r from-transparent via-rust/50 to-transparent mt-12" />
         </div>
@@ -201,9 +204,10 @@ function RevealWord({
   total: number;
   scrollYProgress: MotionValue<number>;
 }) {
-  const start = index / total;
-  const end = start + 1 / total;
-  const opacity = useTransform(scrollYProgress, [start, end], [0.2, 1]);
+  const revealWindow = 0.62;
+  const start = (index / total) * revealWindow;
+  const end = Math.min(start + revealWindow / total, revealWindow);
+  const opacity = useTransform(scrollYProgress, [start, end], [0.18, 1]);
   const color =
     word.color === 'rust' ? 'var(--color-rust)' : 'var(--color-paper)';
 
@@ -222,39 +226,36 @@ function TextReveal() {
   const prefersReduced = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start 0.88', 'end 0.18'],
+    offset: ['start end', 'end 0.4'],
   });
 
   if (prefersReduced) {
     return (
       <div className="py-24 md:py-32">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 text-center">
-          <p
-            className="font-display font-light"
+          <div
+            className="font-display font-light flex flex-col items-center gap-3"
             style={{
               fontSize: 'clamp(1.8rem, 4vw, 3.4rem)',
               lineHeight: 1.12,
             }}
           >
-            <span className="text-paper">
-              We build the blueprint. The narrative. The creative.
-            </span>
-            <br />
-            <span className="text-rust mt-2 inline-block">
-              You build the transformation.
-            </span>
-          </p>
+            <p className="text-paper">We build the blueprint.</p>
+            <p className="text-paper">The narrative.</p>
+            <p className="text-paper">The creative.</p>
+            <p className="text-rust">So you can build the transformation.</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div ref={containerRef} className="relative" style={{ height: '125vh' }}>
+    <div ref={containerRef} className="relative" style={{ height: '140vh' }}>
       <div className="sticky top-0 h-[88vh] flex items-center justify-center">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 text-center">
           <div
-            className="font-display font-light flex flex-wrap justify-center"
+            className="font-display font-light flex flex-col items-center gap-3"
             style={{
               fontSize: 'clamp(1.8rem, 4vw, 3.4rem)',
               lineHeight: 1.12,
@@ -266,7 +267,7 @@ function TextReveal() {
                 .reduce((count, currentLine) => count + currentLine.words.length, 0);
 
               return (
-                <Fragment key={`${line.color}-${lineIndex}`}>
+                <div key={`${line.color}-${lineIndex}`} className="flex flex-wrap justify-center">
                   {line.words.map((text, wordIndex) => (
                     <RevealWord
                       key={`${line.color}-${text}-${wordIndex}`}
@@ -276,10 +277,7 @@ function TextReveal() {
                       scrollYProgress={scrollYProgress}
                     />
                   ))}
-                  {lineIndex < STATEMENT_LINES.length - 1 && (
-                    <div className="basis-full h-3" aria-hidden />
-                  )}
-                </Fragment>
+                </div>
               );
             })}
           </div>
@@ -313,7 +311,7 @@ export default function ActFour() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.7, ease: ABOUT_EASE }}
         >
-          Narrative Architecture
+          How We Work
         </motion.p>
       </div>
 

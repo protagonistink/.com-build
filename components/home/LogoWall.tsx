@@ -21,7 +21,7 @@ export default function LogoWall() {
       {/* Label */}
       <div className="flex justify-center mb-10 md:mb-14">
         <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.4em] text-white/20">
-          Featuring
+          Trusted by
         </span>
       </div>
 

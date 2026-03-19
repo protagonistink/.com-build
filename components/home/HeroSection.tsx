@@ -110,7 +110,7 @@ export default function HeroSection() {
               className="font-[family-name:var(--font-satoshi)] text-[#9B9EA4] leading-[1.75] mb-9"
               style={{ fontSize: 'clamp(14px, 1.4vw, 19px)' }}
             >
-              You have something real to say. Board misalignment, AI-generated sprawl, and fragmented messaging are burying it. Every week without a clear story is a week your competitors don&apos;t have to be better — just louder.
+              Today&apos;s market demands clarity, authenticity, and entertainment. And every week without a clear story means your competitors don&apos;t have to be better — just louder.
             </p>
 
             <motion.div
@@ -123,13 +123,13 @@ export default function HeroSection() {
                 className="font-[family-name:var(--font-satoshi)] text-[#9B9EA4] leading-[1.75]"
                 style={{ fontSize: 'clamp(14px, 1.4vw, 19px)' }}
               >
-                Curious if your story hits? Give us five minutes.
+                Want to know if your story lands?
               </span>
               <Link
                 href="/story-teardown"
                 className="inline-flex items-center gap-4 bg-[var(--color-rust)] hover:bg-[#a83020] text-white pl-8 pr-6 py-[15px] font-[family-name:var(--font-satoshi)] font-bold text-[13px] uppercase tracking-[0.18em] transition-all duration-300 group shadow-lg shadow-black/20"
               >
-                Get your free story teardown
+                We&apos;ll tear down your story
                 <span className="group-hover:translate-x-2 transition-transform duration-300 text-[17px]">→</span>
               </Link>
             </motion.div>

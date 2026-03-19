@@ -9,10 +9,12 @@ function NameOverlay({
   lines,
   align,
   tone,
+  zClass = 'z-20',
 }: {
   lines: [string, string];
   align: 'left' | 'right';
   tone: 'light' | 'dark';
+  zClass?: string;
 }) {
   const isRight = align === 'right';
   const stroke = tone === 'light'
@@ -22,7 +24,7 @@ function NameOverlay({
 
   return (
     <div
-      className={`absolute z-20 pointer-events-none ${isRight ? 'bottom-8 right-6 md:bottom-[11%] md:-right-[18%]' : 'bottom-8 left-6 md:top-[30%] md:-left-[18%]'}`}
+      className={`absolute pointer-events-none ${zClass} ${isRight ? 'bottom-8 right-6 md:bottom-[11%] md:-right-[18%]' : 'bottom-8 left-6 md:top-[30%] md:-left-[18%]'}`}
       aria-hidden="true"
     >
       <span
@@ -68,11 +70,11 @@ export default function ActFounders() {
             animate={show ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1.05, ease: ABOUT_EASE }}
           >
-            <NameOverlay lines={['AMY', 'KIRKLAND']} align="right" tone="light" />
+            <NameOverlay lines={['AMY', 'KIRKLAND']} align="right" tone="light" zClass="z-0" />
           </motion.div>
         </div>
 
-        <div className="relative w-full md:w-[42%] bg-paper z-0 flex flex-col justify-end px-8 md:px-16 py-14 md:py-20">
+        <div className="relative w-full md:w-[42%] bg-paper z-20 flex flex-col justify-end px-8 md:px-16 py-14 md:py-20">
           <div className="absolute inset-0 texture-paper opacity-[0.03] pointer-events-none" />
           <motion.div
             className="max-w-md relative z-10"
@@ -128,12 +130,12 @@ export default function ActFounders() {
             <p className="text-rust text-[10px] tracking-[0.32em] uppercase mb-7 font-sans font-medium">Co-Founder &amp; Chief Storyteller</p>
 
             <p className="font-display font-light italic text-ink mb-8" style={{ fontSize: 'var(--step-3)', lineHeight: 1.24 }}>
-              {'\u201C'}Patrick approaches brand storytelling the way screenwriters approach story: protagonist, tension, transformation.{"\u201D"}
+              {'\u201C'}Patrick approaches brand storytelling the way screenwriters approach story.{"\u201D"}
             </p>
 
             <div className="font-sans text-ink/70 leading-relaxed space-y-4 text-[0.92rem] md:text-[length:var(--step-0)]">
-              <p>Patrick spent more than two decades in agencies and brand teams shaping campaigns, platforms, and product narratives for companies including Verizon, AT&amp;T, Intel, Airtable, Beats by Dre, and Warner Brothers. His work spans brand storytelling, UX writing, campaign development, and narrative strategy across digital, product, and cultural initiatives.</p>
-              <p>Patrick approaches brand and organizational storytelling the way screenwriters approach story: every narrative needs a protagonist, a tension worth resolving, and a transformation that matters. Because when the story is clear, the work moves.</p>
+              <p>A screenwriter for film and television, Patrick spent more than two decades in New York and Los Angeles agencies and in-house brand teams shaping campaigns, platforms, and product narratives for tech and entertainment giants including Verizon, AT&amp;T, Intel, and Warner Brothers. His work spans brand storytelling, UX writing, campaign development, and narrative strategy across digital, product, and cultural initiatives.</p>
+              <p>Patrick approaches brand and organizational storytelling the way screenwriters approach story: Hero + Goal + Villain = Transformation. It works for Hollywood, it will work for you.</p>
             </div>
           </motion.div>
         </div>

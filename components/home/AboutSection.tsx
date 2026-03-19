@@ -27,12 +27,12 @@ export default function AboutSection() {
           className="mb-16 lg:mb-24"
         >
           <span className="font-sans text-[10px] uppercase tracking-[0.5em] text-ink/35 mb-6 block">
-            The Philosophy
+            About Us
           </span>
           <h2 className="font-display text-[clamp(2.6rem,7vw,6rem)] leading-[0.9] tracking-[-0.02em] text-ink max-w-5xl">
-            Strategy is not <br />
-            a guessing game. <br />
-            <em className="italic font-light text-ink/50">It&apos;s an interrogation.</em>
+            Strategy is not a guessing game.
+            <br />
+            <em className="italic font-light text-ink/50">It&apos;s a story.</em>
           </h2>
         </motion.div>
 
@@ -65,7 +65,7 @@ export default function AboutSection() {
                   Amy Kirkland
                 </p>
                 <p className="font-sans text-[10px] tracking-[0.1em] text-ink/30 uppercase">
-                  Co-Founder, Executive Producer &amp; Impact
+                  Co-Founder / Executive Producer
                 </p>
               </div>
             </motion.div>
@@ -93,7 +93,7 @@ export default function AboutSection() {
                   Patrick Kirkland
                 </p>
                 <p className="font-sans text-[10px] tracking-[0.1em] text-ink/30 uppercase">
-                  Co-Founder, Chief Narrative Architect
+                  Co-Founder / Chief Storyteller
                 </p>
               </div>
             </motion.div>
@@ -115,7 +115,7 @@ export default function AboutSection() {
                   Background
                 </h3>
                 <p className="font-sans text-base lg:text-lg leading-[1.75] text-ink/75 max-w-xl">
-                  Before Protagonist Ink, we spent a decade in the trenches of brand strategy and narrative architecture. We learned that most brands fail not because their ideas are bad — but because they can&apos;t articulate why they matter. We left the big rooms to build something sharper.
+                  Before Protagonist Ink, we spent two decades in the trenches of brand strategy, cultural production and narrative architecture. We learned that most organizations don&apos;t work not because their ideas are bad, but because they can&apos;t articulate why they matter.
                 </p>
               </motion.div>
 
@@ -144,11 +144,11 @@ export default function AboutSection() {
               className="mt-16 lg:mt-0"
             >
               <Link
-                href="/#story-teardown"
+                href="/story-teardown"
                 className="inline-flex items-center gap-3 group"
               >
                 <span className="font-display italic text-2xl lg:text-3xl text-rust border-b border-rust/20 pb-1 group-hover:border-rust/60 transition-colors">
-                  Start the interrogation
+                  Write your story
                 </span>
                 <ArrowUpRight className="w-6 h-6 text-rust transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </Link>

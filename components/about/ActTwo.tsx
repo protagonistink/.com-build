@@ -64,8 +64,8 @@ export default function ActTwo() {
               letterSpacing: '-0.02em',
             }}
           >
-            You&apos;re already fighting<br />
-            <em className="italic text-rust">orcs.</em> We make you Frodo.
+            To beat your villains,<br />
+            you need a sharp <em className="italic text-rust">edge.</em>
           </h2>
 
           <div className="about-rule mt-8 mb-8 !bg-ink/15" />
@@ -74,17 +74,14 @@ export default function ActTwo() {
             className="font-sans text-ink/65 leading-relaxed mb-6 max-w-lg"
             style={{ fontSize: '1.05rem' }}
           >
-            Yes. You need copy. We&apos;ll give you copy. But without story, copy is motionless.
-            Logos, websites, and content are expensive executions without meaning.
+            You need a story that engages, surprises, and brings your audience in. We&apos;ll give you copy, plus a whole lot more. Without an engaging story, copy is motionless. Logos, websites, and content are expensive executions without meaning.
           </p>
 
           <p
             className="font-sans text-ink/65 leading-relaxed max-w-lg"
             style={{ fontSize: '1.05rem' }}
           >
-            If you&apos;ve never heard of the Hero&apos;s Journey, you&apos;re in for a ride. Because
-            that&apos;s how people have told the glory of every book, movie, tale, campfire setting,
-            phone call, and text thread since the dawn of time. One good guy. One bad guy. One goal.
+            If you&apos;ve never heard of the Hero&apos;s Journey, you&apos;re in for a ride. Because that&apos;s how people have told the glory of every book, movie, tale, campfire setting, OMG phone and text thread since the dawn of time. One good guy. One bad guy. One goal.
           </p>
         </motion.div>
       </div>
@@ -105,26 +102,28 @@ export default function ActTwo() {
                 className="font-sans text-ink/65 leading-relaxed mb-6 max-w-lg"
                 style={{ fontSize: '1.05rem' }}
               >
-                Not right now. We&apos;re not selling ads, we&apos;re crafting identity. We&apos;re creating
-                the building blocks of your story. You&apos;re who started something new. Who saw
-                something others missed. Who had a mission to follow.
+                Not right now. Look, we&apos;ve heard it, too. &quot;Your customers are the heroes and you&apos;re the one making their journeys possible.&quot; That&apos;s what they say. You know what they also say? &quot;Figure your own stuff out before you guide somebody else.&quot;
               </p>
 
               <p
                 className="font-sans text-ink/65 leading-relaxed max-w-lg"
                 style={{ fontSize: '1.05rem' }}
               >
-                We&apos;ll take you through the process used in Hollywood writers&apos; rooms, Madison Ave
-                whiteboards, and world-class arts organizations to clarify your goal, strengthen your
-                characters, and rediscover your why. You&apos;re the hero. Maybe not the one you thought,
-                but the one they need right now.
+                We&apos;re not selling ads, we&apos;re crafting identity. We&apos;re creating the building blocks of your story. You&apos;re the one who started something new. Who saw something others missed. Who had a mission.
+              </p>
+
+              <p
+                className="font-sans text-ink/65 leading-relaxed max-w-lg"
+                style={{ fontSize: '1.05rem' }}
+              >
+                We&apos;ll take you through the process used in Hollywood writers&apos; rooms, Madison Ave whiteboards, and world-class arts organizations to clarify your goal, strengthen your characters, and rediscover your why.
               </p>
 
               <Link
                 href="/story-teardown"
                 className="inline-flex items-center font-sans text-sm tracking-wide text-ink/50 hover:text-rust transition-colors mt-10"
               >
-                Ready to talk? Start a story teardown <span className="ml-2 text-rust/60">→</span>
+                Ready to see how? Start a story teardown <span className="ml-2 text-rust/60">→</span>
               </Link>
             </div>
           </div>

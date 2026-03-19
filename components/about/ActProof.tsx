@@ -37,26 +37,9 @@ export default function ActProof() {
       <div className="absolute inset-y-0 left-[max(1.5rem,calc(50%-42rem))] hidden xl:block w-px bg-rust/10 pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto px-6 md:px-12 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,15rem)_1fr] gap-10 md:gap-16 items-start mb-14 md:mb-18">
-          <div>
-            <p className="about-scene-label text-rust mb-4">The Proof</p>
-            <div className="about-rule mb-6 !bg-rust/35" />
-            <p className="font-sans text-[0.8rem] uppercase tracking-[0.22em] text-ink/42">
-              Selected lines from people who&apos;ve actually been in the room.
-            </p>
-          </div>
-
-          <div className="max-w-3xl">
-            <h2
-              className="font-display font-light text-ink"
-              style={{ fontSize: 'clamp(2.2rem, 4.4vw, 4rem)', lineHeight: 1.02 }}
-            >
-              Evidence, not posture.
-            </h2>
-            <p className="font-sans text-ink/62 mt-5 max-w-2xl" style={{ fontSize: '1rem', lineHeight: 1.72 }}>
-              The page can be cinematic. The work still has to land with actual people. These are the people who have seen that happen up close.
-            </p>
-          </div>
+        <div className="mb-14 md:mb-18">
+          <p className="about-scene-label text-rust mb-4">The Proof</p>
+          <div className="about-rule mb-6 !bg-rust/35" />
         </div>
 
         <div className="flex flex-col gap-14 md:gap-16">

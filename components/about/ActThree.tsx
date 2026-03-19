@@ -7,7 +7,7 @@ import Image from 'next/image';
 const BELIEFS = [
   {
     word: 'HERO',
-    body: 'The suited man in a cape. The founder on a mission. The leader of community programs. The one everyone is rooting for. This is about your why.',
+    body: 'The suited man in a cape. The founder on a mission. The leader of community programs. The one everyone is rooting for. This isn\'t about the market. This is about your why.',
     dark: false,
     color: 'text-ink',
     bgImage: null,
@@ -28,7 +28,7 @@ const BELIEFS = [
   },
   {
     word: 'STORY',
-    body: 'Where framework meets passion. Where authenticity meets structure. Where audiences meet brand.',
+    body: 'The sum of all things above. This isn\'t just your mission statement. Your identity. Where framework meets passion. Authenticity meets structure. Where audiences meet brand.',
     dark: true,
     color: 'text-rust',
     bgImage: '/images/pages/boyinboots.jpg',
@@ -36,10 +36,10 @@ const BELIEFS = [
 ] as const;
 
 const INTRO_LABEL = 'The Framework';
-const INTRO_HEADLINE = 'Narrative Architecture 101:';
-const INTRO_EMPHASIS = 'story meets system.';
+const INTRO_HEADLINE = 'We didn\'t invent storytelling.';
+const INTRO_EMPHASIS = 'We just know how to make you the center of it.';
 const INTRO_BODY =
-  "Not our system. The universe's. And not our story. Yours. We're not inventing any of it. We just know how to put you in the center of it.";
+  "Not our system. The universe's. And not our story. Yours.";
 const PROGRESS_LABELS = ['INTRO', ...BELIEFS.map((belief) => belief.word)] as const;
 
 function getConnector(index: number) {

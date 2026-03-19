@@ -37,13 +37,15 @@ export default function TransformationSection() {
           <div className="w-[1px] h-32 bg-gradient-to-b from-transparent via-[#555] to-transparent opacity-60"></div>
 
           <h2 className="font-[family-name:var(--font-cormorant)] text-[clamp(2.5rem,8vw,6.5rem)] leading-[1.1] font-light tracking-wide text-[#E5E5E5]">
-            <span className="opacity-50 text-base md:text-xl block mb-6 font-[family-name:var(--font-satoshi)] uppercase tracking-[0.3em] font-normal text-[#9B9EA4]">
-              We write your
-            </span>
+            <span className="text-[#E5E5E5] block">We write your</span>
             <span className="italic text-[#FAFAFA] font-normal block">
               transformation.
             </span>
           </h2>
+
+          <p className="max-w-2xl text-[15px] md:text-[18px] leading-[1.75] text-[#9B9EA4]">
+            For decades, we&apos;ve worked with leaders, founders, and brands just like you.
+          </p>
 
           {/* Vertical Anchor Bottom */}
           <div className="w-[1px] h-32 bg-gradient-to-b from-[#555] via-[#555]/30 to-transparent opacity-60"></div>

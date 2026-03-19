@@ -129,7 +129,7 @@ export default function ActOne() {
               lineHeight: 0.98,
             }}
           >
-            Why aren&apos;t you the <span className="italic text-rust">hero?</span>
+            We&apos;ll make you its <span className="italic text-rust">hero.</span>
           </h2>
         </motion.div>
 
@@ -142,17 +142,14 @@ export default function ActOne() {
             className="font-sans text-paper/45 leading-[1.72]"
             style={{ fontSize: 'var(--step--1)' }}
           >
-            Founders, dreamers, and cultural leaders operate from an idea. A mission. We work at
-            the edge of what&apos;s possible. But ideas are fragile. Today&apos;s audiences are tired
-            of ideas. They want a story.
+            The modern content game isn&apos;t working. You talk about products. The audience hears features. You talk about your vision. The market hears another ad, another pitch, another money ask, another app.
           </p>
 
           <p
             className="font-sans text-paper/45 leading-[1.72]"
             style={{ fontSize: 'var(--step--1)' }}
           >
-            You built something real. Something that matters. And you&apos;ve got a story to tell.
-            You just have to make your audience choose to listen.
+            Today&apos;s audiences want a story that moves them. And that&apos;s what you&apos;ll give them.
           </p>
         </motion.div>
       </motion.div>

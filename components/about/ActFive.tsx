@@ -41,9 +41,9 @@ export default function ActFive() {
           animate={show ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: ABOUT_EASE }}
         >
-          Your story isn&apos;t missing.
+          YOUR STORY ISN&apos;T MISSING.
           <br />
-          <span className="italic text-rust">It&apos;s waiting.</span>
+          <span className="italic text-rust">It&apos;s just waiting to be discovered.</span>
         </motion.h2>
 
         <div className="mt-8 w-12 h-px bg-rust/35 mx-auto" />

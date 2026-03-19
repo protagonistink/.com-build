@@ -17,21 +17,21 @@ const services = [
     id: 'audit',
     eyebrow: 'Lost in Translation',
     title: 'Brand &\nStory Audit',
-    tagline: 'Find the leak before the ship goes down.',
+    tagline: 'Find the mole before they find you.',
     image: '/posters/story-audit.png',
     spec: 'Narrative Friction',
     timeline: '1 Week',
-    investment: '$1,500',
+    investment: '$1,000',
     description:
-      'Most messaging fails not because it\'s wrong — it\'s fragmented. We map your current story against market resonance to find exactly where you\'re leaking trust.',
+      'Most messaging fails not because it\'s wrong, it\'s all over the place. We map your current story against your pitch, marketing, and presentation materials to find the plot holes holding you back.',
     deliverables: [
       'Full diagnostic video walkthrough',
       '1-hour deep dive strategy session',
-      'Written Gap Analysis report',
-      'Prioritized action plan with cost metrics',
-      '30-day narrative stewardship support',
+      'Plot Holes report',
+      'Action Blueprint',
+      '30-day narrative support',
     ],
-    cta: 'Initiate the Audit',
+    cta: 'Start Your Story Audit',
     ctaHref: 'mailto:hello@protagonist.ink?subject=Story%20Audit%20Inquiry',
   },
   {
@@ -42,18 +42,18 @@ const services = [
     image: '/posters/brand-strategy.png',
     spec: 'Structural Alignment',
     timeline: '3–4 Weeks',
-    investment: 'Starting at $7,500',
+    investment: '$5,000+',
     description:
-      'We extract the truth of what you\'re building and codify it into a dominant narrative. This is the blueprint for everything you say — to investors, to customers, to yourself.',
+      'Your story starts here. This is the blueprint for everything you say — to investors, to customers, to yourself. We work closely with you to discover and put in writing the truth of what you\'re building.',
     deliverables: [
-      'Stakeholder & Customer discovery',
-      'The Narrative Manifesto & Origin Story',
+      'Stakeholder & Customer Discovery',
+      'The Narrative Guide & Origin Story',
       'Core Values & Behavioral definitions',
       'Positioning & Audience Profiles',
       'Comprehensive Brand Voice system',
       'Website & Pitch messaging guide',
     ],
-    cta: 'Design the Foundation',
+    cta: 'Build the Foundation',
     ctaHref: 'mailto:hello@protagonist.ink?subject=Narrative%20Spine%20%2B%20Strategy%20Inquiry',
   },
   {
@@ -64,21 +64,21 @@ const services = [
     image: '/posters/full-build.png',
     spec: 'Completed Journey',
     timeline: '8–12 Weeks',
-    investment: 'Starting at $25,000',
+    investment: 'Based on need',
     description:
-      'Total narrative stewardship. We take the blueprint and construct the entire surface — delivering the finished execution across every critical touchpoint.',
+      'Total narrative stewardship. We take the blueprint and construct the entire surface, delivering the finished execution across every critical touchpoint.',
     deliverables: [
       'Everything in Narrative Spine + Strategy',
-      'Full Website Copywriting (up to 6p)',
+      'Full Website Copywriting (up to 5p)',
       'Investor or Donor Deck Narrative',
       'Executive Bios & Founder Narrative',
-      '3-Month Editorial Content Strategy',
+      '1-mo Editorial Content Strategy',
       'Collaborator & Designer Coordination',
       '90-Day Narrative Stewardship Call',
     ],
     cta: 'Inquire for Construction',
     ctaHref: 'mailto:hello@protagonist.ink?subject=Full%20Build%20Inquiry',
-    note: 'This engagement isn\'t for everyone. We limit active builds to ensure structural integrity across every touchpoint.',
+    note: 'Limited engagement.',
   },
 ];
 
@@ -560,7 +560,7 @@ function WritersRoom() {
               href="mailto:hello@protagonist.ink"
               className="group inline-flex items-center gap-4 bg-rust text-white px-8 py-4 text-[12px] font-bold uppercase tracking-[0.22em] hover:bg-rust/90 transition-colors"
             >
-              Request Room Access
+              Get in the room
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
@@ -577,7 +577,7 @@ function WritersRoom() {
             <div className="border-t border-white/10 pt-8">
               <span className="block text-[11px] uppercase tracking-[0.3em] text-white/30 mb-4">On-Site</span>
               <span className="font-display text-[clamp(2.5rem,5vw,4rem)] leading-none text-white block mb-4">
-                $7,500<span className="text-[1.2rem] text-white/30 font-sans font-normal tracking-normal ml-2">from</span>
+                $5,000
               </span>
               <p className="text-[15px] text-white/45 leading-[1.65]">
                 Intensive deep dive. Face to face. Whiteboarding the future of your narrative in the room together.
@@ -588,7 +588,7 @@ function WritersRoom() {
             <div className="border-t border-white/10 pt-8">
               <span className="block text-[11px] uppercase tracking-[0.3em] text-white/30 mb-4">Remote</span>
               <span className="font-display text-[clamp(2.5rem,5vw,4rem)] leading-none text-white block mb-4">
-                $3,000<span className="text-[1.2rem] text-white/30 font-sans font-normal tracking-normal ml-2">from</span>
+                $3,000+
               </span>
               <p className="text-[15px] text-white/45 leading-[1.65]">
                 Focused digital session. Shared screens. Rapid structural iteration with full documentation.
@@ -599,7 +599,7 @@ function WritersRoom() {
             <div className="border-t border-white/10 pt-8">
               <span className="block text-[11px] uppercase tracking-[0.3em] text-white/30 mb-4">Nonprofits</span>
               <p className="text-[15px] text-white/55 leading-[1.65]">
-                We believe in mission-driven work. Discounted rates available — reach out and let&apos;s talk.
+                Non-profit rates are available. Reach out and let&apos;s talk.
               </p>
             </div>
           </motion.div>
@@ -698,52 +698,24 @@ export default function ServicesSection() {
             Stage 02 // Copywriting &amp; Narrative Services
           </motion.span>
 
-          {/* Manifesto — staggered lines, each its own motion beat */}
-          <div className="overflow-hidden">
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <p className="font-display text-[clamp(2.2rem,7vw,6.5rem)] leading-[0.9] tracking-[-0.01em] text-white">
-                You need a brand
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.1, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <p className="font-display text-[clamp(2.2rem,7vw,6.5rem)] leading-[0.9] tracking-[-0.01em] text-white/60 italic font-light pl-[4vw] md:pl-[10vw]">
-                that tells the truth
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.1, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <p className="font-display text-[clamp(2.2rem,7vw,6.5rem)] leading-[0.9] tracking-[-0.01em] text-white">
-                about what you&apos;re building
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.1, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <p className="font-display text-[clamp(2.2rem,7vw,6.5rem)] leading-[0.9] tracking-[-0.01em] text-rust italic font-light pl-[2vw] md:pl-[6vw]">
-                — and why it matters.
-              </p>
-            </motion.div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-[1080px]"
+          >
+            <h2 className="font-display text-[clamp(2.2rem,7vw,6.1rem)] leading-[0.94] tracking-[-0.02em] text-white">
+              There&apos;s a truth to what you&apos;re doing.
+              <br />
+              <span className="italic font-light text-white/60">What you&apos;re building.</span>
+              <br />
+              <span className="text-rust italic font-light">And why it matters.</span>
+            </h2>
+            <p className="mt-8 text-[18px] md:text-[22px] leading-[1.5] text-white/42 max-w-2xl">
+              Your brand needs to tell that story.
+            </p>
+          </motion.div>
 
           {/* Manifesto body — editorial, generous spacing */}
           <div className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
@@ -755,9 +727,7 @@ export default function ServicesSection() {
             >
               <div className="w-12 h-px bg-rust mb-8" />
               <p className="text-[18px] md:text-[20px] leading-[1.7] text-white/50 font-light">
-                You&apos;re the hero of this story — not your product, not your pitch deck, not your
-                category. <em className="text-white/70 not-italic">You.</em> The founder who saw
-                something others missed and built something the world isn&apos;t ready for yet.
+                You didn&apos;t just do this for the money. So why did you do it? Because what you did wasn&apos;t about the product, the features, the benefits, the category. It was about seeing something others missed, and building something the world needed, despite all odds.
               </p>
             </motion.div>
 
@@ -768,9 +738,7 @@ export default function ServicesSection() {
               transition={{ duration: 1, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className="text-[18px] md:text-[20px] leading-[1.7] text-white/50 font-light mb-10">
-                We give that story structure, voice, and conviction — across every surface, every
-                touchpoint, every room you walk into. So when you speak, people lean in. When they
-                read, they remember. When they share, they&apos;re selling for you.
+                <em className="text-white/70 not-italic">That&apos;s</em> the story audiences clamor for. We work together with you to give that story the architecture, the voice, and the conviction to tell it across every surface, every touchpoint, every room you walk into. So when you speak, people lean in. When they read, they remember. When they share, they&apos;re selling for you.
               </p>
             </motion.div>
           </div>
