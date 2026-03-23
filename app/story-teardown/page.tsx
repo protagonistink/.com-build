@@ -51,7 +51,7 @@ function isValidWebUrl(value: string) {
 }
 
 export default function StoryHealthCheckPage() {
-    // ── Multi-step Story Loom form ──────────────────────────────────────────
+    // ── Multi-step Story Rip form ───────────────────────────────────────────
     const [step, setStep] = useState(0);
     const [formData, setFormData] = useState({
         name: '', email: '', company: '', url: '', miss: '', stage: '',
@@ -224,10 +224,9 @@ export default function StoryHealthCheckPage() {
             <main className="pt-0 pb-24 md:pb-28 isolate">
 
                 {/* ═══════════════════════════════════════════════════════
-                    SECTION 1 — HERO
-                    Hook. Problem. Dark cinematic treatment — no form.
-                    Illustration: storybook_bg3.jpg as parallax background
-                    with vignette overlays.
+                    SECTION 1 — HERO (7.1)
+                    Hook. Problem. Dark cinematic treatment.
+                    CTA scrolls to paid Story Teardown product.
                     ═══════════════════════════════════════════════════════ */}
                 <section className="relative min-h-[100svh] md:min-h-[90vh] flex flex-col justify-center items-center px-6 pt-24 md:pt-0 mb-24 md:mb-32 bg-ink overflow-hidden">
 
@@ -243,19 +242,19 @@ export default function StoryHealthCheckPage() {
 
                         <div className="text-left max-w-4xl md:max-w-[58%]">
                             <div className="inline-block mb-8 md:mb-10 px-4 md:px-6 py-2 border border-rust/50 text-rust text-[0.58rem] md:text-[0.65rem] font-bold uppercase tracking-[0.2em] md:tracking-[0.25em] bg-ink/50 backdrop-blur-sm reveal reveal-delay-1 shadow-[4px_4px_0px_rgba(200,60,47,0.15)]">
-                                Story Audit
+                                Story Teardown
                             </div>
 
                             <h1 className="font-display text-5xl sm:text-6xl md:text-[8.5rem] leading-[0.9] md:leading-[0.85] mb-10 md:mb-12 text-paper tracking-tight md:tracking-tighter">
                                 <TypewriterHeadline
-                                    text="Your Story is"
+                                    text="Your Story's"
                                     initialDelay={400}
                                     wordDelay={100}
                                 />
                                 <br />
                                 <span className="italic text-rust">
                                     <TypewriterHeadline
-                                        text="Bleeding Revenue."
+                                        text="Bleeding Money."
                                         initialDelay={750}
                                         wordDelay={100}
                                         showCursor={true}
@@ -265,22 +264,19 @@ export default function StoryHealthCheckPage() {
 
                             <div className="w-full flex justify-start mb-10 md:mb-16 reveal reveal-delay-3">
                                 <p className="font-sans text-base md:text-xl max-w-lg text-paper/70 leading-[1.75] md:leading-[1.8] font-light border-l-2 border-rust/50 pl-5 md:pl-8 text-left backdrop-blur-sm p-3 md:p-4">
-                                    Founders don&apos;t fail because their product is broken. They fail because their narrative is unrecognizable.<br />
-                                    <span className="text-paper font-bold mt-4 block uppercase tracking-widest text-[0.65rem]">We apply engineering rigor to your brand story.</span>
+                                    Wonder why your pitch stalls, your site doesn&apos;t convert, and your donors dry up? It&apos;s not your product. It&apos;s because no one understands what you do&nbsp;&mdash; or why it matters.<br />
+                                    <span className="text-paper font-bold mt-4 block uppercase tracking-widest text-[0.65rem]">Let&apos;s fix that.</span>
                                 </p>
                             </div>
 
-                            {/* Single rust CTA + quiet text-link */}
+                            {/* Single rust CTA */}
                             <div className="flex flex-col sm:flex-row gap-4 justify-start items-start sm:items-center reveal reveal-delay-4 w-full max-w-lg">
-                                <a href="#free-loom" className="group relative flex w-full sm:w-auto">
+                                <a href="#story-teardown" className="group relative flex w-full sm:w-auto">
                                     <div className="absolute inset-0 bg-black/50 transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
                                     <div className="relative bg-rust text-paper font-sans text-[0.62rem] md:text-[0.65rem] uppercase tracking-[0.16em] md:tracking-[0.2em] font-bold px-6 md:px-8 py-4 flex items-center justify-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform w-full">
-                                        <PlayCircle className="w-4 h-4" />
-                                        Get a Free Story Analysis
+                                        See What&apos;s Costing You
+                                        <ArrowRight className="w-4 h-4" />
                                     </div>
-                                </a>
-                                <a href={BOOKING_ACTION} className="font-sans text-[0.58rem] md:text-[0.6rem] uppercase tracking-[0.12em] md:tracking-[0.15em] text-paper/40 hover:text-rust transition-colors pl-1 sm:pl-0">
-                                    or skip to the paid audit →
                                 </a>
                             </div>
                         </div>
@@ -288,8 +284,8 @@ export default function StoryHealthCheckPage() {
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════
-                    SECTION 2 — THE CRISIS MIRROR
-                    Curse of Knowledge. Earns both products.
+                    SECTION 2 — THE CRISIS MIRROR (7.2)
+                    "Knowing your lines isn't enough."
                     ═══════════════════════════════════════════════════════ */}
                 <section className="max-w-6xl mx-auto px-6 mb-0 relative">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-start relative z-10">
@@ -303,7 +299,9 @@ export default function StoryHealthCheckPage() {
                                 <span className="text-rust font-bold font-sans text-sm">01</span>
                                 <div className="flex-1 h-[1px] bg-ink/20" />
                             </div>
-                            <h2 className="font-display text-5xl md:text-6xl italic leading-[0.9] mb-6 tracking-tight text-ink">The Crisis Mirror</h2>
+                            <h2 className="font-display text-5xl md:text-6xl italic leading-[1.15] mb-6 tracking-tight text-ink">
+                                Knowing your lines <span className="bg-ink text-paper px-2 py-1">isn&apos;t enough.</span>
+                            </h2>
                             <p className="text-[0.65rem] font-sans uppercase tracking-[0.2em] text-rust font-bold">Diagnostic Phase</p>
                         </motion.div>
                         <motion.div
@@ -312,19 +310,20 @@ export default function StoryHealthCheckPage() {
                             viewport={MOTION_VIEWPORT}
                             transition={{ ...MOTION_TRANSITION, delay: 0.15 }}
                         >
-                            <p className="text-2xl md:text-3xl font-display font-light leading-[1.4] text-ink">
-                                You are the protagonist. But the market sees <span className="bg-ink text-paper px-2 py-1 italic">a confused extra.</span>
+                            <p className="text-ink/80 leading-[1.8] font-light text-lg border-l border-ink/20 pl-6">
+                                You know when a story turns just because the writer needed it to. And you know when you&apos;re pitching and you can see that no one but you gets it. You&apos;re your story&apos;s protagonist. But the market sees you as an extra.
                             </p>
                             <p className="text-ink/80 leading-[1.8] font-light text-lg border-l border-ink/20 pl-6">
-                                Most founders suffer from the &ldquo;Curse of Knowledge.&rdquo; You know your product so well that you&apos;ve forgotten what it&apos;s like not to know. You speak in features, specs, and internal shorthand. The market hears noise.
+                                You know your product so well that you&apos;ve forgotten what it&apos;s like not to know. You speak in features, specs, and shorthand. The market hears noise.
                             </p>
 
                             <div className="p-10 bg-white border border-ink/10 relative overflow-hidden shadow-sm mt-16">
 
                                 <h3 className="font-sans text-[0.65rem] font-bold uppercase tracking-[0.2em] mb-8 text-rust flex items-center gap-3">
                                     <span className="w-2 h-2 rounded-full bg-rust animate-pulse" />
-                                    Symptoms of Narrative Debt
+                                    When It&apos;s Not Working
                                 </h3>
+                                <h4 className="font-display text-2xl md:text-3xl italic text-ink mb-8">Every pitch, every call, every idea.</h4>
                                 <ul className="space-y-6 font-display text-xl text-ink/90 italic">
                                     <li className="flex items-start gap-4">
                                         <span className="text-ink/30 font-sans text-sm mt-1 not-italic">—</span>
@@ -332,15 +331,18 @@ export default function StoryHealthCheckPage() {
                                     </li>
                                     <li className="flex items-start gap-4">
                                         <span className="text-ink/30 font-sans text-sm mt-1 not-italic">—</span>
-                                        <span className="leading-relaxed"><span className="line-through text-ink/40">Sales cycles</span> are dragging because prospects &ldquo;need to think.&rdquo;</span>
+                                        <span className="leading-relaxed">Sales cycles are dragging because prospects &ldquo;need to think.&rdquo;</span>
                                     </li>
                                     <li className="flex items-start gap-4">
                                         <span className="text-ink/30 font-sans text-sm mt-1 not-italic">—</span>
-                                        <span className="leading-relaxed">Marketing burns cash with zero attribution.</span>
+                                        <span className="leading-relaxed">Marketing burns cash with zero response.</span>
                                     </li>
                                 </ul>
                                 <p className="mt-10 pt-8 border-t border-ink/10 text-ink/70 leading-[1.8] font-sans font-light text-base">
-                                    Every day your story leaks, you pay for it&mdash;in abandoned carts, in meetings that don&apos;t convert, in funding rounds that stall before the second slide. The curse of knowledge isn&apos;t a metaphor. It&apos;s the invisible ceiling on your revenue, and it compounds.
+                                    You know the feeling. Abandoned carts, calls that don&apos;t convert, and funding rounds that go stale. You&apos;re an expert at this, so why isn&apos;t anyone buying?
+                                </p>
+                                <p className="mt-6 font-display text-2xl md:text-3xl italic text-ink leading-tight">
+                                    Because if people don&apos;t understand it, they can&apos;t choose it.
                                 </p>
                             </div>
                         </motion.div>
@@ -348,8 +350,8 @@ export default function StoryHealthCheckPage() {
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════
-                    SECTION 3 — METHODOLOGY INTERSTITIAL
-                    Storybook background, parallax. Introduces what PI does.
+                    SECTION 3 — METHODOLOGY INTERSTITIAL (7.4)
+                    "Some stories sound good. Others get funded."
                     ═══════════════════════════════════════════════════════ */}
                 <div
                     ref={methodologyRef}
@@ -386,24 +388,172 @@ export default function StoryHealthCheckPage() {
                         transition={{ ...MOTION_TRANSITION, duration: 0.8 }}
                     >
                         <p className="font-sans text-paper/50 text-[0.65rem] uppercase tracking-[0.25em] mb-6">
-                            Our approach
+                            What We Believe
                         </p>
                         <h2 className="font-display text-paper text-3xl md:text-5xl italic leading-[1.25] mb-8">
-                            Every founder has a story<br className="hidden md:inline" /> worth telling.
+                            Some stories sound good.<br className="hidden md:inline" /> Others get funded.
                         </h2>
-                        <p className="font-sans text-paper/80 text-base md:text-lg leading-[1.85] mb-4">
-                            You built something real. But somewhere between your vision and the way people experience it, the signal gets lost. We help founders articulate what makes them matter&mdash;so the right audience doesn&apos;t just understand your product, they <em className="text-rust/90 not-italic">feel</em> it.
-                        </p>
-                        <p className="font-sans text-paper/60 text-sm md:text-base leading-[1.85]">
-                            Protagonist Ink is a story strategy studio. We find the narrative thread that connects what you&apos;ve built to the people it&apos;s built for&mdash;then we make it impossible to ignore.
+                        <p className="font-sans text-paper/80 text-base md:text-lg leading-[1.85]">
+                            Somewhere between your vision and how people experience it, that story gets lost. We use the same methods that have made thousands of stories sell for hundreds of years to help founders, artists, non-profits, and small businesses tell the story their work deserves. Audiences won&apos;t just understand it. They&apos;ll act on it.
                         </p>
                     </motion.div>
                 </div>
 
                 {/* ═══════════════════════════════════════════════════════
-                    SECTION 4 — THE FREE STORY LOOM
-                    Its own full spotlight. Light background.
-                    Form with useState submission state.
+                    SECTION 4 — THE STORY TEARDOWN (PAID PRODUCT) (7.5)
+                    Main conversion section. $1,500.
+                    Moved UP — now appears before social proof.
+                    ═══════════════════════════════════════════════════════ */}
+                <motion.section
+                    id="story-teardown"
+                    className="scroll-mt-24 md:scroll-mt-28 bg-ink text-paper py-32 relative overflow-hidden"
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ ...MOTION_TRANSITION, duration: 0.8 }}
+                >
+                    {/* Blueprint grid overlay */}
+                    <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'linear-gradient(var(--color-paper) 1px, transparent 1px), linear-gradient(90deg, var(--color-paper) 1px, transparent 1px)', backgroundSize: '3rem 3rem' }} />
+
+                    {/* HUMAN PHOTOGRAPHY — yellowbrickroad breaks right edge */}
+                    <div className="absolute right-0 top-0 bottom-0 w-[32vw] max-w-[420px] z-[1] pointer-events-none">
+                        <Image
+                            src="/images/pages/yellowbrickroad.jpg"
+                            alt="Founder on the path to narrative clarity"
+                            fill
+                            sizes="32vw"
+                            className="object-cover contrast-110"
+                            style={{ objectPosition: '75% 45%' }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-ink/10 to-ink/60 pointer-events-none" />
+                    </div>
+
+                    <div className="max-w-6xl mx-auto px-6 relative z-10">
+
+                        {/* Header */}
+                        <div className="max-w-full md:max-w-[62%] mb-20">
+                            <div className="flex items-center gap-4 mb-8">
+                                <span className="text-rust font-bold font-sans text-sm">02</span>
+                                <div className="flex-1 h-[1px] bg-white/20 max-w-20" />
+                                <span className="font-sans text-[0.6rem] uppercase tracking-[0.2em] text-white/30">$1,500</span>
+                            </div>
+                            <h2 className="font-display text-6xl md:text-7xl leading-[0.9] tracking-tighter text-paper mb-8">
+                                The Protagonist<br /><span className="italic text-white/40">Story Teardown.</span>
+                            </h2>
+                            <p className="font-sans text-lg text-paper/70 leading-[1.8] max-w-xl">
+                                This one-week diagnostic examines your story at every layer, from your core thesis to your live website, and hands you a single message that holds across your deck, your home page, and every cold email you send.
+                            </p>
+                        </div>
+
+                        {/* Deliverables */}
+                        <div className="max-w-full md:max-w-[62%] mb-20">
+                            <h3 className="font-sans text-[0.65rem] font-bold uppercase tracking-[0.2em] mb-8 text-rust flex items-center gap-3">
+                                <span className="w-2 h-2 rounded-full bg-rust animate-pulse" />
+                                What You Get
+                            </h3>
+                            <div className="space-y-6 border-l-2 border-rust/30 pl-8 mb-12">
+                                {[
+                                    { item: "60-Minute Zoom Diagnostic", sub: "We want to hear your story directly from you. We'll meet, we'll dissect, and we'll find new angles for your core narrative." },
+                                    { item: "Red Line Blueprint", sub: "We'll walk through your current marketing and pitch deck and give you a simple map of where your story is breaking and how to fix it." },
+                                    { item: "Narrative Brief", sub: "A clear, usable version of your core message. The line you can drop into your homepage, your deck, your next email without rewriting it." },
+                                ].map((d, i) => (
+                                    <div key={i} className="group">
+                                        <p className="font-sans text-sm font-bold text-paper group-hover:text-rust transition-colors">{d.item}</p>
+                                        <p className="font-sans text-xs text-paper/40 mt-1">{d.sub}</p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <p className="font-sans text-base text-paper/60 italic mb-10">
+                                Give us one week, and we&apos;ll give you clarity.
+                            </p>
+
+                            <a href={BOOKING_ACTION} className="group relative inline-flex">
+                                <div className="absolute inset-0 bg-rust transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
+                                <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-8 py-4 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+                                    Secure Your Story Teardown — $1,500
+                                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                </div>
+                            </a>
+                            <p className="mt-4 font-sans text-sm text-rust/80 italic">
+                                Nothing to fix? Then you don&apos;t pay.
+                            </p>
+                        </div>
+                    </div>
+                </motion.section>
+
+                {/* ═══════════════════════════════════════════════════════
+                    SECTION 5 — SOCIAL PROOF (7.6)
+                    "Founders who found their story"
+                    ═══════════════════════════════════════════════════════ */}
+                <section className="bg-ink text-paper py-40 texture-grain relative overflow-hidden" id="proof">
+
+                    <div className="absolute left-0 top-0 bottom-0 w-[22vw] max-w-[280px] z-0 pointer-events-none">
+                        <Image
+                            src="/writers-room.jpg"
+                            alt=""
+                            fill
+                            className="object-cover grayscale contrast-75 opacity-20"
+                            style={{ objectPosition: '70% top' }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-ink pointer-events-none" />
+                    </div>
+
+                    <div className="max-w-7xl mx-auto px-6 relative z-10">
+                        <div className="flex flex-col md:flex-row justify-between items-end mb-24 border-b border-white/10 pb-12 reveal">
+                            <div>
+                                <h2 className="font-display text-6xl md:text-7xl tracking-tighter mb-4 text-white">The Results.</h2>
+                                <p className="text-[0.65rem] font-sans text-rust uppercase tracking-[0.2em] font-bold">Across SaaS, deep tech, and nonprofit industries</p>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+                            {[
+                                {
+                                    quote: "We'd been pitching for six months and getting the same \"we'll call you\" every time. Protagonist Ink's teardown gave us a clear line to use so investors finally started writing checks.",
+                                    role: "SaaS Founder",
+                                    result: "Investors writing checks"
+                                },
+                                {
+                                    quote: "I started thinking we'd spent months building something totally useless. The red line changed our entire game. Half our pitch was tossed. We're better for it.",
+                                    role: "Co-Founder & CEO",
+                                    result: "Entire game changed"
+                                },
+                                {
+                                    quote: "We pull out the one-liner every time we launch something new. It keeps us aligned on what actually matters.",
+                                    role: "Board Director",
+                                    result: "Team alignment & clarity"
+                                }
+                            ].map((item, i) => (
+                                <div key={i} className={`space-y-8 reveal reveal-delay-${i + 1} border-l border-white/10 pl-8 relative`}>
+                                    <div className="absolute top-0 -left-1 w-2 h-2 rounded-full bg-rust" />
+                                    <div className="inline-block px-3 py-1 border border-rust/40 text-rust text-[0.6rem] font-bold uppercase tracking-widest">
+                                        {item.result}
+                                    </div>
+                                    <p className="font-display text-xl text-paper/80 leading-[1.6] italic">
+                                        &ldquo;{item.quote}&rdquo;
+                                    </p>
+                                    <div className="border-t border-white/10 pt-6">
+                                        <p className="font-sans text-sm text-white/50 uppercase tracking-widest">{item.role}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Transition text */}
+                        <div className="mt-24 text-center reveal">
+                            <p className="font-display text-2xl md:text-3xl italic text-paper/50">
+                                Need proof? Give us 5 minutes, we&apos;ll show you where the cracks are.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ═══════════════════════════════════════════════════════
+                    SECTION 6 — THE STORY RIP (FREE FORM) (7.7)
+                    Renamed from "Story Loom". Moved DOWN after social proof.
+                    Internal IDs kept as #free-loom to avoid breaking integrations.
                     ═══════════════════════════════════════════════════════ */}
                 <section id="free-loom" className="scroll-mt-24 md:scroll-mt-28 py-32 bg-paper border-y border-ink/10 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-[0.025] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, var(--color-ink) 1px, transparent 1px)', backgroundSize: '1.5rem 1.5rem' }} />
@@ -427,22 +577,20 @@ export default function StoryHealthCheckPage() {
 
                                         {/* Badge */}
                                         <div className="inline-block mb-10 px-4 py-1 border border-rust text-rust text-[0.6rem] font-sans font-bold uppercase tracking-widest bg-white">
-                                            Option 01 // $0
+                                            Try Us Out // Free
                                         </div>
 
                                         {/* Heading */}
                                         <h2 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tighter text-ink mb-8">
-                                            The 5-Minute<br />
-                                            <span className="italic text-rust">Story Loom.</span>
+                                            The<br />
+                                            <span className="italic text-rust">Story Rip.</span>
                                         </h2>
 
                                         {/* Description */}
                                         <p className="font-sans text-base md:text-lg text-ink/60 leading-[1.85] max-w-lg mx-auto mb-4">
-                                            Answer a few questions about your brand story. Within 48 hours, you&apos;ll receive a personalized Loom video diagnosing the narrative leaks costing you conversions.
+                                            Right here, right now, you can answer a few questions about your brand story and we&apos;ll send you a Loom covering our first impressions and where we can help.
                                         </p>
-                                        <p className="font-sans text-sm text-ink/40 leading-relaxed max-w-md mx-auto mb-12">
-                                            No pitch. No follow-up unless you want one. Just a brutal, honest teardown of your story architecture.
-                                        </p>
+                                        <div className="mb-12" />
 
                                         {/* CTA */}
                                         <button
@@ -450,13 +598,13 @@ export default function StoryHealthCheckPage() {
                                             onClick={beginForm}
                                             className="bg-rust text-paper font-sans text-[0.7rem] uppercase tracking-widest px-10 py-4 hover:bg-rust/85 transition-all duration-300 inline-flex items-center gap-3 font-bold group"
                                         >
-                                            Begin Your Audit
+                                            Rip My Story Apart
                                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </button>
                                     </div>
 
                                     <p className="mt-8 font-sans text-[0.6rem] text-ink/30 uppercase tracking-widest">
-                                        Already know you need the full audit?{" "}
+                                        Already know you need the full teardown?{" "}
                                         <a href={BOOKING_ACTION} className="underline hover:text-rust transition-colors">Book direct →</a>
                                     </p>
                                 </motion.div>
@@ -478,18 +626,18 @@ export default function StoryHealthCheckPage() {
                                         {/* Left — Value + what you get */}
                                         <div>
                                             <div className="flex items-center gap-4 mb-8">
-                                                <span className="text-rust font-bold font-sans text-sm">02</span>
+                                                <span className="text-rust font-bold font-sans text-sm">03</span>
                                                 <div className="flex-1 h-[1px] bg-ink/20" />
                                                 <span className="font-sans text-[0.6rem] uppercase tracking-[0.2em] text-ink/40">Free</span>
                                             </div>
                                             <div className="inline-block mb-8 px-4 py-1 border border-rust text-rust text-[0.6rem] font-sans font-bold uppercase tracking-widest bg-white">
-                                                Option 01 // $0
+                                                Try Us Out // Free
                                             </div>
                                             <h2 className="font-display text-6xl md:text-7xl leading-[0.9] tracking-tighter text-ink mb-8">
-                                                The Story<br /><span className="italic text-rust">Loom.</span>
+                                                The Story<br /><span className="italic text-rust">Rip.</span>
                                             </h2>
                                             <p className="font-sans text-lg text-ink/70 leading-[1.8] mb-12 max-w-md">
-                                                Submit your deck or site. We record a brutal, 5-minute video teardown of your narrative architecture — exactly where the revenue is leaking. No pitch, just architecture.
+                                                Answer a few questions about your brand story and we&apos;ll send you a Loom covering our first impressions and where we can help. No pitch, just architecture.
                                             </p>
 
                                             <div className="space-y-4 border-l-2 border-ink/10 pl-8">
@@ -497,7 +645,6 @@ export default function StoryHealthCheckPage() {
                                                     "Asynchronous Loom video. In your inbox in 2–3 days.",
                                                     "High-level structural review of your biggest leak.",
                                                     "Actionable quick-wins you can act on immediately.",
-                                                    "No pitch. No follow-up sales call unless you want one.",
                                                 ].map((item, i) => (
                                                     <div key={i} className="flex items-start gap-3">
                                                         <CheckCircle2 className="w-4 h-4 text-rust mt-0.5 flex-shrink-0" />
@@ -517,11 +664,11 @@ export default function StoryHealthCheckPage() {
                                                     </div>
                                                     <h3 className="font-display text-3xl mb-4 text-ink">Request Received.</h3>
                                                     <p className="font-sans text-sm text-ink/60 leading-relaxed max-w-sm mx-auto">
-                                                        We&apos;ll record your Story Loom and send it within 2–3 business days. Watch your inbox.
+                                                        We&apos;ll record your Story Rip and send it within 2–3 business days. Watch your inbox.
                                                     </p>
                                                     <p className="mt-8 font-sans text-[0.6rem] uppercase tracking-widest text-ink/30">
                                                         Want the full surgical intervention?{" "}
-                                                        <a href={BOOKING_ACTION} className="underline hover:text-rust transition-colors">Book the Story Audit →</a>
+                                                        <a href={BOOKING_ACTION} className="underline hover:text-rust transition-colors">Book the Story Teardown →</a>
                                                     </p>
                                                 </div>
                                             ) : (
@@ -700,7 +847,7 @@ export default function StoryHealthCheckPage() {
                                             )}
 
                                             <p className="mt-6 font-sans text-[0.6rem] text-ink/30 uppercase tracking-widest text-center">
-                                                Already know you need the full audit?{" "}
+                                                Already know you need the full teardown?{" "}
                                                 <a href={BOOKING_ACTION} className="underline hover:text-rust transition-colors">Book direct — $1,500 →</a>
                                             </p>
                                         </div>
@@ -712,306 +859,55 @@ export default function StoryHealthCheckPage() {
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════
-                    SECTION 5 — SOCIAL PROOF / WHY TRUST US
-                    Testimonials + 40+ audits stat.
-                    Photography: writers-room.jpg ghosts left edge.
-                    Moved up: now immediately follows Free Loom form.
+                    SECTION 7 — THE FOUR LAYERS WE EXAMINE (7.8)
                     ═══════════════════════════════════════════════════════ */}
-                <section className="bg-ink text-paper py-40 texture-grain relative overflow-hidden" id="proof">
-
-                    <div className="absolute left-0 top-0 bottom-0 w-[22vw] max-w-[280px] z-0 pointer-events-none">
-                        <Image
-                            src="/writers-room.jpg"
-                            alt=""
-                            fill
-                            className="object-cover grayscale contrast-75 opacity-20"
-                            style={{ objectPosition: '70% top' }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-ink pointer-events-none" />
-                    </div>
-
-                    <div className="max-w-7xl mx-auto px-6 relative z-10">
-                        <div className="flex flex-col md:flex-row justify-between items-end mb-24 border-b border-white/10 pb-12 reveal">
-                            <div>
-                                <h2 className="font-display text-6xl md:text-7xl tracking-tighter mb-4 text-white">The Results.</h2>
-                                <p className="text-[0.65rem] font-sans text-rust uppercase tracking-[0.2em] font-bold">Founders who stopped the bleeding</p>
-                            </div>
-                            <div className="hidden md:block font-sans text-[0.65rem] text-white/30 uppercase tracking-widest text-right">
-                                <p>40+ narrative audits completed</p>
-                                <p className="mt-1">Across SaaS, deep tech, and creative industries</p>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-                            {[
-                                {
-                                    quote: "We'd been pitching for six months with polite rejections. After the audit, we closed our seed round in three weeks. The framing shift was that dramatic.",
-                                    name: "Marcus T.",
-                                    role: "Founder, B2B SaaS",
-                                    result: "Seed round closed"
-                                },
-                                {
-                                    quote: "I thought our problem was the product. It wasn't. It was that no one understood what we actually did in under 30 seconds. The redline was brutal and exactly what we needed.",
-                                    name: "Priya K.",
-                                    role: "Co-Founder, Climate Tech",
-                                    result: "Website conversion +3×"
-                                },
-                                {
-                                    quote: "The 'Soul Extraction' document became our internal north star. Every new hire reads it. It's the clearest articulation of what we're building and why it matters.",
-                                    name: "James O.",
-                                    role: "CEO, Series A",
-                                    result: "Team alignment & hiring clarity"
-                                }
-                            ].map((item, i) => (
-                                <div key={i} className={`space-y-8 reveal reveal-delay-${i + 1} border-l border-white/10 pl-8 relative`}>
-                                    <div className="absolute top-0 -left-1 w-2 h-2 rounded-full bg-rust" />
-                                    <div className="inline-block px-3 py-1 border border-rust/40 text-rust text-[0.6rem] font-bold uppercase tracking-widest">
-                                        {item.result}
-                                    </div>
-                                    <p className="font-display text-xl text-paper/80 leading-[1.6] italic">
-                                        &ldquo;{item.quote}&rdquo;
-                                    </p>
-                                    <div className="border-t border-white/10 pt-6">
-                                        <p className="font-sans text-sm text-white font-bold">{item.name}</p>
-                                        <p className="font-sans text-[0.75rem] text-white/40 uppercase tracking-widest mt-1">{item.role}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Narrative Pivot — Free → Paid Bridge */}
-                <section className="py-24 md:py-32 bg-paper texture-paper relative">
-                    <div className="max-w-3xl mx-auto px-6 text-center">
-                        <p className="font-display text-3xl md:text-4xl lg:text-5xl text-ink italic leading-tight reveal">
-                            A 5-minute teardown stops the bleeding.
-                        </p>
-                        <p className="font-display text-3xl md:text-4xl lg:text-5xl text-ink/40 italic leading-tight mt-4 reveal reveal-delay-1">
-                            A 5-day audit cures the disease.
-                        </p>
-                    </div>
-                </section>
-
-                {/* ═══════════════════════════════════════════════════════
-                    SECTION 6 — THE STORY AUDIT (PAID)
-                    Dark section. Its own full spotlight.
-                    Blueprint (4 layers) integrated in right column.
-                    girlfounder_conference.jpg breaks from right edge.
-                    Risk reversal copy included. Scroll-triggered reveal.
-                    ═══════════════════════════════════════════════════════ */}
-                <motion.section
-                    id="story-audit"
-                    className="bg-ink text-paper py-32 relative overflow-hidden"
-                    initial={{ opacity: 0, scale: 0.97 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, amount: 0.15 }}
-                    transition={{ ...MOTION_TRANSITION, duration: 0.8 }}
-                >
-                    {/* Blueprint grid overlay */}
+                <section className="bg-ink text-paper py-32 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'linear-gradient(var(--color-paper) 1px, transparent 1px), linear-gradient(90deg, var(--color-paper) 1px, transparent 1px)', backgroundSize: '3rem 3rem' }} />
 
-                    {/* HUMAN PHOTOGRAPHY — yellowbrickroad breaks right edge */}
-                    <div className="absolute right-0 top-0 bottom-0 w-[32vw] max-w-[420px] z-[1] pointer-events-none">
-                        <Image
-                            src="/images/pages/yellowbrickroad.jpg"
-                            alt="Founder on the path to narrative clarity"
-                            fill
-                            sizes="32vw"
-                            className="object-cover contrast-110"
-                            style={{ objectPosition: '75% 45%' }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent pointer-events-none" />
-                        <div className="absolute inset-0 bg-gradient-to-b from-ink/10 to-ink/60 pointer-events-none" />
-                    </div>
-
-                    <div className="max-w-6xl mx-auto px-6 relative z-10">
-
-                        {/* Header */}
-                        <div className="max-w-full md:max-w-[62%] mb-20">
-                            <div className="flex items-center gap-4 mb-8">
-                                <span className="text-rust font-bold font-sans text-sm">03</span>
-                                <div className="flex-1 h-[1px] bg-white/20 max-w-20" />
-                                <span className="font-sans text-[0.6rem] uppercase tracking-[0.2em] text-white/30">$1,500</span>
-                            </div>
-                            <p className="font-display text-xl md:text-2xl text-paper/50 italic mb-6">
-                                Loved the teardown? There&apos;s more where that came from.
-                            </p>
-                            <h2 className="font-display text-6xl md:text-7xl leading-[0.9] tracking-tighter text-paper mb-8">
-                                The Story<br /><span className="italic text-white/40">Audit.</span>
-                            </h2>
-                            <p className="font-sans text-lg text-paper/70 leading-[1.8] max-w-xl">
-                                The free teardown shows you where the cracks are. This is the full treatment — a one-time surgical intervention where we examine your story at every layer, from your core thesis to your live website, and hand you a single, indelible message that works in your deck, your homepage, and every cold email you send.
-                            </p>
-                            <p className="mt-6 font-sans text-sm text-rust/80 italic">
-                                If we can&apos;t identify a fixable narrative leak in your first call, you pay nothing.
-                            </p>
-                        </div>
-
-                        {/* Two columns: Deliverables + Blueprint */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
-
-                            {/* Left: Deliverables + CTA */}
-                            <div>
-                                <h3 className="font-sans text-[0.65rem] font-bold uppercase tracking-[0.2em] mb-8 text-rust flex items-center gap-3">
-                                    <span className="w-2 h-2 rounded-full bg-rust animate-pulse" />
-                                    Engineer-Led Surgery
-                                </h3>
-                                <div className="space-y-6 border-l-2 border-rust/30 pl-8 mb-12">
-                                    {[
-                                        { item: "60-Min Live Diagnostic Call", sub: "We meet. We dissect. We rebuild your core thesis." },
-                                        { item: "Redline Markup", sub: "A brutally honest annotation of your deck or site copy." },
-                                        { item: "The Soul Extraction Plan", sub: "PDF. Your single indelible message + how to deploy it everywhere." },
-                                        { item: "Brand Blueprint", sub: "The four-layer narrative architecture, documented." },
-                                    ].map((d, i) => (
-                                        <div key={i} className="group">
-                                            <p className="font-sans text-sm font-bold text-paper group-hover:text-rust transition-colors">{d.item}</p>
-                                            <p className="font-sans text-xs text-paper/40 mt-1">{d.sub}</p>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <a href={BOOKING_ACTION} className="group relative inline-flex">
-                                    <div className="absolute inset-0 bg-rust transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
-                                    <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-8 py-4 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-                                        Secure Your Spot — $1,500
-                                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                    </div>
-                                </a>
-                            </div>
-
-                            {/* Right: Blueprint — 4 layers */}
-                            <div>
-                                <h3 className="font-sans text-[0.65rem] font-bold uppercase tracking-[0.2em] mb-8 text-white/40 flex items-center gap-3">
-                                    <span className="w-8 h-[1px] bg-white/20" />
-                                    The Four Layers We Examine
-                                </h3>
-                                <div className="space-y-px border border-white/10">
-                                    {[
-                                        { num: "01", title: "The Spine", desc: "Your core thesis — the single sentence that should anchor every conversation." },
-                                        { num: "02", title: "The Script", desc: "Messaging architecture: headlines, elevator pitch, email subject lines." },
-                                        { num: "03", title: "The Stage", desc: "Deck, website, anywhere a prospect first forms an impression." },
-                                        { num: "04", title: "The Show", desc: "Distribution: what gets forwarded, remembered, and acted on." },
-                                    ].map((layer) => (
-                                        <div key={layer.num} className="group flex gap-6 p-6 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0">
-                                            <span className="font-sans text-[0.6rem] text-paper/70 font-bold tracking-widest mt-1 flex-shrink-0">{layer.num}</span>
-                                            <div>
-                                                <h4 className="font-display text-xl text-paper mb-1 group-hover:text-rust transition-colors">{layer.title}</h4>
-                                                <p className="font-sans text-xs text-paper/40 leading-relaxed">{layer.desc}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                                <p className="mt-4 font-sans text-[0.6rem] text-white/20 uppercase tracking-widest">Most founders have a leak in at least two of these layers.</p>
-                            </div>
-                        </div>
-                    </div>
-                </motion.section>
-
-                {/* ═══════════════════════════════════════════════════════
-                    SECTION 7 — THE CHOICE
-                    Simplified 2-column comparison. Both products, side by side.
-                    ═══════════════════════════════════════════════════════ */}
-                <section className="py-32 bg-paper border-y border-ink/10">
-                    <div className="max-w-5xl mx-auto px-6">
+                    <div className="max-w-5xl mx-auto px-6 relative z-10">
                         <motion.div
-                            className="text-center mb-20"
+                            className="text-center mb-16"
                             {...FADE_UP}
                             viewport={{ once: true, amount: 0.3 }}
                             transition={MOTION_TRANSITION}
                         >
-                            <h2 className="font-display text-5xl md:text-6xl tracking-tighter text-ink mb-4">The Choice.</h2>
-                            <p className="font-sans text-ink/50 text-sm max-w-md mx-auto">Both paths lead to clarity. Pick the depth you need.</p>
+                            <h2 className="font-display text-5xl md:text-6xl tracking-tighter text-paper mb-4">The Protagonist&apos;s Story Elements</h2>
                         </motion.div>
 
-                        <div className="flex flex-col md:flex-row gap-0">
-                            {/* Free Loom Column */}
-                            <motion.div
-                                className="flex-1 py-12 md:pr-16"
-                                {...SLIDE_LEFT}
-                                viewport={MOTION_VIEWPORT}
-                                transition={MOTION_TRANSITION}
-                            >
-                                <p className="font-sans text-[0.6rem] font-bold uppercase tracking-[0.2em] text-ink/40 mb-4">Free</p>
-                                <h3 className="font-display text-4xl text-ink mb-3 italic">Story Loom</h3>
-                                <p className="font-display text-lg text-ink/60 italic mb-8">A 5-minute video teardown of your narrative blind spots.</p>
-                                <ul className="space-y-4 font-sans text-[0.8rem] text-ink/70 mb-10">
-                                    <li className="flex items-start gap-3">
-                                        <span className="text-rust mt-0.5"><CheckCircle2 className="w-3.5 h-3.5" /></span>
-                                        <span>First-impression audit of your homepage or pitch deck</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <span className="text-rust mt-0.5"><CheckCircle2 className="w-3.5 h-3.5" /></span>
-                                        <span>Narrative gap identification</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <span className="text-rust mt-0.5"><CheckCircle2 className="w-3.5 h-3.5" /></span>
-                                        <span>Delivered via personalized Loom within 48 hours</span>
-                                    </li>
-                                </ul>
-                                <a href="#free-loom" className="font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold text-rust hover:text-ink transition-colors flex items-center gap-2">
-                                    Send Your URL
-                                    <ArrowRight className="w-3 h-3" />
-                                </a>
-                            </motion.div>
-
-                            {/* Vertical Rule */}
-                            <div className="hidden md:block w-px bg-ink/15 self-stretch" />
-                            <div className="md:hidden h-px bg-ink/15 w-full" />
-
-                            {/* Paid Audit Column */}
-                            <motion.div
-                                className="flex-1 py-12 md:pl-16"
-                                {...SLIDE_RIGHT}
-                                viewport={MOTION_VIEWPORT}
-                                transition={{ ...MOTION_TRANSITION, delay: 0.15 }}
-                            >
-                                <p className="font-sans text-[0.6rem] font-bold uppercase tracking-[0.2em] text-ink/40 mb-4">$1,500</p>
-                                <h3 className="font-display text-4xl text-ink mb-3 italic">Story Audit</h3>
-                                <p className="font-display text-lg text-ink/60 italic mb-8">A 5-day deep dive that rebuilds your narrative from the spine out.</p>
-                                <ul className="space-y-4 font-sans text-[0.8rem] text-ink/70 mb-10">
-                                    <li className="flex items-start gap-3">
-                                        <span className="text-rust mt-0.5"><CheckCircle2 className="w-3.5 h-3.5" /></span>
-                                        <span>The Spine — your foundational narrative architecture</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <span className="text-rust mt-0.5"><CheckCircle2 className="w-3.5 h-3.5" /></span>
-                                        <span>The Script — rewritten homepage and pitch deck copy</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <span className="text-rust mt-0.5"><CheckCircle2 className="w-3.5 h-3.5" /></span>
-                                        <span>The Stage — content strategy and channel playbook</span>
-                                    </li>
-                                </ul>
-                                <a href={BOOKING_ACTION} className="group relative inline-flex">
-                                    <div className="absolute inset-0 bg-rust transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
-                                    <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-8 py-4 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-                                        Book the Story Audit
-                                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <h3 className="font-sans text-[0.65rem] font-bold uppercase tracking-[0.2em] mb-8 text-white/40 flex items-center gap-3">
+                            <span className="w-8 h-[1px] bg-white/20" />
+                            The Four Layers We Examine
+                        </h3>
+                        <div className="space-y-px border border-white/10">
+                            {[
+                                { num: "01", title: "The Spine", desc: "The core sentence that should anchor every conversation, every piece of marketing, every webpage." },
+                                { num: "02", title: "The Script", desc: "What the audience hears: your emails, your elevator pitch, and your top content." },
+                                { num: "03", title: "The Stage", desc: "Your deck, website, and anywhere a prospect first gets their first impression." },
+                                { num: "04", title: "The Show", desc: "Your advertising, your distribution, and your audience's reaction." },
+                            ].map((layer) => (
+                                <div key={layer.num} className="group flex gap-6 p-6 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0">
+                                    <span className="font-sans text-[0.6rem] text-paper/70 font-bold tracking-widest mt-1 flex-shrink-0">{layer.num}</span>
+                                    <div>
+                                        <h4 className="font-display text-xl text-paper mb-1 group-hover:text-rust transition-colors">{layer.title}</h4>
+                                        <p className="font-sans text-xs text-paper/40 leading-relaxed">{layer.desc}</p>
                                     </div>
-                                </a>
-                            </motion.div>
+                                </div>
+                            ))}
                         </div>
-                    </div>
 
-                    {/* Full-width testimonial pull quote */}
-                    <div className="max-w-4xl mx-auto px-6 pt-24 pb-8 reveal reveal-delay-2">
-                        <div className="border-t border-ink/10 pt-20 text-center">
-                            <p className="font-display text-3xl md:text-4xl lg:text-[2.75rem] italic text-ink leading-[1.35] tracking-tight">
-                                &ldquo;We&apos;d been pitching for six months with polite rejections. After the audit, we closed our seed round in three weeks. The framing shift was that dramatic.&rdquo;
+                        {/* Testimonial */}
+                        <div className="mt-16 text-center">
+                            <p className="font-display text-xl md:text-2xl italic text-paper/60 leading-[1.5] max-w-2xl mx-auto">
+                                &ldquo;Since our audit, every pitch has been tighter, audiences are starting to talk, and the money&apos;s rolling in.&rdquo;
                             </p>
-                            <div className="mt-10">
-                                <p className="font-sans text-sm font-bold text-ink tracking-wide">Marcus T.</p>
-                                <p className="font-sans text-[0.7rem] text-ink/40 uppercase tracking-[0.2em] mt-1">Founder, B2B SaaS</p>
-                            </div>
+                            <p className="mt-6 font-sans text-sm text-white/40">— Series A Co-Founder</p>
                         </div>
                     </div>
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════
-                    SECTION 8 — CLOSING CTA
-                    Both products. Photography ghost right edge.
-                    Swapped with FAQ — CTA now precedes FAQ.
+                    SECTION 8 — CLOSING CTA (7.9)
+                    "Stop guessing. Start converting."
                     ═══════════════════════════════════════════════════════ */}
                 <section className="bg-ink border-t-2 border-rust py-32 relative overflow-hidden">
                     <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.06]" style={{
@@ -1044,20 +940,20 @@ export default function StoryHealthCheckPage() {
                             Stop guessing.<br /><span className="italic text-rust">Start converting.</span>
                         </h2>
                         <p className="font-sans text-paper/60 text-lg max-w-xl mx-auto leading-relaxed mb-16">
-                            The free Loom shows you the leak. The Story Audit fixes it. Either way, you&apos;ll know more about your narrative in the next 72 hours than you have in years.
+                            Within 5 minutes, you&apos;ll know the story issue. Within one week, you&apos;ll know how to fix it. Either way, you&apos;ll get a story worth telling, over and over again.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                             <a href={BOOKING_ACTION} className="group relative flex">
                                 <div className="absolute inset-0 bg-black/50 transform translate-x-1.5 translate-y-1.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
                                 <div className="relative bg-rust text-paper font-sans text-[0.65rem] uppercase tracking-[0.2em] font-bold px-10 py-5 flex items-center gap-3 transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-                                    Book the Story Audit
+                                    Secure Your Story Teardown
                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </div>
                             </a>
 
                             <a href="#free-loom" className="font-sans text-[0.6rem] tracking-[0.15em] text-paper/30 hover:text-rust transition-colors flex items-center gap-1.5 mt-6">
-                                Not ready? Send your URL for the free teardown first
+                                Not ready? Get a free story rip first
                                 <ArrowRight className="w-3 h-3" />
                             </a>
                         </div>
@@ -1069,26 +965,25 @@ export default function StoryHealthCheckPage() {
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════
-                    SECTION 9 — FAQ
-                    "Who performs the audit?" added as first question.
-                    Swapped with CTA — FAQ is now final content section.
+                    SECTION 9 — FAQ (7.10)
+                    Updated copy and product names.
                     ═══════════════════════════════════════════════════════ */}
                 <section className="pt-40 pb-8 bg-paper border-t border-ink/5 relative overflow-hidden" id="faq">
                     <div className="max-w-5xl mx-auto px-6">
                         <div className="mb-24 reveal text-center lg:text-left">
                             <h2 className="font-display text-5xl md:text-7xl italic leading-none text-ink tracking-tight mb-4">Got Questions?</h2>
-                            <p className="font-sans text-ink/50 text-sm tracking-widest uppercase">The structural fine print</p>
+                            <p className="font-sans text-ink/50 text-sm tracking-widest uppercase">A few commonalities between clients</p>
                         </div>
 
                         <div className="space-y-12 reveal reveal-delay-1">
                             <div className="grid md:grid-cols-2 gap-x-12 gap-y-10 items-start">
                                 {[
-                                    { q: "Who performs the audit?", a: "Our senior strategists — not contractors, not AI. The same team whose work you can see on our work page. You'll get a real human on your first call, and a real human's markup on your copy." },
-                                    { q: "Why is this $1,500?", a: "This isn't copywriting, it's architecture. You're investing in clarity that changes how you pitch, present, and sell. One story that works can move a room or close a round. That's measurable ROI." },
-                                    { q: "What exactly will I walk away with?", a: "Three deliverables: A Story Audit, a Brand Blueprint, and a practical Narrative Roadmap (PDF) — all pulling from the same foundation so your team, site, and fundraising speak with one voice." },
-                                    { q: "How long does it take?", a: "One business week. We'll send it 3–5 days from when we begin, keeping you out of 'brand work limbo.'" },
-                                    { q: "Will this help me raise?", a: "Without question. Investors fund clarity. If your pitch stalls at 'what do you actually do?', this process fixes that." },
-                                    { q: "What's the difference between the free Loom and the paid Audit?", a: "The Loom is a high-level read on your biggest leak — directional, fast, and free. The Audit is a surgical intervention across all four layers of your narrative, with deliverables your whole team can use." },
+                                    { q: "Who performs the audit?", a: "We do. Not contractors, not AI. We have twenty years of strategy, copywriting, and storytelling experience and we know how to turn a story around." },
+                                    { q: "Why is this $1,500?", a: "You're investing in clarity that changes how you pitch, present, and sell. One story that works can move a room or close a round. That's measurable ROI." },
+                                    { q: "What exactly will I walk away with?", a: "With the Story Rip, a 5-minute Loom walking you through first impressions. Great for a quick check. For the teardown, three deliverables: A Story Audit, a Red Line Blueprint, and a practical Narrative Roadmap, all pulling from the same foundation so your team, site, and fundraising speak with one voice." },
+                                    { q: "How long does it take?", a: "The Story Rip takes two days. The Teardown is one business week. We'll schedule a call at our earliest mutual convenience, and send the deliverables 5–7 days from when we begin." },
+                                    { q: "Will this help me raise?", a: "The #1 problem we hear from VCs and donors: they didn't understand the point of it. Investors fund clarity. If your pitch stalls at 'what do you actually do?', this process fixes that." },
+                                    { q: "What's the difference between the free Story Rip and the paid Teardown?", a: "The Story Rip gives you first impressions on where your story's working, and most importantly where it's not. It's a five minute Loom that gives you insight into what the breakdown is and how we'll take care of it. The Teardown is a writer's room intervention across all four layers of your narrative, with deliverables your whole team can use." },
                                 ].map((faq, i) => (
                                     <div key={i} className="group">
                                         <h4 className="font-display text-xl mb-4 group-hover:text-rust transition-colors flex items-start gap-3">
@@ -1109,25 +1004,25 @@ export default function StoryHealthCheckPage() {
 
             {/* ═══════════════════════════════════════════════════════
                 STICKY BOTTOM BAR
-                "Spots Available This Week" — not form language.
                 ═══════════════════════════════════════════════════════ */}
             <div className="fixed bottom-0 left-0 w-full z-40 bg-white text-ink border-t-2 border-rust shadow-[0_-20px_50px_rgba(0,0,0,0.05)]">
                 <div className="max-w-7xl mx-auto px-4 md:px-6 h-20 md:h-24 flex items-center justify-between gap-3 md:gap-6">
                     <div className="hidden md:flex flex-col">
-                        <span className="text-[0.6rem] font-sans text-rust uppercase tracking-[0.2em] mb-1 font-bold">Spots Available This Week</span>
-                        <span className="font-display font-light text-2xl tracking-tighter text-ink italic">What is your confusion costing?</span>
+                        <span className="font-display font-light text-3xl tracking-tighter text-ink italic">What&apos;s your story costing you?</span>
                     </div>
                     <div className="md:hidden flex flex-col justify-center min-w-0">
-                        <span className="text-[0.6rem] font-sans text-rust uppercase tracking-[0.2em] mb-1 font-bold">Spots Available</span>
-                        <span className="font-display font-light text-lg tracking-tight text-ink italic truncate">Stop the bleeding.</span>
+                        <span className="font-display font-light text-xl tracking-tight text-ink italic truncate">What&apos;s your story costing you?</span>
                     </div>
-                    <a
-                        href={pastLoomForm ? BOOKING_ACTION : '#free-loom'}
-                        className="bg-rust hover:bg-rust/85 text-paper px-4 py-3 md:px-10 md:py-4 font-sans text-[0.58rem] md:text-[0.65rem] uppercase tracking-[0.14em] md:tracking-[0.2em] font-bold flex items-center gap-2 md:gap-4 transition-all md:hover:pr-8 shadow-sm group whitespace-nowrap"
-                    >
-                        {pastLoomForm ? 'Book the Story Audit' : 'Send Your URL'}
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
-                    </a>
+                    <div className="flex flex-col items-center gap-1.5">
+                        <a
+                            href={BOOKING_ACTION}
+                            className="bg-rust hover:bg-rust/85 text-paper px-4 py-3 md:px-10 md:py-4 font-sans text-[0.58rem] md:text-[0.65rem] uppercase tracking-[0.14em] md:tracking-[0.2em] font-bold flex items-center gap-2 md:gap-4 transition-all md:hover:pr-8 shadow-sm group whitespace-nowrap"
+                        >
+                            Book Your Story Teardown
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
+                        </a>
+                        <span className="text-[0.65rem] font-sans text-rust/70 italic tracking-wide">We only take a few each month.</span>
+                    </div>
                 </div>
             </div>
         </div>
