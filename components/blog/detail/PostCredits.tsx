@@ -1,5 +1,4 @@
 import type { FaqItem } from '@/types/blog';
-import InkDisplay from '@/components/InkDisplay';
 
 interface PostCreditsProps {
   items: FaqItem[];

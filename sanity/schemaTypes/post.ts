@@ -73,6 +73,46 @@ export const post = defineType({
             }),
           ],
         },
+        {
+          type: 'object',
+          name: 'pullQuote',
+          title: 'Pull Quote',
+          fields: [
+            defineField({ name: 'text', type: 'text', validation: (Rule) => Rule.required() }),
+          ],
+          preview: { select: { title: 'text' } },
+        },
+        {
+          type: 'image',
+          name: 'fullBleedImage',
+          title: 'Full Bleed Image',
+          options: { hotspot: true },
+          fields: [
+            defineField({ name: 'alt', type: 'string', title: 'Alt Text' }),
+            defineField({ name: 'caption', type: 'string', title: 'Caption' }),
+          ],
+        },
+        {
+          type: 'object',
+          name: 'sectionDivider',
+          title: 'Section Divider',
+          fields: [
+            defineField({
+              name: 'variant',
+              type: 'string',
+              initialValue: 'rule',
+              options: {
+                list: [
+                  { title: 'Rule', value: 'rule' },
+                  { title: 'Marker (§)', value: 'marker' },
+                  { title: 'Space', value: 'space' },
+                ],
+                layout: 'radio',
+              },
+            }),
+          ],
+          preview: { select: { title: 'variant' } },
+        },
       ],
     }),
     defineField({
@@ -101,12 +141,24 @@ export const post = defineType({
     defineField({
       name: 'schema',
       type: 'object',
-      fields: [defineField({ name: 'type', type: 'string' })],
-    }),
-    defineField({
-      name: 'readingTime',
-      type: 'number',
-      title: 'Reading Time (Minutes)',
+      fields: [
+        defineField({ name: 'type', type: 'string' }),
+        defineField({
+          name: 'faqItems',
+          title: 'FAQ Items',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              name: 'faqItem',
+              fields: [
+                defineField({ name: 'question', type: 'string', validation: (Rule) => Rule.required() }),
+                defineField({ name: 'answer', type: 'text', validation: (Rule) => Rule.required() }),
+              ],
+            },
+          ],
+        }),
+      ],
     }),
     defineField({
       name: 'featured',

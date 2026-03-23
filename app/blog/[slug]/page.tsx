@@ -2,11 +2,11 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import PostCredits from '@/components/blog/detail/PostCredits';
-import SuggestedReading from '@/components/blog/detail/SuggestedReading';
+import MoreInk from '@/components/blog/detail/MoreInk';
 import EditorialFooter from '@/components/blog/detail/EditorialFooter';
 import Prose from '@/components/blog/detail/Prose';
 import SanityPortableText from '@/components/blog/detail/SanityPortableText';
-import { getBlogPosts } from '@/lib/blog';
+import { getBlogPostBySlug, getBlogPosts, getBlogPostSlugs } from '@/lib/blog';
 import type { BlogPost } from '@/types/blog';
 
 // --- Static generation ---
@@ -14,8 +14,8 @@ import type { BlogPost } from '@/types/blog';
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const posts = await getBlogPosts();
-  return posts.map((post) => ({ slug: post.slug }));
+  const slugs = await getBlogPostSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -24,8 +24,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const posts = await getBlogPosts();
-  const post = posts.find((p) => p.slug === slug) ?? null;
+  const post = await getBlogPostBySlug(slug);
   if (!post) return { title: 'Post Not Found' };
 
   const openGraphImage = post.openGraphImage || post.mainImage || '/images/og-default.jpg';
@@ -61,10 +60,10 @@ export default async function BlogDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const posts = await getBlogPosts();
-  const post = posts.find((p) => p.slug === slug);
+  const post = await getBlogPostBySlug(slug);
   if (!post) return notFound();
 
+  const posts = await getBlogPosts();
   const cataloguePosts = getCataloguePosts(posts, post.slug);
 
   return (
@@ -156,7 +155,7 @@ export default async function BlogDetailPage({
       )}
 
       {/* ═══ FURTHER READING ═══ */}
-      <SuggestedReading posts={cataloguePosts} />
+      <MoreInk posts={cataloguePosts} />
 
       {/* Editorial footer — newsletter, Story Teardown, PI mark */}
       <EditorialFooter />

@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
+import NewsletterSignupForm from '@/components/blog/detail/NewsletterSignupForm';
 
 const navLinks = [
   { label: 'Work', href: '/work' },
@@ -35,22 +36,7 @@ export default function EditorialFooter() {
             <p className="font-sans text-[15px] text-white/50 mt-4 mb-8 leading-relaxed max-w-[320px]">
               Get biweekly insights on all things copy, story, and voice sent straight to your inbox.
             </p>
-            {/* TODO: wire to newsletter provider */}
-            <form action="#">
-              <div className="flex items-end gap-0 border-b border-warmwhite/20 pb-2 max-w-[320px]">
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className="flex-1 bg-transparent text-warmwhite text-[15px] placeholder-warmwhite/40 focus:outline-none font-sans min-w-0"
-                />
-                <button
-                  type="submit"
-                  className="font-sans text-[15px] text-rust hover:text-warmwhite transition-colors duration-300 ml-4 flex-shrink-0"
-                >
-                  Join now →
-                </button>
-              </div>
-            </form>
+            <NewsletterSignupForm />
           </div>
 
           {/* ── Center: Navigate ── */}

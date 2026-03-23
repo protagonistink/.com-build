@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Permanent_Marker } from "next/font/google";
+import { Cormorant_Garamond } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -12,12 +12,6 @@ const cormorant = Cormorant_Garamond({
   weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-cormorant",
-});
-
-const permanentMarker = Permanent_Marker({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-permanent-marker",
 });
 
 export const metadata: Metadata = {
@@ -58,20 +52,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
-        <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
-        <link
-          rel="preload"
-          as="style"
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"
-        />
-        <link
-          rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"
-        />
       </head>
       <body
-        className={`${cormorant.variable} ${permanentMarker.variable} font-sans bg-ink text-warmwhite antialiased selection:bg-rust selection:text-warmwhite`}
+        className={`${cormorant.variable} font-sans bg-ink text-warmwhite antialiased selection:bg-rust selection:text-warmwhite`}
       >
         <Navbar />
         <ScrollReveal />

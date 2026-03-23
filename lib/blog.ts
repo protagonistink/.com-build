@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { createClient } from 'next-sanity';
 import type { BlogPost, FaqItem, PortableTextBlock } from '@/types/blog';
 import { normalizeEnvValue } from '@/lib/env';
@@ -21,6 +22,8 @@ interface CmsPost {
   body?: PortableTextBlock[];
   faqItems?: FaqItem[];
 }
+
+type CmsPostSummary = Omit<CmsPost, 'body' | 'faqItems'>;
 
 function getSanityClient() {
   const projectId =
@@ -65,39 +68,84 @@ function mapCmsPost(post: CmsPost): BlogPost | null {
   };
 }
 
-async function getCmsPosts(): Promise<BlogPost[]> {
+const listPostsQuery = `*[_type == "post"] | order(featured desc, publishedAt desc) {
+  _id,
+  title,
+  slug,
+  publishedAt,
+  featured,
+  excerpt,
+  "mainImageUrl": coalesce(mainImage.asset->url, mainImageUrl),
+  "mainImageAlt": mainImage.alt,
+  "openGraphImageUrl": seo.ogImage.asset->url,
+  "openGraphImageAlt": seo.ogImage.alt,
+  "readingTime": round(length(pt::text(body)) / 1000),
+  categories[]->{
+    title
+  }
+}`;
+
+const singlePostQuery = `*[_type == "post" && slug.current == $slug][0] {
+  _id,
+  title,
+  slug,
+  publishedAt,
+  featured,
+  excerpt,
+  "mainImageUrl": coalesce(mainImage.asset->url, mainImageUrl),
+  "mainImageAlt": mainImage.alt,
+  "openGraphImageUrl": seo.ogImage.asset->url,
+  "openGraphImageAlt": seo.ogImage.alt,
+  readingTime,
+  body,
+  "faqItems": schema.faqItems[]{question, answer},
+  categories[]->{
+    title
+  }
+}`;
+
+const slugListQuery = `*[_type == "post" && defined(slug.current)] | order(featured desc, publishedAt desc) {
+  "slug": slug.current
+}`;
+
+const getCmsPosts = cache(async (): Promise<BlogPost[]> => {
   const client = getSanityClient();
-  if (!client) return [];
 
   try {
-    const posts = await client.fetch<CmsPost[]>(
-      `*[_type == "post"] | order(featured desc, publishedAt desc) {
-        _id,
-        title,
-        slug,
-        publishedAt,
-        featured,
-        excerpt,
-        "mainImageUrl": coalesce(mainImage.asset->url, mainImageUrl),
-        "mainImageAlt": mainImage.alt,
-        "openGraphImageUrl": seo.ogImage.asset->url,
-        "openGraphImageAlt": seo.ogImage.alt,
-        readingTime,
-        body,
-        "faqItems": schema.faqItems[]{question, answer},
-        categories[]->{
-          title
-        }
-      }`
-    );
+    const posts = await client.fetch<CmsPostSummary[]>(listPostsQuery);
 
     return posts
-      .map(mapCmsPost)
+      .map((post) => mapCmsPost(post as CmsPost))
       .filter((item): item is BlogPost => Boolean(item));
   } catch {
     return [];
   }
-}
+});
+
+const getCmsPostBySlug = cache(async (slug: string): Promise<BlogPost | undefined> => {
+  const client = getSanityClient();
+
+  try {
+    const post = await client.fetch<CmsPost | null>(singlePostQuery, { slug });
+    if (!post) return undefined;
+    return mapCmsPost(post) ?? undefined;
+  } catch {
+    return undefined;
+  }
+});
+
+const getCmsPostSlugs = cache(async (): Promise<string[]> => {
+  const client = getSanityClient();
+
+  try {
+    const slugs = await client.fetch<Array<{ slug?: string }>>(slugListQuery);
+    return slugs
+      .map((item) => item.slug?.trim())
+      .filter((item): item is string => Boolean(item));
+  } catch {
+    return [];
+  }
+});
 
 function dedupeBySlug(posts: BlogPost[]) {
   const seen = new Set<string>();
@@ -116,6 +164,9 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
-  const posts = await getBlogPosts();
-  return posts.find((post) => post.slug === slug);
+  return getCmsPostBySlug(slug);
+}
+
+export async function getBlogPostSlugs(): Promise<string[]> {
+  return getCmsPostSlugs();
 }

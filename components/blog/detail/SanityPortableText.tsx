@@ -5,6 +5,9 @@ import {
   type PortableTextMarkComponentProps,
 } from '@portabletext/react';
 import type { PortableTextBlock } from '@/types/blog';
+import PullQuote from '@/components/blog/detail/PullQuote';
+import FullBleedImage from '@/components/blog/detail/FullBleedImage';
+import SectionDivider from '@/components/blog/detail/SectionDivider';
 
 const PROJECT_ID = 'dkok2iir';
 const DATASET = 'production';
@@ -141,6 +144,13 @@ const components: PortableTextComponents = {
         </figure>
       );
     },
+    pullQuote: ({ value }) => <PullQuote text={value?.text || ''} />,
+    fullBleedImage: ({ value }) => {
+      const src = value?.asset?.url || imageUrlFromRef(value?.asset?._ref);
+      if (!src) return null;
+      return <FullBleedImage src={src} alt={value?.alt || ''} caption={value?.caption} />;
+    },
+    sectionDivider: ({ value }) => <SectionDivider variant={value?.variant ?? 'rule'} />,
   },
   hardBreak: () => <br />,
 };

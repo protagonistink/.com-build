@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import type { BlogPost } from '@/types/blog';
 import ScrollRevealWrapper from '@/components/ScrollRevealWrapper';
-import InkDisplay from '@/components/InkDisplay';
 
 interface MoreInkProps {
   posts: BlogPost[];
