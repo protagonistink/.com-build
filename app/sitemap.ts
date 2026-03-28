@@ -48,6 +48,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    {
+      url: "https://www.protagonist.ink/terms",
+      lastModified: new Date("2026-03-28"),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
   ];
 
   const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({

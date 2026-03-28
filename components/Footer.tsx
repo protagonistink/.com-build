@@ -121,6 +121,10 @@ export default function Footer() {
             <Link href="/data-deletion" className="hover:text-white/40 transition-colors duration-300">
               Data Deletion
             </Link>
+            {' · '}
+            <Link href="/terms" className="hover:text-white/40 transition-colors duration-300">
+              Terms of Service
+            </Link>
           </p>
           <p className="font-mono text-[10px] text-white/15 tracking-[0.3em] uppercase select-none">
             Built with conviction.
