@@ -113,6 +113,14 @@ export default function Footer() {
         <div className="py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <p className="font-sans text-xs text-white/25 tracking-[0.05em]">
             &copy; {new Date().getFullYear()} Protagonist Ink LLC. All rights reserved.
+            {' · '}
+            <Link href="/privacy" className="hover:text-white/40 transition-colors duration-300">
+              Privacy Policy
+            </Link>
+            {' · '}
+            <Link href="/data-deletion" className="hover:text-white/40 transition-colors duration-300">
+              Data Deletion
+            </Link>
           </p>
           <p className="font-mono text-[10px] text-white/15 tracking-[0.3em] uppercase select-none">
             Built with conviction.
