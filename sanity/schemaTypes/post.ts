@@ -1,9 +1,11 @@
+import {Newspaper} from 'lucide-react';
 import { defineField, defineType } from 'sanity';
 
 export const post = defineType({
   name: 'post',
   title: 'Blog Posts',
   type: 'document',
+  icon: Newspaper,
   fields: [
     defineField({
       name: 'title',
@@ -31,9 +33,6 @@ export const post = defineType({
       type: 'image',
       options: {
         hotspot: true,
-        aiAssist: {
-          imageDescriptionField: 'alt',
-        },
       },
       fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
     }),
@@ -57,9 +56,6 @@ export const post = defineType({
           type: 'image',
           options: {
             hotspot: true,
-            aiAssist: {
-              imageDescriptionField: 'alt',
-            },
           },
           fields: [
             defineField({ name: 'alt', type: 'string', title: 'Alt Text' }),
@@ -128,9 +124,6 @@ export const post = defineType({
           description: 'Optional social-sharing override. If empty, the main image will be used.',
           options: {
             hotspot: true,
-            aiAssist: {
-              imageDescriptionField: 'alt',
-            },
           },
           fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
         }),
