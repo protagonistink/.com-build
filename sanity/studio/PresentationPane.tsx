@@ -1,5 +1,5 @@
 import {ArrowRight, PanelsTopLeft} from 'lucide-react';
-import {useEffect, useMemo} from 'react';
+import {useMemo} from 'react';
 import {Button, Card, Flex, Stack, Text} from '@sanity/ui';
 import {useRouter} from 'sanity/router';
 
@@ -36,17 +36,6 @@ export function PresentationPane(props: PresentationPaneProps) {
     });
   }, [documentId, documentType, previewPath, router]);
 
-  useEffect(() => {
-    if (!documentId || !documentType) return;
-
-    router.navigateIntent('edit', {
-      id: documentId,
-      type: documentType,
-      mode: 'presentation',
-      preview: previewPath,
-    });
-  }, [documentId, documentType, previewPath, router]);
-
   return (
     <Flex align="center" justify="center" padding={5} style={{height: '100%'}}>
       <Card
@@ -74,10 +63,10 @@ export function PresentationPane(props: PresentationPaneProps) {
             </Card>
             <Stack space={2}>
               <Text size={3} weight="semibold">
-                Opening Presentation
+                Open split-view preview
               </Text>
               <Text muted size={1}>
-                Live draft preview belongs in the split-view Presentation tool, not in this pane.
+                Keep the editor stable here. Open the real Presentation tool only when you want live draft preview.
               </Text>
             </Stack>
           </Flex>
