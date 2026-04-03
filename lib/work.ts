@@ -1,6 +1,6 @@
-import {createClient, defineQuery} from 'next-sanity';
+import {defineQuery} from 'next-sanity';
 import {PROJECTS} from '@/data/work-projects';
-import {normalizeEnvValue} from '@/lib/env';
+import {sanityFetch} from '@/sanity/lib/live';
 import type {
   CaseStudy,
   CaseStudySection,
@@ -17,9 +17,6 @@ import type {
   ShowcaseSurface,
   VideoEmbedSection,
 } from '@/types/work';
-
-const DEFAULT_SANITY_PROJECT_ID = 'dkok2iir';
-const DEFAULT_SANITY_DATASET = 'production';
 
 interface CmsShowcaseBlock {
   _key: string;
@@ -93,22 +90,6 @@ interface CmsCaseStudy {
   ogImageUrl?: string;
   seoDescription?: string;
   sections?: CmsSection[];
-}
-
-function getSanityClient(preview?: boolean) {
-  const projectId =
-    normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) || DEFAULT_SANITY_PROJECT_ID;
-  const dataset =
-    normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_DATASET) || DEFAULT_SANITY_DATASET;
-  const token = preview ? process.env.SANITY_API_READ_TOKEN : undefined;
-
-  return createClient({
-    projectId,
-    dataset,
-    apiVersion: '2026-03-02',
-    useCdn: false,
-    ...(preview && token && {token, perspective: 'previewDrafts' as const}),
-  });
 }
 
 function toYear(value?: string) {
@@ -665,10 +646,14 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
 `);
 
 async function getCmsCaseStudies(preview?: boolean): Promise<CaseStudy[]> {
-  const client = getSanityClient(preview);
   const query = preview ? CASE_STUDY_PREVIEW_QUERY : CASE_STUDY_QUERY;
+
   try {
-    const records = await client.fetch<CmsCaseStudy[]>(query);
+    const {data: records} = (await sanityFetch({
+      query,
+      perspective: preview ? undefined : 'published',
+      stega: preview ? undefined : false,
+    })) as {data: CmsCaseStudy[]};
     return records.map(mapCmsCaseStudy).filter((item): item is CaseStudy => Boolean(item));
   } catch {
     return [];

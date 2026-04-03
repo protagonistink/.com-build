@@ -8,6 +8,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
+import { SanityLive } from "@/sanity/lib/live";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -67,6 +68,7 @@ export default async function RootLayout({
         <ScrollReveal />
         {children}
         <Footer />
+        <SanityLive />
         {isDraftMode && <VisualEditing />}
         <Analytics />
         <SpeedInsights />
