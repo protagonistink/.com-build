@@ -104,7 +104,7 @@ function getSanityClient(preview?: boolean) {
     projectId,
     dataset,
     apiVersion: '2026-03-02',
-    useCdn: !preview,
+    useCdn: false,
     ...(preview && token && {token, perspective: 'previewDrafts' as const}),
   });
 }
