@@ -1,4 +1,4 @@
-import {ArrowRight, PanelsTopLeft} from 'lucide-react';
+import {ArrowRight, ExternalLink, PanelsTopLeft} from 'lucide-react';
 import {useMemo} from 'react';
 import {Button, Card, Flex, Stack, Text} from '@sanity/ui';
 import {useRouter} from 'sanity/router';
@@ -25,6 +25,7 @@ export function PresentationPane(props: PresentationPaneProps) {
       : documentType === 'post' && slug
         ? `/blog/${slug}`
         : '/';
+  const publishedUrl = `https://www.protagonist.ink${previewPath}`;
 
   const href = useMemo(() => {
     if (!documentId || !documentType) return null;
@@ -63,10 +64,10 @@ export function PresentationPane(props: PresentationPaneProps) {
             </Card>
             <Stack space={2}>
               <Text size={3} weight="semibold">
-                Open split-view preview
+                Open live draft preview
               </Text>
               <Text muted size={1}>
-                Keep the editor stable here. Open the real Presentation tool only when you want live draft preview.
+                This keeps the CMS where it is. Use the real Presentation tool only when you want side-by-side draft updates.
               </Text>
             </Stack>
           </Flex>
@@ -81,18 +82,34 @@ export function PresentationPane(props: PresentationPaneProps) {
           >
             <Stack space={3}>
               <Text size={1} muted>
-                {slug ? `Route: ${previewPath}` : 'Generate a slug to map this document to the frontend route.'}
+                {slug ? `Draft route: ${previewPath}` : 'Generate a slug to map this document to the frontend route.'}
               </Text>
-              {href ? (
-                <Button
-                  as="a"
-                  href={href}
-                  iconRight={ArrowRight}
-                  mode="ghost"
-                  text="Open Presentation now"
-                  tone="primary"
-                />
-              ) : null}
+              <Flex gap={3} wrap="wrap">
+                {href ? (
+                  <Button
+                    as="a"
+                    href={href}
+                    iconRight={ArrowRight}
+                    mode="default"
+                    text="Open live draft preview"
+                    tone="primary"
+                  />
+                ) : null}
+                {slug ? (
+                  <Button
+                    as="a"
+                    href={publishedUrl}
+                    iconRight={ExternalLink}
+                    mode="ghost"
+                    target="_blank"
+                    text="Open published page"
+                    tone="default"
+                  />
+                ) : null}
+              </Flex>
+              <Text size={1} muted>
+                Presentation is the only place in Sanity where this document will live-refresh against draft edits.
+              </Text>
             </Stack>
           </Card>
         </Stack>
