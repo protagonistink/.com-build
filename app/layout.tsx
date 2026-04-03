@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { VisualEditing } from "next-sanity/visual-editing";
+import { draftMode } from "next/headers";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -44,11 +46,13 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { isEnabled: isDraftMode } = await draftMode();
+
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
@@ -63,6 +67,7 @@ export default function RootLayout({
         <ScrollReveal />
         {children}
         <Footer />
+        {isDraftMode && <VisualEditing />}
         <Analytics />
         <SpeedInsights />
       </body>

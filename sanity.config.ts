@@ -2,6 +2,7 @@
 
 import {visionTool} from '@sanity/vision';
 import {defineConfig} from 'sanity';
+import {presentationTool} from 'sanity/presentation';
 import {structureTool} from 'sanity/structure';
 import {media} from 'sanity-plugin-media';
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash';
@@ -34,6 +35,15 @@ export default defineConfig({
 
   plugins: [
     structureTool({structure}),
+    presentationTool({
+      previewUrl: {
+        origin: 'https://protagonist.ink',
+        previewMode: {
+          enable: '/api/draft-mode/enable',
+          disable: '/api/draft-mode/disable',
+        },
+      },
+    }),
     media(),
     visionTool(),
     unsplashImageAsset(),
