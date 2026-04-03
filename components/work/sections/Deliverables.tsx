@@ -40,7 +40,7 @@ export default function Deliverables({ section }: { section: DeliverablesSection
                     </h4>
                   )}
                   {item.description && (
-                    <p className="text-ink/35 group-hover:text-white/35 text-sm leading-relaxed transition-colors duration-500">
+                    <p className="text-ink/35 group-hover:text-white/35 text-base leading-relaxed transition-colors duration-500">
                       {item.description}
                     </p>
                   )}

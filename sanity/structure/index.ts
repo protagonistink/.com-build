@@ -66,7 +66,7 @@ export const structure: StructureResolver = (S) =>
                         .schemaType('caseStudy')
                         .views([
                           S.view.form(),
-                          S.view.component(PreviewPane).title('Preview').icon(Eye),
+                          S.view.component(PreviewPane).title('Published').icon(Eye),
                         ]),
                     ),
                 ),
@@ -84,7 +84,7 @@ export const structure: StructureResolver = (S) =>
                         .schemaType('caseStudy')
                         .views([
                           S.view.form(),
-                          S.view.component(PreviewPane).title('Preview').icon(Eye),
+                          S.view.component(PreviewPane).title('Published').icon(Eye),
                         ]),
                     ),
                 ),
@@ -102,7 +102,7 @@ export const structure: StructureResolver = (S) =>
                         .schemaType('caseStudy')
                         .views([
                           S.view.form(),
-                          S.view.component(PreviewPane).title('Preview').icon(Eye),
+                          S.view.component(PreviewPane).title('Published').icon(Eye),
                         ]),
                     ),
                 ),
@@ -122,7 +122,7 @@ export const structure: StructureResolver = (S) =>
                         .schemaType('caseStudy')
                         .views([
                           S.view.form(),
-                          S.view.component(PreviewPane).title('Preview').icon(Eye),
+                          S.view.component(PreviewPane).title('Published').icon(Eye),
                         ]),
                     ),
                 ),

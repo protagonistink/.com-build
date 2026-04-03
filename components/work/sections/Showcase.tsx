@@ -82,7 +82,7 @@ function ContentPanel({ block, isDark }: { block: ShowcaseBlock; isDark: boolean
           </p>
         )}
         {block.body && (
-          <p className={`text-sm leading-[1.8] max-w-md ${
+          <p className={`text-base leading-[1.8] max-w-md ${
             isDark ? 'text-white/30' : 'text-ink/35'
           }`}>
             {block.body}

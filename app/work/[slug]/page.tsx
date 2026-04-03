@@ -7,6 +7,8 @@ import ScrollRevealWrapper from '@/components/ScrollRevealWrapper';
 import ParallaxHeroBackground from '@/components/ParallaxHeroBackground';
 import SectionRenderer from '@/components/work/sections/SectionRenderer';
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const projects = await getWorkProjects();
   return projects.map((project) => ({ slug: project.slug }));

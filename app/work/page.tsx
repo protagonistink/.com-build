@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getWorkProjects } from '@/lib/work';
 
+export const revalidate = 60;
+
 export const metadata = {
   title: 'The Work',
   description: 'Narrative architecture in action. Case studies in brand strategy, story, and structure.',
