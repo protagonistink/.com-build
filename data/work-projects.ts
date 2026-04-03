@@ -3,235 +3,270 @@ import type { CaseStudy } from '@/types/work';
 export const PROJECTS: CaseStudy[] = [
   {
     id: 1,
-    slug: 'the-silent-whisper',
+    slug: 'rebranding-a-giant',
     scene: 'SCENE 01',
     ref: 'CASE-01',
-    title: 'The Silent Whisper',
-    subtitle: 'Nature vs. science. One doctrine, not two.',
-    client: 'Aesop',
-    sector: 'Beauty & Wellness',
-    engagementType: 'Narrative Architecture',
+    title: 'Rebranding a Giant',
+    subtitle: 'What does a 150-year-old energy company say when the world decides energy has to change?',
+    client: 'Chevron',
+    sector: 'Energy',
+    engagementType: 'Content Strategy + Brand Voice + .com',
     year: '2024',
-    image: '/images/work/scene-01.png',
-    imageAlt: 'A nocturnal study of texture and restraint',
-
-    // Beat 1 — Cold Open
-    coldOpen:
-      'Aesop had earned its reputation through formulation rigor and retail atmosphere. But beneath the amber bottles and considered typography, the brand story was quietly fracturing — different teams telling different versions of the same belief system, none of them wrong, none of them complete.',
-
-    // Beat 2 — Story Problem
-    internalStory:
-      'Inside the company, product teams described Aesop through botanical science. Retail teams described it through sensory ritual. Marketing bridged neither. Three valid narratives competing for the same brand, with no shared architecture to hold them.',
-    externalPerception:
-      'Customers experienced Aesop as refined but interchangeable with any premium skincare brand that used the word "botanical." The distinctiveness lived in the store, not in the story.',
-    consequences:
-      'Without a unifying narrative doctrine, every new product launch required reinventing the brand rationale. Expansion into new markets amplified the inconsistency. The brand was growing, but its meaning was thinning.',
-
-    // Beat 3 — The World
-    mentors: [
+    image: 'https://cdn.sanity.io/images/dkok2iir/production/dc7726a98ea8ec70d51db131d198e6c7f5c0b3d0-1000x667.jpg',
+    imageAlt: 'Rebranding a Giant for Chevron',
+    caseNumber: '001',
+    timeline: '2024',
+    sections: [
       {
-        name: 'Head of Product Development',
-        observation: 'Our formulations are arguments — each ingredient is there to prove something. But we never tell anyone what we are trying to prove.',
+        _type: 'prologue',
+        _key: 'chevron-prologue',
+        body: "Chevron had the science. They had the infrastructure, the investment, the roadmap. What they didn't have was a way to talk about any of it to people who weren't already inside the industry. The existing copy assumed fluency it had no right to assume. Dense, regulated, written for an audience that no longer existed in the numbers it once did. The .com wasn't a communication tool. It was a compliance document with a navigation bar.",
+        details: [
+          {_key: 'd1', label: 'Client', value: 'Chevron'},
+          {_key: 'd2', label: 'Scope', value: 'Content Strategy, Voice & Tone, Website Copy'},
+        ],
       },
       {
-        name: 'Regional Retail Director',
-        observation: 'The store experience converts people. But when they leave, they cannot articulate why they chose us over anyone else.',
-      },
-    ],
-    villains: [
-      {
-        name: 'Category Convention',
-        observation: 'Premium skincare defaults to aspiration and self-care language that flattens every brand into the same emotional territory.',
-      },
-      {
-        name: 'Internal Fragmentation',
-        observation: 'Each department had optimized its own version of the story. Alignment felt like loss of autonomy, so no one pursued it.',
-      },
-    ],
-
-    // Beat 4 — The Reframe
-    reframe:
-      'Aesop is not a skincare brand that values nature. It is a company that treats daily routine as a practice — a deliberate, repeatable relationship with attention itself.',
-    reframeAnnotation:
-      'This reframe collapsed the nature-vs-science tension by elevating both into a single organizing principle: the practice of paying attention. Formulation rigor and sensory ritual became two expressions of the same belief.',
-
-    // Beat 5 — Narrative Architecture
-    artifacts: [
-      {
-        src: '/images/work/scene-01.png',
-        alt: 'Doctrine system overview',
-        label: 'FIG. 01',
-        description: 'The Practice Doctrine — a single-page narrative architecture mapping formulation, retail, and messaging to one strategic spine.',
+        _type: 'showcase',
+        _key: 'chevron-challenge',
+        label: 'THE CHALLENGE',
+        surface: 'light',
+        items: [
+          {
+            _key: 'chevron-challenge-1',
+            layout: 'split',
+            itemLabel: 'The Problem',
+            title: 'A language built for insiders',
+            body: "Energy is technical. It's also political, emotional, and heavily scrutinized. Chevron's existing copy tried to navigate all of that by saying as little as possible as precisely as possible. The result was language that protected the company without ever connecting to the people it needed to reach. Credibility without humanity is just bureaucracy.",
+          },
+          {
+            _key: 'chevron-challenge-2',
+            layout: 'stat',
+            statValue: '90%',
+            body: 'of Chevron.com was being read on mobile. The copy was written for a desktop reader with time and industry context. That reader had largely stopped showing up.',
+          },
+          {
+            _key: 'chevron-challenge-3',
+            layout: 'split',
+            itemLabel: 'The Real Stakes',
+            title: "Evolution isn't just technology. It's trust.",
+            body: "An energy company pivoting toward renewables doesn't get the benefit of the doubt. Every word either builds the case or undermines it. The wrong tone reads as spin. The right tone reads as conviction. The difference between those two things isn't a messaging refresh. It's a complete rethinking of what the company needs to say — and then the discipline to write every page like that actually matters.",
+          },
+        ],
       },
       {
-        src: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=2600',
-        alt: 'Retail narrative surface',
-        label: 'FIG. 02',
-        description: 'Copy system applied to retail signage — translating the doctrine into the physical space without losing precision.',
+        _type: 'showcase',
+        _key: 'chevron-work',
+        label: 'THE WORK',
+        surface: 'dark',
+        items: [
+          {
+            _key: 'chevron-work-1',
+            layout: 'split',
+            itemLabel: 'The Approach',
+            title: 'Copy drove the redesign. Not the other way around.',
+            body: "Most .com rebuilds start with the wireframe and fill in the words later. This one started with the story — what Chevron actually believes about the future of energy, who needs to hear it, and what they need to feel before they'll trust it. The content strategy came first. The architecture followed. Then came the work of writing it: every page, every section, every headline built to carry both the technical credibility and the human stakes.",
+          },
+          {
+            _key: 'chevron-work-2',
+            layout: 'split',
+            itemLabel: 'Voice & Tone',
+            title: 'Trading insider language for a human one',
+            body: "The work wasn't simplification. Simplification loses credibility in a technical industry. It was translation — finding the version of the truth that a curious, skeptical, non-specialist reader could follow without feeling talked down to. That meant rewriting the existing copy from the ground up, then building a voice guide the internal team could use to hold the standard across every surface we didn't touch directly.",
+          },
+          {
+            _key: 'chevron-work-3',
+            layout: 'fullBleed',
+            itemLabel: 'Renewable Fuels',
+            title: 'Hub-and-spoke storytelling at scale',
+            body: "The Renewable Fuels section became the proof of concept. A multi-page experience covering every transportation category — trucking, rail, shipping — written to educate first, advocate second. Each page carried the technical weight the subject required without losing the human reading it along the way. The pages didn't argue for Chevron. They explained the future of fuel clearly enough that Chevron's role in it became obvious.",
+          },
+        ],
       },
       {
-        src: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&q=80&w=2600',
-        alt: 'Product narrative framework',
-        label: 'FIG. 03',
-        description: 'Product description framework — each SKU positioned as evidence of the practice, not as a standalone benefit claim.',
-      },
-    ],
-
-    // Beat 6 — Execution
-    executionSurfaces: [
-      {
-        surface: 'Brand Narrative Doctrine',
-        description: 'A foundational document that unified product, retail, and marketing language under one strategic spine. Distributed as a reference system, not a brand book.',
+        _type: 'videoEmbed',
+        _key: 'chevron-video',
+        url: 'https://vimeo.com/926419977',
+        caption: 'Renewable Fuels on the Road — hub-and-spoke editorial experience',
+        aspectRatio: '16/9',
       },
       {
-        surface: 'Product Copy System',
-        description: 'Rewritten descriptions for 40+ SKUs, each structured to connect formulation rationale to the practice-of-attention framework.',
-      },
-    ],
-
-    // Beat 7 — The Shift
-    shifts: [
-      {
-        dimension: 'Internal Alignment',
-        change: 'Three competing narratives collapsed into one shared doctrine that each department could extend without contradiction.',
+        _type: 'climax',
+        _key: 'chevron-climax',
+        quote: 'The Renewable Fuels hub became one of the highest-trafficked destinations on Chevron.com. Not because we promoted it. Because people actually wanted to read it.',
+        metrics: [
+          { _key: 'chevron-metric-1', value: 'Full', label: '.com rewritten' },
+          { _key: 'chevron-metric-2', value: '#1', label: 'trafficked hub on .com' },
+          { _key: 'chevron-metric-3', value: '150', label: 'years of history, rewritten for now' },
+        ],
       },
       {
-        dimension: 'Customer Articulation',
-        change: 'Post-purchase surveys showed customers could now describe why they chose Aesop in language that matched the brand\'s own positioning.',
-      },
-      {
-        dimension: 'Launch Efficiency',
-        change: 'New product launches no longer required narrative reinvention — the doctrine provided a repeatable framework for positioning.',
-      },
-    ],
-    metrics: [
-      {
-        label: 'Narrative alignment score',
-        value: '34% to 91% across departments',
-      },
-      {
-        label: 'Product launch brief cycle time',
-        value: 'Reduced from 6 weeks to 2 weeks',
+        _type: 'closer',
+        _key: 'chevron-closer',
+        text: "When a company this old needs to say something new, the problem is never the technology. It's always the story — and someone still has to write it.",
       },
     ],
-
-    // SEO + Listing
-    description: 'Nature versus science, reframed into one coherent system of belief.',
-    category: 'Narrative Architecture',
-    tagline: 'Nature vs. science. One doctrine, not two.',
+    description: 'A brand-story refresh for Chevron built through content strategy, voice, and a copy-led .com overhaul.',
+    category: 'Content Strategy',
+    tagline: 'What does a 150-year-old energy company say when the world decides energy has to change?',
   },
   {
     id: 2,
-    slug: 'midnight-oil',
+    slug: 'this-is-how',
     scene: 'SCENE 02',
     ref: 'CASE-02',
-    title: 'Midnight Oil',
-    subtitle: 'Algorithm vs. intention. Scale that remembers why.',
-    client: 'Spotify',
-    sector: 'Technology',
-    engagementType: 'Strategic Messaging',
-    year: '2023',
-    image: 'https://images.unsplash.com/photo-1514525253361-bee8a187499b?ixlib=rb-4.0.3&auto=format&fit=crop&q=80&w=2600',
-    imageAlt: 'A motion-heavy frame study designed to hold noise, rhythm, and editorial restraint',
-
-    // Beat 1 — Cold Open
-    coldOpen:
-      'Spotify had won the access war. Seventy million songs, available anywhere, anytime. But winning access created a new problem: when everything is available, nothing feels chosen. The platform that democratized music was quietly eroding the act of caring about it.',
-
-    // Beat 2 — Story Problem
-    internalStory:
-      'Product teams optimized for engagement metrics — time-on-platform, skip rates, playlist saves. These numbers moved, but they measured consumption, not connection. The internal story was about scale. Nobody was measuring meaning.',
-    externalPerception:
-      'Artists saw Spotify as a distribution channel, not a partner. Listeners described it as convenient but forgettable — a utility, not a relationship. The brand was everywhere and about nothing.',
-    consequences:
-      'Without a narrative that connected algorithmic scale to human intention, Spotify was vulnerable to any competitor that could tell a better story about why music matters — even with inferior technology.',
-
-    // Beat 3 — The World
-    mentors: [
+    title: 'This is How',
+    subtitle: 'Showing what software could do, without explaining a thing.',
+    client: 'Airtable',
+    sector: 'Enterprise SaaS',
+    engagementType: 'Brand Campaign',
+    year: '2024',
+    image: 'https://cdn.sanity.io/images/dkok2iir/production/fe3ff99856676168c9c1e383ac65eeb4fe0e6418-1000x667.jpg',
+    imageAlt: 'This is How for Airtable',
+    caseNumber: '002',
+    timeline: '2024',
+    sections: [
       {
-        name: 'VP of Creator Partnerships',
-        observation: 'Artists do not want more listeners. They want listeners who stay. We have the data to enable that relationship, but we have never framed it as our purpose.',
+        _type: 'prologue',
+        _key: 'airtable-prologue',
+        body: "Airtable had the kind of product people loved once they understood it. The problem was scale: national awareness required a story, not a tutorial.",
+        details: [
+          {_key: 'd1', label: 'Core Objective', value: 'Show what the product does without teaching the product.'},
+          {_key: 'd2', label: 'Disciplines', value: 'Creative Direction · Copywriting · Scriptwriting'},
+        ],
       },
       {
-        name: 'Senior Product Designer',
-        observation: 'Every feature we build makes discovery easier. None of them make commitment easier. We are optimizing the wrong moment in the listener journey.',
-      },
-    ],
-    villains: [
-      {
-        name: 'The Convenience Trap',
-        observation: 'Streaming platforms compete on access and ease. This frames music as a commodity and the platform as infrastructure — invisible and replaceable.',
-      },
-      {
-        name: 'Metric Myopia',
-        observation: 'Engagement metrics rewarded passive listening. Active choice, repeat commitment, and artist loyalty were unmeasured and therefore unvalued.',
-      },
-    ],
-
-    // Beat 4 — The Reframe
-    reframe:
-      'Spotify is not where you find music. It is where discovery becomes commitment — for listeners and for artists.',
-    reframeAnnotation:
-      'This reframe repositioned the algorithm from a convenience engine to a commitment engine. It gave product, marketing, and creator teams a shared definition of success: not just plays, but returns.',
-
-    // Beat 5 — Narrative Architecture
-    artifacts: [
-      {
-        src: 'https://images.unsplash.com/photo-1514525253361-bee8a187499b?auto=format&fit=crop&q=80&w=2600',
-        alt: 'Commitment framework overview',
-        label: 'FIG. 01',
-        description: 'The Commitment Framework — a narrative model connecting listener behavior, artist value, and platform positioning around the concept of return visits.',
+        _type: 'showcase',
+        _key: 'airtable-problem',
+        label: 'THE CHALLENGE',
+        surface: 'light',
+        items: [
+          {
+            _key: 'airtable-problem-1',
+            layout: 'split',
+            itemLabel: 'THE CONFLICT',
+            title: 'The Explanation Trap',
+            tagline: "Product specs weren't going to work",
+            body: "The category default was demo, feature, demo again. But the thing Airtable actually needed to communicate was what work feels like when the system holds.",
+          },
+        ],
       },
       {
-        src: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=2600',
-        alt: 'Creator trust messaging',
-        label: 'FIG. 02',
-        description: 'Creator Trust Messaging — language system for artist-facing communications that frames Spotify as a partner in listener commitment, not just distribution.',
+        _type: 'showcase',
+        _key: 'airtable-work',
+        label: 'THE WORK',
+        surface: 'dark',
+        items: [
+          {
+            _key: 'airtable-work-1',
+            layout: 'split',
+            itemLabel: 'THE RESOLUTION',
+            title: 'Rhythm as Proof',
+            body: 'Four :15 spots, built around real working moments, carried the message. The pacing did the explaining. The story handled the product logic without turning into a demo.',
+          },
+        ],
       },
-    ],
-
-    // Beat 6 — Execution
-    executionSurfaces: [
       {
-        surface: 'Cross-Functional Messaging Framework',
-        description: 'A strategic narrative reset delivered to product, marketing, and creator partnership teams. Unified the internal vocabulary around commitment rather than consumption.',
+        _type: 'videoEmbed',
+        _key: 'airtable-video',
+        url: 'https://vimeo.com/918125423',
+        caption: 'This is How | Launch Spot',
+        aspectRatio: '16/9',
       },
       {
-        surface: 'Creator Communication Templates',
-        description: 'Rewritten outreach and reporting templates for artist relations, repositioning data insights as evidence of listener commitment rather than raw play counts.',
+        _type: 'climax',
+        _key: 'airtable-shift',
+        label: 'THE SHIFT',
+        quote: "The campaign established a national voice for Airtable by trusting the audience to understand the product through consequence, motion, and rhythm rather than explanation.",
+        metrics: [
+          { _key: 'airtable-metric-1', value: '4', label: ':15 Broadcast Spots' },
+          { _key: 'airtable-metric-2', value: 'National', label: 'Campaign Scale' },
+          { _key: 'airtable-metric-3', value: '3', label: 'Deliverable Channels' },
+        ],
       },
     ],
-
-    // Beat 7 — The Shift
-    shifts: [
+    description: 'A campaign-led brand-story refresh for Airtable built around outcome, rhythm, and trust instead of software demos.',
+    category: 'Brand Campaign',
+    tagline: 'Showing what software could do, without explaining a thing.',
+  },
+  {
+    id: 3,
+    slug: 'what-comes-next',
+    scene: 'SCENE 03',
+    ref: 'CASE-03',
+    title: '"What Comes Next?"',
+    subtitle: 'From regulator to advocate. A first consumer-facing campaign for the people who rate the movies.',
+    client: 'Motion Picture Association',
+    sector: 'Entertainment',
+    engagementType: 'Brand Campaign',
+    year: '2016',
+    image: 'https://cdn.sanity.io/images/dkok2iir/production/dcc6f414d7b5699a1369e2044e768dcf8d1117f7-1200x800.jpg',
+    imageAlt: 'What Comes Next for Motion Picture Association',
+    caseNumber: '003',
+    timeline: '2016',
+    sections: [
       {
-        dimension: 'Brand Perception',
-        change: 'Shifted from "convenient music utility" to "the platform where listeners and artists build lasting relationships."',
+        _type: 'prologue',
+        _key: 'mpa-prologue',
+        body: "The MPA had cultural presence without public intimacy. People knew the ratings. They did not know the people, values, or point of view behind them.",
+        details: [
+          {_key: 'd1', label: 'Core Objective', value: 'Build awareness and trust from scratch.'},
+          {_key: 'd2', label: 'Disciplines', value: 'Copywriting · Scriptwriting'},
+        ],
       },
       {
-        dimension: 'Internal Language',
-        change: 'Cross-functional teams adopted "commitment" as a shared success metric, replacing the fragmented vocabulary of engagement, retention, and growth.',
+        _type: 'showcase',
+        _key: 'mpa-problem',
+        label: 'THE CHALLENGE',
+        surface: 'light',
+        items: [
+          {
+            _key: 'mpa-problem-1',
+            layout: 'split',
+            itemLabel: 'THE CONFLICT',
+            title: 'Unknown to Audiences',
+            tagline: 'Movie lovers who had to relate to movie lovers',
+            body: "The work had to make the MPA feel less like a remote authority and more like part of the moviegoing community it served.",
+          },
+        ],
       },
       {
-        dimension: 'Creator Sentiment',
-        change: 'Artist satisfaction with platform communications improved measurably within two quarters of the messaging reset.',
+        _type: 'showcase',
+        _key: 'mpa-work',
+        label: 'THE WORK',
+        surface: 'dark',
+        items: [
+          {
+            _key: 'mpa-work-1',
+            layout: 'split',
+            itemLabel: 'THE APPROACH',
+            title: 'Passion Over Policy',
+            body: 'The campaign moved away from institutional explanation and toward affection for film itself, giving the organization a more human voice.',
+          },
+        ],
+      },
+      {
+        _type: 'videoEmbed',
+        _key: 'mpa-video',
+        url: 'https://vimeo.com/920254992',
+        caption: 'Spark — campaign film',
+        aspectRatio: '16/9',
+      },
+      {
+        _type: 'climax',
+        _key: 'mpa-shift',
+        label: 'THE SHIFT',
+        quote: 'The work gave the MPA a public-facing voice rooted in empathy and shared movie love, not policy language.',
+        metrics: [
+          { _key: 'mpa-metric-1', value: '1st', label: 'Consumer Campaign' },
+          { _key: 'mpa-metric-2', value: '2', label: 'Campaign Waves' },
+          { _key: 'mpa-metric-3', value: 'New', label: 'Brand Voice' },
+        ],
       },
     ],
-    metrics: [
-      {
-        label: 'Creator partnership response rate',
-        value: 'Up 28% post-messaging reset',
-      },
-      {
-        label: 'Internal narrative alignment',
-        value: '5 teams using one framework (previously 5 separate narratives)',
-      },
-    ],
-
-    // SEO + Listing
-    description: 'Where algorithmic scale and human intention stop competing.',
-    category: 'Strategic Messaging',
-    tagline: 'Algorithm vs. intention. Scale that remembers why.',
+    description: 'A lean, film-led brand campaign for the Motion Picture Association built to humanize the organization for a public audience.',
+    category: 'Brand Campaign',
+    tagline: 'From regulator to advocate. A first consumer-facing campaign for the people who rate the movies.',
   },
 ];
 

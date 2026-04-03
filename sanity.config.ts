@@ -1,13 +1,19 @@
 'use client';
 
-import { defineConfig } from 'sanity';
-import { structureTool } from 'sanity/structure';
-import { visionTool } from '@sanity/vision';
-import { assist } from '@sanity/assist';
-import { media } from 'sanity-plugin-media';
-import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
-import { schemaTypes } from './sanity/schemaTypes';
-import { normalizeEnvValue } from './lib/env';
+import React from 'react';
+import {visionTool} from '@sanity/vision';
+import {defineConfig} from 'sanity';
+import {structureTool} from 'sanity/structure';
+import {media} from 'sanity-plugin-media';
+import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash';
+import {normalizeEnvValue} from './lib/env';
+import {schemaTypes} from './sanity/schemaTypes';
+import {structure} from './sanity/structure';
+import {BrandLogo} from './sanity/studio/BrandLogo';
+import {StoryProgressBanner} from './sanity/studio/StoryProgressBanner';
+import {StudioLayoutWrapper} from './sanity/studio/StudioLayoutWrapper';
+import {caseStudyTemplates} from './sanity/templates';
+import {sanityTheme} from './sanity/theme';
 
 const DEFAULT_SANITY_PROJECT_ID = 'dkok2iir';
 const DEFAULT_SANITY_DATASET = 'production';
@@ -29,14 +35,42 @@ export default defineConfig({
   dataset: getPublicEnvWithDefault('NEXT_PUBLIC_SANITY_DATASET'),
 
   plugins: [
-    structureTool(),
-    visionTool(),
+    structureTool({structure}),
     media(),
+    visionTool(),
     unsplashImageAsset(),
-    assist(),
   ],
+
+  studio: {
+    components: {
+      logo: BrandLogo,
+      layout: StudioLayoutWrapper,
+    },
+  },
 
   schema: {
     types: schemaTypes,
+    templates: (prev) => {
+      const filtered = prev.filter((t) => t.schemaType !== 'caseStudy');
+      return [...filtered, ...caseStudyTemplates];
+    },
+  },
+  
+  theme: sanityTheme,
+
+  document: {
+    components: {
+      unstable_layout: (props) => {
+        if (props.documentType === 'caseStudy') {
+          return React.createElement(
+            React.Fragment,
+            null,
+            React.createElement(StoryProgressBanner),
+            props.renderDefault(props),
+          );
+        }
+        return props.renderDefault(props);
+      },
+    },
   },
 });
