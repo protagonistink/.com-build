@@ -2,7 +2,7 @@
 
 import {visionTool} from '@sanity/vision';
 import {defineConfig} from 'sanity';
-import {presentationTool} from 'sanity/presentation';
+import {defineDocuments, defineLocations, presentationTool} from 'sanity/presentation';
 import {structureTool} from 'sanity/structure';
 import {media} from 'sanity-plugin-media';
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash';
@@ -16,6 +16,85 @@ import {sanityTheme} from './sanity/theme';
 
 const DEFAULT_SANITY_PROJECT_ID = 'dkok2iir';
 const DEFAULT_SANITY_DATASET = 'production';
+
+const presentationDocuments = defineDocuments([
+  {
+    route: '/work/:slug',
+    filter: `_type == "caseStudy" && slug.current == $slug`,
+    params: ({params}) => ({slug: params.slug}),
+  },
+  {
+    route: '/blog/:slug',
+    filter: `_type == "post" && slug.current == $slug`,
+    params: ({params}) => ({slug: params.slug}),
+  },
+  {
+    route: '/',
+    type: 'siteSettings',
+  },
+]);
+
+const presentationLocations = {
+  caseStudy: defineLocations({
+    select: {
+      title: 'title',
+      slug: 'slug.current',
+    },
+    resolve: (document) => {
+      if (!document?.slug) {
+        return {
+          message: 'Generate a slug before opening this case study in Presentation.',
+          tone: 'caution',
+        };
+      }
+
+      return {
+        locations: [
+          {
+            title: document.title || 'Untitled case study',
+            href: `/work/${document.slug}`,
+          },
+        ],
+      };
+    },
+  }),
+  post: defineLocations({
+    select: {
+      title: 'title',
+      slug: 'slug.current',
+    },
+    resolve: (document) => {
+      if (!document?.slug) {
+        return {
+          message: 'Generate a slug before opening this post in Presentation.',
+          tone: 'caution',
+        };
+      }
+
+      return {
+        locations: [
+          {
+            title: document.title || 'Untitled post',
+            href: `/blog/${document.slug}`,
+          },
+        ],
+      };
+    },
+  }),
+  siteSettings: defineLocations({
+    select: {
+      title: 'title',
+    },
+    resolve: () => ({
+      locations: [
+        {
+          title: 'Homepage',
+          href: '/',
+        },
+      ],
+    }),
+  }),
+};
 
 function getPublicEnvWithDefault(name: 'NEXT_PUBLIC_SANITY_PROJECT_ID' | 'NEXT_PUBLIC_SANITY_DATASET') {
   const value = normalizeEnvValue(process.env[name]);
@@ -43,6 +122,10 @@ export default defineConfig({
           enable: '/api/draft-mode/enable',
           disable: '/api/draft-mode/disable',
         },
+      },
+      resolve: {
+        mainDocuments: presentationDocuments,
+        locations: presentationLocations,
       },
     }),
     media(),

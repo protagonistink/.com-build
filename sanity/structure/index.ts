@@ -1,7 +1,7 @@
-import {FolderOpenDot, Newspaper, Settings2, Tags, BookOpen, Eye} from 'lucide-react';
+import {FolderOpenDot, Newspaper, Settings2, Tags, BookOpen, PanelsTopLeft} from 'lucide-react';
 import type {StructureResolver} from 'sanity/structure';
 import {WritersGuide} from '../studio/WritersGuide';
-import {PreviewPane} from '../studio/PreviewPane';
+import {PresentationPane} from '../studio/PresentationPane';
 
 function documentList(
   S: Parameters<StructureResolver>[0],
@@ -57,7 +57,7 @@ export const structure: StructureResolver = (S) =>
                 .schemaType('caseStudy')
                 .views([
                   S.view.form(),
-                  S.view.component(PreviewPane).title('Published').icon(Eye),
+                  S.view.component(PresentationPane).title('Presentation').icon(PanelsTopLeft),
                 ]),
             ),
         ),
