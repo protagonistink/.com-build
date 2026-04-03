@@ -26,6 +26,7 @@ interface CmsShowcaseBlock {
   itemLabel?: string;
   layout?: string;
   imagePosition?: string;
+  imageDisplay?: string;
   title?: string;
   body?: string;
   tagline?: string;
@@ -50,6 +51,7 @@ interface CmsSection {
   surface?: string;
   eyebrow?: string;
   imagePosition?: string;
+  imageDisplay?: string;
   title?: string;
   tagline?: string;
   imageUrl?: string;
@@ -158,6 +160,7 @@ function mapLegacyShowcaseBlock(block: CmsShowcaseBlock): ShowcaseBlock {
     _key: block._key,
     layout: (block.layout as ShowcaseBlock['layout']) || 'split',
     imagePosition: (block.imagePosition as 'left' | 'right') || undefined,
+    imageDisplay: (block.imageDisplay as 'cover' | 'contain') || undefined,
     eyebrow: block.itemLabel?.trim() || undefined,
     itemLabel: block.itemLabel?.trim() || undefined,
     title: block.title?.trim() || undefined,
@@ -178,6 +181,7 @@ function mapFlatSectionToShowcaseBlock(section: FlatShowcaseSection): ShowcaseBl
         _key: section._key,
         layout: 'split',
         imagePosition: section.imagePosition,
+        imageDisplay: section.imageDisplay,
         eyebrow: section.eyebrow,
         title: section.title,
         tagline: section.tagline,
@@ -315,6 +319,7 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
         surface: normalizeSurface(section.surface),
         eyebrow: section.eyebrow?.trim() || undefined,
         imagePosition: (section.imagePosition as 'left' | 'right') || undefined,
+        imageDisplay: (section.imageDisplay as 'cover' | 'contain') || undefined,
         title: section.title?.trim() || undefined,
         tagline: section.tagline?.trim() || undefined,
         body: section.body?.trim() || undefined,
@@ -486,6 +491,7 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
       surface,
       eyebrow,
       imagePosition,
+      imageDisplay,
       title,
       tagline,
       "imageUrl": image.asset->url,
@@ -509,6 +515,7 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
         itemLabel,
         layout,
         imagePosition,
+        imageDisplay,
         title,
         body,
         tagline,
@@ -586,6 +593,7 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
       surface,
       eyebrow,
       imagePosition,
+      imageDisplay,
       title,
       tagline,
       "imageUrl": image.asset->url,
@@ -609,6 +617,7 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
         itemLabel,
         layout,
         imagePosition,
+        imageDisplay,
         title,
         body,
         tagline,

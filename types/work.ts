@@ -26,6 +26,7 @@ export interface ShowcaseBlock {
   _key: string;
   layout: ShowcaseLayout;
   imagePosition?: 'left' | 'right';
+  imageDisplay?: 'cover' | 'contain';
   eyebrow?: string;
   itemLabel?: string;
   title?: string;
@@ -57,6 +58,7 @@ export interface ShowcaseSplitSection {
   surface?: ShowcaseSurface;
   eyebrow?: string;
   imagePosition?: 'left' | 'right';
+  imageDisplay?: 'cover' | 'contain';
   title?: string;
   tagline?: string;
   body?: string;

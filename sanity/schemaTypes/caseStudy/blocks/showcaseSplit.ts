@@ -34,6 +34,21 @@ export const showcaseSplit = defineType({
       initialValue: 'left',
     }),
     defineField({
+      name: 'imageDisplay',
+      title: 'Image Fit',
+      type: 'string',
+      fieldset: 'layout',
+      description: 'Should the image fill the frame by cropping, or stay fully visible inside it?',
+      options: {
+        list: [
+          {title: 'Crop to fill', value: 'cover'},
+          {title: 'Fit whole image', value: 'contain'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'cover',
+    }),
+    defineField({
       name: 'title',
       title: 'Headline',
       type: 'string',

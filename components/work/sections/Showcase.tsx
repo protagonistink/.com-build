@@ -122,15 +122,27 @@ function SplitBlock({ block, index, isDark }: { block: ShowcaseBlock; index: num
 
   const image = (
     <div className={`min-h-[250px] md:min-h-[400px] relative overflow-hidden ${
-      isDark ? '' : 'bg-[#1a1a1a]'
+      isDark ? 'bg-[#111111]' : 'bg-[#f3eee8]'
     }`}>
-      <Image
-        src={block.image.src}
-        alt={block.image.alt || block.title || ''}
-        fill
-        className="object-cover grayscale opacity-60 hover:grayscale-0 hover:opacity-80 transition-all duration-700"
-        sizes="(max-width: 768px) 100vw, 50vw"
-      />
+      {block.imageDisplay === 'contain' ? (
+        <div className="absolute inset-4 md:inset-6">
+          <Image
+            src={block.image.src}
+            alt={block.image.alt || block.title || ''}
+            fill
+            className="object-contain object-center grayscale opacity-60 hover:grayscale-0 hover:opacity-80 transition-all duration-700"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
+      ) : (
+        <Image
+          src={block.image.src}
+          alt={block.image.alt || block.title || ''}
+          fill
+          className="object-cover object-center grayscale opacity-60 hover:grayscale-0 hover:opacity-80 transition-all duration-700"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+      )}
     </div>
   );
 
