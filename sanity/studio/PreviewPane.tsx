@@ -1,8 +1,16 @@
 import React from 'react';
-import {useFormValue} from 'sanity';
 
-export function PreviewPane() {
-  const slug = useFormValue(['slug', 'current']) as string | undefined;
+interface PreviewPaneProps {
+  document: {
+    displayed: {
+      slug?: {current?: string};
+      [key: string]: unknown;
+    };
+  };
+}
+
+export function PreviewPane(props: PreviewPaneProps) {
+  const slug = props?.document?.displayed?.slug?.current;
 
   if (!slug) {
     return (
