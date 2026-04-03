@@ -1,5 +1,6 @@
 import {FolderOpenDot} from 'lucide-react';
 import {defineArrayMember, defineField, defineType} from 'sanity';
+import {StoryBuilderInput} from '../studio/StoryBuilderInput';
 
 export const caseStudy = defineType({
   name: 'caseStudy',
@@ -158,6 +159,9 @@ export const caseStudy = defineType({
         defineArrayMember({type: 'climax'}),
         defineArrayMember({type: 'closer'}),
       ],
+      components: {
+        input: StoryBuilderInput,
+      },
     }),
     defineField({
       name: 'seoTitle',

@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import {visionTool} from '@sanity/vision';
 import {defineConfig} from 'sanity';
 import {structureTool} from 'sanity/structure';
@@ -10,7 +9,6 @@ import {normalizeEnvValue} from './lib/env';
 import {schemaTypes} from './sanity/schemaTypes';
 import {structure} from './sanity/structure';
 import {BrandLogo} from './sanity/studio/BrandLogo';
-import {StoryProgressBanner} from './sanity/studio/StoryProgressBanner';
 import {StudioLayoutWrapper} from './sanity/studio/StudioLayoutWrapper';
 import {caseStudyTemplates} from './sanity/templates';
 import {sanityTheme} from './sanity/theme';
@@ -58,19 +56,4 @@ export default defineConfig({
   
   theme: sanityTheme,
 
-  document: {
-    components: {
-      unstable_layout: (props) => {
-        if (props.documentType === 'caseStudy') {
-          return React.createElement(
-            React.Fragment,
-            null,
-            React.createElement(StoryProgressBanner),
-            props.renderDefault(props),
-          );
-        }
-        return props.renderDefault(props);
-      },
-    },
-  },
 });
