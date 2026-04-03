@@ -202,11 +202,20 @@ export const caseStudy = defineType({
     }),
   ],
   preview: {
-    select: {title: 'title', subtitle: 'clientName', media: 'heroImage'},
-    prepare: ({title, subtitle, media}) => ({
-      title,
-      subtitle: subtitle || 'Case file',
-      media,
-    }),
+    select: {title: 'title', clientName: 'clientName', status: 'status', media: 'heroImage'},
+    prepare: ({title, clientName, status, media}) => {
+      const statusLabel =
+        status === 'published'
+          ? 'Published'
+          : status === 'scheduled'
+            ? 'Ready for Review'
+            : 'Draft';
+
+      return {
+        title,
+        subtitle: [clientName || 'Case study', statusLabel].filter(Boolean).join(' · '),
+        media,
+      };
+    },
   },
 });

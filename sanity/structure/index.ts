@@ -1,4 +1,4 @@
-import {FolderOpenDot, Newspaper, Settings2, Tags, AlertCircle, PenTool, Globe, BookOpen, Eye} from 'lucide-react';
+import {FolderOpenDot, Newspaper, Settings2, Tags, BookOpen, Eye} from 'lucide-react';
 import type {StructureResolver} from 'sanity/structure';
 import {WritersGuide} from '../studio/WritersGuide';
 import {PreviewPane} from '../studio/PreviewPane';
@@ -41,92 +41,25 @@ export const structure: StructureResolver = (S) =>
         .child(S.editor().id('siteSettings').schemaType('siteSettings').documentId('siteSettings')),
       S.divider(),
 
-      // Case Files — grouped by status
       S.listItem()
-        .title('Case Files')
+        .title('Case Studies')
         .icon(FolderOpenDot)
         .child(
-          S.list()
-            .title('Case Files')
-            .items([
-              S.listItem()
-                .title('Drafts — In Progress')
-                .icon(PenTool)
-                .child(
-                  S.documentList()
-                    .title('Drafts')
-                    .schemaType('caseStudy')
-                    .filter('_type == "caseStudy" && coalesce(status, "draft") == "draft"')
-                    .canHandleIntent((intentName, params) =>
-                      ['create', 'edit'].includes(intentName) && params.type === 'caseStudy',
-                    )
-                    .child((documentId) =>
-                      S.document()
-                        .documentId(documentId)
-                        .schemaType('caseStudy')
-                        .views([
-                          S.view.form(),
-                          S.view.component(PreviewPane).title('Published').icon(Eye),
-                        ]),
-                    ),
-                ),
-              S.listItem()
-                .title('Ready for Review')
-                .icon(AlertCircle)
-                .child(
-                  S.documentList()
-                    .title('Ready for Review')
-                    .schemaType('caseStudy')
-                    .filter('_type == "caseStudy" && status == "scheduled"')
-                    .child((documentId) =>
-                      S.document()
-                        .documentId(documentId)
-                        .schemaType('caseStudy')
-                        .views([
-                          S.view.form(),
-                          S.view.component(PreviewPane).title('Published').icon(Eye),
-                        ]),
-                    ),
-                ),
-              S.listItem()
-                .title('Published')
-                .icon(Globe)
-                .child(
-                  S.documentList()
-                    .title('Published')
-                    .schemaType('caseStudy')
-                    .filter('_type == "caseStudy" && status == "published"')
-                    .child((documentId) =>
-                      S.document()
-                        .documentId(documentId)
-                        .schemaType('caseStudy')
-                        .views([
-                          S.view.form(),
-                          S.view.component(PreviewPane).title('Published').icon(Eye),
-                        ]),
-                    ),
-                ),
-              S.divider(),
-              S.listItem()
-                .title('All Case Files')
-                .icon(FolderOpenDot)
-                .child(
-                  S.documentTypeList('caseStudy')
-                    .title('All Case Files')
-                    .canHandleIntent((intentName, params) =>
-                      ['create', 'edit'].includes(intentName) && params.type === 'caseStudy',
-                    )
-                    .child((documentId) =>
-                      S.document()
-                        .documentId(documentId)
-                        .schemaType('caseStudy')
-                        .views([
-                          S.view.form(),
-                          S.view.component(PreviewPane).title('Published').icon(Eye),
-                        ]),
-                    ),
-                ),
-            ]),
+          S.documentTypeList('caseStudy')
+            .title('Case Studies')
+            .defaultOrdering([{field: '_updatedAt', direction: 'desc'}])
+            .canHandleIntent((intentName, params) =>
+              ['create', 'edit'].includes(intentName) && params.type === 'caseStudy',
+            )
+            .child((documentId) =>
+              S.document()
+                .documentId(documentId)
+                .schemaType('caseStudy')
+                .views([
+                  S.view.form(),
+                  S.view.component(PreviewPane).title('Published').icon(Eye),
+                ]),
+            ),
         ),
       S.divider(),
       documentList(S, 'post', 'Blog', Newspaper),
