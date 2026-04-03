@@ -109,7 +109,7 @@ function ContentPanel({ block, isDark }: { block: ShowcaseBlock; isDark: boolean
 // ─── Layout: Split (image + text side by side) ──────────────────────────────
 
 function SplitBlock({ block, index, isDark }: { block: ShowcaseBlock; index: number; isDark: boolean }) {
-  const imageFirst = block.imagePosition ? block.imagePosition === 'left' : index % 2 === 0;
+  const imageFirst = block.imagePosition ? block.imagePosition === 'right' : index % 2 === 0;
   const borderColor = isDark ? 'border-white/[0.06]' : 'border-ink/[0.06]';
 
   if (!block.image) {
