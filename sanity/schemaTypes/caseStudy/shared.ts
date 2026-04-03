@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField} from 'sanity';
+import {SurfacePickerInput} from '../../studio/VisualPickerInputs';
 
 export const surfaceOptions = [
   {title: 'Dark Surface', value: 'dark'},
@@ -27,6 +28,9 @@ export function surfaceField(fieldset?: string) {
       layout: 'radio',
     },
     initialValue: 'dark',
+    components: {
+      input: SurfacePickerInput,
+    },
   });
 }
 

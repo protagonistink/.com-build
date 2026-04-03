@@ -2,6 +2,7 @@ import {Columns2} from 'lucide-react';
 import {defineField, defineType} from 'sanity';
 import {actLabelField, detailsField, eyebrowField, imageField, surfaceField} from '../shared';
 import {CaseStudyBlockPreview} from '../../../studio/CaseStudyBlockPreview';
+import {ImagePositionPickerInput} from '../../../studio/VisualPickerInputs';
 
 export const showcaseSplit = defineType({
   name: 'showcaseSplit',
@@ -32,6 +33,9 @@ export const showcaseSplit = defineType({
         layout: 'radio',
       },
       initialValue: 'left',
+      components: {
+        input: ImagePositionPickerInput,
+      },
     }),
     defineField({
       name: 'imageDisplay',
