@@ -36,8 +36,9 @@ export default defineConfig({
   plugins: [
     structureTool({structure}),
     presentationTool({
+      allowOrigins: ['https://www.protagonist.ink', 'https://protagonist.ink', 'http://localhost:3000'],
       previewUrl: {
-        origin: 'https://protagonist.ink',
+        origin: 'https://www.protagonist.ink',
         previewMode: {
           enable: '/api/draft-mode/enable',
           disable: '/api/draft-mode/disable',
