@@ -21,8 +21,8 @@ export function PreviewPane(props: PreviewPaneProps) {
   }
 
   const siteUrl = typeof window !== 'undefined'
-    ? (window.location.origin.includes('localhost') ? 'http://localhost:3000' : 'https://protagonistink.com')
-    : 'https://protagonistink.com';
+    ? (window.location.origin.includes('localhost') ? 'http://localhost:3000' : 'https://protagonist.ink')
+    : 'https://protagonist.ink';
 
   return (
     <iframe
