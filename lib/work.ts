@@ -93,13 +93,20 @@ interface CmsCaseStudy {
   sections?: CmsSection[];
 }
 
-function getSanityClient() {
+function getSanityClient(preview?: boolean) {
   const projectId =
     normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) || DEFAULT_SANITY_PROJECT_ID;
   const dataset =
     normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_DATASET) || DEFAULT_SANITY_DATASET;
+  const token = preview ? process.env.SANITY_API_READ_TOKEN : undefined;
 
-  return createClient({projectId, dataset, apiVersion: '2026-03-02', useCdn: false});
+  return createClient({
+    projectId,
+    dataset,
+    apiVersion: '2026-03-02',
+    useCdn: !preview,
+    ...(preview && token && {token, perspective: 'previewDrafts' as const}),
+  });
 }
 
 function toYear(value?: string) {
@@ -548,18 +555,119 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
   }
 `);
 
-async function getCmsCaseStudies(): Promise<CaseStudy[]> {
-  const client = getSanityClient();
+const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
+  *[_type == "caseStudy" && defined(slug.current)]
+  | order(coalesce(publishedAt, _updatedAt) desc) {
+    _id,
+    title,
+    subtitle,
+    slug,
+    clientName,
+    sector,
+    engagementType,
+    publishedAt,
+    status,
+    caseNumber,
+    timeline,
+    seoDescription,
+    "heroImageUrl": heroImage.asset->url,
+    "heroImageAlt": heroImage.alt,
+    "ogImageUrl": ogImage.asset->url,
+    sections[] {
+      _type,
+      _key,
+      body,
+      objectiveLabel,
+      objectiveValue,
+      focusLabel,
+      focusValue,
+      label,
+      actLabel,
+      surface,
+      eyebrow,
+      imagePosition,
+      title,
+      tagline,
+      "imageUrl": image.asset->url,
+      "imageAlt": image.alt,
+      statValue,
+      statLabel,
+      "frames": frames[] {
+        _key,
+        alt,
+        label,
+        caption,
+        "assetUrl": asset->url
+      },
+      details[] {
+        _key,
+        label,
+        value
+      },
+      "items": items[] {
+        _key,
+        itemLabel,
+        layout,
+        imagePosition,
+        title,
+        body,
+        tagline,
+        "imageUrl": image.asset->url,
+        "imageAlt": image.alt,
+        statValue,
+        statLabel,
+        "frames": frames[] {
+          _key,
+          alt,
+          label,
+          caption,
+          "assetUrl": asset->url
+        },
+        details[] {
+          _key,
+          label,
+          value
+        }
+      },
+      quote,
+      "backgroundImageUrl": backgroundImage.asset->url,
+      "backgroundImageAlt": backgroundImage.alt,
+      "metrics": metrics[] {
+        _key,
+        value,
+        label
+      },
+      url,
+      caption,
+      aspectRatio,
+      headline,
+      subheadline,
+      "deliverableItems": items[] {
+        _key,
+        number,
+        title,
+        description
+      },
+      ctaLabel,
+      ctaLink,
+      text
+    }
+  }
+`);
+
+async function getCmsCaseStudies(preview?: boolean): Promise<CaseStudy[]> {
+  const client = getSanityClient(preview);
+  const query = preview ? CASE_STUDY_PREVIEW_QUERY : CASE_STUDY_QUERY;
   try {
-    const records = await client.fetch<CmsCaseStudy[]>(CASE_STUDY_QUERY);
+    const records = await client.fetch<CmsCaseStudy[]>(query);
     return records.map(mapCmsCaseStudy).filter((item): item is CaseStudy => Boolean(item));
   } catch {
     return [];
   }
 }
 
-export async function getWorkProjects(): Promise<CaseStudy[]> {
-  const cmsProjects = await getCmsCaseStudies();
+export async function getWorkProjects(preview?: boolean): Promise<CaseStudy[]> {
+  const cmsProjects = await getCmsCaseStudies(preview);
   if (cmsProjects.length === 0) return PROJECTS;
 
   const cmsSlugs = new Set(cmsProjects.map((project) => project.slug));
@@ -567,7 +675,7 @@ export async function getWorkProjects(): Promise<CaseStudy[]> {
   return [...cmsProjects, ...extras.map((project, index) => ({...project, id: cmsProjects.length + index + 1}))];
 }
 
-export async function getWorkProjectBySlug(slug: string): Promise<CaseStudy | undefined> {
-  const projects = await getWorkProjects();
+export async function getWorkProjectBySlug(slug: string, preview?: boolean): Promise<CaseStudy | undefined> {
+  const projects = await getWorkProjects(preview);
   return projects.find((project) => project.slug === slug);
 }
