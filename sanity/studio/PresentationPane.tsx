@@ -19,6 +19,12 @@ export function PresentationPane(props: PresentationPaneProps) {
   const documentId = props.document?.displayed?._id;
   const documentType = props.document?.displayed?._type;
   const slug = props.document?.displayed?.slug?.current;
+  const previewPath =
+    documentType === 'caseStudy' && slug
+      ? `/work/${slug}`
+      : documentType === 'post' && slug
+        ? `/blog/${slug}`
+        : '/';
 
   const href = useMemo(() => {
     if (!documentId || !documentType) return null;
@@ -26,8 +32,9 @@ export function PresentationPane(props: PresentationPaneProps) {
       id: documentId,
       type: documentType,
       mode: 'presentation',
+      preview: previewPath,
     });
-  }, [documentId, documentType, router]);
+  }, [documentId, documentType, previewPath, router]);
 
   useEffect(() => {
     if (!documentId || !documentType) return;
@@ -36,8 +43,9 @@ export function PresentationPane(props: PresentationPaneProps) {
       id: documentId,
       type: documentType,
       mode: 'presentation',
+      preview: previewPath,
     });
-  }, [documentId, documentType, router]);
+  }, [documentId, documentType, previewPath, router]);
 
   return (
     <Flex align="center" justify="center" padding={5} style={{height: '100%'}}>
@@ -84,7 +92,7 @@ export function PresentationPane(props: PresentationPaneProps) {
           >
             <Stack space={3}>
               <Text size={1} muted>
-                {slug ? `Route: /work/${slug}` : 'Generate a slug to map this document to the frontend route.'}
+                {slug ? `Route: ${previewPath}` : 'Generate a slug to map this document to the frontend route.'}
               </Text>
               {href ? (
                 <Button
