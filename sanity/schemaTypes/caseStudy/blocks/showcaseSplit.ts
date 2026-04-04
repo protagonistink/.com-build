@@ -3,6 +3,7 @@ import {defineField, defineType} from 'sanity';
 import {detailsField, imageField} from '../shared';
 import {CaseStudyBlockPreview} from '../../../studio/CaseStudyBlockPreview';
 import {BeatConfigStrip} from '../../../studio/BeatConfigStrip';
+import {SurfaceToggleInput, CopyStyleInput, TextAlignInput} from '../../../studio/CopyStyleStrip';
 
 export const showcaseSplit = defineType({
   name: 'showcaseSplit',
@@ -11,11 +12,12 @@ export const showcaseSplit = defineType({
   type: 'object',
   icon: Columns2,
   fieldsets: [
+    {name: 'copyControls', title: ' ', options: {columns: 2}},
     {name: 'story', title: 'Story Copy'},
     {name: 'design', title: 'Design', options: {collapsible: true, collapsed: true, columns: 2}},
   ],
   fields: [
-    // Layout picker — compact cards, first thing the writer sees
+    // Layout picker — compact cards
     defineField({
       name: 'imagePosition',
       title: 'Layout',
@@ -36,7 +38,63 @@ export const showcaseSplit = defineType({
       },
     }),
 
-    // Story fields — immediately after layout
+    // Surface — compact toggle right below layout
+    defineField({
+      name: 'surface',
+      title: 'Surface',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Dark', value: 'dark'},
+          {title: 'Light', value: 'light'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'dark',
+      components: {
+        input: SurfaceToggleInput,
+      },
+    }),
+
+    // Copy controls — inline toggles before the writing fields
+    defineField({
+      name: 'copyStyle',
+      title: 'Text Style',
+      type: 'string',
+      fieldset: 'copyControls',
+      options: {
+        list: [
+          {title: 'Default', value: 'default'},
+          {title: 'Display', value: 'display'},
+          {title: 'Pull Quote', value: 'pull-quote'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'default',
+      components: {
+        input: CopyStyleInput,
+      },
+    }),
+    defineField({
+      name: 'textAlign',
+      title: 'Text Alignment',
+      type: 'string',
+      fieldset: 'copyControls',
+      options: {
+        list: [
+          {title: 'Left', value: 'left'},
+          {title: 'Center', value: 'center'},
+          {title: 'Right', value: 'right'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'left',
+      components: {
+        input: TextAlignInput,
+      },
+    }),
+
+    // Story fields
     defineField({
       name: 'title',
       title: 'Headline',
@@ -63,25 +121,10 @@ export const showcaseSplit = defineType({
       description: 'Optional — What happened here, in plain language. Don\'t overthink it.',
     }),
 
-    // Image — after story
+    // Image
     imageField('image', 'Image', 'The frame that carries this beat. Not needed for Copy Only layout.'),
 
-    // Design fieldset — collapsed, secondary controls
-    defineField({
-      name: 'surface',
-      title: 'Surface',
-      type: 'string',
-      fieldset: 'design',
-      description: 'Dark or light background.',
-      options: {
-        list: [
-          {title: 'Dark', value: 'dark'},
-          {title: 'Light', value: 'light'},
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'dark',
-    }),
+    // Design — collapsed, secondary controls
     defineField({
       name: 'imageDisplay',
       title: 'Image Fit',
@@ -97,23 +140,6 @@ export const showcaseSplit = defineType({
       },
       initialValue: 'cover',
       hidden: ({parent}) => (parent as Record<string, unknown>)?.imagePosition === 'copyOnly',
-    }),
-    defineField({
-      name: 'copyStyle',
-      title: 'Text Style',
-      type: 'string',
-      fieldset: 'design',
-      description: 'How should the text feel?',
-      options: {
-        list: [
-          {title: 'Default — standard heading + body', value: 'default'},
-          {title: 'Display — bigger, bolder, statement copy', value: 'display'},
-          {title: 'Pull Quote — italic, editorial feel', value: 'pull-quote'},
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'default',
-      hidden: ({parent}) => (parent as Record<string, unknown>)?.imagePosition !== 'copyOnly',
     }),
     defineField({
       name: 'actLabel',
@@ -132,7 +158,7 @@ export const showcaseSplit = defineType({
       description: 'Micro-label above the headline.',
     }),
 
-    // Details — at the bottom
+    // Details
     detailsField(),
   ],
   preview: {

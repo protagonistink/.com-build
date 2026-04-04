@@ -28,6 +28,7 @@ export interface ShowcaseBlock {
   imagePosition?: 'left' | 'right' | 'full' | 'copyOnly';
   imageDisplay?: 'cover' | 'contain';
   copyStyle?: 'default' | 'display' | 'pull-quote';
+  textAlign?: 'left' | 'center' | 'right';
   eyebrow?: string;
   itemLabel?: string;
   title?: string;
@@ -61,6 +62,7 @@ export interface ShowcaseSplitSection {
   imagePosition?: 'left' | 'right' | 'full' | 'copyOnly';
   imageDisplay?: 'cover' | 'contain';
   copyStyle?: 'default' | 'display' | 'pull-quote';
+  textAlign?: 'left' | 'center' | 'right';
   title?: string;
   tagline?: string;
   body?: string;

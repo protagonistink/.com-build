@@ -25,6 +25,7 @@ interface CmsShowcaseBlock {
   imagePosition?: string;
   imageDisplay?: string;
   copyStyle?: string;
+  textAlign?: string;
   title?: string;
   body?: string;
   tagline?: string;
@@ -51,6 +52,7 @@ interface CmsSection {
   imagePosition?: string;
   imageDisplay?: string;
   copyStyle?: string;
+  textAlign?: string;
   title?: string;
   tagline?: string;
   imageUrl?: string;
@@ -161,6 +163,7 @@ function mapFlatSectionToShowcaseBlock(section: FlatShowcaseSection): ShowcaseBl
         imagePosition: section.imagePosition,
         imageDisplay: section.imageDisplay,
         copyStyle: section.copyStyle,
+        textAlign: section.textAlign,
         eyebrow: section.eyebrow,
         title: section.title,
         tagline: section.tagline,
@@ -300,6 +303,7 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
         imagePosition: (section.imagePosition as 'left' | 'right' | 'full' | 'copyOnly') || undefined,
         imageDisplay: (section.imageDisplay as 'cover' | 'contain') || undefined,
         copyStyle: (section.copyStyle as 'default' | 'display' | 'pull-quote') || undefined,
+        textAlign: (section.textAlign as 'left' | 'center' | 'right') || undefined,
         title: section.title?.trim() || undefined,
         tagline: section.tagline?.trim() || undefined,
         body: section.body?.trim() || undefined,
@@ -473,6 +477,7 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
       imagePosition,
       imageDisplay,
       copyStyle,
+      textAlign,
       title,
       tagline,
       "imageUrl": image.asset->url,
@@ -576,6 +581,7 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
       imagePosition,
       imageDisplay,
       copyStyle,
+      textAlign,
       title,
       tagline,
       "imageUrl": image.asset->url,
