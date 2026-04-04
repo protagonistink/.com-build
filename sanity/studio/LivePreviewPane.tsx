@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {Card, Flex, Spinner, Text} from '@sanity/ui';
 import {useClient} from 'sanity';
 
@@ -18,9 +18,10 @@ export function LivePreviewPane(props: LivePreviewPaneProps) {
   const client = useClient({apiVersion: '2026-03-02'});
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isDraft, setIsDraft] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  useEffect(() => {
+  const buildPreviewUrl = useCallback(async () => {
     if (!slug) {
       setPreviewUrl(null);
       setLoading(false);
@@ -32,30 +33,38 @@ export function LivePreviewPane(props: LivePreviewPaneProps) {
       ? 'http://localhost:3000'
       : 'https://www.protagonist.ink';
 
-    async function getPreviewUrl() {
-      setLoading(true);
-      try {
-        // Use the preview-url-secret to create a validated draft mode URL
-        const {createPreviewSecret} = await import('@sanity/preview-url-secret/create-secret');
-        const {secret} = await createPreviewSecret(
-          client,
-          '@sanity/presentation',
-          window.location.href,
-        );
-        // The enable endpoint validates this secret via the Sanity API
-        const url = new URL(`${origin}/api/draft-mode/enable`);
-        url.searchParams.set('sanity-preview-secret', secret);
-        url.searchParams.set('sanity-preview-pathname', path);
-        setPreviewUrl(url.toString());
-      } catch {
-        // Fall back to published URL
-        setPreviewUrl(`${origin}${path}`);
-      }
-      setLoading(false);
+    setLoading(true);
+    try {
+      const {createPreviewSecret} = await import('@sanity/preview-url-secret/create-secret');
+      const {secret} = await createPreviewSecret(
+        client,
+        '@sanity/presentation',
+        window.location.href,
+      );
+      const url = new URL(`${origin}/api/draft-mode/enable`);
+      url.searchParams.set('sanity-preview-secret', secret);
+      url.searchParams.set('sanity-preview-pathname', path);
+      setPreviewUrl(url.toString());
+      setIsDraft(true);
+    } catch (err) {
+      console.warn('[LivePreviewPane] Draft mode failed, showing published:', err);
+      setPreviewUrl(`${origin}${path}`);
+      setIsDraft(false);
     }
-
-    getPreviewUrl();
+    setLoading(false);
   }, [slug, docType, client]);
+
+  useEffect(() => {
+    buildPreviewUrl();
+  }, [buildPreviewUrl]);
+
+  const reload = useCallback(() => {
+    if (iframeRef.current) {
+      const src = iframeRef.current.src;
+      iframeRef.current.src = '';
+      setTimeout(() => { if (iframeRef.current) iframeRef.current.src = src; }, 50);
+    }
+  }, []);
 
   if (!slug) {
     return (
@@ -79,37 +88,53 @@ export function LivePreviewPane(props: LivePreviewPaneProps) {
     <div style={{display: 'flex', flexDirection: 'column', height: '100%', background: '#131417'}}>
       <div
         style={{
-          padding: '10px 16px',
+          padding: '8px 16px',
           borderBottom: '1px solid rgba(250,248,244,0.08)',
           color: 'rgba(250,248,244,0.5)',
-          fontSize: 12,
+          fontSize: 11,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          gap: 8,
         }}
       >
-        <span>Published page preview — draft changes show after publishing</span>
-        <button
-          onClick={() => {
-            if (iframeRef.current) {
-              // Re-set src to reload without cross-origin issues
-              const src = iframeRef.current.src;
-              iframeRef.current.src = '';
-              setTimeout(() => { if (iframeRef.current) iframeRef.current.src = src; }, 50);
-            }
-          }}
-          style={{
-            background: 'rgba(250,248,244,0.06)',
-            border: '1px solid rgba(250,248,244,0.1)',
-            color: 'rgba(250,248,244,0.6)',
-            padding: '4px 10px',
-            borderRadius: 4,
-            fontSize: 11,
-            cursor: 'pointer',
-          }}
-        >
-          Reload
-        </button>
+        <span>
+          {isDraft
+            ? 'Draft preview — showing unpublished changes'
+            : 'Published preview — open Presentation for live drafts'}
+        </span>
+        <Flex gap={2}>
+          {!isDraft && (
+            <button
+              onClick={buildPreviewUrl}
+              style={{
+                background: 'rgba(200,60,47,0.1)',
+                border: '1px solid rgba(200,60,47,0.2)',
+                color: 'rgba(200,60,47,0.8)',
+                padding: '3px 8px',
+                borderRadius: 4,
+                fontSize: 10,
+                cursor: 'pointer',
+              }}
+            >
+              Retry draft
+            </button>
+          )}
+          <button
+            onClick={reload}
+            style={{
+              background: 'rgba(250,248,244,0.06)',
+              border: '1px solid rgba(250,248,244,0.1)',
+              color: 'rgba(250,248,244,0.6)',
+              padding: '3px 8px',
+              borderRadius: 4,
+              fontSize: 10,
+              cursor: 'pointer',
+            }}
+          >
+            Reload
+          </button>
+        </Flex>
       </div>
       <iframe
         ref={iframeRef}
@@ -120,7 +145,7 @@ export function LivePreviewPane(props: LivePreviewPaneProps) {
           border: 'none',
           background: '#131417',
         }}
-        title="Live preview"
+        title="Preview"
       />
     </div>
   );
