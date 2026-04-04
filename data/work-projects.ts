@@ -15,7 +15,7 @@ export const PROJECTS: CaseStudy[] = [
     image: 'https://cdn.sanity.io/images/dkok2iir/production/dc7726a98ea8ec70d51db131d198e6c7f5c0b3d0-1000x667.jpg',
     imageAlt: 'Rebranding a Giant for Chevron',
     caseNumber: '001',
-    timeline: '2024',
+    bigIdea: '2024',
     sections: [
       {
         _type: 'prologue',
@@ -124,7 +124,7 @@ export const PROJECTS: CaseStudy[] = [
     image: 'https://cdn.sanity.io/images/dkok2iir/production/fe3ff99856676168c9c1e383ac65eeb4fe0e6418-1000x667.jpg',
     imageAlt: 'This is How for Airtable',
     caseNumber: '002',
-    timeline: '2024',
+    bigIdea: '2024',
     sections: [
       {
         _type: 'prologue',
@@ -203,7 +203,7 @@ export const PROJECTS: CaseStudy[] = [
     image: 'https://cdn.sanity.io/images/dkok2iir/production/dcc6f414d7b5699a1369e2044e768dcf8d1117f7-1200x800.jpg',
     imageAlt: 'What Comes Next for Motion Picture Association',
     caseNumber: '003',
-    timeline: '2016',
+    bigIdea: '2016',
     sections: [
       {
         _type: 'prologue',

@@ -184,7 +184,7 @@ export interface CaseStudy {
   image: string;
   imageAlt?: string;
   caseNumber?: string;
-  timeline?: string;
+  bigIdea?: string;
   sections: CaseStudySection[];
   description: string;
   category: string;

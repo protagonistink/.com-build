@@ -78,11 +78,11 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
             {project.caseNumber && (
               <span>CASE STUDY // {project.caseNumber}</span>
             )}
-            {project.timeline && (
-              <span>TIMELINE // {project.timeline}</span>
+            {project.bigIdea && (
+              <span>BIG IDEA // {project.bigIdea}</span>
             )}
             {!project.caseNumber && <span>{project.scene}</span>}
-            {!project.timeline && <span>{project.ref}</span>}
+            {!project.bigIdea && <span>{project.ref}</span>}
             <span>f/2.8 — 1/250s</span>
             <span>ISO 400</span>
             <span className="flex items-center gap-1.5 justify-end mt-1 text-white/60">

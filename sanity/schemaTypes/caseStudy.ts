@@ -111,13 +111,13 @@ export const caseStudy = defineType({
       placeholder: '042',
     }),
     defineField({
-      name: 'timeline',
-      title: 'Timeline',
+      name: 'bigIdea',
+      title: 'Big Idea',
       type: 'string',
       group: 'hero',
       fieldset: 'identity',
-      description: 'How long the work lived. “14 weeks” is enough.',
-      placeholder: '14 Weeks',
+      description: 'The campaign concept in one line. The idea that made everything else make sense.',
+      placeholder: 'Make the science feel human',
     }),
     defineField({
       name: 'heroImage',

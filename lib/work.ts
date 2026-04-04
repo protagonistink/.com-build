@@ -84,7 +84,7 @@ interface CmsCaseStudy {
   publishedAt?: string;
   status?: string;
   caseNumber?: string;
-  timeline?: string;
+  bigIdea?: string;
   heroImageUrl?: string;
   heroImageAlt?: string;
   ogImageUrl?: string;
@@ -97,11 +97,6 @@ function toYear(value?: string) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return String(new Date().getUTCFullYear());
   return String(date.getUTCFullYear());
-}
-
-function yearFromTimeline(value?: string) {
-  const match = value?.match(/\b(19|20)\d{2}\b/);
-  return match?.[0];
 }
 
 function normalizeSurface(surface?: string): ShowcaseSurface {
@@ -414,7 +409,7 @@ function mapCmsCaseStudy(item: CmsCaseStudy, index: number): CaseStudy | null {
     item.ogImageUrl ||
     fallbackProject?.image ||
     '/images/work/scene-01.png';
-  const year = yearFromTimeline(item.timeline) || toYear(item.publishedAt);
+  const year = toYear(item.publishedAt);
   const sourceSections = (item.sections || [])
     .map(mapCmsSection)
     .filter((section): section is CaseStudySourceSection => section !== null);
@@ -433,7 +428,7 @@ function mapCmsCaseStudy(item: CmsCaseStudy, index: number): CaseStudy | null {
     image,
     imageAlt: item.heroImageAlt || fallbackProject?.imageAlt || title,
     caseNumber: item.caseNumber?.trim() || fallbackProject?.caseNumber || undefined,
-    timeline: item.timeline?.trim() || fallbackProject?.timeline || undefined,
+    bigIdea: item.bigIdea?.trim() || fallbackProject?.bigIdea || undefined,
     sections: normalizeCaseStudySections(sourceSections),
     description: item.seoDescription || fallbackProject?.description || title,
     category: item.engagementType || item.sector || fallbackProject?.category || 'Brand Strategy',
@@ -454,7 +449,7 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
     publishedAt,
     status,
     caseNumber,
-    timeline,
+    bigIdea,
     seoDescription,
     "heroImageUrl": heroImage.asset->url,
     "heroImageAlt": heroImage.alt,
@@ -556,7 +551,7 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
     publishedAt,
     status,
     caseNumber,
-    timeline,
+    bigIdea,
     seoDescription,
     "heroImageUrl": heroImage.asset->url,
     "heroImageAlt": heroImage.alt,
