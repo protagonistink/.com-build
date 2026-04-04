@@ -60,9 +60,9 @@ function ContentPanel({ block, isDark }: { block: ShowcaseBlock; isDark: boolean
   const style = block.copyStyle || 'default';
   const align = block.textAlign || 'left';
 
-  const alignClass = align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : 'text-left';
+  const alignClass = align === 'center' ? 'text-center items-center' : align === 'right' ? 'text-right items-end' : 'text-left items-start';
   const detailsAlign = align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : '';
-  const maxWidth = align === 'center' ? '' : 'max-w-md';
+  const maxWidth = align === 'center' ? 'max-w-xl mx-auto' : 'max-w-md';
 
   const headlineSize = style === 'display'
     ? 'text-4xl md:text-5xl'
@@ -78,7 +78,7 @@ function ContentPanel({ block, isDark }: { block: ShowcaseBlock; isDark: boolean
 
   return (
     <div className={`flex flex-col justify-center p-8 md:p-12 lg:p-16 ${alignClass}`}>
-      <div>
+      <div className={align === 'center' ? 'w-full' : ''}>
         {(block.eyebrow || block.itemLabel) && (
           <p className={`text-[10px] font-bold uppercase tracking-[0.28em] mb-4 ${
             isDark ? 'text-rust/90' : 'text-rust'
