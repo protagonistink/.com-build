@@ -88,9 +88,16 @@ export function LivePreviewPane(props: LivePreviewPaneProps) {
           justifyContent: 'space-between',
         }}
       >
-        <span>Live preview</span>
+        <span>Published page preview — draft changes show after publishing</span>
         <button
-          onClick={() => iframeRef.current?.contentWindow?.location.reload()}
+          onClick={() => {
+            if (iframeRef.current) {
+              // Re-set src to reload without cross-origin issues
+              const src = iframeRef.current.src;
+              iframeRef.current.src = '';
+              setTimeout(() => { if (iframeRef.current) iframeRef.current.src = src; }, 50);
+            }
+          }}
           style={{
             background: 'rgba(250,248,244,0.06)',
             border: '1px solid rgba(250,248,244,0.1)',
