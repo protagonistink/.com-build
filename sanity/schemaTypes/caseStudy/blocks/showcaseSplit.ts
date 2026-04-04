@@ -1,8 +1,8 @@
 import {Columns2} from 'lucide-react';
 import {defineField, defineType} from 'sanity';
-import {actLabelField, detailsField, eyebrowField, imageField, surfaceField} from '../shared';
+import {detailsField, imageField} from '../shared';
 import {CaseStudyBlockPreview} from '../../../studio/CaseStudyBlockPreview';
-import {ImagePositionPickerInput} from '../../../studio/VisualPickerInputs';
+import {BeatConfigStrip} from '../../../studio/BeatConfigStrip';
 
 export const showcaseSplit = defineType({
   name: 'showcaseSplit',
@@ -11,20 +11,16 @@ export const showcaseSplit = defineType({
   type: 'object',
   icon: Columns2,
   fieldsets: [
-    {name: 'settings', title: 'Settings', options: {collapsible: true, collapsed: true}},
     {name: 'story', title: 'Story Copy'},
-    {name: 'layout', title: 'Layout', options: {collapsible: true, collapsed: true, columns: 2}},
+    {name: 'design', title: 'Design', options: {collapsible: true, collapsed: true, columns: 2}},
   ],
   fields: [
-    actLabelField('settings'),
-    surfaceField('settings'),
-    eyebrowField('settings'),
+    // Layout picker — compact cards, first thing the writer sees
     defineField({
       name: 'imagePosition',
-      title: 'Image Position',
+      title: 'Layout',
       type: 'string',
-      fieldset: 'layout',
-      description: 'How should this beat be laid out?',
+      description: 'Pick the shape of this beat.',
       options: {
         list: [
           {title: 'Image Left', value: 'left'},
@@ -36,24 +32,11 @@ export const showcaseSplit = defineType({
       },
       initialValue: 'left',
       components: {
-        input: ImagePositionPickerInput,
+        input: BeatConfigStrip,
       },
     }),
-    defineField({
-      name: 'imageDisplay',
-      title: 'Image Fit',
-      type: 'string',
-      fieldset: 'layout',
-      description: 'Should the image fill the frame by cropping, or stay fully visible inside it?',
-      options: {
-        list: [
-          {title: 'Crop to fill', value: 'cover'},
-          {title: 'Fit whole image', value: 'contain'},
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'cover',
-    }),
+
+    // Story fields — immediately after layout
     defineField({
       name: 'title',
       title: 'Headline',
@@ -79,7 +62,60 @@ export const showcaseSplit = defineType({
       placeholder: 'The old platform had 340 daily users. The new one needed to feel inevitable from day one...',
       description: 'Optional — What happened here, in plain language. Don\'t overthink it.',
     }),
-    imageField('image', 'Image', 'The frame that carries the other half of this split.'),
+
+    // Image — after story
+    imageField('image', 'Image', 'The frame that carries this beat. Not needed for Copy Only layout.'),
+
+    // Design fieldset — collapsed, secondary controls
+    defineField({
+      name: 'surface',
+      title: 'Surface',
+      type: 'string',
+      fieldset: 'design',
+      description: 'Dark or light background.',
+      options: {
+        list: [
+          {title: 'Dark', value: 'dark'},
+          {title: 'Light', value: 'light'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'dark',
+    }),
+    defineField({
+      name: 'imageDisplay',
+      title: 'Image Fit',
+      type: 'string',
+      fieldset: 'design',
+      description: 'Crop to fill or show the whole image.',
+      options: {
+        list: [
+          {title: 'Crop to fill', value: 'cover'},
+          {title: 'Fit whole image', value: 'contain'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'cover',
+      hidden: ({parent}) => (parent as Record<string, unknown>)?.imagePosition === 'copyOnly',
+    }),
+    defineField({
+      name: 'actLabel',
+      title: 'Act Label',
+      type: 'string',
+      fieldset: 'design',
+      placeholder: 'THE CHALLENGE',
+      description: 'The story beat this belongs to.',
+    }),
+    defineField({
+      name: 'eyebrow',
+      title: 'Eyebrow',
+      type: 'string',
+      fieldset: 'design',
+      placeholder: 'Optional micro-label',
+      description: 'Micro-label above the headline.',
+    }),
+
+    // Details — at the bottom
     detailsField(),
   ],
   preview: {
@@ -87,17 +123,27 @@ export const showcaseSplit = defineType({
       title: 'title',
       actLabel: 'actLabel',
       surface: 'surface',
-      eyebrow: 'eyebrow',
+      imagePosition: 'imagePosition',
       media: 'image',
     },
-    prepare: ({title, actLabel, surface, eyebrow, media}) => ({
-      title: title || 'Image + Text Beat',
-      subtitle: [actLabel, surface === 'light' ? 'Light surface' : 'Dark surface', eyebrow || 'Image + text']
-        .filter(Boolean)
-        .join(' · '),
-      description: title || undefined,
-      media: media || Columns2,
-    }),
+    prepare: ({title, actLabel, surface, imagePosition, media}) => {
+      const layoutLabel = imagePosition === 'full'
+        ? 'Full width'
+        : imagePosition === 'copyOnly'
+          ? 'Copy only'
+          : imagePosition === 'right'
+            ? 'Image right'
+            : 'Image left';
+
+      return {
+        title: title || 'Image + Text Beat',
+        subtitle: [actLabel, surface === 'light' ? 'Light' : 'Dark', layoutLabel]
+          .filter(Boolean)
+          .join(' · '),
+        description: title || undefined,
+        media: media || Columns2,
+      };
+    },
   },
   components: {
     preview: CaseStudyBlockPreview,
