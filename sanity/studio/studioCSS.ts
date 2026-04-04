@@ -24,4 +24,10 @@ export const studioCSS = `
     border-left: 2px solid rgba(200, 60, 47, 0.2);
     padding-left: 8px;
   }
+
+  /* Widen the form panel in Presentation mode */
+  [data-testid="presentation-editor-panel"] {
+    min-width: 480px !important;
+    flex-basis: 42% !important;
+  }
 `;
