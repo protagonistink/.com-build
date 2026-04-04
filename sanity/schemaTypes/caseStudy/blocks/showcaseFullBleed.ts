@@ -31,6 +31,21 @@ export const showcaseFullBleed = defineType({
       placeholder: 'Three months of iteration, compressed into a single frame...',
       description: 'Optional supporting copy if the frame needs more than the headline.',
     }),
+    defineField({
+      name: 'imageDisplay',
+      title: 'Image Fit',
+      type: 'string',
+      fieldset: 'settings',
+      description: 'Should the image fill the frame by cropping, or stay fully visible inside it?',
+      options: {
+        list: [
+          {title: 'Crop to fill', value: 'cover'},
+          {title: 'Fit whole image', value: 'contain'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'cover',
+    }),
     imageField('image', 'Image', 'The frame that should take over the page.'),
   ],
   preview: {

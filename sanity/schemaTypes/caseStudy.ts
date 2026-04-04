@@ -67,6 +67,14 @@ export const caseStudy = defineType({
       description: 'Optional — set this when the case file should officially go live.',
     }),
     defineField({
+      name: 'sortOrder',
+      title: 'Sort Order',
+      type: 'number',
+      group: 'publishing',
+      description: 'Optional — Lower numbers appear first on the Work page. Leave blank for default date-based ordering.',
+      placeholder: '1',
+    }),
+    defineField({
       name: 'clientName',
       title: 'Client / Organization',
       type: 'string',
@@ -168,14 +176,18 @@ export const caseStudy = defineType({
       title: 'SEO Title',
       type: 'string',
       group: 'seo',
-      description: 'Search title if it needs to differ from the on-page title.',
+      description: 'Search title if it needs to differ from the on-page title. Keep it under 60 characters.',
+      validation: (rule) =>
+        rule.max(60).warning('SEO titles over 60 characters get truncated in search results.'),
     }),
     defineField({
       name: 'seoDescription',
       title: 'SEO Description',
       type: 'text',
       group: 'seo',
-      description: 'The concise version someone should see before they click.',
+      description: 'The concise version someone should see before they click. Keep it under 160 characters.',
+      validation: (rule) =>
+        rule.max(160).warning('SEO descriptions over 160 characters get cut off in search results.'),
     }),
     defineField({
       name: 'ogImage',
@@ -199,6 +211,14 @@ export const caseStudy = defineType({
       title: 'No Index',
       type: 'boolean',
       group: 'seo',
+    }),
+    defineField({
+      name: 'nextCaseStudy',
+      title: 'Next Case Study',
+      type: 'reference',
+      to: [{type: 'caseStudy'}],
+      group: 'publishing',
+      description: 'Optional — Pick which case study appears in the "Next" slot at the bottom. If blank, it auto-rotates.',
     }),
   ],
   preview: {
