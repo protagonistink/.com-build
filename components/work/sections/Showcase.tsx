@@ -106,11 +106,110 @@ function ContentPanel({ block, isDark }: { block: ShowcaseBlock; isDark: boolean
   );
 }
 
+// ─── Layout: Copy Only (centered text, no image) ──────────────────────────
+
+function CopyOnlyBlock({ block, isDark }: { block: ShowcaseBlock; isDark: boolean }) {
+  const borderColor = isDark ? 'border-white/[0.06]' : 'border-ink/[0.06]';
+
+  return (
+    <div className={`border-t ${borderColor}`}>
+      <div className="max-w-3xl mx-auto px-6 md:px-12 py-16 md:py-24">
+        {(block.eyebrow || block.itemLabel) && (
+          <p className={`text-[10px] font-bold uppercase tracking-[0.28em] mb-4 ${
+            isDark ? 'text-rust/90' : 'text-rust'
+          }`}>
+            {block.eyebrow || block.itemLabel}
+          </p>
+        )}
+        {block.title && (
+          <h3 className={`text-3xl md:text-4xl lg:text-5xl font-serif font-medium leading-[1.1] mb-6 ${
+            isDark ? 'text-white' : 'text-ink'
+          }`}>
+            {block.title}
+          </h3>
+        )}
+        {block.tagline && (
+          <p className={`text-sm font-bold uppercase tracking-wide mb-6 ${
+            isDark ? 'text-white/30' : 'text-ink/30'
+          }`}>
+            {block.tagline}
+          </p>
+        )}
+        {block.body && (
+          <p className={`text-lg md:text-xl leading-[1.8] ${
+            isDark ? 'text-white/40' : 'text-ink/40'
+          }`}>
+            {block.body}
+          </p>
+        )}
+        {block.details && block.details.length > 0 && (
+          <div className={`flex flex-wrap gap-4 pt-6 mt-8 border-t ${
+            isDark ? 'border-white/[0.06]' : 'border-ink/[0.06]'
+          }`}>
+            {block.details.map((d) => (
+              <span key={d._key} className={`text-[10px] font-bold uppercase tracking-widest ${
+                isDark ? 'text-white/20' : 'text-ink/20'
+              }`}>
+                {d.label} {d.value}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Layout: Full Width Image (image top, text below) ─────────────────────
+
+function FullWidthBlock({ block, isDark }: { block: ShowcaseBlock; isDark: boolean }) {
+  const borderColor = isDark ? 'border-white/[0.06]' : 'border-ink/[0.06]';
+
+  return (
+    <div className={`border-t ${borderColor}`}>
+      {block.image && (
+        <div className={`relative overflow-hidden h-[300px] md:h-[500px] lg:h-[600px] ${
+          isDark ? 'bg-[#111111]' : 'bg-[#f3eee8]'
+        }`}>
+          {block.imageDisplay === 'contain' ? (
+            <div className="absolute inset-4 md:inset-8">
+              <Image
+                src={block.image.src}
+                alt={block.image.alt || block.title || ''}
+                fill
+                className="object-contain object-center grayscale opacity-60 hover:grayscale-0 hover:opacity-80 transition-all duration-700"
+                sizes="100vw"
+              />
+            </div>
+          ) : (
+            <Image
+              src={block.image.src}
+              alt={block.image.alt || block.title || ''}
+              fill
+              className="object-cover object-center grayscale opacity-60 hover:grayscale-0 hover:opacity-80 transition-all duration-700"
+              sizes="100vw"
+            />
+          )}
+        </div>
+      )}
+      <ContentPanel block={block} isDark={isDark} />
+    </div>
+  );
+}
+
 // ─── Layout: Split (image + text side by side) ──────────────────────────────
 
 function SplitBlock({ block, index, isDark }: { block: ShowcaseBlock; index: number; isDark: boolean }) {
-  const imageFirst = block.imagePosition ? block.imagePosition === 'right' : index % 2 === 0;
+  const imageFirst = block.imagePosition ? block.imagePosition === 'left' : index % 2 === 0;
   const borderColor = isDark ? 'border-white/[0.06]' : 'border-ink/[0.06]';
+
+  // Route to specialized layouts
+  if (block.imagePosition === 'copyOnly') {
+    return <CopyOnlyBlock block={block} isDark={isDark} />;
+  }
+  if (block.imagePosition === 'full') {
+    return <FullWidthBlock block={block} isDark={isDark} />;
+  }
 
   if (!block.image) {
     return (
