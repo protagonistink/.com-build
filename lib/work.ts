@@ -24,6 +24,7 @@ interface CmsShowcaseBlock {
   layout?: string;
   imagePosition?: string;
   imageDisplay?: string;
+  copyStyle?: string;
   title?: string;
   body?: string;
   tagline?: string;
@@ -49,6 +50,7 @@ interface CmsSection {
   eyebrow?: string;
   imagePosition?: string;
   imageDisplay?: string;
+  copyStyle?: string;
   title?: string;
   tagline?: string;
   imageUrl?: string;
@@ -158,6 +160,7 @@ function mapFlatSectionToShowcaseBlock(section: FlatShowcaseSection): ShowcaseBl
         layout: 'split',
         imagePosition: section.imagePosition,
         imageDisplay: section.imageDisplay,
+        copyStyle: section.copyStyle,
         eyebrow: section.eyebrow,
         title: section.title,
         tagline: section.tagline,
@@ -296,6 +299,7 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
         eyebrow: section.eyebrow?.trim() || undefined,
         imagePosition: (section.imagePosition as 'left' | 'right' | 'full' | 'copyOnly') || undefined,
         imageDisplay: (section.imageDisplay as 'cover' | 'contain') || undefined,
+        copyStyle: (section.copyStyle as 'default' | 'display' | 'pull-quote') || undefined,
         title: section.title?.trim() || undefined,
         tagline: section.tagline?.trim() || undefined,
         body: section.body?.trim() || undefined,
@@ -468,6 +472,7 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
       eyebrow,
       imagePosition,
       imageDisplay,
+      copyStyle,
       title,
       tagline,
       "imageUrl": image.asset->url,
@@ -570,6 +575,7 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
       eyebrow,
       imagePosition,
       imageDisplay,
+      copyStyle,
       title,
       tagline,
       "imageUrl": image.asset->url,

@@ -27,6 +27,7 @@ export interface ShowcaseBlock {
   layout: ShowcaseLayout;
   imagePosition?: 'left' | 'right' | 'full' | 'copyOnly';
   imageDisplay?: 'cover' | 'contain';
+  copyStyle?: 'default' | 'display' | 'pull-quote';
   eyebrow?: string;
   itemLabel?: string;
   title?: string;
@@ -59,6 +60,7 @@ export interface ShowcaseSplitSection {
   eyebrow?: string;
   imagePosition?: 'left' | 'right' | 'full' | 'copyOnly';
   imageDisplay?: 'cover' | 'contain';
+  copyStyle?: 'default' | 'display' | 'pull-quote';
   title?: string;
   tagline?: string;
   body?: string;

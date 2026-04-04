@@ -110,10 +110,23 @@ function ContentPanel({ block, isDark }: { block: ShowcaseBlock; isDark: boolean
 
 function CopyOnlyBlock({ block, isDark }: { block: ShowcaseBlock; isDark: boolean }) {
   const borderColor = isDark ? 'border-white/[0.06]' : 'border-ink/[0.06]';
+  const style = block.copyStyle || 'default';
+
+  const headlineSize = style === 'display'
+    ? 'text-4xl md:text-5xl lg:text-6xl'
+    : style === 'pull-quote'
+      ? 'text-2xl md:text-3xl lg:text-4xl italic'
+      : 'text-3xl md:text-4xl lg:text-5xl';
+
+  const bodySize = style === 'display'
+    ? 'text-xl md:text-2xl leading-[1.6]'
+    : style === 'pull-quote'
+      ? 'text-lg md:text-xl leading-[1.8] italic'
+      : 'text-lg md:text-xl leading-[1.8]';
 
   return (
     <div className={`border-t ${borderColor}`}>
-      <div className="max-w-3xl mx-auto px-6 md:px-12 py-16 md:py-24">
+      <div className="max-w-3xl mx-auto px-6 md:px-12 py-16 md:py-24 text-center">
         {(block.eyebrow || block.itemLabel) && (
           <p className={`text-[10px] font-bold uppercase tracking-[0.28em] mb-4 ${
             isDark ? 'text-rust/90' : 'text-rust'
@@ -122,7 +135,7 @@ function CopyOnlyBlock({ block, isDark }: { block: ShowcaseBlock; isDark: boolea
           </p>
         )}
         {block.title && (
-          <h3 className={`text-3xl md:text-4xl lg:text-5xl font-serif font-medium leading-[1.1] mb-6 ${
+          <h3 className={`${headlineSize} font-serif font-medium leading-[1.1] mb-6 ${
             isDark ? 'text-white' : 'text-ink'
           }`}>
             {block.title}
@@ -136,14 +149,14 @@ function CopyOnlyBlock({ block, isDark }: { block: ShowcaseBlock; isDark: boolea
           </p>
         )}
         {block.body && (
-          <p className={`text-lg md:text-xl leading-[1.8] ${
+          <p className={`${bodySize} ${
             isDark ? 'text-white/40' : 'text-ink/40'
           }`}>
             {block.body}
           </p>
         )}
         {block.details && block.details.length > 0 && (
-          <div className={`flex flex-wrap gap-4 pt-6 mt-8 border-t ${
+          <div className={`flex flex-wrap justify-center gap-4 pt-6 mt-8 border-t ${
             isDark ? 'border-white/[0.06]' : 'border-ink/[0.06]'
           }`}>
             {block.details.map((d) => (

@@ -99,6 +99,23 @@ export const showcaseSplit = defineType({
       hidden: ({parent}) => (parent as Record<string, unknown>)?.imagePosition === 'copyOnly',
     }),
     defineField({
+      name: 'copyStyle',
+      title: 'Text Style',
+      type: 'string',
+      fieldset: 'design',
+      description: 'How should the text feel?',
+      options: {
+        list: [
+          {title: 'Default — standard heading + body', value: 'default'},
+          {title: 'Display — bigger, bolder, statement copy', value: 'display'},
+          {title: 'Pull Quote — italic, editorial feel', value: 'pull-quote'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'default',
+      hidden: ({parent}) => (parent as Record<string, unknown>)?.imagePosition !== 'copyOnly',
+    }),
+    defineField({
       name: 'actLabel',
       title: 'Act Label',
       type: 'string',
