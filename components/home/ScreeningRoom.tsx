@@ -3,15 +3,15 @@ import Image from 'next/image';
 
 const cases = [
   {
-    slug: 'decoda',
-    client: 'Decoda',
-    subtitle: 'Music',
-    tagline: 'A legacy ensemble forgets how to speak. We gave them back their voice.',
-    disciplines: 'Strategy — Narrative — Copy',
+    slug: 'rebranding-a-giant',
+    client: 'Chevron',
+    subtitle: 'Energy',
+    tagline: "A giant with institutional weight needed language that could meet actual humans without losing technical credibility.",
+    disciplines: 'Content Strategy — Voice — UX Copy',
     year: '2024',
-    image: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=1200&q=75',
-    ghostWord: 'VOICE',
-    href: '/work/decoda',
+    image: 'https://cdn.sanity.io/images/dkok2iir/production/dc7726a98ea8ec70d51db131d198e6c7f5c0b3d0-1000x667.jpg',
+    ghostWord: 'TRUST',
+    href: '/work/rebranding-a-giant',
   },
 ];
 

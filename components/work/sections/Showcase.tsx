@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import ScrollRevealWrapper from '@/components/ScrollRevealWrapper';
 import type { ShowcaseSection, ShowcaseBlock } from '@/types/work';
+import { getEmbedUrl } from './VideoEmbed';
+import WorkPortableText from './WorkPortableText';
 
 // ─── Lightbox ────────────────────────────────────────────────────────────────
 
@@ -54,6 +56,65 @@ function Lightbox({ src, alt, label, caption, onClose }: {
   );
 }
 
+function MediaPanel({ block, isDark, sizes = '100vw' }: { block: ShowcaseBlock; isDark: boolean; sizes?: string }) {
+  const embedUrl = block.video?.url ? getEmbedUrl(block.video.url) : null;
+
+  if (block.mediaType === 'video' && embedUrl) {
+    return (
+      <div
+        className={`relative overflow-hidden ${
+          isDark ? 'bg-[#111111]' : 'bg-[#f3eee8]'
+        }`}
+        style={{ aspectRatio: block.video?.aspectRatio || '16/9' }}
+      >
+        <iframe
+          src={embedUrl}
+          className="absolute inset-0 h-full w-full"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          title={block.video?.caption || block.title || 'Video'}
+        />
+      </div>
+    );
+  }
+
+  if (!block.image) return null;
+
+  return (
+    <div className={`relative overflow-hidden ${
+      isDark ? 'bg-[#111111]' : 'bg-[#f3eee8]'
+    }`}>
+      {block.imageDisplay === 'contain' ? (
+        <div className="absolute inset-4 md:inset-6">
+          <Image
+            src={block.image.src}
+            alt={block.image.alt || block.title || ''}
+            fill
+            className="object-contain object-center grayscale opacity-60 hover:grayscale-0 hover:opacity-80 transition-all duration-700"
+            sizes={sizes}
+          />
+        </div>
+      ) : (
+        <Image
+          src={block.image.src}
+          alt={block.image.alt || block.title || ''}
+          fill
+          className="object-cover object-center grayscale opacity-60 hover:grayscale-0 hover:opacity-80 transition-all duration-700"
+          sizes={sizes}
+        />
+      )}
+    </div>
+  );
+}
+
+function hasRenderableMedia(block: ShowcaseBlock) {
+  if (block.mediaType === 'video') {
+    return Boolean(block.video?.url && getEmbedUrl(block.video.url));
+  }
+
+  return Boolean(block.image);
+}
+
 // ─── Shared content panel ───────────────────────────────────────────────────
 
 function ContentPanel({ block, isDark }: { block: ShowcaseBlock; isDark: boolean }) {
@@ -69,12 +130,6 @@ function ContentPanel({ block, isDark }: { block: ShowcaseBlock; isDark: boolean
     : style === 'pull-quote'
       ? 'text-2xl md:text-3xl italic'
       : 'text-3xl md:text-4xl';
-
-  const bodySize = style === 'display'
-    ? 'text-lg md:text-xl leading-[1.6]'
-    : style === 'pull-quote'
-      ? 'text-base md:text-lg leading-[1.8] italic'
-      : 'text-base leading-[1.8]';
 
   return (
     <div className={`flex flex-col justify-center p-8 md:p-12 lg:p-16 ${alignClass}`}>
@@ -101,11 +156,13 @@ function ContentPanel({ block, isDark }: { block: ShowcaseBlock; isDark: boolean
           </p>
         )}
         {block.body && (
-          <p className={`${bodySize} ${maxWidth} ${
-            isDark ? 'text-white/30' : 'text-ink/35'
-          }`}>
-            {block.body}
-          </p>
+          <WorkPortableText
+            value={block.body}
+            variant={style === 'display' ? 'display' : style === 'pull-quote' ? 'pull-quote' : 'default'}
+            align={align}
+            isDark={isDark}
+            className={maxWidth}
+          />
         )}
         {block.details && block.details.length > 0 && (
           <div className={`flex flex-wrap gap-4 pt-4 mt-6 border-t ${detailsAlign} ${
@@ -133,6 +190,8 @@ function CopyOnlyBlock({ block, isDark }: { block: ShowcaseBlock; isDark: boolea
   const align = block.textAlign || 'center';
 
   const alignClass = align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : 'text-left';
+  const blockPositionClass =
+    align === 'center' ? 'mx-auto' : align === 'right' ? 'ml-auto' : 'mr-auto';
 
   const headlineSize = style === 'display'
     ? 'text-4xl md:text-5xl lg:text-6xl'
@@ -140,56 +199,53 @@ function CopyOnlyBlock({ block, isDark }: { block: ShowcaseBlock; isDark: boolea
       ? 'text-2xl md:text-3xl lg:text-4xl italic'
       : 'text-3xl md:text-4xl lg:text-5xl';
 
-  const bodySize = style === 'display'
-    ? 'text-xl md:text-2xl leading-[1.6]'
-    : style === 'pull-quote'
-      ? 'text-lg md:text-xl leading-[1.8] italic'
-      : 'text-lg md:text-xl leading-[1.8]';
-
   return (
     <div className={`border-t ${borderColor}`}>
-      <div className={`max-w-3xl mx-auto px-6 md:px-12 py-16 md:py-24 ${alignClass}`}>
-        {(block.eyebrow || block.itemLabel) && (
-          <p className={`text-[10px] font-bold uppercase tracking-[0.28em] mb-4 ${
-            isDark ? 'text-rust/90' : 'text-rust'
-          }`}>
-            {block.eyebrow || block.itemLabel}
-          </p>
-        )}
-        {block.title && (
-          <h3 className={`${headlineSize} font-serif font-medium leading-[1.1] mb-6 ${
-            isDark ? 'text-white' : 'text-ink'
-          }`}>
-            {block.title}
-          </h3>
-        )}
-        {block.tagline && (
-          <p className={`text-sm font-bold uppercase tracking-wide mb-6 ${
-            isDark ? 'text-white/30' : 'text-ink/30'
-          }`}>
-            {block.tagline}
-          </p>
-        )}
-        {block.body && (
-          <p className={`${bodySize} ${
-            isDark ? 'text-white/40' : 'text-ink/40'
-          }`}>
-            {block.body}
-          </p>
-        )}
-        {block.details && block.details.length > 0 && (
-          <div className={`flex flex-wrap gap-4 pt-6 mt-8 border-t ${
-            align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : ''
-          } ${isDark ? 'border-white/[0.06]' : 'border-ink/[0.06]'}`}>
-            {block.details.map((d) => (
-              <span key={d._key} className={`text-[10px] font-bold uppercase tracking-widest ${
-                isDark ? 'text-white/20' : 'text-ink/20'
-              }`}>
-                {d.label} {d.value}
-              </span>
-            ))}
-          </div>
-        )}
+      <div className="max-w-5xl mx-auto px-6 md:px-12 py-16 md:py-24">
+        <div className={`max-w-3xl ${blockPositionClass} ${alignClass}`}>
+          {(block.eyebrow || block.itemLabel) && (
+            <p className={`text-[10px] font-bold uppercase tracking-[0.28em] mb-4 ${
+              isDark ? 'text-rust/90' : 'text-rust'
+            }`}>
+              {block.eyebrow || block.itemLabel}
+            </p>
+          )}
+          {block.title && (
+            <h3 className={`${headlineSize} font-serif font-medium leading-[1.1] mb-6 ${
+              isDark ? 'text-white' : 'text-ink'
+            }`}>
+              {block.title}
+            </h3>
+          )}
+          {block.tagline && (
+            <p className={`text-sm font-bold uppercase tracking-wide mb-6 ${
+              isDark ? 'text-white/30' : 'text-ink/30'
+            }`}>
+              {block.tagline}
+            </p>
+          )}
+          {block.body && (
+            <WorkPortableText
+              value={block.body}
+              variant={style === 'display' ? 'display' : style === 'pull-quote' ? 'pull-quote' : 'default'}
+              align={align}
+              isDark={isDark}
+            />
+          )}
+          {block.details && block.details.length > 0 && (
+            <div className={`flex flex-wrap gap-4 pt-6 mt-8 border-t ${
+              align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : ''
+            } ${isDark ? 'border-white/[0.06]' : 'border-ink/[0.06]'}`}>
+              {block.details.map((d) => (
+                <span key={d._key} className={`text-[10px] font-bold uppercase tracking-widest ${
+                  isDark ? 'text-white/20' : 'text-ink/20'
+                }`}>
+                  {d.label} {d.value}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -199,32 +255,16 @@ function CopyOnlyBlock({ block, isDark }: { block: ShowcaseBlock; isDark: boolea
 
 function FullWidthBlock({ block, isDark }: { block: ShowcaseBlock; isDark: boolean }) {
   const borderColor = isDark ? 'border-white/[0.06]' : 'border-ink/[0.06]';
+  const media = <MediaPanel block={block} isDark={isDark} sizes="100vw" />;
+  const hasMedia = hasRenderableMedia(block);
 
   return (
     <div className={`border-t ${borderColor}`}>
-      {block.image && (
-        <div className={`relative overflow-hidden h-[300px] md:h-[500px] lg:h-[600px] ${
-          isDark ? 'bg-[#111111]' : 'bg-[#f3eee8]'
-        }`}>
-          {block.imageDisplay === 'contain' ? (
-            <div className="absolute inset-4 md:inset-8">
-              <Image
-                src={block.image.src}
-                alt={block.image.alt || block.title || ''}
-                fill
-                className="object-contain object-center grayscale opacity-60 hover:grayscale-0 hover:opacity-80 transition-all duration-700"
-                sizes="100vw"
-              />
-            </div>
-          ) : (
-            <Image
-              src={block.image.src}
-              alt={block.image.alt || block.title || ''}
-              fill
-              className="object-cover object-center grayscale opacity-60 hover:grayscale-0 hover:opacity-80 transition-all duration-700"
-              sizes="100vw"
-            />
-          )}
+      {hasMedia && (
+        <div className="h-[300px] md:h-[500px] lg:h-[600px]">
+          <div className="h-full w-full [&>*]:h-full [&>*]:w-full">
+            {media}
+          </div>
         </div>
       )}
       <ContentPanel block={block} isDark={isDark} />
@@ -237,6 +277,7 @@ function FullWidthBlock({ block, isDark }: { block: ShowcaseBlock; isDark: boole
 function SplitBlock({ block, index, isDark }: { block: ShowcaseBlock; index: number; isDark: boolean }) {
   const imageFirst = block.imagePosition ? block.imagePosition === 'left' : index % 2 === 0;
   const borderColor = isDark ? 'border-white/[0.06]' : 'border-ink/[0.06]';
+  const hasMedia = hasRenderableMedia(block);
 
   // Route to specialized layouts
   if (block.imagePosition === 'copyOnly') {
@@ -246,7 +287,7 @@ function SplitBlock({ block, index, isDark }: { block: ShowcaseBlock; index: num
     return <FullWidthBlock block={block} isDark={isDark} />;
   }
 
-  if (!block.image) {
+  if (!hasMedia) {
     return (
       <div className={`border-t ${borderColor}`}>
         <ContentPanel block={block} isDark={isDark} />
@@ -255,28 +296,10 @@ function SplitBlock({ block, index, isDark }: { block: ShowcaseBlock; index: num
   }
 
   const image = (
-    <div className={`min-h-[250px] md:min-h-[400px] relative overflow-hidden ${
-      isDark ? 'bg-[#111111]' : 'bg-[#f3eee8]'
-    }`}>
-      {block.imageDisplay === 'contain' ? (
-        <div className="absolute inset-4 md:inset-6">
-          <Image
-            src={block.image.src}
-            alt={block.image.alt || block.title || ''}
-            fill
-            className="object-contain object-center grayscale opacity-60 hover:grayscale-0 hover:opacity-80 transition-all duration-700"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
-        </div>
-      ) : (
-        <Image
-          src={block.image.src}
-          alt={block.image.alt || block.title || ''}
-          fill
-          className="object-cover object-center grayscale opacity-60 hover:grayscale-0 hover:opacity-80 transition-all duration-700"
-          sizes="(max-width: 768px) 100vw, 50vw"
-        />
-      )}
+    <div className="h-full min-h-[250px] md:min-h-[400px]">
+      <div className="h-full w-full [&>*]:h-full [&>*]:w-full">
+        <MediaPanel block={block} isDark={isDark} sizes="(max-width: 768px) 100vw, 50vw" />
+      </div>
     </div>
   );
 
@@ -284,13 +307,13 @@ function SplitBlock({ block, index, isDark }: { block: ShowcaseBlock; index: num
     <div className={`grid grid-cols-1 md:grid-cols-2 border-t ${borderColor}`}>
       {imageFirst ? (
         <>
-          <div className={`border-b md:border-b-0 md:border-r ${borderColor}`}>{image}</div>
+          <div className={`border-b md:border-b-0 md:border-r ${borderColor} h-full`}>{image}</div>
           <ContentPanel block={block} isDark={isDark} />
         </>
       ) : (
         <>
           <ContentPanel block={block} isDark={isDark} />
-          <div className={`border-t md:border-t-0 md:border-l ${borderColor}`}>{image}</div>
+          <div className={`border-t md:border-t-0 md:border-l ${borderColor} h-full`}>{image}</div>
         </>
       )}
     </div>

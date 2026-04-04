@@ -5,35 +5,17 @@ import {CaseStudyBlockPreview} from '../../../studio/CaseStudyBlockPreview';
 
 export const showcaseFilmStrip = defineType({
   name: 'showcaseFilmStrip',
-  title: 'The Reel',
+  title: 'Film Strip',
   description: 'A horizontal strip of images. Think film frames.',
   type: 'object',
   icon: Film,
   fieldsets: [
     {name: 'settings', title: 'Settings', options: {collapsible: true, collapsed: true}},
-    {name: 'intro', title: 'Intro Copy'},
   ],
   fields: [
     actLabelField('settings'),
     surfaceField('settings'),
     eyebrowField('settings'),
-    defineField({
-      name: 'title',
-      title: 'Headline',
-      type: 'string',
-      fieldset: 'intro',
-      placeholder: 'From wireframe to final cut',
-      description: 'Optional opener above the strip.',
-    }),
-    defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'text',
-      rows: 3,
-      fieldset: 'intro',
-      placeholder: 'Each frame represents a different stage of the visual identity...',
-      description: 'Optional context for what the viewer is looking at.',
-    }),
     defineField({
       name: 'frames',
       title: 'Frames',
@@ -71,17 +53,16 @@ export const showcaseFilmStrip = defineType({
   preview: {
     select: {
       title: 'title',
-      body: 'body',
       actLabel: 'actLabel',
       surface: 'surface',
       media: 'frames.0',
     },
-    prepare: ({title, body, actLabel, surface, media}) => ({
-      title: title || 'The Reel',
+    prepare: ({title, actLabel, surface, media}) => ({
+      title: title || 'Film Strip',
       subtitle: [actLabel, surface === 'light' ? 'Light surface' : 'Dark surface', 'Horizontal sequence']
         .filter(Boolean)
         .join(' · '),
-      description: title || body || undefined,
+      description: title || undefined,
       media: media || Film,
     }),
   },

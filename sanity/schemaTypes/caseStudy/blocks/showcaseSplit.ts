@@ -1,6 +1,6 @@
 import {Columns2} from 'lucide-react';
 import {defineField, defineType} from 'sanity';
-import {detailsField, imageField} from '../shared';
+import {detailsField, storyBodyField, storyBodyPreview} from '../shared';
 import {CaseStudyBlockPreview} from '../../../studio/CaseStudyBlockPreview';
 import {BeatConfigStrip} from '../../../studio/BeatConfigStrip';
 import {SurfaceToggleInput, CopyStyleInput, TextAlignInput} from '../../../studio/CopyStyleStrip';
@@ -111,18 +111,98 @@ export const showcaseSplit = defineType({
       placeholder: 'A complete interface overhaul in 14 weeks',
       description: 'A short line beneath the headline if the beat needs a second strike.',
     }),
-    defineField({
+    storyBodyField({
       name: 'body',
       title: 'Body',
-      type: 'text',
-      rows: 4,
       fieldset: 'story',
       placeholder: 'The old platform had 340 daily users. The new one needed to feel inevitable from day one...',
       description: 'Optional — What happened here, in plain language. Don\'t overthink it.',
     }),
 
-    // Image
-    imageField('image', 'Image', 'The frame that carries this beat. Not needed for Copy Only layout.'),
+    defineField({
+      name: 'mediaType',
+      title: 'Media Type',
+      type: 'string',
+      description: 'Choose whether this beat carries an image or a video.',
+      options: {
+        list: [
+          {title: 'Image', value: 'image'},
+          {title: 'Video', value: 'video'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'image',
+      hidden: ({parent}) => (parent as Record<string, unknown>)?.imagePosition === 'copyOnly',
+    }),
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      description: 'The frame that carries this beat. Not needed for Copy Only layout.',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          description: 'Describe what matters in the frame, not just what is technically visible.',
+        }),
+      ],
+      hidden: ({parent}) => {
+        const current = parent as Record<string, unknown>;
+        return current?.imagePosition === 'copyOnly' || current?.mediaType === 'video';
+      },
+    }),
+    defineField({
+      name: 'videoUrl',
+      title: 'Video URL',
+      type: 'url',
+      description: 'Paste a YouTube or Vimeo URL for this beat.',
+      hidden: ({parent}) => {
+        const current = parent as Record<string, unknown>;
+        return current?.imagePosition === 'copyOnly' || current?.mediaType !== 'video';
+      },
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const parent = context.parent as Record<string, unknown> | undefined;
+          if (parent?.imagePosition === 'copyOnly' || parent?.mediaType !== 'video') return true;
+          return typeof value === 'string' && value.trim()
+            ? true
+            : 'Add a video URL when this beat is set to video.';
+        }),
+    }),
+    defineField({
+      name: 'videoCaption',
+      title: 'Video Caption',
+      type: 'string',
+      description: 'Optional caption under the player.',
+      hidden: ({parent}) => {
+        const current = parent as Record<string, unknown>;
+        return current?.imagePosition === 'copyOnly' || current?.mediaType !== 'video';
+      },
+    }),
+    defineField({
+      name: 'videoAspectRatio',
+      title: 'Video Aspect Ratio',
+      type: 'string',
+      description: 'Shape of the embedded player.',
+      options: {
+        list: [
+          {title: '16:9', value: '16/9'},
+          {title: '4:3', value: '4/3'},
+          {title: '1:1', value: '1/1'},
+          {title: '9:16', value: '9/16'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: '16/9',
+      hidden: ({parent}) => {
+        const current = parent as Record<string, unknown>;
+        return current?.imagePosition === 'copyOnly' || current?.mediaType !== 'video';
+      },
+    }),
 
     // Design — collapsed, secondary controls
     defineField({
@@ -139,7 +219,10 @@ export const showcaseSplit = defineType({
         layout: 'radio',
       },
       initialValue: 'cover',
-      hidden: ({parent}) => (parent as Record<string, unknown>)?.imagePosition === 'copyOnly',
+      hidden: ({parent}) => {
+        const current = parent as Record<string, unknown>;
+        return current?.imagePosition === 'copyOnly' || current?.mediaType === 'video';
+      },
     }),
     defineField({
       name: 'actLabel',
@@ -164,12 +247,14 @@ export const showcaseSplit = defineType({
   preview: {
     select: {
       title: 'title',
+      body: 'body',
       actLabel: 'actLabel',
       surface: 'surface',
       imagePosition: 'imagePosition',
+      mediaType: 'mediaType',
       media: 'image',
     },
-    prepare: ({title, actLabel, surface, imagePosition, media}) => {
+    prepare: ({title, body, actLabel, surface, imagePosition, mediaType, media}) => {
       const layoutLabel = imagePosition === 'full'
         ? 'Full width'
         : imagePosition === 'copyOnly'
@@ -177,13 +262,19 @@ export const showcaseSplit = defineType({
           : imagePosition === 'right'
             ? 'Image right'
             : 'Image left';
+      const mediaLabel = imagePosition === 'copyOnly'
+        ? undefined
+        : mediaType === 'video'
+          ? 'Video'
+          : 'Image';
+      const bodyPreview = storyBodyPreview(body);
 
       return {
         title: title || 'Image + Text Beat',
-        subtitle: [actLabel, surface === 'light' ? 'Light' : 'Dark', layoutLabel]
+        subtitle: [actLabel, surface === 'light' ? 'Light' : 'Dark', layoutLabel, mediaLabel]
           .filter(Boolean)
           .join(' · '),
-        description: title || undefined,
+        description: title || bodyPreview || undefined,
         media: media || Columns2,
       };
     },

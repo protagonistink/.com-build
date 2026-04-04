@@ -1,5 +1,5 @@
 import React from 'react';
-import {Flex, Text} from '@sanity/ui';
+import {Box, Flex, Text} from '@sanity/ui';
 import {type StringInputProps, set} from 'sanity';
 
 function PillToggle({
@@ -46,6 +46,27 @@ function PillToggle({
             {opt.label}
           </button>
         ))}
+      </Flex>
+    </Flex>
+  );
+}
+
+function AlignmentIcon({value, active}: {value: 'left' | 'center' | 'right'; active: boolean}) {
+  const lineColor = active ? 'rgba(200, 60, 47, 0.92)' : 'rgba(250, 248, 244, 0.38)';
+  const faintLine = active ? 'rgba(200, 60, 47, 0.38)' : 'rgba(250, 248, 244, 0.18)';
+  const justify =
+    value === 'center' ? 'center' : value === 'right' ? 'flex-end' : 'flex-start';
+
+  return (
+    <Flex direction="column" gap={1} justify="center" style={{width: 18, height: 12}}>
+      <Flex justify={justify}>
+        <Box style={{height: 2, width: 12, background: lineColor, borderRadius: 2}} />
+      </Flex>
+      <Flex justify={justify}>
+        <Box style={{height: 1, width: 16, background: faintLine, borderRadius: 2}} />
+      </Flex>
+      <Flex justify={justify}>
+        <Box style={{height: 1, width: 10, background: faintLine, borderRadius: 2}} />
       </Flex>
     </Flex>
   );
@@ -98,15 +119,50 @@ export function TextAlignInput(props: StringInputProps) {
   const value = (props.value as string) || 'left';
 
   return (
-    <PillToggle
-      label="Align"
-      options={[
-        {label: '⫷', value: 'left'},
-        {label: '☰', value: 'center'},
-        {label: '⫸', value: 'right'},
-      ]}
-      value={value}
-      onChange={(v) => props.onChange(set(v))}
-    />
+    <Flex gap={2} align="center">
+      <Text size={0} style={{color: 'rgba(250,248,244,0.35)', fontSize: 10, whiteSpace: 'nowrap'}}>
+        Align
+      </Text>
+      <Flex
+        gap={0}
+        style={{
+          border: '1px solid rgba(250, 248, 244, 0.1)',
+          borderRadius: 4,
+          overflow: 'hidden',
+        }}
+      >
+        {([
+          {label: 'Left', value: 'left' as const},
+          {label: 'Center', value: 'center' as const},
+          {label: 'Right', value: 'right' as const},
+        ]).map((opt, i) => {
+          const active = value === opt.value;
+
+          return (
+            <button
+              key={opt.value}
+              type="button"
+              aria-label={opt.label}
+              title={opt.label}
+              onClick={() => props.onChange(set(opt.value))}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 30,
+                height: 22,
+                cursor: 'pointer',
+                border: 'none',
+                background: active ? 'rgba(200, 60, 47, 0.15)' : 'transparent',
+                transition: 'all 0.12s ease',
+                borderRight: i < 2 ? '1px solid rgba(250, 248, 244, 0.06)' : 'none',
+              }}
+            >
+              <AlignmentIcon value={opt.value} active={active} />
+            </button>
+          );
+        })}
+      </Flex>
+    </Flex>
   );
 }

@@ -1,7 +1,7 @@
 import ScrollRevealWrapper from '@/components/ScrollRevealWrapper';
 import type { VideoEmbedSection } from '@/types/work';
 
-function getEmbedUrl(url: string): string | null {
+export function getEmbedUrl(url: string): string | null {
   // Vimeo
   const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
   if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}?dnt=1`;

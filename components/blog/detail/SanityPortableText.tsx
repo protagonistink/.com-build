@@ -4,7 +4,7 @@ import {
   type PortableTextComponents,
   type PortableTextMarkComponentProps,
 } from '@portabletext/react';
-import type { PortableTextBlock } from '@/types/blog';
+import type { PortableTextBlock } from '@/types/portableText';
 import PullQuote from '@/components/blog/detail/PullQuote';
 import FullBleedImage from '@/components/blog/detail/FullBleedImage';
 import SectionDivider from '@/components/blog/detail/SectionDivider';

@@ -1,10 +1,13 @@
+import type { PortableTextValue } from '@/types/portableText';
+
 export type ShowcaseSurface = 'dark' | 'light';
 export type ShowcaseLayout = 'split' | 'fullBleed' | 'filmStrip' | 'stat';
+export type StoryBody = PortableTextValue | string;
 
 export interface PrologueSection {
   _type: 'prologue';
   _key: string;
-  body?: string;
+  body?: StoryBody;
   details?: ShowcaseDetail[];
 }
 
@@ -14,6 +17,12 @@ export interface ShowcaseFrame {
   alt?: string;
   label?: string;
   caption?: string;
+}
+
+export interface ShowcaseVideo {
+  url: string;
+  caption?: string;
+  aspectRatio?: string;
 }
 
 export interface ShowcaseDetail {
@@ -26,15 +35,17 @@ export interface ShowcaseBlock {
   _key: string;
   layout: ShowcaseLayout;
   imagePosition?: 'left' | 'right' | 'full' | 'copyOnly';
+  mediaType?: 'image' | 'video';
   imageDisplay?: 'cover' | 'contain';
   copyStyle?: 'default' | 'display' | 'pull-quote';
   textAlign?: 'left' | 'center' | 'right';
   eyebrow?: string;
   itemLabel?: string;
   title?: string;
-  body?: string;
+  body?: StoryBody;
   tagline?: string;
   image?: {src: string; alt?: string};
+  video?: ShowcaseVideo;
   statValue?: string;
   statLabel?: string;
   frames?: ShowcaseFrame[];
@@ -60,13 +71,15 @@ export interface ShowcaseSplitSection {
   surface?: ShowcaseSurface;
   eyebrow?: string;
   imagePosition?: 'left' | 'right' | 'full' | 'copyOnly';
+  mediaType?: 'image' | 'video';
   imageDisplay?: 'cover' | 'contain';
   copyStyle?: 'default' | 'display' | 'pull-quote';
   textAlign?: 'left' | 'center' | 'right';
   title?: string;
   tagline?: string;
-  body?: string;
+  body?: StoryBody;
   image?: {src: string; alt?: string};
+  video?: ShowcaseVideo;
   details?: ShowcaseDetail[];
 }
 
@@ -77,7 +90,7 @@ export interface ShowcaseFullBleedSection {
   surface?: ShowcaseSurface;
   eyebrow?: string;
   title?: string;
-  body?: string;
+  body?: StoryBody;
   image?: {src: string; alt?: string};
 }
 
@@ -88,7 +101,7 @@ export interface ShowcaseFilmStripSection {
   surface?: ShowcaseSurface;
   eyebrow?: string;
   title?: string;
-  body?: string;
+  body?: StoryBody;
   frames?: ShowcaseFrame[];
 }
 
@@ -99,7 +112,7 @@ export interface ShowcaseStatSection {
   surface?: ShowcaseSurface;
   eyebrow?: string;
   title?: string;
-  body?: string;
+  body?: StoryBody;
   statValue?: string;
   statLabel?: string;
   details?: ShowcaseDetail[];

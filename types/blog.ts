@@ -1,36 +1,5 @@
 import type { ReactNode } from 'react';
-
-export interface PortableTextMarkDef {
-  _key: string;
-  _type: string;
-  href?: string;
-  blank?: boolean;
-}
-
-export interface PortableTextSpan {
-  _type: 'span';
-  _key?: string;
-  text: string;
-  marks?: string[];
-}
-
-export interface PortableTextBlock {
-  _type: string;
-  _key?: string;
-  style?: string;
-  children?: PortableTextSpan[];
-  listItem?: 'bullet' | 'number';
-  level?: number;
-  markDefs?: PortableTextMarkDef[];
-  alt?: string;
-  caption?: string;
-  externalUrl?: string;
-  asset?: {
-    _ref?: string;
-    _type?: string;
-    url?: string;
-  };
-}
+import type { PortableTextBlock } from '@/types/portableText';
 
 export interface FaqItem {
   question: string;

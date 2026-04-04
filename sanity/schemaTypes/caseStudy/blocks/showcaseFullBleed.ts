@@ -1,6 +1,6 @@
 import {Image as ImageIcon} from 'lucide-react';
 import {defineField, defineType} from 'sanity';
-import {actLabelField, eyebrowField, imageField, surfaceField} from '../shared';
+import {actLabelField, eyebrowField, imageField, storyBodyField, storyBodyPreview, surfaceField} from '../shared';
 import {CaseStudyBlockPreview} from '../../../studio/CaseStudyBlockPreview';
 
 export const showcaseFullBleed = defineType({
@@ -23,11 +23,9 @@ export const showcaseFullBleed = defineType({
       placeholder: 'The moment it clicked',
       description: 'If the image needs a line on top of it, write it here.',
     }),
-    defineField({
+    storyBodyField({
       name: 'body',
       title: 'Body',
-      type: 'text',
-      rows: 3,
       placeholder: 'Three months of iteration, compressed into a single frame...',
       description: 'Optional supporting copy if the frame needs more than the headline.',
     }),
@@ -51,16 +49,17 @@ export const showcaseFullBleed = defineType({
   preview: {
     select: {
       title: 'title',
+      body: 'body',
       actLabel: 'actLabel',
       surface: 'surface',
       media: 'image',
     },
-    prepare: ({title, actLabel, surface, media}) => ({
+    prepare: ({title, body, actLabel, surface, media}) => ({
       title: title || 'Hero Image Moment',
       subtitle: [actLabel, surface === 'light' ? 'Light surface' : 'Dark surface', 'Image with overlay']
         .filter(Boolean)
         .join(' · '),
-      description: title || undefined,
+      description: title || storyBodyPreview(body) || undefined,
       media: media || ImageIcon,
     }),
   },

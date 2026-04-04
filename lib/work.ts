@@ -1,6 +1,8 @@
 import {defineQuery} from 'next-sanity';
 import {PROJECTS} from '@/data/work-projects';
+import {normalizePortableTextOrString} from '@/lib/portableText';
 import {sanityFetch} from '@/sanity/lib/live';
+import type {PortableTextValue} from '@/types/portableText';
 import type {
   CaseStudy,
   CaseStudySection,
@@ -23,14 +25,18 @@ interface CmsShowcaseBlock {
   itemLabel?: string;
   layout?: string;
   imagePosition?: string;
+  mediaType?: string;
   imageDisplay?: string;
   copyStyle?: string;
   textAlign?: string;
   title?: string;
-  body?: string;
+  body?: PortableTextValue | string;
   tagline?: string;
   imageUrl?: string;
   imageAlt?: string;
+  videoUrl?: string;
+  videoCaption?: string;
+  videoAspectRatio?: string;
   statValue?: string;
   statLabel?: string;
   frames?: Array<{_key: string; alt?: string; label?: string; caption?: string; assetUrl?: string}>;
@@ -40,7 +46,7 @@ interface CmsShowcaseBlock {
 interface CmsSection {
   _type: string;
   _key: string;
-  body?: string;
+  body?: PortableTextValue | string;
   objectiveLabel?: string;
   objectiveValue?: string;
   focusLabel?: string;
@@ -50,6 +56,7 @@ interface CmsSection {
   surface?: string;
   eyebrow?: string;
   imagePosition?: string;
+  mediaType?: string;
   imageDisplay?: string;
   copyStyle?: string;
   textAlign?: string;
@@ -57,6 +64,9 @@ interface CmsSection {
   tagline?: string;
   imageUrl?: string;
   imageAlt?: string;
+  videoUrl?: string;
+  videoCaption?: string;
+  videoAspectRatio?: string;
   statValue?: string;
   statLabel?: string;
   items?: CmsShowcaseBlock[];
@@ -140,13 +150,21 @@ function mapLegacyShowcaseBlock(block: CmsShowcaseBlock): ShowcaseBlock {
     _key: block._key,
     layout: (block.layout as ShowcaseBlock['layout']) || 'split',
     imagePosition: (block.imagePosition as 'left' | 'right' | 'full' | 'copyOnly') || undefined,
+    mediaType: (block.mediaType as 'image' | 'video') || (block.videoUrl ? 'video' : 'image'),
     imageDisplay: (block.imageDisplay as 'cover' | 'contain') || undefined,
     eyebrow: block.itemLabel?.trim() || undefined,
     itemLabel: block.itemLabel?.trim() || undefined,
     title: block.title?.trim() || undefined,
-    body: block.body?.trim() || undefined,
+    body: normalizePortableTextOrString(block.body),
     tagline: block.tagline?.trim() || undefined,
     image: block.imageUrl ? {src: block.imageUrl, alt: block.imageAlt || undefined} : undefined,
+    video: block.videoUrl
+      ? {
+          url: block.videoUrl,
+          caption: block.videoCaption?.trim() || undefined,
+          aspectRatio: block.videoAspectRatio || undefined,
+        }
+      : undefined,
     statValue: block.statValue?.trim() || undefined,
     statLabel: block.statLabel?.trim() || undefined,
     frames: mapFrames(block.frames),
@@ -161,14 +179,16 @@ function mapFlatSectionToShowcaseBlock(section: FlatShowcaseSection): ShowcaseBl
         _key: section._key,
         layout: 'split',
         imagePosition: section.imagePosition,
+        mediaType: section.mediaType || (section.video ? 'video' : 'image'),
         imageDisplay: section.imageDisplay,
         copyStyle: section.copyStyle,
         textAlign: section.textAlign,
         eyebrow: section.eyebrow,
         title: section.title,
         tagline: section.tagline,
-        body: section.body,
+        body: normalizePortableTextOrString(section.body),
         image: section.image,
+        video: section.video,
         details: section.details,
       };
     case 'showcaseFullBleed':
@@ -177,7 +197,7 @@ function mapFlatSectionToShowcaseBlock(section: FlatShowcaseSection): ShowcaseBl
         layout: 'fullBleed',
         eyebrow: section.eyebrow,
         title: section.title,
-        body: section.body,
+        body: normalizePortableTextOrString(section.body),
         image: section.image,
       };
     case 'showcaseFilmStrip':
@@ -186,7 +206,7 @@ function mapFlatSectionToShowcaseBlock(section: FlatShowcaseSection): ShowcaseBl
         layout: 'filmStrip',
         eyebrow: section.eyebrow,
         title: section.title,
-        body: section.body,
+        body: normalizePortableTextOrString(section.body),
         frames: section.frames,
       };
     case 'showcaseStat':
@@ -195,7 +215,7 @@ function mapFlatSectionToShowcaseBlock(section: FlatShowcaseSection): ShowcaseBl
         layout: 'stat',
         eyebrow: section.eyebrow,
         title: section.title,
-        body: section.body,
+        body: normalizePortableTextOrString(section.body),
         statValue: section.statValue,
         statLabel: section.statLabel,
         details: section.details,
@@ -279,7 +299,7 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
       return {
         _type: 'prologue',
         _key: section._key,
-        body: section.body?.trim() || undefined,
+        body: normalizePortableTextOrString(section.body),
         details: prologueDetails,
       } satisfies PrologueSection;
     }
@@ -301,13 +321,21 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
         surface: normalizeSurface(section.surface),
         eyebrow: section.eyebrow?.trim() || undefined,
         imagePosition: (section.imagePosition as 'left' | 'right' | 'full' | 'copyOnly') || undefined,
+        mediaType: (section.mediaType as 'image' | 'video') || (section.videoUrl ? 'video' : 'image'),
         imageDisplay: (section.imageDisplay as 'cover' | 'contain') || undefined,
         copyStyle: (section.copyStyle as 'default' | 'display' | 'pull-quote') || undefined,
         textAlign: (section.textAlign as 'left' | 'center' | 'right') || undefined,
         title: section.title?.trim() || undefined,
         tagline: section.tagline?.trim() || undefined,
-        body: section.body?.trim() || undefined,
+        body: normalizePortableTextOrString(section.body),
         image: section.imageUrl ? {src: section.imageUrl, alt: section.imageAlt || undefined} : undefined,
+        video: section.videoUrl
+          ? {
+              url: section.videoUrl,
+              caption: section.videoCaption?.trim() || undefined,
+              aspectRatio: section.videoAspectRatio || undefined,
+            }
+          : undefined,
         details: mapDetails(section.details),
       };
 
@@ -319,7 +347,7 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
         surface: normalizeSurface(section.surface),
         eyebrow: section.eyebrow?.trim() || undefined,
         title: section.title?.trim() || undefined,
-        body: section.body?.trim() || undefined,
+        body: normalizePortableTextOrString(section.body),
         image: section.imageUrl ? {src: section.imageUrl, alt: section.imageAlt || undefined} : undefined,
       };
 
@@ -331,7 +359,7 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
         surface: normalizeSurface(section.surface),
         eyebrow: section.eyebrow?.trim() || undefined,
         title: section.title?.trim() || undefined,
-        body: section.body?.trim() || undefined,
+        body: normalizePortableTextOrString(section.body),
         frames: mapFrames(section.frames),
       };
 
@@ -343,7 +371,7 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
         surface: normalizeSurface(section.surface),
         eyebrow: section.eyebrow?.trim() || undefined,
         title: section.title?.trim() || undefined,
-        body: section.body?.trim() || undefined,
+        body: normalizePortableTextOrString(section.body),
         statValue: section.statValue?.trim() || undefined,
         statLabel: section.statLabel?.trim() || undefined,
         details: mapDetails(section.details),
@@ -465,7 +493,12 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
     sections[] {
       _type,
       _key,
-      body,
+      body[]{
+        ...,
+        _type == "bodyImage" => {
+          "asset": asset->{url, _id}
+        }
+      },
       objectiveLabel,
       objectiveValue,
       focusLabel,
@@ -475,6 +508,7 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
       surface,
       eyebrow,
       imagePosition,
+      mediaType,
       imageDisplay,
       copyStyle,
       textAlign,
@@ -482,6 +516,9 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
       tagline,
       "imageUrl": image.asset->url,
       "imageAlt": image.alt,
+      videoUrl,
+      videoCaption,
+      videoAspectRatio,
       statValue,
       statLabel,
       "frames": frames[] {
@@ -501,12 +538,23 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
         itemLabel,
         layout,
         imagePosition,
+        mediaType,
         imageDisplay,
+        copyStyle,
+        textAlign,
         title,
-        body,
+        body[]{
+          ...,
+          _type == "bodyImage" => {
+            "asset": asset->{url, _id}
+          }
+        },
         tagline,
         "imageUrl": image.asset->url,
         "imageAlt": image.alt,
+        videoUrl,
+        videoCaption,
+        videoAspectRatio,
         statValue,
         statLabel,
         "frames": frames[] {
@@ -569,7 +617,12 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
     sections[] {
       _type,
       _key,
-      body,
+      body[]{
+        ...,
+        _type == "bodyImage" => {
+          "asset": asset->{url, _id}
+        }
+      },
       objectiveLabel,
       objectiveValue,
       focusLabel,
@@ -579,6 +632,7 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
       surface,
       eyebrow,
       imagePosition,
+      mediaType,
       imageDisplay,
       copyStyle,
       textAlign,
@@ -586,6 +640,9 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
       tagline,
       "imageUrl": image.asset->url,
       "imageAlt": image.alt,
+      videoUrl,
+      videoCaption,
+      videoAspectRatio,
       statValue,
       statLabel,
       "frames": frames[] {
@@ -605,12 +662,23 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
         itemLabel,
         layout,
         imagePosition,
+        mediaType,
         imageDisplay,
+        copyStyle,
+        textAlign,
         title,
-        body,
+        body[]{
+          ...,
+          _type == "bodyImage" => {
+            "asset": asset->{url, _id}
+          }
+        },
         tagline,
         "imageUrl": image.asset->url,
         "imageAlt": image.alt,
+        videoUrl,
+        videoCaption,
+        videoAspectRatio,
         statValue,
         statLabel,
         "frames": frames[] {
@@ -662,14 +730,21 @@ async function getCmsCaseStudies(preview?: boolean): Promise<CaseStudy[]> {
       stega: preview ? undefined : false,
     })) as {data: CmsCaseStudy[]};
     return records.map(mapCmsCaseStudy).filter((item): item is CaseStudy => Boolean(item));
-  } catch {
+  } catch (error) {
+    console.error('Sanity case-study fetch failed.', error);
     return [];
   }
 }
 
 export async function getWorkProjects(preview?: boolean): Promise<CaseStudy[]> {
   const cmsProjects = await getCmsCaseStudies(preview);
-  if (cmsProjects.length === 0) return PROJECTS;
+  if (cmsProjects.length === 0) {
+    if (process.env.NODE_ENV === 'development') {
+      return PROJECTS;
+    }
+
+    throw new Error('No case studies were returned from Sanity.');
+  }
 
   const cmsSlugs = new Set(cmsProjects.map((project) => project.slug));
   const extras = PROJECTS.filter((project) => !cmsSlugs.has(project.slug));

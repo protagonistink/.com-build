@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import { createClient } from 'next-sanity';
-import type { BlogPost, FaqItem, PortableTextBlock } from '@/types/blog';
+import type { BlogPost, FaqItem } from '@/types/blog';
+import type { PortableTextBlock } from '@/types/portableText';
 import { normalizeEnvValue } from '@/lib/env';
 
 const DEFAULT_SANITY_PROJECT_ID = 'dkok2iir';

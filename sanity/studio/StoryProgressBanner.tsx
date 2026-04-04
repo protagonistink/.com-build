@@ -1,11 +1,13 @@
 import React from 'react';
 import {Card, Flex, Box, Text} from '@sanity/ui';
 import {useFormValue} from 'sanity';
+import {hasPortableTextContent} from '../../lib/portableText';
+import type {PortableTextValue} from '../../types/portableText';
 
 interface Section {
   _type: string;
   _key: string;
-  body?: string;
+  body?: string | unknown[];
   text?: string;
   title?: string;
   quote?: string;
@@ -16,9 +18,20 @@ interface Section {
 }
 
 const BEAT_CHECKS: Record<string, (s: Section) => boolean> = {
-  prologue: (s) => Boolean(s.body?.trim()),
-  showcaseSplit: (s) => Boolean(s.title?.trim() || s.body?.trim()),
-  showcaseFullBleed: (s) => Boolean(s.title?.trim() || s.body?.trim()),
+  prologue: (s) =>
+    Boolean((typeof s.body === 'string' && s.body.trim()) || hasPortableTextContent(s.body as PortableTextValue | undefined)),
+  showcaseSplit: (s) =>
+    Boolean(
+      s.title?.trim() ||
+        (typeof s.body === 'string' && s.body.trim()) ||
+        hasPortableTextContent(s.body as PortableTextValue | undefined),
+    ),
+  showcaseFullBleed: (s) =>
+    Boolean(
+      s.title?.trim() ||
+        (typeof s.body === 'string' && s.body.trim()) ||
+        hasPortableTextContent(s.body as PortableTextValue | undefined),
+    ),
   showcaseFilmStrip: (s) => Boolean(s.frames && s.frames.length > 0),
   showcaseStat: (s) => Boolean(s.statValue?.trim()),
   videoEmbed: (s) => Boolean(s.url?.trim()),

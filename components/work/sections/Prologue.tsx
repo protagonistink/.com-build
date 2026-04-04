@@ -1,4 +1,5 @@
 import ScrollRevealWrapper from '@/components/ScrollRevealWrapper';
+import WorkPortableText from '@/components/work/sections/WorkPortableText';
 import type { PrologueSection } from '@/types/work';
 
 export default function Prologue({ section }: { section: PrologueSection }) {
@@ -14,9 +15,7 @@ export default function Prologue({ section }: { section: PrologueSection }) {
             </span>
           </div>
 
-          <p className="text-2xl md:text-3xl lg:text-4xl font-serif text-white leading-[1.3] tracking-tight">
-            {section.body}
-          </p>
+          <WorkPortableText value={section.body} variant="prologue" isDark />
 
           {section.details && section.details.length > 0 && (
             <div className="grid grid-cols-2 gap-8 md:gap-16 border-t border-white/[0.06] pt-8 mt-14 md:mt-20">

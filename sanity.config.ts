@@ -129,7 +129,7 @@ export default defineConfig({
       },
     }),
     media(),
-    visionTool(),
+    visionTool({defaultApiVersion: '2026-03-02'}),
     unsplashImageAsset(),
   ],
 

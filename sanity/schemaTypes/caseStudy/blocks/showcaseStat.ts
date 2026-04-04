@@ -1,6 +1,6 @@
 import {BadgePercent} from 'lucide-react';
 import {defineField, defineType} from 'sanity';
-import {actLabelField, detailsField, eyebrowField, surfaceField} from '../shared';
+import {actLabelField, detailsField, eyebrowField, storyBodyField, storyBodyPreview, surfaceField} from '../shared';
 import {CaseStudyBlockPreview} from '../../../studio/CaseStudyBlockPreview';
 
 export const showcaseStat = defineType({
@@ -41,11 +41,9 @@ export const showcaseStat = defineType({
       placeholder: 'The number that changed the conversation',
       description: 'Optional supporting headline beside the number.',
     }),
-    defineField({
+    storyBodyField({
       name: 'body',
       title: 'Body',
-      type: 'text',
-      rows: 4,
       placeholder: 'Before the rebrand, engagement was a polite fiction. After launch, the numbers told a different story...',
       description: 'Context that turns the number into a story beat instead of a decorative stat.',
     }),
@@ -64,7 +62,7 @@ export const showcaseStat = defineType({
       subtitle: [actLabel, surface === 'light' ? 'Light surface' : 'Dark surface', statLabel || 'Big number + context']
         .filter(Boolean)
         .join(' · '),
-      description: title || body || undefined,
+      description: title || storyBodyPreview(body) || undefined,
       media: BadgePercent,
     }),
   },
