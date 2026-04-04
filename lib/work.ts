@@ -135,7 +135,7 @@ function mapLegacyShowcaseBlock(block: CmsShowcaseBlock): ShowcaseBlock {
   return {
     _key: block._key,
     layout: (block.layout as ShowcaseBlock['layout']) || 'split',
-    imagePosition: (block.imagePosition as 'left' | 'right') || undefined,
+    imagePosition: (block.imagePosition as 'left' | 'right' | 'full' | 'copyOnly') || undefined,
     imageDisplay: (block.imageDisplay as 'cover' | 'contain') || undefined,
     eyebrow: block.itemLabel?.trim() || undefined,
     itemLabel: block.itemLabel?.trim() || undefined,
@@ -294,7 +294,7 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
         actLabel: section.actLabel?.trim() || undefined,
         surface: normalizeSurface(section.surface),
         eyebrow: section.eyebrow?.trim() || undefined,
-        imagePosition: (section.imagePosition as 'left' | 'right') || undefined,
+        imagePosition: (section.imagePosition as 'left' | 'right' | 'full' | 'copyOnly') || undefined,
         imageDisplay: (section.imageDisplay as 'cover' | 'contain') || undefined,
         title: section.title?.trim() || undefined,
         tagline: section.tagline?.trim() || undefined,

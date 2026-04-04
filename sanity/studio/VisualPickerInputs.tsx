@@ -171,6 +171,40 @@ export function SurfacePickerInput(props: StringInputProps) {
   );
 }
 
+function FullWidthDiagram() {
+  return (
+    <Stack space={2} style={{height: 88}}>
+      <Card
+        radius={2}
+        style={{
+          height: 52,
+          background: 'linear-gradient(135deg, rgba(200, 60, 47, 0.22), rgba(250, 248, 244, 0.08))',
+          border: '1px solid rgba(250, 248, 244, 0.08)',
+        }}
+      />
+      <Flex direction="column" gap={1} paddingX={1}>
+        <Box style={{width: '65%', height: 3, background: '#FAF8F4', opacity: 0.72}} />
+        <Box style={{width: '88%', height: 2, background: '#FAF8F4', opacity: 0.22}} />
+        <Box style={{width: '74%', height: 2, background: '#FAF8F4', opacity: 0.22}} />
+      </Flex>
+    </Stack>
+  );
+}
+
+function CopyOnlyDiagram() {
+  return (
+    <Flex align="center" justify="center" style={{height: 88}}>
+      <Stack space={2} style={{width: '70%'}}>
+        <Box style={{width: '50%', height: 3, background: '#FAF8F4', opacity: 0.72, margin: '0 auto'}} />
+        <Box style={{width: '100%', height: 2, background: '#FAF8F4', opacity: 0.22}} />
+        <Box style={{width: '92%', height: 2, background: '#FAF8F4', opacity: 0.22}} />
+        <Box style={{width: '85%', height: 2, background: '#FAF8F4', opacity: 0.22}} />
+        <Box style={{width: '78%', height: 2, background: '#FAF8F4', opacity: 0.22}} />
+      </Stack>
+    </Flex>
+  );
+}
+
 export function ImagePositionPickerInput(props: StringInputProps) {
   const value = typeof props.value === 'string' ? props.value : 'left';
 
@@ -194,6 +228,26 @@ export function ImagePositionPickerInput(props: StringInputProps) {
         description="Lead with the copy, let the frame land second."
       >
         <SplitLayoutDiagram imageOnLeft={false} tone="dark" />
+      </PickerCard>
+
+      <PickerCard
+        selected={value === 'full'}
+        disabled={props.readOnly}
+        onClick={() => handleSelect('full', value, props.onChange)}
+        label="Full Width Image"
+        description="Image takes the full width, copy sits below."
+      >
+        <FullWidthDiagram />
+      </PickerCard>
+
+      <PickerCard
+        selected={value === 'copyOnly'}
+        disabled={props.readOnly}
+        onClick={() => handleSelect('copyOnly', value, props.onChange)}
+        label="Copy Only"
+        description="Just the text, centered with breathing room."
+      >
+        <CopyOnlyDiagram />
       </PickerCard>
     </Grid>
   );

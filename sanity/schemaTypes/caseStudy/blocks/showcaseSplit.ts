@@ -24,11 +24,13 @@ export const showcaseSplit = defineType({
       title: 'Image Position',
       type: 'string',
       fieldset: 'layout',
-      description: 'Which side should carry the image weight?',
+      description: 'How should this beat be laid out?',
       options: {
         list: [
-          {title: 'Left', value: 'left'},
-          {title: 'Right', value: 'right'},
+          {title: 'Image Left', value: 'left'},
+          {title: 'Image Right', value: 'right'},
+          {title: 'Full Width Image', value: 'full'},
+          {title: 'Copy Only', value: 'copyOnly'},
         ],
         layout: 'radio',
       },
