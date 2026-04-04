@@ -2,21 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import type {LayoutProps} from 'sanity';
 import {studioCSS} from './studioCSS';
 
-const focusModeCSS = `
-  body.focus-mode [data-testid="pane"] ~ [data-testid="pane"] ~ [data-testid="pane"],
-  body.focus-mode [data-testid="pane"]:first-child,
-  body.focus-mode [data-testid="pane"]:first-child + [data-testid="pane"] {
-    /* Hide all panes except the last (document) pane */
-  }
-
-  body.focus-mode [data-ui="PaneLayout"] > [data-ui="Pane"]:not(:last-child) {
-    display: none !important;
-  }
-
-  body.focus-mode [data-ui="PaneLayout"] > [data-testid="pane-divider"] {
-    display: none !important;
-  }
-
+const focusToggleCSS = `
   .focus-toggle {
     position: fixed;
     bottom: 16px;
@@ -56,17 +42,47 @@ const focusModeCSS = `
   }
 `;
 
+function applyFocusMode(active: boolean) {
+  // Find all panes by data-testid="pane"
+  const panes = document.querySelectorAll<HTMLElement>('[data-testid="pane"]');
+  if (panes.length < 2) return;
+
+  // Hide all panes except the last one (the document editor)
+  for (let i = 0; i < panes.length - 1; i++) {
+    panes[i].style.display = active ? 'none' : '';
+    panes[i].style.width = active ? '0' : '';
+    panes[i].style.minWidth = active ? '0' : '';
+    panes[i].style.flex = active ? '0' : '';
+  }
+
+  // Also hide pane dividers (siblings between panes)
+  const layout = document.querySelector<HTMLElement>('[data-ui="PaneLayout"]');
+  if (layout) {
+    const children = layout.children;
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i] as HTMLElement;
+      // Dividers are elements between panes that aren't panes themselves
+      if (!child.matches('[data-testid="pane"]') && child.tagName !== 'STYLE') {
+        const nextPane = child.nextElementSibling as HTMLElement | null;
+        const prevPane = child.previousElementSibling as HTMLElement | null;
+        // If this is between two panes and one of them is hidden, hide the divider too
+        if (active && (prevPane?.style.display === 'none' || nextPane?.matches('[data-testid="pane"]:last-of-type'))) {
+          child.style.display = 'none';
+        } else if (!active) {
+          child.style.display = '';
+        }
+      }
+    }
+  }
+}
+
 export function StudioLayoutWrapper(props: LayoutProps) {
   const [focusMode, setFocusMode] = useState(false);
 
   const toggle = useCallback(() => {
     setFocusMode((prev) => {
       const next = !prev;
-      if (next) {
-        document.body.classList.add('focus-mode');
-      } else {
-        document.body.classList.remove('focus-mode');
-      }
+      applyFocusMode(next);
       return next;
     });
   }, []);
@@ -82,15 +98,28 @@ export function StudioLayoutWrapper(props: LayoutProps) {
     return () => window.removeEventListener('keydown', handleKeydown);
   }, [toggle]);
 
-  // Clean up class on unmount
+  // Re-apply on navigation changes (panes get re-rendered)
   useEffect(() => {
-    return () => document.body.classList.remove('focus-mode');
+    if (!focusMode) return;
+    const observer = new MutationObserver(() => {
+      applyFocusMode(true);
+    });
+    const layout = document.querySelector('[data-ui="PaneLayout"]');
+    if (layout) {
+      observer.observe(layout, {childList: true});
+    }
+    return () => observer.disconnect();
+  }, [focusMode]);
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => applyFocusMode(false);
   }, []);
 
   return (
     <>
       <style>{studioCSS}</style>
-      <style>{focusModeCSS}</style>
+      <style>{focusToggleCSS}</style>
       {props.renderDefault(props)}
       <button
         type="button"
