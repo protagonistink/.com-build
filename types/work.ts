@@ -13,6 +13,7 @@ export interface PrologueSection {
 
 export interface ShowcaseFrame {
   _key: string;
+  mediaType: 'image' | 'video';
   src: string;
   alt?: string;
   label?: string;

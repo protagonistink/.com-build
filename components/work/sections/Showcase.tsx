@@ -9,8 +9,8 @@ import WorkPortableText from './WorkPortableText';
 
 // ─── Lightbox ────────────────────────────────────────────────────────────────
 
-function Lightbox({ src, alt, label, caption, onClose }: {
-  src: string; alt: string; label?: string; caption?: string; onClose: () => void;
+function Lightbox({ src, alt, label, caption, mediaType, onClose }: {
+  src: string; alt: string; label?: string; caption?: string; mediaType: 'image' | 'video'; onClose: () => void;
 }) {
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -32,12 +32,22 @@ function Lightbox({ src, alt, label, caption, onClose }: {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative overflow-hidden" style={{ maxHeight: '80vh' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={src}
-            alt={alt}
-            className="max-w-[90vw] max-h-[80vh] object-contain block"
-          />
+          {mediaType === 'video' ? (
+            <video
+              src={src}
+              controls
+              autoPlay
+              playsInline
+              className="max-w-[90vw] max-h-[80vh] object-contain block"
+            />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt}
+              className="max-w-[90vw] max-h-[80vh] object-contain block"
+            />
+          )}
         </div>
         {(label || caption) && (
           <div className="flex justify-between items-center text-[10px] font-mono text-white/30 uppercase tracking-widest px-1">
@@ -307,13 +317,13 @@ function SplitBlock({ block, index, isDark }: { block: ShowcaseBlock; index: num
     <div className={`grid grid-cols-1 md:grid-cols-2 border-t ${borderColor}`}>
       {imageFirst ? (
         <>
-          <div className={`border-b md:border-b-0 md:border-r ${borderColor} h-full`}>{image}</div>
+          <div className="h-full">{image}</div>
           <ContentPanel block={block} isDark={isDark} />
         </>
       ) : (
         <>
           <ContentPanel block={block} isDark={isDark} />
-          <div className={`border-t md:border-t-0 md:border-l ${borderColor} h-full`}>{image}</div>
+          <div className="h-full">{image}</div>
         </>
       )}
     </div>
@@ -349,7 +359,13 @@ function FullBleedBlock({ block }: { block: ShowcaseBlock }) {
 
 function FilmStripBlock({ block }: { block: ShowcaseBlock }) {
   const frames = block.frames;
-  const [lightbox, setLightbox] = useState<{ src: string; alt: string; label?: string; caption?: string } | null>(null);
+  const [lightbox, setLightbox] = useState<{
+    src: string;
+    alt: string;
+    label?: string;
+    caption?: string;
+    mediaType: 'image' | 'video';
+  } | null>(null);
 
   if (!frames || frames.length === 0) return null;
 
@@ -362,18 +378,35 @@ function FilmStripBlock({ block }: { block: ShowcaseBlock }) {
             {frames.map((frame, i) => (
               <div
                 key={frame._key}
-                className="flex-none w-[360px] md:w-[560px] group film-frame cursor-zoom-in"
-                onClick={() => setLightbox({ src: frame.src, alt: frame.alt || `Frame ${i + 1}`, label: frame.label, caption: frame.caption })}
+                className="flex-none w-[360px] md:w-[560px] group film-frame cursor-pointer"
+                onClick={() => setLightbox({
+                  src: frame.src,
+                  alt: frame.alt || `Frame ${i + 1}`,
+                  label: frame.label,
+                  caption: frame.caption,
+                  mediaType: frame.mediaType,
+                })}
               >
                 <div className="border border-white/[0.08] p-1.5 bg-white/[0.01] group-hover:border-white/20 transition-colors duration-300">
                   <div className="relative overflow-hidden aspect-[4/3]">
-                    <Image
-                      src={frame.src}
-                      alt={frame.alt || `Frame ${i + 1}`}
-                      fill
-                      className="object-cover object-top group-hover:scale-[1.02] transition-transform duration-500"
-                      sizes="(max-width: 768px) 360px, 560px"
-                    />
+                    {frame.mediaType === 'video' ? (
+                      <video
+                        src={frame.src}
+                        muted
+                        loop
+                        autoPlay
+                        playsInline
+                        className="h-full w-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-500"
+                      />
+                    ) : (
+                      <Image
+                        src={frame.src}
+                        alt={frame.alt || `Frame ${i + 1}`}
+                        fill
+                        className="object-cover object-top group-hover:scale-[1.02] transition-transform duration-500"
+                        sizes="(max-width: 768px) 360px, 560px"
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="mt-3 flex justify-between items-center text-[10px] font-mono text-white/25 uppercase tracking-widest">
@@ -392,6 +425,7 @@ function FilmStripBlock({ block }: { block: ShowcaseBlock }) {
           alt={lightbox.alt}
           label={lightbox.label}
           caption={lightbox.caption}
+          mediaType={lightbox.mediaType}
           onClose={() => setLightbox(null)}
         />
       )}
@@ -449,7 +483,7 @@ export default function Showcase({ section }: { section: ShowcaseSection }) {
 
   return (
     <section className={isDark ? 'bg-trueblack' : 'bg-warmwhite texture-paper'}>
-      <div className={`max-w-screen-2xl mx-auto ${isDark ? `border-x ${borderColor}` : ''}`}>
+      <div className="max-w-screen-2xl mx-auto">
         {section.label && (
           <div className={`px-6 md:px-8 py-6 md:py-8 border-b ${borderColor}`}>
             <span className="text-[10px] font-bold tracking-[0.5em] text-rust uppercase">

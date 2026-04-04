@@ -39,7 +39,14 @@ interface CmsShowcaseBlock {
   videoAspectRatio?: string;
   statValue?: string;
   statLabel?: string;
-  frames?: Array<{_key: string; alt?: string; label?: string; caption?: string; assetUrl?: string}>;
+  frames?: Array<{
+    _key: string;
+    mediaType?: string;
+    alt?: string;
+    label?: string;
+    caption?: string;
+    assetUrl?: string;
+  }>;
   details?: Array<{_key: string; label?: string; value?: string}>;
 }
 
@@ -70,7 +77,14 @@ interface CmsSection {
   statValue?: string;
   statLabel?: string;
   items?: CmsShowcaseBlock[];
-  frames?: Array<{_key: string; alt?: string; label?: string; caption?: string; assetUrl?: string}>;
+  frames?: Array<{
+    _key: string;
+    mediaType?: string;
+    alt?: string;
+    label?: string;
+    caption?: string;
+    assetUrl?: string;
+  }>;
   details?: Array<{_key: string; label?: string; value?: string}>;
   quote?: string;
   backgroundImageUrl?: string;
@@ -118,12 +132,20 @@ function normalizeSurface(surface?: string): ShowcaseSurface {
 }
 
 function mapFrames(
-  frames?: Array<{_key: string; alt?: string; label?: string; caption?: string; assetUrl?: string}>,
+  frames?: Array<{
+    _key: string;
+    mediaType?: string;
+    alt?: string;
+    label?: string;
+    caption?: string;
+    assetUrl?: string;
+  }>,
 ): ShowcaseFrame[] | undefined {
   const nextFrames = frames
     ?.filter((frame) => frame.assetUrl)
     .map((frame) => ({
       _key: frame._key,
+      mediaType: frame.mediaType === 'video' ? 'video' : 'image',
       src: frame.assetUrl!,
       alt: frame.alt || undefined,
       label: frame.label || undefined,
@@ -523,10 +545,11 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
       statLabel,
       "frames": frames[] {
         _key,
+        "mediaType": select(defined(mediaType) => mediaType, defined(video) => "video", "image"),
         alt,
         label,
         caption,
-        "assetUrl": asset->url
+        "assetUrl": coalesce(asset->url, image.asset->url, video.asset->url)
       },
       details[] {
         _key,
@@ -559,10 +582,11 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
         statLabel,
         "frames": frames[] {
           _key,
+          "mediaType": select(defined(mediaType) => mediaType, defined(video) => "video", "image"),
           alt,
           label,
           caption,
-          "assetUrl": asset->url
+          "assetUrl": coalesce(asset->url, image.asset->url, video.asset->url)
         },
         details[] {
           _key,
@@ -647,10 +671,11 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
       statLabel,
       "frames": frames[] {
         _key,
+        "mediaType": select(defined(mediaType) => mediaType, defined(video) => "video", "image"),
         alt,
         label,
         caption,
-        "assetUrl": asset->url
+        "assetUrl": coalesce(asset->url, image.asset->url, video.asset->url)
       },
       details[] {
         _key,
@@ -683,10 +708,11 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
         statLabel,
         "frames": frames[] {
           _key,
+          "mediaType": select(defined(mediaType) => mediaType, defined(video) => "video", "image"),
           alt,
           label,
           caption,
-          "assetUrl": asset->url
+          "assetUrl": coalesce(asset->url, image.asset->url, video.asset->url)
         },
         details[] {
           _key,
@@ -728,6 +754,7 @@ async function getCmsCaseStudies(preview?: boolean): Promise<CaseStudy[]> {
       query,
       perspective: preview ? undefined : 'published',
       stega: preview ? undefined : false,
+      revalidate: 0,
     })) as {data: CmsCaseStudy[]};
     return records.map(mapCmsCaseStudy).filter((item): item is CaseStudy => Boolean(item));
   } catch (error) {
