@@ -475,6 +475,7 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
       return {
         _type: 'videoEmbed',
         _key: section._key,
+        surface: normalizeSurface(section.surface),
         url: section.url,
         caption: section.caption?.trim() || undefined,
         aspectRatio: section.aspectRatio || '16/9',

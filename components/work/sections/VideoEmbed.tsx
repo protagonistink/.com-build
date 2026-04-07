@@ -32,13 +32,16 @@ export default function VideoEmbed({ section }: { section: VideoEmbedSection }) 
   if (!embedUrl) return null;
 
   const aspectRatio = section.aspectRatio || '16/9';
+  const isLight = section.surface === 'light';
 
   return (
-    <section className="bg-trueblack py-16 md:py-24 px-6 md:px-12">
+    <section className={`${isLight ? 'bg-paper' : 'bg-trueblack'} py-16 md:py-24 px-6 md:px-12`}>
       <div className="max-w-6xl mx-auto">
         <ScrollRevealWrapper direction="up">
           <div
-            className="relative w-full overflow-hidden bg-white/[0.02] border border-white/10"
+            className={`relative w-full overflow-hidden ${
+              isLight ? 'bg-ink/[0.04] border border-ink/10' : 'bg-white/[0.02] border border-white/10'
+            }`}
             style={{ aspectRatio }}
           >
             <iframe
@@ -50,7 +53,11 @@ export default function VideoEmbed({ section }: { section: VideoEmbedSection }) 
             />
           </div>
           {section.caption && (
-            <p className="mt-4 text-[11px] font-mono tracking-widest text-white/25 uppercase text-center">
+            <p
+              className={`mt-4 text-[11px] font-mono tracking-widest uppercase text-center ${
+                isLight ? 'text-ink/35' : 'text-white/25'
+              }`}
+            >
               {section.caption}
             </p>
           )}

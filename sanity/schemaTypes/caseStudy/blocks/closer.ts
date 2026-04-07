@@ -27,7 +27,7 @@ export const closer = defineType({
         reason: 'Use the “body” field instead. This legacy field is kept only so existing closer content continues to load.',
       },
       readOnly: true,
-      hidden: ({value}) => value === undefined,
+      hidden: () => true,
       initialValue: undefined,
     }),
   ],

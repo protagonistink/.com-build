@@ -1,6 +1,7 @@
 import {Play} from 'lucide-react';
 import {defineField, defineType} from 'sanity';
 import {CaseStudyBlockPreview} from '../../../studio/CaseStudyBlockPreview';
+import {surfaceField} from '../shared';
 
 export const videoEmbed = defineType({
   name: 'videoEmbed',
@@ -9,6 +10,7 @@ export const videoEmbed = defineType({
   type: 'object',
   icon: Play,
   fields: [
+    surfaceField(),
     defineField({
       name: 'url',
       title: 'Video URL',
@@ -37,10 +39,13 @@ export const videoEmbed = defineType({
     }),
   ],
   preview: {
-    select: {caption: 'caption', url: 'url'},
-    prepare: ({caption, url}) => ({
+    select: {caption: 'caption', url: 'url', surface: 'surface'},
+    prepare: ({caption, url, surface}) => ({
       title: 'Video',
-      subtitle: caption || url || 'Embedded video',
+      subtitle:
+        [surface === 'light' ? 'Light surface' : 'Dark surface', caption || url || 'Embedded video']
+          .filter(Boolean)
+          .join(' · '),
       description: url || undefined,
       media: Play,
     }),

@@ -150,6 +150,7 @@ export interface ClimaxSection {
 export interface VideoEmbedSection {
   _type: 'videoEmbed';
   _key: string;
+  surface?: ShowcaseSurface;
   url: string;
   caption?: string;
   aspectRatio?: string;
