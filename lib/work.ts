@@ -867,9 +867,7 @@ export async function getWorkProjects(preview?: boolean): Promise<CaseStudy[]> {
     throw new Error('No case studies were returned from Sanity.');
   }
 
-  const cmsSlugs = new Set(cmsProjects.map((project) => project.slug));
-  const extras = PROJECTS.filter((project) => !cmsSlugs.has(project.slug));
-  return [...cmsProjects, ...extras.map((project, index) => ({...project, id: cmsProjects.length + index + 1}))];
+  return cmsProjects;
 }
 
 export async function getWorkProjectBySlug(slug: string, preview?: boolean): Promise<CaseStudy | undefined> {
