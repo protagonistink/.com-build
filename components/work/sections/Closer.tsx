@@ -10,7 +10,7 @@ export default function Closer({ section }: { section: CloserSection }) {
           <div className="w-12 h-px bg-rust mx-auto mb-12 md:mb-16" />
           <WorkPortableText
             value={section.text}
-            variant="pull-quote"
+            variant="display"
             align="center"
             className="max-w-none"
             isDark={false}
