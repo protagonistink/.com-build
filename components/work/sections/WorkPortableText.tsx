@@ -30,7 +30,19 @@ function getEmbedUrl(url?: string): string | null {
   if (!url) return null;
 
   const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}?dnt=1`;
+  if (vimeoMatch) {
+    const params = new URLSearchParams({
+      dnt: '1',
+      title: '0',
+      byline: '0',
+      portrait: '0',
+      badge: '0',
+      vimeo_logo: '0',
+      watch_full_video: '0',
+    });
+
+    return `https://player.vimeo.com/video/${vimeoMatch[1]}?${params.toString()}`;
+  }
 
   const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/);
   if (ytMatch) return `https://www.youtube-nocookie.com/embed/${ytMatch[1]}`;

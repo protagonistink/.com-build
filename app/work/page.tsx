@@ -19,7 +19,7 @@ export default async function WorkPage() {
         {/* Motion plate */}
         <div className="absolute inset-0 pointer-events-none">
           <iframe
-            src="https://player.vimeo.com/video/1169650739?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&dnt=1"
+            src="https://player.vimeo.com/video/1169650739?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&badge=0&vimeo_logo=0&watch_full_video=0&dnt=1"
             className="absolute left-1/2 top-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2"
             style={{
               width: 'max(100vw, 116.67vh)',

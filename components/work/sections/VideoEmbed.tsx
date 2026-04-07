@@ -4,7 +4,19 @@ import type { VideoEmbedSection } from '@/types/work';
 export function getEmbedUrl(url: string): string | null {
   // Vimeo
   const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}?dnt=1`;
+  if (vimeoMatch) {
+    const params = new URLSearchParams({
+      dnt: '1',
+      title: '0',
+      byline: '0',
+      portrait: '0',
+      badge: '0',
+      vimeo_logo: '0',
+      watch_full_video: '0',
+    });
+
+    return `https://player.vimeo.com/video/${vimeoMatch[1]}?${params.toString()}`;
+  }
 
   // YouTube
   const ytMatch = url.match(

@@ -27,7 +27,7 @@ export default function ActInk() {
       >
         {!prefersReduced && inView && (
           <iframe
-            src="https://player.vimeo.com/video/1104985427?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1"
+            src="https://player.vimeo.com/video/1104985427?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&title=0&byline=0&portrait=0&vimeo_logo=0&watch_full_video=0"
             style={{
               position: 'absolute',
               top: '50%',
