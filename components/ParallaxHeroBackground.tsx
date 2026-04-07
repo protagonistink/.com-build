@@ -12,12 +12,12 @@ export default function ParallaxHeroBackground({ src, alt }: { src: string; alt:
         offset: ['start start', 'end start'],
     });
 
-    // Parallax effect: image container moves down at 30% speed of scroll
-    const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+    // Keep the movement subtle so we don't upscale the source image into mush.
+    const y = useTransform(scrollYProgress, [0, 1], ['0%', '10%']);
 
     return (
         <div ref={ref} className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div style={{ y }} className="absolute inset-0 h-[120%] -top-[10%]">
+            <motion.div style={{ y }} className="absolute inset-0 h-[108%] -top-[4%]">
                 <Image
                     src={src}
                     alt={alt}
@@ -25,6 +25,7 @@ export default function ParallaxHeroBackground({ src, alt }: { src: string; alt:
                     className="object-cover"
                     priority
                     sizes="100vw"
+                    quality={90}
                 />
             </motion.div>
 

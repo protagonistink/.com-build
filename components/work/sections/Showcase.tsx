@@ -466,18 +466,11 @@ function FilmStripBlock({ block }: { block: ShowcaseBlock }) {
                         className={`h-full w-full ${frameIsContained ? 'object-contain object-center p-1 md:p-1.5' : 'object-cover object-center'} group-hover:scale-[1.02] transition-transform duration-500`}
                       />
                     ) : (
-                      <Image
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
                         src={frame.src}
                         alt={frame.alt || `Frame ${i + 1}`}
-                        fill
-                        className={`${imageFitClass} group-hover:scale-[1.02] transition-transform duration-500`}
-                        sizes={
-                          block.frameWidth === 'compact'
-                            ? '(max-width: 768px) 280px, 420px'
-                            : block.frameWidth === 'large'
-                              ? '(max-width: 768px) 440px, 700px'
-                              : '(max-width: 768px) 360px, 560px'
-                        }
+                        className={`h-full w-full ${imageFitClass} group-hover:scale-[1.02] transition-transform duration-500`}
                       />
                     )}
                   </div>

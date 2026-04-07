@@ -499,6 +499,8 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
     case 'closer':
       if (
         !(
+          (typeof section.body === 'string' && section.body.trim()) ||
+          normalizePortableTextOrString(section.body) ||
           (typeof section.text === 'string' && section.text.trim()) ||
           normalizePortableTextOrString(section.text)
         )
@@ -508,7 +510,7 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
       return {
         _type: 'closer',
         _key: section._key,
-        text: normalizePortableTextOrString(section.text)!,
+        text: normalizePortableTextOrString(section.body) || normalizePortableTextOrString(section.text)!,
       } satisfies CloserSection;
 
     default:

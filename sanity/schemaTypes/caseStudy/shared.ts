@@ -123,6 +123,10 @@ export function storyBodyField({
   placeholder?: string;
   fieldset?: string;
   validation?: (rule: ArrayRule<unknown[]>) => ArrayRule<unknown[]>;
+  deprecated?: {reason: string};
+  readOnly?: boolean;
+  hidden?: ({value}: {value: unknown}) => boolean;
+  initialValue?: undefined;
 }) {
   return defineField({
     ...config,

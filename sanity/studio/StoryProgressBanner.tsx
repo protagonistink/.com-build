@@ -38,7 +38,12 @@ const BEAT_CHECKS: Record<string, (s: Section) => boolean> = {
   deliverables: (s) => Boolean(s.headline?.trim()),
   climax: (s) => Boolean(s.quote?.trim()),
   closer: (s) =>
-    Boolean((typeof s.text === 'string' && s.text.trim()) || hasPortableTextContent(s.text as PortableTextValue | undefined)),
+    Boolean(
+      (typeof s.body === 'string' && s.body.trim()) ||
+        hasPortableTextContent(s.body as PortableTextValue | undefined) ||
+        (typeof s.text === 'string' && s.text.trim()) ||
+        hasPortableTextContent(s.text as PortableTextValue | undefined),
+    ),
 };
 
 const BEAT_LABELS: Record<string, string> = {

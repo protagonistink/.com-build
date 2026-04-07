@@ -39,6 +39,30 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
+function splitHeroTitle(title: string) {
+  const words = title.trim().split(/\s+/).filter(Boolean);
+
+  if (words.length <= 2) {
+    return [title];
+  }
+
+  let bestIndex = 1;
+  let bestScore = Number.POSITIVE_INFINITY;
+
+  for (let i = 1; i < words.length; i += 1) {
+    const first = words.slice(0, i).join(' ');
+    const second = words.slice(i).join(' ');
+    const score = Math.abs(first.length - second.length);
+
+    if (score < bestScore) {
+      bestScore = score;
+      bestIndex = i;
+    }
+  }
+
+  return [words.slice(0, bestIndex).join(' '), words.slice(bestIndex).join(' ')];
+}
+
 export default async function WorkDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const { isEnabled: preview } = await draftMode();
@@ -51,12 +75,12 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
 
   const currentIndex = projects.findIndex((p) => p.slug === slug);
   const nextProject = projects[(currentIndex + 1) % projects.length];
+  const heroTitleLines = splitHeroTitle(project.title);
 
   const prologueMetaItems = [
-    { label: 'Engagement', value: project.engagementType },
+    { label: 'Need', value: project.engagementType },
+    { label: 'Industry', value: project.sector },
     { label: 'Client', value: project.client },
-    { label: 'Sector', value: project.sector },
-    { label: 'Year', value: project.year },
   ].filter((item): item is { label: string; value: string } => Boolean(item.value));
 
   return (
@@ -92,31 +116,35 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
         </div>
 
         {/* Hero content */}
-        <div className="relative z-10 min-h-[90vh] md:min-h-screen px-6 md:px-10 lg:px-12 pt-28 md:pt-36 lg:pt-40 pb-14 md:pb-20 lg:pb-24">
-          <div className="max-w-[1400px] mx-auto w-full min-h-[calc(90vh-7rem)] md:min-h-[calc(100vh-9rem)] flex flex-col justify-end">
+        <div className="relative z-10 min-h-[90vh] md:min-h-screen px-6 md:px-10 lg:px-12 pt-24 md:pt-28 lg:pt-32 pb-16 md:pb-24 lg:pb-28">
+          <div className="max-w-[1400px] mx-auto w-full min-h-[calc(90vh-6rem)] md:min-h-[calc(100vh-7rem)] flex flex-col justify-end pb-12 md:pb-14 lg:pb-16">
             {/* Breadcrumb */}
-            <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-white/50 mb-6 md:mb-8 drop-shadow-md">
+            <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-white/50 mb-5 md:mb-6 drop-shadow-md">
               <Link href="/work" className="hover:text-white transition-colors duration-300">Case Study</Link>
               <span>/</span>
               <span className="text-white/80">{project.client}</span>
             </div>
 
             {/* Title */}
-            <h1 className="max-w-[13ch] font-display text-5xl md:text-7xl lg:text-8xl xl:text-[7rem] font-medium leading-[0.92] tracking-[-0.02em] mb-5 md:mb-6 drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
-              <TypewriterHeadline text={project.title} initialDelay={400} />
+            <h1 className="max-w-[16ch] font-display text-5xl md:text-7xl lg:text-[5.8rem] xl:text-[6.4rem] font-medium leading-[0.9] tracking-[-0.03em] mb-4 md:mb-5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
+              {heroTitleLines.map((line, index) => (
+                <span key={line} className="block md:whitespace-nowrap">
+                  <TypewriterHeadline text={line} initialDelay={400 + index * 180} />
+                </span>
+              ))}
             </h1>
 
             {/* Subtitle */}
             {project.subtitle && (
-              <p className="font-serif text-xl md:text-2xl italic text-white/70 max-w-2xl leading-relaxed mt-6 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
+              <p className="font-serif text-lg md:text-xl italic text-white/70 max-w-xl leading-relaxed mt-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
                 {project.subtitle}
               </p>
             )}
+
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2 drop-shadow-md">
+        <div className="pointer-events-none absolute left-1/2 top-[calc(100vh-3.75rem)] sm:top-[calc(100vh-4.25rem)] md:top-[calc(100vh-4.75rem)] -translate-x-1/2 -translate-y-full z-10 flex flex-col items-center gap-2 drop-shadow-md">
           <div className="w-px h-12 bg-gradient-to-b from-transparent to-white/40" />
           <span className="text-[8px] uppercase tracking-[0.3em] text-white/40">Scroll</span>
         </div>
