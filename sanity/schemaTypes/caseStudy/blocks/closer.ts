@@ -1,5 +1,6 @@
 import {Pilcrow} from 'lucide-react';
-import {defineField, defineType} from 'sanity';
+import {defineType} from 'sanity';
+import {storyBodyField, storyBodyPreview} from '../shared';
 import {CaseStudyBlockPreview} from '../../../studio/CaseStudyBlockPreview';
 
 export const closer = defineType({
@@ -9,22 +10,20 @@ export const closer = defineType({
   type: 'object',
   icon: Pilcrow,
   fields: [
-    defineField({
+    storyBodyField({
       name: 'text',
       title: 'Closing Line',
-      type: 'text',
-      rows: 3,
       placeholder: 'Every brand has a story. Most of them just need someone to find the thread.',
-      description: 'The line you want ringing in the room after everything else stops. Just get it down — it doesn\'t have to be perfect.',
-      validation: (rule) => rule.required(),
+      description: 'The line you want ringing in the room after everything else stops. Use emphasis and line breaks if the cadence needs them.',
+      validation: (rule) => rule.required().min(1),
     }),
   ],
   preview: {
     select: {text: 'text'},
     prepare: ({text}) => ({
       title: 'Closer',
-      subtitle: text ? text.slice(0, 96) : 'Closing line',
-      description: text ? text.slice(0, 180) : undefined,
+      subtitle: storyBodyPreview(text).slice(0, 96) || 'Closing line',
+      description: storyBodyPreview(text).slice(0, 180) || undefined,
       media: Pilcrow,
     }),
   },

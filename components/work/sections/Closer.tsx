@@ -1,4 +1,5 @@
 import ScrollRevealWrapper from '@/components/ScrollRevealWrapper';
+import WorkPortableText from '@/components/work/sections/WorkPortableText';
 import type { CloserSection } from '@/types/work';
 
 export default function Closer({ section }: { section: CloserSection }) {
@@ -7,9 +8,13 @@ export default function Closer({ section }: { section: CloserSection }) {
       <div className="max-w-3xl mx-auto px-6 text-center">
         <ScrollRevealWrapper direction="up">
           <div className="w-12 h-px bg-rust mx-auto mb-12 md:mb-16" />
-          <p className="font-serif italic text-ink text-xl md:text-2xl lg:text-[28px] leading-relaxed tracking-tight">
-            {section.text}
-          </p>
+          <WorkPortableText
+            value={section.text}
+            variant="pull-quote"
+            align="center"
+            className="max-w-none"
+            isDark={false}
+          />
         </ScrollRevealWrapper>
       </div>
     </section>

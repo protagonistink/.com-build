@@ -90,7 +90,7 @@ export default async function DataDeletionPage({
                   Data connected to your account
                 </h2>
                 <p className="font-sans text-[15px] leading-relaxed text-ink/85 mb-4">
-                  If you've connected a social account or logged in through a third-party service (like Facebook or Instagram) while working with Protagonist Ink, here's what we collect and what you can do about it.
+                  If you&rsquo;ve connected a social account or logged in through a third-party service (like Facebook or Instagram) while working with Protagonist Ink, here&rsquo;s what we collect and what you can do about it.
                 </p>
                 <p className="font-sans text-[15px] leading-relaxed text-ink/85 mb-4">
                   When you authorize a social connection through this dashboard, we may retain:
@@ -112,7 +112,7 @@ export default async function DataDeletionPage({
                   ))}
                 </ul>
                 <p className="font-sans text-[15px] leading-relaxed text-ink/85">
-                  We don't sell this data. We don't share it with third parties outside of the integrations you explicitly authorize. It lives in our system to do one job: help manage the content work we've agreed to do together.
+                  We don&rsquo;t sell this data. We don&rsquo;t share it with third parties outside of the integrations you explicitly authorize. It lives in our system to do one job: help manage the content work we&rsquo;ve agreed to do together.
                 </p>
               </section>
 
@@ -138,10 +138,10 @@ export default async function DataDeletionPage({
                   with the subject line <strong className="font-medium text-ink">Data Deletion Request</strong>.
                 </p>
                 <p className="font-sans text-[15px] leading-relaxed text-ink/85 mb-4">
-                  Include the name and email address associated with your account or social connection. We'll confirm receipt within 48 hours and complete the deletion within 30 days.
+                  Include the name and email address associated with your account or social connection. We&rsquo;ll confirm receipt within 48 hours and complete the deletion within 30 days.
                 </p>
                 <p className="font-sans text-[15px] leading-relaxed text-ink/85">
-                  When the request is fulfilled, you'll receive a confirmation with a tracking code for your records.
+                  When the request is fulfilled, you&rsquo;ll receive a confirmation with a tracking code for your records.
                 </p>
               </section>
 
@@ -157,7 +157,7 @@ export default async function DataDeletionPage({
                   Disconnect Facebook or Instagram
                 </h2>
                 <p className="font-sans text-[15px] leading-relaxed text-ink/85 mb-4">
-                  You can revoke Protagonist Ink's access to your Facebook or Instagram accounts directly through Meta's settings at any time:
+                  You can revoke Protagonist Ink&rsquo;s access to your Facebook or Instagram accounts directly through Meta&rsquo;s settings at any time:
                 </p>
                 <ul className="mb-4 space-y-1.5">
                   <li className="relative pl-5 font-sans text-[15px] leading-relaxed text-ink/85

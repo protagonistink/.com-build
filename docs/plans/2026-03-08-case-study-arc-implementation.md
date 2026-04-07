@@ -863,7 +863,7 @@ git commit -m "fix(work): update listing page field references for new CaseStudy
 
 Run: `cd "/Users/pat/Sites/Protagonist Ink/next" && npx sanity deploy` (or however the project deploys schema)
 
-Check Sanity Studio at `/studio` — verify:
+Check Sanity Studio at `https://protagonistink.sanity.studio/` — verify:
 - Case Studies document type shows grouped fields (Hero, Cold Open, Story Problem, etc.)
 - Array fields (mentors, villains, artifacts, shifts, metrics) work correctly
 - Image fields accept uploads

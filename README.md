@@ -1,55 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Protagonist Ink
 
-## Getting Started
+Marketing site, blog, case-study system, and embedded Sanity Studio for Protagonist Ink.
 
-First, run the development server:
+### Local development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The site runs at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Verification
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run verify
+```
 
-## Learn More
+This runs TypeScript and ESLint across the repo.
 
-To learn more about Next.js, take a look at the following resources:
+For a full production check:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run verify:full
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+That build step requires live Sanity access because blog and case-study routes are generated from CMS data.
 
-## Deploy on Vercel
+### Sanity
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## Sanity Studio Setup
-
-Studio is hosted at `https://protagonistink.sanity.studio`.
-`/studio` on this site redirects to that hosted Studio.
-
-Required environment variables:
+The site expects a Sanity project and dataset in local env:
 
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - `NEXT_PUBLIC_SANITY_DATASET`
 
-Additional API variables used by this app:
+Optional preview/live-editing variables:
+
+- `SANITY_API_READ_TOKEN`
+- `NEXT_PUBLIC_SANITY_API_READ_TOKEN`
+
+Studio lives at `https://protagonistink.sanity.studio/`.
+
+### Additional integrations
+
+Story Rip and newsletter routes can use these variables:
 
 - `CRAFT_LINK_ID`
 - `CRAFT_COLLECTION_ID`
+- `ASANA_ACCESS_TOKEN`
+- `ASANA_PROJECT_ID`
+- `ASANA_SECTION_ID`
 - `NOTION_TOKEN`
 - `NOTION_DATABASE_ID`
+- `MAKE_LOOM_WEBHOOK_URL`
+- `NEXT_PUBLIC_DUBSADO_URL`
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY`
+- `TURNSTILE_SECRET_KEY`
+- `BEEHIIV_API_KEY`
+- `BEEHIIV_PUBLICATION_ID`
 
-Copy `.env.example` to `.env.local` for local setup and set matching values in Vercel Project Settings.
+Copy `.env.example` to `.env.local` and set the values that apply to your local workflow.

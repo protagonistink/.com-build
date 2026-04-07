@@ -1,47 +1,10 @@
 import { NextResponse } from 'next/server';
+import { asTrimmedString, getClientIp, isRateLimited } from '@/lib/api/submissionGuards';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MIN_SUBMIT_MS = 1500;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 10;
-
-type RateLimitEntry = {
-  count: number;
-  resetAt: number;
-};
-
-const globalRateLimitStore = globalThis as typeof globalThis & {
-  __newsletterRateLimitStore?: Map<string, RateLimitEntry>;
-};
-const rateLimitStore = globalRateLimitStore.__newsletterRateLimitStore ?? new Map<string, RateLimitEntry>();
-if (!globalRateLimitStore.__newsletterRateLimitStore) {
-  globalRateLimitStore.__newsletterRateLimitStore = rateLimitStore;
-}
-
-function asTrimmedString(value: unknown) {
-  return typeof value === 'string' ? value.trim() : '';
-}
-
-function getClientIp(request: Request) {
-  const forwardedFor = request.headers.get('x-forwarded-for');
-  if (forwardedFor) return forwardedFor.split(',')[0]?.trim() || 'unknown';
-  return request.headers.get('x-real-ip')?.trim() || 'unknown';
-}
-
-function isRateLimited(ip: string) {
-  const now = Date.now();
-  const existing = rateLimitStore.get(ip);
-
-  if (!existing || existing.resetAt <= now) {
-    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return false;
-  }
-
-  if (existing.count >= RATE_LIMIT_MAX_REQUESTS) return true;
-
-  existing.count += 1;
-  return false;
-}
 
 function parseBeehiivErrorMessage(errorText: string) {
   if (!errorText) return '';
@@ -60,10 +23,43 @@ function parseBeehiivErrorMessage(errorText: string) {
   }
 }
 
+async function verifyTurnstile(token: string, ip: string) {
+  const secretKey = process.env.TURNSTILE_SECRET_KEY;
+  if (!secretKey) return true;
+
+  const formData = new URLSearchParams({
+    secret: secretKey,
+    response: token,
+  });
+
+  if (ip !== 'unknown') {
+    formData.set('remoteip', ip);
+  }
+
+  try {
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formData,
+    });
+
+    if (!response.ok) return false;
+    const payload = (await response.json()) as { success?: boolean };
+    return Boolean(payload.success);
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(request: Request) {
   const clientIp = getClientIp(request);
 
-  if (isRateLimited(clientIp)) {
+  if (isRateLimited({
+    bucket: 'newsletter-signup',
+    ip: clientIp,
+    windowMs: RATE_LIMIT_WINDOW_MS,
+    maxRequests: RATE_LIMIT_MAX_REQUESTS,
+  })) {
     return NextResponse.json({ error: 'Too many signup attempts. Try again later.' }, { status: 429 });
   }
 
@@ -83,6 +79,18 @@ export async function POST(request: Request) {
   const formStartedAt = Number(payload.formStartedAt);
   if (!Number.isFinite(formStartedAt) || Date.now() - formStartedAt < MIN_SUBMIT_MS) {
     return NextResponse.json({ error: 'Submission blocked.' }, { status: 400 });
+  }
+
+  const turnstileToken = asTrimmedString(payload.turnstileToken);
+  if (process.env.TURNSTILE_SECRET_KEY) {
+    if (!turnstileToken) {
+      return NextResponse.json({ error: 'Captcha verification is required.' }, { status: 400 });
+    }
+
+    const turnstileValid = await verifyTurnstile(turnstileToken, clientIp);
+    if (!turnstileValid) {
+      return NextResponse.json({ error: 'Captcha verification failed.' }, { status: 400 });
+    }
   }
 
   const email = asTrimmedString(payload.email).toLowerCase();

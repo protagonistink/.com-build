@@ -7,7 +7,7 @@ function generateKey() {
 const shortStory = {
   sections: [
     {_type: 'prologue', _key: generateKey()},
-    {_type: 'showcaseSplit', _key: generateKey(), surface: 'dark'},
+    {_type: 'showcaseSplit', _key: generateKey(), surface: 'dark', layoutMode: 'mediaLeft'},
     {_type: 'closer', _key: generateKey()},
   ],
 };
@@ -15,9 +15,9 @@ const shortStory = {
 const fullStory = {
   sections: [
     {_type: 'prologue', _key: generateKey()},
-    {_type: 'showcaseSplit', _key: generateKey(), surface: 'dark'},
+    {_type: 'showcaseSplit', _key: generateKey(), surface: 'dark', layoutMode: 'mediaLeft'},
     {_type: 'showcaseFullBleed', _key: generateKey(), surface: 'dark'},
-    {_type: 'showcaseSplit', _key: generateKey(), surface: 'dark', imagePosition: 'right'},
+    {_type: 'showcaseSplit', _key: generateKey(), surface: 'dark', layoutMode: 'mediaRight'},
     {_type: 'climax', _key: generateKey(), label: 'THE CLIMAX'},
     {_type: 'closer', _key: generateKey()},
   ],
@@ -27,7 +27,7 @@ const dataDrivenStory = {
   sections: [
     {_type: 'prologue', _key: generateKey()},
     {_type: 'showcaseStat', _key: generateKey(), surface: 'dark'},
-    {_type: 'showcaseSplit', _key: generateKey(), surface: 'dark'},
+    {_type: 'showcaseSplit', _key: generateKey(), surface: 'dark', layoutMode: 'mediaLeft'},
     {_type: 'showcaseStat', _key: generateKey(), surface: 'light'},
     {_type: 'showcaseFilmStrip', _key: generateKey(), surface: 'dark'},
     {_type: 'climax', _key: generateKey(), label: 'THE CLIMAX'},

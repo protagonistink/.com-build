@@ -52,13 +52,12 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
   const currentIndex = projects.findIndex((p) => p.slug === slug);
   const nextProject = projects[(currentIndex + 1) % projects.length];
 
-  // Meta pills for hero
-  const heroPills = [
-    project.engagementType,
-    project.client,
-    project.sector,
-    project.year,
-  ].filter(Boolean);
+  const prologueMetaItems = [
+    { label: 'Engagement', value: project.engagementType },
+    { label: 'Client', value: project.client },
+    { label: 'Sector', value: project.sector },
+    { label: 'Year', value: project.year },
+  ].filter((item): item is { label: string; value: string } => Boolean(item.value));
 
   return (
     <>
@@ -93,29 +92,17 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
         </div>
 
         {/* Hero content */}
-        <div className="relative z-10 flex flex-col justify-end min-h-[90vh] md:min-h-screen px-6 md:px-10 lg:px-12 pb-16 md:pb-24">
-          <div className="max-w-[1400px] mx-auto w-full">
+        <div className="relative z-10 min-h-[90vh] md:min-h-screen px-6 md:px-10 lg:px-12 pt-28 md:pt-36 lg:pt-40 pb-14 md:pb-20 lg:pb-24">
+          <div className="max-w-[1400px] mx-auto w-full min-h-[calc(90vh-7rem)] md:min-h-[calc(100vh-9rem)] flex flex-col justify-end">
             {/* Breadcrumb */}
-            <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-white/50 mb-10 md:mb-14 drop-shadow-md">
-              <Link href="/work" className="hover:text-white transition-colors duration-300">The Work</Link>
+            <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-white/50 mb-6 md:mb-8 drop-shadow-md">
+              <Link href="/work" className="hover:text-white transition-colors duration-300">Case Study</Link>
               <span>/</span>
-              <span className="text-white/80">{project.title}</span>
-            </div>
-
-            {/* Meta pills */}
-            <div className="flex flex-wrap gap-3 mb-8 drop-shadow-md">
-              {heroPills.map((pill) => (
-                <span
-                  key={pill}
-                  className="text-[10px] uppercase tracking-[0.2em] text-white/50 border border-white/20 px-3 py-1.5 bg-black/10 backdrop-blur-sm"
-                >
-                  {pill}
-                </span>
-              ))}
+              <span className="text-white/80">{project.client}</span>
             </div>
 
             {/* Title */}
-            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl xl:text-[7rem] font-medium leading-[0.92] tracking-[-0.02em] mb-6 drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
+            <h1 className="max-w-[13ch] font-display text-5xl md:text-7xl lg:text-8xl xl:text-[7rem] font-medium leading-[0.92] tracking-[-0.02em] mb-5 md:mb-6 drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
               <TypewriterHeadline text={project.title} initialDelay={400} />
             </h1>
 
@@ -138,7 +125,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
       {/* ================================================================
           COMPOSABLE SECTIONS
           ================================================================ */}
-      <SectionRenderer sections={project.sections} />
+      <SectionRenderer sections={project.sections} prologueMetaItems={prologueMetaItems} />
 
       {/* ================================================================
           NAVIGATION FOOTER

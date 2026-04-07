@@ -4,7 +4,7 @@
 
 **Goal:** Transform the Sanity Studio from a schema-correct CMS into a premium, anxiety-reducing writing environment for a neurodivergent writer who needs to feel safe, oriented, and productive from their first session.
 
-**Architecture:** All changes are studio-side (schema types, structure, config, custom components). The Next.js rendering pipeline and data-fetching layer stay untouched except for a new draft-preview API route. The hosted studio at `protagonistink.sanity.studio` will pick up all changes after the next deploy.
+**Architecture:** All changes are studio-side (schema types, structure, config, custom components). The Next.js rendering pipeline and data-fetching layer stay untouched except for a new draft-preview API route. The hosted studio at `https://protagonistink.sanity.studio/` will pick up all changes after the next deploy.
 
 **Tech Stack:** Sanity v5, React, `@sanity/ui`, `next-sanity` v12, TypeScript, Lucide icons
 
@@ -117,7 +117,7 @@ studio: {
 
 ### Step 5: Verify the studio loads
 
-Run: `npm run dev` and visit `/studio` (should redirect to hosted, but local dev should render)
+Run: `npm run dev` and open the hosted studio URL (or local Studio directly if you are running a local-only sanity dev workflow)
 Expected: Studio loads with slightly lifted background, stronger focus rings, more spacious array items.
 
 ### Step 6: Commit

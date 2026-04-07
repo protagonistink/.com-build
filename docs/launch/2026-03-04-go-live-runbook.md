@@ -7,7 +7,7 @@ This is the exact pre-launch sequence for the current Next.js + Sanity + Vercel 
 - `npm run lint`: PASS
 - `npm run build`: PASS
 - Sitemap and robots routes exist and build (`/sitemap.xml`, `/robots.txt`)
-- `/studio/*` redirects to hosted Studio (`https://protagonistink.sanity.studio`)
+- `/studio/*` redirects to hosted Studio (`https://protagonistink.sanity.studio/`)
 
 ## 1) Freeze and branch hygiene
 

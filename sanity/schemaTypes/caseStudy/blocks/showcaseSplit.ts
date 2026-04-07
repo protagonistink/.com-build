@@ -3,7 +3,20 @@ import {defineField, defineType} from 'sanity';
 import {detailsField, storyBodyField, storyBodyPreview} from '../shared';
 import {CaseStudyBlockPreview} from '../../../studio/CaseStudyBlockPreview';
 import {BeatConfigStrip} from '../../../studio/BeatConfigStrip';
-import {SurfaceToggleInput, CopyStyleInput, TextAlignInput} from '../../../studio/CopyStyleStrip';
+import {SurfaceToggleInput, CopyStyleInput, MediaTypeInput, TextAlignInput} from '../../../studio/CopyStyleStrip';
+
+function resolveLayout(parent: Record<string, unknown> | undefined) {
+  const imagePosition = parent?.imagePosition;
+  if (imagePosition === 'left' || imagePosition === 'right' || imagePosition === 'full' || imagePosition === 'copyOnly') {
+    return imagePosition;
+  }
+
+  const layoutMode = parent?.layoutMode;
+  if (layoutMode === 'mediaLeft' || layoutMode === 'mediaRight' || layoutMode === 'full' || layoutMode === 'copyOnly') {
+    return layoutMode === 'mediaRight' ? 'right' : layoutMode === 'mediaLeft' ? 'left' : layoutMode;
+  }
+  return 'left';
+}
 
 export const showcaseSplit = defineType({
   name: 'showcaseSplit',
@@ -12,12 +25,11 @@ export const showcaseSplit = defineType({
   type: 'object',
   icon: Columns2,
   fieldsets: [
-    {name: 'copyControls', title: ' ', options: {columns: 2}},
+    {name: 'copyControls', title: 'Text Settings', options: {columns: 2}},
     {name: 'story', title: 'Story Copy'},
-    {name: 'design', title: 'Design', options: {collapsible: true, collapsed: true, columns: 2}},
+    {name: 'design', title: 'Advanced', options: {collapsible: true, collapsed: true, columns: 2}},
   ],
   fields: [
-    // Layout picker — compact cards
     defineField({
       name: 'imagePosition',
       title: 'Layout',
@@ -25,8 +37,8 @@ export const showcaseSplit = defineType({
       description: 'Pick the shape of this beat.',
       options: {
         list: [
-          {title: 'Image Left', value: 'left'},
-          {title: 'Image Right', value: 'right'},
+          {title: 'Media Left', value: 'left'},
+          {title: 'Media Right', value: 'right'},
           {title: 'Full Width Image', value: 'full'},
           {title: 'Copy Only', value: 'copyOnly'},
         ],
@@ -37,8 +49,32 @@ export const showcaseSplit = defineType({
         input: BeatConfigStrip,
       },
     }),
+    defineField({
+      name: 'layoutMode',
+      title: 'Deprecated Layout Mode',
+      type: 'string',
+      hidden: true,
+    }),
 
-    // Surface — compact toggle right below layout
+    defineField({
+      name: 'mediaType',
+      title: 'Media Type',
+      type: 'string',
+      description: 'Choose whether this beat carries an image or a video.',
+      options: {
+        list: [
+          {title: 'Image', value: 'image'},
+          {title: 'Video', value: 'video'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'image',
+      components: {
+        input: MediaTypeInput,
+      },
+      hidden: ({parent}) => resolveLayout(parent as Record<string, unknown> | undefined) === 'copyOnly',
+    }),
+
     defineField({
       name: 'surface',
       title: 'Surface',
@@ -56,7 +92,6 @@ export const showcaseSplit = defineType({
       },
     }),
 
-    // Copy controls — inline toggles before the writing fields
     defineField({
       name: 'copyStyle',
       title: 'Text Style',
@@ -94,7 +129,6 @@ export const showcaseSplit = defineType({
       },
     }),
 
-    // Story fields
     defineField({
       name: 'title',
       title: 'Headline',
@@ -120,21 +154,6 @@ export const showcaseSplit = defineType({
     }),
 
     defineField({
-      name: 'mediaType',
-      title: 'Media Type',
-      type: 'string',
-      description: 'Choose whether this beat carries an image or a video.',
-      options: {
-        list: [
-          {title: 'Image', value: 'image'},
-          {title: 'Video', value: 'video'},
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'image',
-      hidden: ({parent}) => (parent as Record<string, unknown>)?.imagePosition === 'copyOnly',
-    }),
-    defineField({
       name: 'image',
       title: 'Image',
       type: 'image',
@@ -152,7 +171,7 @@ export const showcaseSplit = defineType({
       ],
       hidden: ({parent}) => {
         const current = parent as Record<string, unknown>;
-        return current?.imagePosition === 'copyOnly' || current?.mediaType === 'video';
+        return resolveLayout(current) === 'copyOnly' || current?.mediaType === 'video';
       },
     }),
     defineField({
@@ -162,12 +181,12 @@ export const showcaseSplit = defineType({
       description: 'Paste a YouTube or Vimeo URL for this beat.',
       hidden: ({parent}) => {
         const current = parent as Record<string, unknown>;
-        return current?.imagePosition === 'copyOnly' || current?.mediaType !== 'video';
+        return resolveLayout(current) === 'copyOnly' || current?.mediaType !== 'video';
       },
       validation: (rule) =>
         rule.custom((value, context) => {
           const parent = context.parent as Record<string, unknown> | undefined;
-          if (parent?.imagePosition === 'copyOnly' || parent?.mediaType !== 'video') return true;
+          if (resolveLayout(parent) === 'copyOnly' || parent?.mediaType !== 'video') return true;
           return typeof value === 'string' && value.trim()
             ? true
             : 'Add a video URL when this beat is set to video.';
@@ -180,7 +199,7 @@ export const showcaseSplit = defineType({
       description: 'Optional caption under the player.',
       hidden: ({parent}) => {
         const current = parent as Record<string, unknown>;
-        return current?.imagePosition === 'copyOnly' || current?.mediaType !== 'video';
+        return resolveLayout(current) === 'copyOnly' || current?.mediaType !== 'video';
       },
     }),
     defineField({
@@ -200,11 +219,10 @@ export const showcaseSplit = defineType({
       initialValue: '16/9',
       hidden: ({parent}) => {
         const current = parent as Record<string, unknown>;
-        return current?.imagePosition === 'copyOnly' || current?.mediaType !== 'video';
+        return resolveLayout(current) === 'copyOnly' || current?.mediaType !== 'video';
       },
     }),
 
-    // Design — collapsed, secondary controls
     defineField({
       name: 'imageDisplay',
       title: 'Image Fit',
@@ -221,7 +239,7 @@ export const showcaseSplit = defineType({
       initialValue: 'cover',
       hidden: ({parent}) => {
         const current = parent as Record<string, unknown>;
-        return current?.imagePosition === 'copyOnly' || current?.mediaType === 'video';
+        return resolveLayout(current) === 'copyOnly' || current?.mediaType === 'video';
       },
     }),
     defineField({
@@ -251,18 +269,29 @@ export const showcaseSplit = defineType({
       actLabel: 'actLabel',
       surface: 'surface',
       imagePosition: 'imagePosition',
+      layoutMode: 'layoutMode',
       mediaType: 'mediaType',
       media: 'image',
     },
-    prepare: ({title, body, actLabel, surface, imagePosition, mediaType, media}) => {
-      const layoutLabel = imagePosition === 'full'
+    prepare: ({title, body, actLabel, surface, layoutMode, imagePosition, mediaType, media}) => {
+      const resolvedLayout = imagePosition === 'right' || layoutMode === 'mediaRight'
+        ? 'mediaRight'
+        : imagePosition === 'full' || layoutMode === 'full'
+          ? 'full'
+          : imagePosition === 'copyOnly' || layoutMode === 'copyOnly'
+            ? 'copyOnly'
+            : imagePosition === 'left' || layoutMode === 'mediaLeft'
+              ? 'mediaLeft'
+              : 'mediaLeft';
+
+      const layoutLabel = resolvedLayout === 'full'
         ? 'Full width'
-        : imagePosition === 'copyOnly'
+        : resolvedLayout === 'copyOnly'
           ? 'Copy only'
-          : imagePosition === 'right'
-            ? 'Image right'
-            : 'Image left';
-      const mediaLabel = imagePosition === 'copyOnly'
+          : resolvedLayout === 'mediaRight'
+            ? 'Media right'
+            : 'Media left';
+      const mediaLabel = resolvedLayout === 'copyOnly'
         ? undefined
         : mediaType === 'video'
           ? 'Video'

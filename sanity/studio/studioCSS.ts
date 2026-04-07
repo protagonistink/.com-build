@@ -1,4 +1,9 @@
 export const studioCSS = `
+  /* Studio-wide type bump: default 16px -> 18px */
+  html {
+    font-size: 18px;
+  }
+
   /* Stronger focus rings for tracking cursor position */
   [data-ui="TextInput"]:focus-within,
   [data-ui="TextArea"]:focus-within {

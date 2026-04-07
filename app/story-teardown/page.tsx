@@ -1,12 +1,21 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, PlayCircle, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Image from 'next/image';
 import Script from 'next/script';
 import { motion, useScroll, useTransform, AnimatePresence, MotionConfig } from 'motion/react';
 import TypewriterHeadline from '@/components/TypewriterHeadline';
 import ParallaxHeroBackground from '@/components/ParallaxHeroBackground';
+import {
+    EMPTY_STORY_RIP_FORM,
+    STORY_RIP_STEPS,
+    TURNSTILE_SITE_KEY,
+    getStoryRipFieldError,
+    isValidEmail,
+    isValidWebUrl,
+    normalizeWebUrl,
+} from '@/components/story-teardown/storyRipForm';
 
 const BOOKING_ACTION = process.env.NEXT_PUBLIC_DUBSADO_URL ?? "https://elixirs.protagonist.ink/public/form/view/69a8e2029373e6642f6a2642";
 
@@ -16,8 +25,6 @@ const SLIDE_LEFT = { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1,
 const SLIDE_RIGHT = { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 } } as const;
 const MOTION_TRANSITION = { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] } as const;
 const MOTION_VIEWPORT = { once: true, amount: 0.2 } as const;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? '';
 
 declare global {
     interface Window {
@@ -27,36 +34,10 @@ declare global {
     }
 }
 
-function normalizeWebUrl(value: string) {
-    const trimmed = value.trim();
-    if (!trimmed) return '';
-    return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
-}
-
-function isValidEmail(value: string) {
-    return EMAIL_PATTERN.test(value.trim());
-}
-
-function isValidWebUrl(value: string) {
-    const normalized = normalizeWebUrl(value);
-    if (!normalized) return false;
-
-    try {
-        const parsed = new URL(normalized);
-        if (!['http:', 'https:'].includes(parsed.protocol)) return false;
-        return parsed.hostname.includes('.') && !parsed.hostname.startsWith('.') && !parsed.hostname.endsWith('.');
-    } catch {
-        return false;
-    }
-}
-
 export default function StoryHealthCheckPage() {
     // ── Multi-step Story Rip form ───────────────────────────────────────────
     const [step, setStep] = useState(0);
-    const [formData, setFormData] = useState({
-        name: '', email: '', company: '', url: '', miss: '', stage: '',
-    });
-    const [pastLoomForm, setPastLoomForm] = useState(false);
+    const [formData, setFormData] = useState(EMPTY_STORY_RIP_FORM);
     const [showWelcome, setShowWelcome] = useState(true);
     const [turnstileToken, setTurnstileToken] = useState('');
     const [honeypot, setHoneypot] = useState('');
@@ -69,25 +50,6 @@ export default function StoryHealthCheckPage() {
         offset: ['start end', 'end start'],
     });
     const methodologyY = useTransform(methodologyScroll, [0, 1], ['0%', '12%']);
-
-    useEffect(() => {
-        const loomSection = document.getElementById('free-loom');
-        if (!loomSection) return;
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-                    setPastLoomForm(true);
-                } else if (entry.isIntersecting) {
-                    setPastLoomForm(false);
-                }
-            },
-            { threshold: 0 }
-        );
-
-        observer.observe(loomSection);
-        return () => observer.disconnect();
-    }, []);
 
     useEffect(() => {
         if (!TURNSTILE_SITE_KEY) return;
@@ -111,32 +73,15 @@ export default function StoryHealthCheckPage() {
         };
     }, []);
 
-    const steps = [
-        { field: 'name',    label: "What's your name?",                                   type: 'text',     placeholder: 'First name is fine.',                                         required: true  },
-        { field: 'email',   label: "Where should we send the Loom?",                       type: 'email',    placeholder: 'you@company.com',                                             required: true  },
-        { field: 'company', label: "Company and what you do — one sentence.",               type: 'text',     placeholder: '"Acme — we help SaaS companies reduce churn."',               required: false },
-        { field: 'url',     label: "Drop the link you want reviewed.",                      type: 'url',      placeholder: 'www.your-story.com',                                          required: true  },
-        { field: 'miss',    label: "What do you wish prospects understood faster?",         type: 'textarea', placeholder: "Don't overthink it — that gap is usually the leak.",          required: false },
-        { field: 'stage',   label: "What stage are you at?",                               type: 'select',   options: ['Pre-seed', 'Seed', 'Series A', 'Bootstrapped', 'Other'],        required: false },
-    ];
-
-    const currentStep  = steps[step];
+    const currentStep  = STORY_RIP_STEPS[step];
     const currentField = currentStep.field as keyof typeof formData;
     const currentFieldValue = formData[currentField];
 
-    const getFieldError = (field: keyof typeof formData, value: string) => {
-        const trimmed = value.trim();
-        if (!trimmed) return '';
-        if (field === 'email' && !isValidEmail(trimmed)) return 'Enter a valid email address.';
-        if (field === 'url' && !isValidWebUrl(trimmed)) return 'Enter a valid URL (example: yoursite.com or https://yoursite.com).';
-        return '';
-    };
-
-    const currentFieldError = getFieldError(currentField, currentFieldValue);
+    const currentFieldError = getStoryRipFieldError(currentField, currentFieldValue);
     const canProceed = (!currentStep.required || Boolean(currentFieldValue.trim())) && !currentFieldError;
 
     const handleNext = () => {
-        if (step < steps.length - 1 && canProceed) setStep(s => s + 1);
+        if (step < STORY_RIP_STEPS.length - 1 && canProceed) setStep(s => s + 1);
     };
 
     const handleBack = () => {
@@ -680,11 +625,11 @@ export default function StoryHealthCheckPage() {
 
                                                     {/* Progress bar */}
                                                     <div className="h-[2px] bg-ink/8">
-                                                        <div
-                                                            className="h-full bg-rust transition-all duration-500 ease-out"
-                                                            style={{ width: `${((step + 1) / steps.length) * 100}%` }}
-                                                        />
-                                                    </div>
+                                                            <div
+                                                                className="h-full bg-rust transition-all duration-500 ease-out"
+                                                                style={{ width: `${((step + 1) / STORY_RIP_STEPS.length) * 100}%` }}
+                                                            />
+                                                        </div>
 
                                                     <div className="p-10">
                                                         <div className="sr-only" aria-hidden="true">
@@ -704,7 +649,7 @@ export default function StoryHealthCheckPage() {
                                                             <span className="font-sans text-[0.6rem] font-bold uppercase tracking-widest text-rust">
                                                                 {String(step + 1).padStart(2, '0')}{' '}
                                                                 <span className="text-ink/20 mx-1">/</span>{' '}
-                                                                {String(steps.length).padStart(2, '0')}
+                                                                {String(STORY_RIP_STEPS.length).padStart(2, '0')}
                                                             </span>
                                                             <div className="flex items-center gap-2">
                                                                 <span className="w-1.5 h-1.5 rounded-full bg-rust animate-pulse" />

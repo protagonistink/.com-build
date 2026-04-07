@@ -104,7 +104,7 @@ export default function PrivacyPage() {
               ))}
             </ul>
             <p className="font-sans text-[15px] leading-relaxed text-ink/85">
-              Financial data is used exclusively for internal business financial management. It is never shared with third parties, never sold, and never used for any purpose beyond the internal tools of Protagonist Ink. Plaid's own privacy policy governs how they handle data at the connection layer — you can review it at{' '}
+              Financial data is used exclusively for internal business financial management. It is never shared with third parties, never sold, and never used for any purpose beyond the internal tools of Protagonist Ink. Plaid&rsquo;s own privacy policy governs how they handle data at the connection layer — you can review it at{' '}
               <a
                 href="https://plaid.com/legal/privacy-policy"
                 target="_blank"
@@ -281,7 +281,7 @@ export default function PrivacyPage() {
               Changes to This Policy
             </h2>
             <p className="font-sans text-[15px] leading-relaxed text-ink/85">
-              If this policy changes in any meaningful way, we'll update the effective date above. For connected third-party services, we recommend reviewing their policies directly as those are outside our control.
+              If this policy changes in any meaningful way, we&rsquo;ll update the effective date above. For connected third-party services, we recommend reviewing their policies directly as those are outside our control.
             </p>
           </section>
 

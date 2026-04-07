@@ -2,10 +2,7 @@ import { cache } from 'react';
 import { createClient } from 'next-sanity';
 import type { BlogPost, FaqItem } from '@/types/blog';
 import type { PortableTextBlock } from '@/types/portableText';
-import { normalizeEnvValue } from '@/lib/env';
-
-const DEFAULT_SANITY_PROJECT_ID = 'dkok2iir';
-const DEFAULT_SANITY_DATASET = 'production';
+import { getPublicSanityConfig } from '@/lib/env';
 
 interface CmsPost {
   _id: string;
@@ -27,10 +24,7 @@ interface CmsPost {
 type CmsPostSummary = Omit<CmsPost, 'body' | 'faqItems'>;
 
 function getSanityClient() {
-  const projectId =
-    normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) || DEFAULT_SANITY_PROJECT_ID;
-  const dataset =
-    normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_DATASET) || DEFAULT_SANITY_DATASET;
+  const { projectId, dataset } = getPublicSanityConfig();
 
   return createClient({
     projectId,
@@ -118,8 +112,9 @@ const getCmsPosts = cache(async (): Promise<BlogPost[]> => {
     return posts
       .map((post) => mapCmsPost(post as CmsPost))
       .filter((item): item is BlogPost => Boolean(item));
-  } catch {
-    return [];
+  } catch (error) {
+    console.error('Sanity blog fetch failed while listing posts.', error);
+    throw error;
   }
 });
 
@@ -130,8 +125,9 @@ const getCmsPostBySlug = cache(async (slug: string): Promise<BlogPost | undefine
     const post = await client.fetch<CmsPost | null>(singlePostQuery, { slug });
     if (!post) return undefined;
     return mapCmsPost(post) ?? undefined;
-  } catch {
-    return undefined;
+  } catch (error) {
+    console.error(`Sanity blog fetch failed for slug "${slug}".`, error);
+    throw error;
   }
 });
 
@@ -143,8 +139,9 @@ const getCmsPostSlugs = cache(async (): Promise<string[]> => {
     return slugs
       .map((item) => item.slug?.trim())
       .filter((item): item is string => Boolean(item));
-  } catch {
-    return [];
+  } catch (error) {
+    console.error('Sanity blog fetch failed while generating slug list.', error);
+    throw error;
   }
 });
 

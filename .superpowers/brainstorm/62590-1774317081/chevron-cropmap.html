@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chevron — Filmstrip Crop Map v2</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0e0e0e; color: #f0ece4; padding: 48px; }
+h1 { font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: #b5452a; margin-bottom: 4px; }
+p.sub { font-size: 12px; color: #555; margin-bottom: 48px; }
+
+.frame-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 56px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid #1a1a1a;
+  align-items: start;
+}
+.frame-row:last-child { border-bottom: none; }
+
+.col-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #b5452a; margin-bottom: 6px; }
+.col-title { font-size: 15px; color: #f0ece4; font-weight: 500; margin-bottom: 3px; }
+.col-rect { font-size: 11px; color: #444; font-family: monospace; margin-bottom: 12px; }
+.col-note { font-size: 12px; color: #666; margin-bottom: 12px; }
+
+.crop-img { width: 100%; display: block; border: 1px solid #1f1f1f; border-radius: 3px; aspect-ratio: 4/3; object-fit: cover; }
+.crop-img:hover { border-color: #b5452a; cursor: pointer; }
+
+.source-thumb {
+  position: relative;
+  width: 100%;
+  border: 1px solid #222;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #111;
+}
+.source-thumb img { width: 100%; display: block; opacity: 0.45; }
+.crop-zone {
+  position: absolute; left: 0; right: 0;
+  border: 2px solid #b5452a;
+  background: rgba(181,69,42,0.2);
+  display: flex; align-items: center; padding-left: 8px;
+}
+.crop-zone-tag {
+  font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+  color: #b5452a; font-weight: 700;
+  background: rgba(14,14,14,0.85); padding: 2px 6px; border-radius: 2px;
+}
+</style>
+</head>
+<body>
+
+<h1>Chevron Filmstrip — Crop Map v2</h1>
+<p class="sub">All 5 frames now stay within a single page section. Each crop is 4:3 ratio to match the new frame size.</p>
+
+<!-- Frame 1 -->
+<div class="frame-row">
+  <div>
+    <div class="col-label">Frame 1 — HOMEPAGE</div>
+    <div class="col-title">Hero section</div>
+    <div class="col-rect">rect=50,0,900,675 → y 0–675</div>
+    <div class="col-note">Section boundary: hero ends ~y 647. Crops cleanly within the sunset landscape + "moving towards a lower carbon future" card.</div>
+    <div class="source-thumb">
+      <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?w=300" />
+      <!-- Hero: 0–647. Scale: at 300w, height = 3584*(300/1000)=1075. 0–647 = 0–18.1% = 0–194px at 300w -->
+      <div class="crop-zone" style="top:0; height:18.1%"><span class="crop-zone-tag">Frame 1 ↑ hero</span></div>
+    </div>
+  </div>
+  <div>
+    <a href="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=50,0,900,675&w=900" target="_blank">
+      <img class="crop-img" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=50,0,900,675&w=900" />
+    </a>
+  </div>
+</div>
+
+<!-- Frame 2 -->
+<div class="frame-row">
+  <div>
+    <div class="col-label">Frame 2 — WHO WE ARE</div>
+    <div class="col-title">"critical thinkers / collaborators / innovators"</div>
+    <div class="col-rect">rect=0,650,760,570 → y 650–1220</div>
+    <div class="col-note">Section boundary: "who we are" dark blue runs y 647–1217. Crop sits fully inside it — big typographic brand identity copy.</div>
+    <div class="source-thumb">
+      <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?w=300" />
+      <!-- 647–1217 = 18.1%–34.0% at 1075px thumb. Crop 650–1220 = 18.1%–34.1% -->
+      <div class="crop-zone" style="top:18.1%; height:15.9%"><span class="crop-zone-tag">Frame 2 ↑ who we are</span></div>
+    </div>
+  </div>
+  <div>
+    <a href="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,650,760,570&w=900" target="_blank">
+      <img class="crop-img" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,650,760,570&w=900" />
+    </a>
+  </div>
+</div>
+
+<!-- Frame 3 -->
+<div class="frame-row">
+  <div>
+    <div class="col-label">Frame 3 — WHAT WE DO</div>
+    <div class="col-title">"energy that fuels the world" hub</div>
+    <div class="col-rect">rect=0,1250,1000,750 → y 1250–2000</div>
+    <div class="col-note">Section boundary: "what we do" runs y 1217–2268. Crop shows the editorial hub headline + image grid — the hub-and-spoke architecture made visible.</div>
+    <div class="source-thumb">
+      <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?w=300" />
+      <!-- 1217–2268 = 34.0%–63.3%. Crop 1250–2000 = 34.9%–55.8% -->
+      <div class="crop-zone" style="top:34.9%; height:20.9%"><span class="crop-zone-tag">Frame 3 ↑ what we do hub</span></div>
+    </div>
+  </div>
+  <div>
+    <a href="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,1250,1000,750&w=900" target="_blank">
+      <img class="crop-img" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,1250,1000,750&w=900" />
+    </a>
+  </div>
+</div>
+
+<!-- Frame 4 -->
+<div class="frame-row">
+  <div>
+    <div class="col-label">Frame 4 — WHAT WE DO (page 2)</div>
+    <div class="col-title">"affordable, reliable, ever-cleaner energy"</div>
+    <div class="col-rect">rect=0,220,768,576 → y 220–796</div>
+    <div class="col-note">From CVX What We Do page. Section runs y 205–1381. Crop shows the opening argument for the product line — the narrative lead of the hub content.</div>
+    <div class="source-thumb">
+      <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?w=300" />
+      <!-- 4382 at 300w → thumb height=1711. Section 205–1381 = 12%–80.7%. Crop 220–796 = 12.9%–46.5% -->
+      <div class="crop-zone" style="top:12.9%; height:33.6%"><span class="crop-zone-tag">Frame 4 ↑ affordable reliable</span></div>
+    </div>
+  </div>
+  <div>
+    <a href="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?rect=0,220,768,576&w=900" target="_blank">
+      <img class="crop-img" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?rect=0,220,768,576&w=900" />
+    </a>
+  </div>
+</div>
+
+<!-- Frame 5 -->
+<div class="frame-row">
+  <div>
+    <div class="col-label">Frame 5 — ENERGY</div>
+    <div class="col-title">"oil and natural gas" product section</div>
+    <div class="col-rect">rect=0,540,768,576 → y 540–1116</div>
+    <div class="col-note">From CVX Energy page. "Oil and natural gas" section runs y 512–1409. Crop shows the product narrative with imagery — the actual rewritten product copy in context.</div>
+    <div class="source-thumb">
+      <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/7d06a8419716624cd8b3075b6412e0c3174b2a19-768x4632.jpg?w=300" />
+      <!-- 4632 at 300w → thumb height=1809. Section 512–1409 = 11.1%–30.4%. Crop 540–1116 = 11.7%–24.1% -->
+      <div class="crop-zone" style="top:11.7%; height:12.4%"><span class="crop-zone-tag">Frame 5 ↑ oil and gas</span></div>
+    </div>
+  </div>
+  <div>
+    <a href="https://cdn.sanity.io/images/gz4qpupc/portfolio/7d06a8419716624cd8b3075b6412e0c3174b2a19-768x4632.jpg?rect=0,540,768,576&w=900" target="_blank">
+      <img class="crop-img" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/7d06a8419716624cd8b3075b6412e0c3174b2a19-768x4632.jpg?rect=0,540,768,576&w=900" />
+    </a>
+  </div>
+</div>
+
+</body>
+</html>

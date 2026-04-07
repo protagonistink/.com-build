@@ -1,16 +1,51 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Script from 'next/script';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? '';
+
+declare global {
+  interface Window {
+    onNewsletterTurnstileSuccess?: (token: string) => void;
+    onNewsletterTurnstileExpired?: () => void;
+    onNewsletterTurnstileError?: () => void;
+  }
+}
 
 export default function NewsletterSignupForm() {
   const [email, setEmail] = useState('');
   const [companyFax, setCompanyFax] = useState('');
   const [startedAt] = useState(() => Date.now());
+  const [turnstileToken, setTurnstileToken] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const scrollTopRef = useRef(0);
+
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY) return;
+
+    window.onNewsletterTurnstileSuccess = (token: string) => {
+      setTurnstileToken(token);
+      setStatus((current) => (current === 'error' ? 'idle' : current));
+      setMessage('');
+    };
+    window.onNewsletterTurnstileExpired = () => {
+      setTurnstileToken('');
+    };
+    window.onNewsletterTurnstileError = () => {
+      setTurnstileToken('');
+      setStatus('error');
+      setMessage('Verification failed. Please retry.');
+    };
+
+    return () => {
+      delete window.onNewsletterTurnstileSuccess;
+      delete window.onNewsletterTurnstileExpired;
+      delete window.onNewsletterTurnstileError;
+    };
+  }, []);
 
   function restoreScrollPosition() {
     const savedScrollTop = scrollTopRef.current;
@@ -31,6 +66,13 @@ export default function NewsletterSignupForm() {
       return;
     }
 
+    if (TURNSTILE_SITE_KEY && !turnstileToken) {
+      setStatus('error');
+      setMessage('Complete the verification before joining.');
+      restoreScrollPosition();
+      return;
+    }
+
     setStatus('submitting');
     setMessage('');
 
@@ -44,6 +86,7 @@ export default function NewsletterSignupForm() {
           email: trimmedEmail,
           companyFax,
           formStartedAt: startedAt,
+          turnstileToken,
         }),
       });
 
@@ -60,6 +103,7 @@ export default function NewsletterSignupForm() {
       setMessage('Check your inbox for the next step.');
       setEmail('');
       setCompanyFax('');
+      setTurnstileToken('');
     } catch {
       setStatus('error');
       setMessage('Could not complete signup.');
@@ -70,6 +114,12 @@ export default function NewsletterSignupForm() {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-[320px]">
+      {TURNSTILE_SITE_KEY && (
+        <Script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          strategy="afterInteractive"
+        />
+      )}
       <div className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
         <label htmlFor="newsletter-company-fax">Leave this blank</label>
         <input
@@ -82,6 +132,19 @@ export default function NewsletterSignupForm() {
           onChange={(event) => setCompanyFax(event.target.value)}
         />
       </div>
+
+      {TURNSTILE_SITE_KEY && (
+        <div className="mb-4">
+          <div
+            className="cf-turnstile"
+            data-sitekey={TURNSTILE_SITE_KEY}
+            data-theme="dark"
+            data-callback="onNewsletterTurnstileSuccess"
+            data-expired-callback="onNewsletterTurnstileExpired"
+            data-error-callback="onNewsletterTurnstileError"
+          />
+        </div>
+      )}
 
       <div className="flex items-end gap-0 border-b border-warmwhite/20 pb-2">
         <input
@@ -98,7 +161,7 @@ export default function NewsletterSignupForm() {
         />
         <button
           type="submit"
-          disabled={status === 'submitting'}
+          disabled={status === 'submitting' || (Boolean(TURNSTILE_SITE_KEY) && !turnstileToken)}
           className="font-sans text-[15px] text-rust hover:text-warmwhite transition-colors duration-300 ml-4 flex-shrink-0 disabled:opacity-60 disabled:hover:text-rust"
         >
           {status === 'submitting' ? 'Joining...' : status === 'success' ? 'You’re in!' : 'Join now →'}

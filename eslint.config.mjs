@@ -9,11 +9,13 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    "**/.next/**",
     "out/**",
     "build/**",
     "dist/**",
     "next-env.d.ts",
     // Local archives/scratch files not part of shipped app code:
+    ".worktrees/**",
     ".zip_temp/**",
     "tmp_founders/**",
     "**/*.new",

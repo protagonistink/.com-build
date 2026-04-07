@@ -1,21 +1,15 @@
 import {createClient} from 'next-sanity';
 import {defineLive} from 'next-sanity/live';
-import {normalizeEnvValue} from '@/lib/env';
+import {getPublicSanityConfig} from '@/lib/env';
 
-const DEFAULT_SANITY_PROJECT_ID = 'dkok2iir';
-const DEFAULT_SANITY_DATASET = 'production';
-
-const projectId =
-  normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) || DEFAULT_SANITY_PROJECT_ID;
-const dataset =
-  normalizeEnvValue(process.env.NEXT_PUBLIC_SANITY_DATASET) || DEFAULT_SANITY_DATASET;
+const {projectId, dataset} = getPublicSanityConfig();
 
 const client = createClient({
   projectId,
   dataset,
   apiVersion: '2026-03-02',
   useCdn: false,
-  stega: {studioUrl: '/studio'},
+  stega: {studioUrl: 'https://protagonistink.sanity.studio/'},
 });
 
 // serverToken is server-only; browserToken uses the NEXT_PUBLIC_ variant (optional — live
@@ -24,4 +18,7 @@ export const {sanityFetch, SanityLive} = defineLive({
   client,
   serverToken: process.env.SANITY_API_READ_TOKEN,
   browserToken: process.env.NEXT_PUBLIC_SANITY_API_READ_TOKEN,
+  fetchOptions: {
+    revalidate: 0,
+  },
 });

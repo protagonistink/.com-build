@@ -158,8 +158,8 @@ export const sections: GuideSection[] = [
     title: 'CMS Notes',
     body: 'Best path for maintainability: store photography repos and brand references as Sanity documents, then render them in this guide through typed queries.',
     links: [
-      { label: 'Sanity Studio', href: '/studio' },
-      { label: 'Content Models', href: '/studio/structure' },
+      { label: 'Sanity Studio', href: 'https://protagonistink.sanity.studio/' },
+      { label: 'Content Models', href: 'https://protagonistink.sanity.studio/' },
     ],
   },
 ];

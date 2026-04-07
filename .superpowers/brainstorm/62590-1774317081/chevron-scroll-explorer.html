@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chevron — Scroll Explorer</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0e0e0e; color: #f0ece4; }
+
+.page-header {
+  padding: 32px 48px 24px;
+  border-bottom: 1px solid #2a2a2a;
+  position: sticky; top: 0; background: #0e0e0e; z-index: 100;
+}
+.page-header h1 { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #b5452a; margin-bottom: 4px; }
+.page-header p { font-size: 13px; color: #666; }
+
+.explorer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid #2a2a2a;
+}
+
+.scroll-col {
+  border-right: 1px solid #2a2a2a;
+  padding: 32px 28px;
+}
+.scroll-col:last-child { border-right: none; }
+
+.col-label {
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #b5452a;
+  margin-bottom: 6px;
+}
+.col-title {
+  font-size: 16px; font-weight: 500; color: #f0ece4; margin-bottom: 4px;
+}
+.col-dims {
+  font-size: 11px; color: #555; margin-bottom: 20px;
+}
+
+/* Full scroll at scale */
+.full-scroll-wrap {
+  position: relative;
+  width: 100%;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  background: #111;
+}
+.full-scroll-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Crop windows */
+.crops-label {
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #555;
+  margin-bottom: 12px;
+}
+.crop-row {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.crop-item {
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.crop-item:hover { border-color: #b5452a; }
+.crop-item .crop-img {
+  width: 100%; height: 160px; overflow: hidden;
+  position: relative; background: #111;
+}
+.crop-item .crop-img img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.crop-item .crop-meta {
+  padding: 8px 12px;
+  background: #161616;
+  border-top: 1px solid #222;
+}
+.crop-item .crop-meta .zone {
+  font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: #b5452a; margin-bottom: 2px;
+}
+.crop-item .crop-meta .note {
+  font-size: 11px; color: #666; line-height: 1.4;
+}
+
+/* Mobile col */
+.mobile-grid {
+  display: flex; flex-direction: column; gap: 16px;
+}
+.mobile-item {
+  border: 1px solid #2a2a2a; border-radius: 6px; overflow: hidden;
+  background: #111;
+}
+.mobile-item img {
+  width: 100%; height: auto; display: block;
+  max-height: 400px; object-fit: cover; object-position: top;
+}
+.mobile-item .mobile-meta {
+  padding: 10px 12px; background: #161616; border-top: 1px solid #222;
+}
+.mobile-item .mobile-meta .cap { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: .1em; }
+
+.note-box {
+  background: #1a1508; border: 1px solid #3a2810; border-radius: 6px;
+  padding: 12px 16px; margin-bottom: 20px;
+  font-size: 12px; color: #c08030; line-height: 1.5;
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Chevron — Scroll Explorer</h1>
+  <p>Full scrolls at reduced scale + crop windows from different vertical positions. Tell me which zone in each screenshot shows the story.</p>
+</div>
+
+<div class="explorer-grid">
+
+  <!-- COL 1: HOMEPAGE -->
+  <div class="scroll-col">
+    <div class="col-label">Screenshot 01</div>
+    <div class="col-title">Homepage Layout</div>
+    <div class="col-dims">1000 × 3584px — full page scroll</div>
+
+    <div class="note-box">Click any crop to open full size in new tab</div>
+
+    <!-- Full scroll thumbnail -->
+    <div class="full-scroll-wrap">
+      <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?w=300" alt="Homepage full">
+    </div>
+
+    <div class="crops-label">Crop windows</div>
+    <div class="crop-row">
+
+      <a class="crop-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,0,1000,800&w=900" target="_blank">
+        <div class="crop-img">
+          <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,0,1000,800&w=400" alt="Top">
+        </div>
+        <div class="crop-meta">
+          <div class="zone">A — Top (0–800px)</div>
+          <div class="note">Hero / page header area</div>
+        </div>
+      </a>
+
+      <a class="crop-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,600,1000,900&w=900" target="_blank">
+        <div class="crop-img">
+          <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,600,1000,900&w=400" alt="Upper mid">
+        </div>
+        <div class="crop-meta">
+          <div class="zone">B — Upper mid (600–1500px)</div>
+          <div class="note">First body section — copy starts here</div>
+        </div>
+      </a>
+
+      <a class="crop-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,1400,1000,900&w=900" target="_blank">
+        <div class="crop-img">
+          <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,1400,1000,900&w=400" alt="Mid">
+        </div>
+        <div class="crop-meta">
+          <div class="zone">C — Mid (1400–2300px)</div>
+          <div class="note">Editorial sections — story in action</div>
+        </div>
+      </a>
+
+      <a class="crop-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,2300,1000,900&w=900" target="_blank">
+        <div class="crop-img">
+          <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?rect=0,2300,1000,900&w=400" alt="Lower">
+        </div>
+        <div class="crop-meta">
+          <div class="zone">D — Lower (2300–3200px)</div>
+          <div class="note">Bottom editorial / close-out sections</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- COL 2: WHAT WE DO + ENERGY -->
+  <div class="scroll-col">
+    <div class="col-label">Screenshot 02</div>
+    <div class="col-title">"What We Do" Page</div>
+    <div class="col-dims">768 × 4382px — full page scroll</div>
+
+    <div class="note-box">Click any crop to open full size in new tab</div>
+
+    <div class="full-scroll-wrap">
+      <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?w=300" alt="What we do full">
+    </div>
+
+    <div class="crops-label">Crop windows</div>
+    <div class="crop-row">
+
+      <a class="crop-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?rect=0,0,768,800&w=900" target="_blank">
+        <div class="crop-img">
+          <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?rect=0,0,768,800&w=400" alt="Top">
+        </div>
+        <div class="crop-meta">
+          <div class="zone">A — Top (0–800px)</div>
+          <div class="note">Hero / section header</div>
+        </div>
+      </a>
+
+      <a class="crop-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?rect=0,700,768,1000&w=900" target="_blank">
+        <div class="crop-img">
+          <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?rect=0,700,768,1000&w=400" alt="Upper mid">
+        </div>
+        <div class="crop-meta">
+          <div class="zone">B — Upper mid (700–1700px)</div>
+          <div class="note">First copy blocks — where the voice shows</div>
+        </div>
+      </a>
+
+      <a class="crop-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?rect=0,1700,768,1000&w=900" target="_blank">
+        <div class="crop-img">
+          <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?rect=0,1700,768,1000&w=400" alt="Mid">
+        </div>
+        <div class="crop-meta">
+          <div class="zone">C — Mid (1700–2700px)</div>
+          <div class="note">Deep editorial — story in full effect</div>
+        </div>
+      </a>
+
+      <a class="crop-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?rect=0,2700,768,1000&w=900" target="_blank">
+        <div class="crop-img">
+          <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?rect=0,2700,768,1000&w=400" alt="Lower">
+        </div>
+        <div class="crop-meta">
+          <div class="zone">D — Lower (2700–3700px)</div>
+          <div class="note">Bottom of page content</div>
+        </div>
+      </a>
+
+    </div>
+
+    <div style="margin-top: 40px; border-top: 1px solid #2a2a2a; padding-top: 32px;">
+      <div class="col-label">Screenshot 03</div>
+      <div class="col-title">Energy Page</div>
+      <div class="col-dims">759 × 2742px — full page scroll</div>
+
+      <div class="full-scroll-wrap" style="margin-top: 16px;">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/2fb3d2d593b795e9832012d0533fbcd693f456c2-759x2742.jpg?w=300" alt="Energy full">
+      </div>
+
+      <div class="crops-label">Crop windows</div>
+      <div class="crop-row">
+
+        <a class="crop-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/2fb3d2d593b795e9832012d0533fbcd693f456c2-759x2742.jpg?rect=0,0,759,800&w=900" target="_blank">
+          <div class="crop-img">
+            <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/2fb3d2d593b795e9832012d0533fbcd693f456c2-759x2742.jpg?rect=0,0,759,800&w=400" alt="Top">
+          </div>
+          <div class="crop-meta">
+            <div class="zone">A — Top (0–800px)</div>
+            <div class="note">Energy hub hero</div>
+          </div>
+        </a>
+
+        <a class="crop-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/2fb3d2d593b795e9832012d0533fbcd693f456c2-759x2742.jpg?rect=0,700,759,900&w=900" target="_blank">
+          <div class="crop-img">
+            <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/2fb3d2d593b795e9832012d0533fbcd693f456c2-759x2742.jpg?rect=0,700,759,900&w=400" alt="Mid">
+          </div>
+          <div class="crop-meta">
+            <div class="zone">B — Mid (700–1600px)</div>
+            <div class="note">Content sections — technical made human</div>
+          </div>
+        </a>
+
+        <a class="crop-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/2fb3d2d593b795e9832012d0533fbcd693f456c2-759x2742.jpg?rect=0,1500,759,900&w=900" target="_blank">
+          <div class="crop-img">
+            <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/2fb3d2d593b795e9832012d0533fbcd693f456c2-759x2742.jpg?rect=0,1500,759,900&w=400" alt="Lower">
+          </div>
+          <div class="crop-meta">
+            <div class="zone">C — Lower (1500–2400px)</div>
+            <div class="note">Deep content — story architecture visible</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COL 3: MOBILE SHOTS + MAIN IMAGE -->
+  <div class="scroll-col">
+    <div class="col-label">Screenshot 04–06</div>
+    <div class="col-title">Renewable Fuels — Mobile</div>
+    <div class="col-dims">Portrait screens, no crop needed</div>
+
+    <div class="note-box">These are already ideal for a filmstrip. Click to open full size.</div>
+
+    <div class="mobile-grid">
+
+      <a class="mobile-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/56efe86818771383f4f5b25076c845434d6b8c59-443x1025.png" target="_blank">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/56efe86818771383f4f5b25076c845434d6b8c59-443x1025.png?w=300" alt="Trucking">
+        <div class="mobile-meta"><div class="cap">Trucking — 443×1025</div></div>
+      </a>
+
+      <a class="mobile-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/4758b13cafeaa88ca0a7de7f50683f3f27b19fd1-562x1324.png" target="_blank">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4758b13cafeaa88ca0a7de7f50683f3f27b19fd1-562x1324.png?w=300" alt="Rail">
+        <div class="mobile-meta"><div class="cap">Rail — 562×1324</div></div>
+      </a>
+
+      <a class="mobile-item" href="https://cdn.sanity.io/images/gz4qpupc/portfolio/7ba4ae6fa74bf25af27d3b81112311e316380087-555x1327.png" target="_blank">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/7ba4ae6fa74bf25af27d3b81112311e316380087-555x1327.png?w=300" alt="Shipping">
+        <div class="mobile-meta"><div class="cap">Shipping — 555×1327</div></div>
+      </a>
+
+    </div>
+
+    <div style="margin-top: 32px; border-top: 1px solid #2a2a2a; padding-top: 28px;">
+      <div class="col-label">Main Image</div>
+      <div class="col-title">Landscape — no crop needed</div>
+      <a href="https://cdn.sanity.io/images/gz4qpupc/portfolio/0e8da418da839a1d50ed1d44aec32a46814e19f8-1200x891.jpg" target="_blank">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/0e8da418da839a1d50ed1d44aec32a46814e19f8-1200x891.jpg?w=300" alt="Main" style="width:100%; border-radius:6px; border: 1px solid #2a2a2a; display:block;">
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

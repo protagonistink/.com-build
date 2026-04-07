@@ -1,12 +1,16 @@
 {
-  "name": "next",
+  "name": "protagonist-ink-site",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:webpack": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "verify": "npm run typecheck && npm run lint",
+    "verify:full": "npm run verify && npm run build:webpack"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.3",

@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server';
+import { asTrimmedString, getClientIp, isRateLimited } from '@/lib/api/submissionGuards';
+import { normalizeStoryRipStage } from '@/lib/storyRip';
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 10;
@@ -6,25 +9,6 @@ const MIN_SUBMIT_MS = 2500;
 const NOTION_API_VERSION = '2022-06-28';
 const NOTION_PAGES_ENDPOINT = 'https://api.notion.com/v1/pages';
 const ASANA_API_ENDPOINT = 'https://app.asana.com/api/1.0/tasks';
-const NOTION_STAGE_OPTIONS = new Set(['New', 'Reviewing', 'Follow-up', 'Passed', 'Accepted', 'Seed', 'Series A', 'Bootstrapped']);
-
-type RateLimitEntry = {
-  count: number;
-  resetAt: number;
-};
-
-const globalRateLimitStore = globalThis as typeof globalThis & {
-  __loomRateLimitStore?: Map<string, RateLimitEntry>;
-};
-const rateLimitStore = globalRateLimitStore.__loomRateLimitStore ?? new Map<string, RateLimitEntry>();
-if (!globalRateLimitStore.__loomRateLimitStore) {
-  globalRateLimitStore.__loomRateLimitStore = rateLimitStore;
-}
-
-function asTrimmedString(value: unknown) {
-  return typeof value === 'string' ? value.trim() : '';
-}
-
 function normalizeWebUrl(value: string) {
   const trimmed = value.trim();
   if (!trimmed) return '';
@@ -44,13 +28,6 @@ function asNotionRichText(value: string) {
   const trimmed = value.trim();
   if (!trimmed) return [];
   return [{ type: 'text', text: { content: trimmed.slice(0, 1900) } }];
-}
-
-function normalizeNotionStage(stage: string) {
-  const trimmed = stage.trim();
-  if (!trimmed) return 'New';
-  if (NOTION_STAGE_OPTIONS.has(trimmed)) return trimmed;
-  return 'New';
 }
 
 function asanaTaskName(name: string, company: string) {
@@ -114,27 +91,6 @@ async function createAsanaTask(params: {
   });
 }
 
-function getClientIp(request: Request) {
-  const forwardedFor = request.headers.get('x-forwarded-for');
-  if (forwardedFor) return forwardedFor.split(',')[0]?.trim() || 'unknown';
-  return request.headers.get('x-real-ip')?.trim() || 'unknown';
-}
-
-function isRateLimited(ip: string) {
-  const now = Date.now();
-  const existing = rateLimitStore.get(ip);
-
-  if (!existing || existing.resetAt <= now) {
-    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return false;
-  }
-
-  if (existing.count >= RATE_LIMIT_MAX_REQUESTS) return true;
-
-  existing.count += 1;
-  return false;
-}
-
 async function verifyTurnstile(token: string, ip: string) {
   const secretKey = process.env.TURNSTILE_SECRET_KEY;
   if (!secretKey) return true;
@@ -166,7 +122,12 @@ async function verifyTurnstile(token: string, ip: string) {
 export async function POST(request: Request) {
   const clientIp = getClientIp(request);
 
-  if (isRateLimited(clientIp)) {
+  if (isRateLimited({
+    bucket: 'loom-submit',
+    ip: clientIp,
+    windowMs: RATE_LIMIT_WINDOW_MS,
+    maxRequests: RATE_LIMIT_MAX_REQUESTS,
+  })) {
     return NextResponse.json({ error: 'Too many submissions. Try again later.' }, { status: 429 });
   }
 
@@ -206,7 +167,7 @@ export async function POST(request: Request) {
 
   const email = asTrimmedString(payload.email);
   const url = normalizeWebUrl(asTrimmedString(payload.url));
-  const stage = normalizeNotionStage(asTrimmedString(payload.stage));
+  const stage = normalizeStoryRipStage(asTrimmedString(payload.stage));
   const name = asTrimmedString(payload.name);
   const company = asTrimmedString(payload.company);
   const miss = asTrimmedString(payload.miss);

@@ -6,6 +6,7 @@ import {legacyShowcase} from './caseStudy/blocks/legacyShowcase';
 import {prologue} from './caseStudy/blocks/prologue';
 import {showcaseFilmStrip} from './caseStudy/blocks/showcaseFilmStrip';
 import {showcaseFullBleed} from './caseStudy/blocks/showcaseFullBleed';
+import {showcaseMediaFrame} from './caseStudy/blocks/showcaseMediaFrame';
 import {showcaseSplit} from './caseStudy/blocks/showcaseSplit';
 import {showcaseStat} from './caseStudy/blocks/showcaseStat';
 import {videoEmbed} from './caseStudy/blocks/videoEmbed';
@@ -20,6 +21,7 @@ export const schemaTypes = [
   prologue,
   showcaseSplit,
   showcaseFullBleed,
+  showcaseMediaFrame,
   showcaseFilmStrip,
   showcaseStat,
   legacyShowcase,

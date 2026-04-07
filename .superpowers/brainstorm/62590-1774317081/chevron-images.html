@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chevron — Image Inventory & Placement</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0e0e0e; color: #f0ece4; }
+
+  .page-header {
+    padding: 40px 48px 32px;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .page-header h1 { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: #b5452a; margin-bottom: 6px; }
+  .page-header p { font-size: 15px; color: #888; line-height: 1.5; }
+
+  .section {
+    padding: 40px 48px;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .section-label {
+    font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: #b5452a;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 20px; font-weight: 500; margin-bottom: 8px; color: #f0ece4;
+    font-style: italic;
+  }
+  .section-desc { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 28px; }
+
+  /* Image grid */
+  .img-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .img-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color .2s, transform .2s;
+  }
+  .img-card:hover { border-color: #b5452a; transform: translateY(-2px); }
+  .img-card.selected { border-color: #b5452a; outline: 2px solid #b5452a; }
+  .img-card .thumb {
+    width: 100%; height: 180px; object-fit: cover; object-position: top;
+    display: block; background: #111;
+  }
+  .img-card .thumb.mobile-screen {
+    object-fit: contain; background: #222; padding: 12px;
+  }
+  .img-meta {
+    padding: 12px 14px;
+  }
+  .img-meta .name { font-size: 12px; font-weight: 600; color: #ddd; margin-bottom: 2px; }
+  .img-meta .dims { font-size: 11px; color: #555; }
+  .img-meta .tag {
+    display: inline-block; margin-top: 6px;
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 3px; background: #2a2a2a; color: #888;
+  }
+
+  /* Crop previews */
+  .crop-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .crop-card {
+    background: #161616; border: 1px solid #2a2a2a; border-radius: 8px; overflow: hidden;
+    cursor: pointer; transition: border-color .2s;
+  }
+  .crop-card:hover { border-color: #b5452a; }
+  .crop-card.selected { border-color: #b5452a; }
+  .crop-preview {
+    width: 100%; height: 200px; overflow: hidden; position: relative;
+  }
+  .crop-preview img { width: 100%; display: block; }
+  .crop-preview img.full-scroll {
+    width: 100%; height: auto;
+    position: absolute; top: 0; left: 0;
+    transform-origin: top left;
+  }
+  .crop-label {
+    padding: 14px 16px;
+    border-top: 1px solid #2a2a2a;
+  }
+  .crop-label .context { font-size: 11px; color: #b5452a; text-transform: uppercase; letter-spacing: .15em; margin-bottom: 4px; }
+  .crop-label .desc { font-size: 13px; color: #bbb; line-height: 1.4; }
+
+  /* Film strip preview */
+  .filmstrip {
+    display: flex; gap: 16px; overflow-x: auto; padding: 16px 0 8px;
+    scrollbar-color: #333 transparent;
+  }
+  .filmstrip .frame {
+    flex: 0 0 auto; width: 140px; background: #1a1a1a;
+    border: 1px solid #2a2a2a; border-radius: 6px; overflow: hidden;
+  }
+  .filmstrip .frame img { width: 100%; height: 280px; object-fit: cover; object-position: top; display: block; }
+  .filmstrip .frame .cap { padding: 8px 10px; font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: .1em; }
+
+  /* Mock page section preview */
+  .page-mock {
+    background: #111; border: 1px solid #2a2a2a; border-radius: 8px; overflow: hidden;
+    margin-top: 20px;
+  }
+  .page-mock .mock-section {
+    display: flex; gap: 0;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .page-mock .mock-section.dark { background: #0a0a0a; }
+  .page-mock .mock-section.light { background: #f5f2ec; }
+  .page-mock .mock-text { flex: 1; padding: 28px 24px; }
+  .page-mock .mock-text .label { font-size: 9px; letter-spacing: .25em; color: #b5452a; text-transform: uppercase; margin-bottom: 8px; }
+  .page-mock .mock-text .title { font-size: 15px; font-weight: 600; color: #f0ece4; margin-bottom: 6px; font-style: italic; }
+  .page-mock .mock-text .title.dark-mode { color: #1a1a1a; }
+  .page-mock .mock-text .body { font-size: 11px; color: #666; line-height: 1.6; }
+  .page-mock .mock-text .body.dark-mode { color: #555; }
+  .page-mock .mock-img {
+    flex: 0 0 220px; height: 180px; overflow: hidden;
+  }
+  .page-mock .mock-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .page-mock .mock-img img.scroll-shot { object-position: center top; }
+
+  .note {
+    background: #1a1508; border: 1px solid #3a2a10; border-radius: 6px;
+    padding: 14px 18px; margin-bottom: 24px;
+    font-size: 13px; color: #c8922a; line-height: 1.5;
+  }
+
+  hr { border: none; border-top: 1px solid #222; margin: 0; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Chevron — Image Inventory & Placement</h1>
+  <p>All images sourced from pkthewriter Sanity (gz4qpupc/portfolio). Review below to decide what goes where and how to crop it.</p>
+</div>
+
+<!-- INVENTORY -->
+<div class="section">
+  <div class="section-label">Full Inventory — 8 images</div>
+
+  <div class="img-grid">
+
+    <div class="img-card">
+      <img class="thumb" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/dc7726a98ea8ec70d51db131d198e6c7f5c0b3d0-1000x667.jpg" alt="Hero">
+      <div class="img-meta">
+        <div class="name">Hero Image</div>
+        <div class="dims">1000 × 667 — 3:2 landscape</div>
+        <span class="tag">Already in hero</span>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <img class="thumb" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/0e8da418da839a1d50ed1d44aec32a46814e19f8-1200x891.jpg" alt="Main">
+      <div class="img-meta">
+        <div class="name">Main Image</div>
+        <div class="dims">1200 × 891 — 4:3 landscape</div>
+        <span class="tag">Available</span>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <img class="thumb" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?w=500&h=180&fit=crop&crop=top" alt="Homepage Layout">
+      <div class="img-meta">
+        <div class="name">Homepage Layout</div>
+        <div class="dims">1000 × 3584 — full scroll</div>
+        <span class="tag">Needs crop</span>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <img class="thumb" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?w=500&h=180&fit=crop&crop=top" alt="What We Do">
+      <div class="img-meta">
+        <div class="name">"What We Do" Page</div>
+        <div class="dims">768 × 4382 — full scroll</div>
+        <span class="tag">Needs crop</span>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <img class="thumb" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/2fb3d2d593b795e9832012d0533fbcd693f456c2-759x2742.jpg?w=500&h=180&fit=crop&crop=top" alt="Energy Page">
+      <div class="img-meta">
+        <div class="name">Energy Page</div>
+        <div class="dims">759 × 2742 — full scroll</div>
+        <span class="tag">Needs crop</span>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <img class="thumb mobile-screen" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/56efe86818771383f4f5b25076c845434d6b8c59-443x1025.png" alt="Trucking">
+      <div class="img-meta">
+        <div class="name">Renewable Fuels — Trucking</div>
+        <div class="dims">443 × 1025 — mobile portrait</div>
+        <span class="tag">Film strip</span>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <img class="thumb mobile-screen" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4758b13cafeaa88ca0a7de7f50683f3f27b19fd1-562x1324.png" alt="Rail">
+      <div class="img-meta">
+        <div class="name">Renewable Fuels — Rail</div>
+        <div class="dims">562 × 1324 — mobile portrait</div>
+        <span class="tag">Film strip</span>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <img class="thumb mobile-screen" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/7ba4ae6fa74bf25af27d3b81112311e316380087-555x1327.png" alt="Shipping">
+      <div class="img-meta">
+        <div class="name">Renewable Fuels — Shipping</div>
+        <div class="dims">555 × 1327 — mobile portrait</div>
+        <span class="tag">Film strip</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CROP ISSUES -->
+<div class="section">
+  <div class="section-label">The Crop Problem — Full-scroll screenshots</div>
+  <div class="note">
+    ⚠ The three page screenshots are massive scrolls (up to 1:5.7 aspect ratio). They need to be cropped to a meaningful window that reads in a split or full-bleed layout. Sanity CDN supports URL-based cropping — OR we can export specific crops from Canva/Figma. Below shows what a top-crop looks like vs a mid-crop.
+  </div>
+
+  <div class="crop-grid">
+
+    <div class="crop-card">
+      <div class="crop-preview" style="overflow:hidden; height:200px;">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?w=600&h=400&fit=crop&crop=top" style="width:100%; display:block;">
+      </div>
+      <div class="crop-label">
+        <div class="context">Homepage — crop from top</div>
+        <div class="desc">Shows the redesigned hero/above-fold. Works for "Copy drove the redesign."</div>
+      </div>
+    </div>
+
+    <div class="crop-card">
+      <div class="crop-preview" style="overflow:hidden; height:200px;">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?w=600&h=400&fit=crop&crop=center" style="width:100%; display:block;">
+      </div>
+      <div class="crop-label">
+        <div class="context">Homepage — crop from center</div>
+        <div class="desc">Mid-scroll editorial content. Shows how copy sits on the page.</div>
+      </div>
+    </div>
+
+    <div class="crop-card">
+      <div class="crop-preview" style="overflow:hidden; height:200px;">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?w=600&h=400&fit=crop&crop=top" style="width:100%; display:block;">
+      </div>
+      <div class="crop-label">
+        <div class="context">What We Do — crop from top</div>
+        <div class="desc">The redesigned What We Do page. Good for "Trading insider language."</div>
+      </div>
+    </div>
+
+    <div class="crop-card">
+      <div class="crop-preview" style="overflow:hidden; height:200px;">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/2fb3d2d593b795e9832012d0533fbcd693f456c2-759x2742.jpg?w=600&h=400&fit=crop&crop=top" style="width:100%; display:block;">
+      </div>
+      <div class="crop-label">
+        <div class="context">Energy Page — crop from top</div>
+        <div class="desc">The energy hub redesign. Strong candidate for the Voice &amp; Tone block.</div>
+      </div>
+    </div>
+
+    <div class="crop-card">
+      <div class="crop-preview" style="overflow:hidden; height:200px;">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/0e8da418da839a1d50ed1d44aec32a46814e19f8-1200x891.jpg" style="width:100%; display:block;">
+      </div>
+      <div class="crop-label">
+        <div class="context">Main Image — no crop needed</div>
+        <div class="desc">Clean landscape. Works as a split or full-bleed visual anchor.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FILMSTRIP PREVIEW -->
+<div class="section">
+  <div class="section-label">Renewable Fuels — Film Strip (Showcase Dark Block 3)</div>
+  <p class="section-desc">Three mobile portrait screenshots — Trucking, Rail, Shipping — displayed as a horizontal filmstrip. These are already the right aspect ratio for a side-by-side scroll. No crop needed, just display.</p>
+
+  <div class="filmstrip">
+    <div class="frame">
+      <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/56efe86818771383f4f5b25076c845434d6b8c59-443x1025.png" alt="Trucking">
+      <div class="cap">Trucking</div>
+    </div>
+    <div class="frame">
+      <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4758b13cafeaa88ca0a7de7f50683f3f27b19fd1-562x1324.png" alt="Rail">
+      <div class="cap">Rail</div>
+    </div>
+    <div class="frame">
+      <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/7ba4ae6fa74bf25af27d3b81112311e316380087-555x1327.png" alt="Shipping">
+      <div class="cap">Shipping</div>
+    </div>
+    <div class="frame" style="border-style: dashed; display:flex; align-items:center; justify-content:center;">
+      <div style="font-size: 11px; color: #444; text-align: center; padding: 20px;">Could scroll horizontally on mobile</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROPOSED PLACEMENT -->
+<div class="section">
+  <div class="section-label">Proposed Image Placement — Page Map</div>
+  <p class="section-desc">How images map to each section in the case study. The layout type of each block determines how the image is positioned.</p>
+
+  <div class="page-mock">
+
+    <!-- Challenge Block 1: split -->
+    <div class="mock-section light">
+      <div class="mock-text">
+        <div class="label" style="color:#b5452a;">The Problem</div>
+        <div class="title dark-mode">A language built for insiders</div>
+        <div class="body dark-mode">Credibility without humanity is just bureaucracy.</div>
+      </div>
+      <div class="mock-img">
+        <img class="scroll-shot" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/643015e90a36b894bff0c1162e1eeab6d647501d-1000x3584.jpg?w=440&h=360&fit=crop&crop=top" alt="Homepage">
+      </div>
+    </div>
+
+    <!-- Challenge Block 3: split -->
+    <div class="mock-section light" style="flex-direction: row-reverse;">
+      <div class="mock-text">
+        <div class="label" style="color:#b5452a;">The Real Stakes</div>
+        <div class="title dark-mode">Evolution isn't just technology. It's trust.</div>
+        <div class="body dark-mode">Every word either builds the case or undermines it.</div>
+      </div>
+      <div class="mock-img">
+        <img class="scroll-shot" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/2fb3d2d593b795e9832012d0533fbcd693f456c2-759x2742.jpg?w=440&h=360&fit=crop&crop=top" alt="Energy page">
+      </div>
+    </div>
+
+    <!-- Work Block 1: split dark -->
+    <div class="mock-section dark">
+      <div class="mock-text">
+        <div class="label" style="color:#b5452a;">The Approach</div>
+        <div class="title">Copy drove the redesign.</div>
+        <div class="body">The content strategy came first. The architecture followed.</div>
+      </div>
+      <div class="mock-img">
+        <img class="scroll-shot" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4751179c1cec3e98d2d5178dffad0936c3cba496-768x4382.jpg?w=440&h=360&fit=crop&crop=top" alt="What we do">
+      </div>
+    </div>
+
+    <!-- Work Block 2: split dark -->
+    <div class="mock-section dark" style="flex-direction: row-reverse;">
+      <div class="mock-text">
+        <div class="label" style="color:#b5452a;">Voice &amp; Tone</div>
+        <div class="title">Trading insider language for a human one</div>
+        <div class="body">It was translation — not simplification.</div>
+      </div>
+      <div class="mock-img">
+        <img class="scroll-shot" src="https://cdn.sanity.io/images/gz4qpupc/portfolio/0e8da418da839a1d50ed1d44aec32a46814e19f8-1200x891.jpg" alt="Main image">
+      </div>
+    </div>
+
+    <!-- Work Block 3: fullBleed dark -->
+    <div class="mock-section dark" style="flex-direction: column; padding: 0;">
+      <div style="padding: 24px; width: 100%;">
+        <div class="label" style="color: #b5452a;">Renewable Fuels</div>
+        <div class="title">Hub-and-spoke storytelling at scale</div>
+      </div>
+      <div style="display:flex; gap:12px; overflow-x:auto; padding: 0 24px 24px; width:100%;">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/56efe86818771383f4f5b25076c845434d6b8c59-443x1025.png" style="height:200px; width:auto; flex-shrink:0; border-radius:6px;">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/4758b13cafeaa88ca0a7de7f50683f3f27b19fd1-562x1324.png" style="height:200px; width:auto; flex-shrink:0; border-radius:6px;">
+        <img src="https://cdn.sanity.io/images/gz4qpupc/portfolio/7ba4ae6fa74bf25af27d3b81112311e316380087-555x1327.png" style="height:200px; width:auto; flex-shrink:0; border-radius:6px;">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CANVA NOTE -->
+<div class="section" style="border-bottom: none;">
+  <div class="section-label">On Cropping — CDN vs Canva</div>
+  <div class="note" style="background: #0a160a; border-color: #1a3a1a; color: #6ab86a;">
+    ✓ <strong>Good news:</strong> Sanity's CDN handles crops via URL params (?w=W&amp;h=H&amp;fit=crop&amp;crop=top|center|bottom). No Canva needed for the full-scroll screenshots — we can programmatically crop to any window. However, if any screenshot has a specific section that reads better than the auto-crop, Canva would let you export a precise frame.
+  </div>
+  <p style="font-size: 13px; color: #555; line-height: 1.6;">The CDN crop approach is faster to implement and editable in code. Canva gives pixel-perfect control if a specific moment in the scroll tells the story better than top/center/bottom.</p>
+</div>
+
+</body>
+</html>

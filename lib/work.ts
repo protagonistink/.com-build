@@ -1,4 +1,4 @@
-import {defineQuery} from 'next-sanity';
+import {defineQuery, stegaClean} from 'next-sanity';
 import {PROJECTS} from '@/data/work-projects';
 import {normalizePortableTextOrString} from '@/lib/portableText';
 import {sanityFetch} from '@/sanity/lib/live';
@@ -24,11 +24,16 @@ interface CmsShowcaseBlock {
   _key: string;
   itemLabel?: string;
   layout?: string;
+  layoutMode?: string;
   imagePosition?: string;
   mediaType?: string;
   imageDisplay?: string;
   copyStyle?: string;
   textAlign?: string;
+  frameAspectRatio?: string;
+  frameWidth?: string;
+  frameGap?: string;
+  stripPadding?: string;
   title?: string;
   body?: PortableTextValue | string;
   tagline?: string;
@@ -42,6 +47,9 @@ interface CmsShowcaseBlock {
   frames?: Array<{
     _key: string;
     mediaType?: string;
+    displayMode?: string;
+    assetWidth?: number;
+    assetHeight?: number;
     alt?: string;
     label?: string;
     caption?: string;
@@ -62,11 +70,16 @@ interface CmsSection {
   actLabel?: string;
   surface?: string;
   eyebrow?: string;
+  layoutMode?: string;
   imagePosition?: string;
   mediaType?: string;
   imageDisplay?: string;
   copyStyle?: string;
   textAlign?: string;
+  frameAspectRatio?: string;
+  frameWidth?: string;
+  frameGap?: string;
+  stripPadding?: string;
   title?: string;
   tagline?: string;
   imageUrl?: string;
@@ -80,6 +93,9 @@ interface CmsSection {
   frames?: Array<{
     _key: string;
     mediaType?: string;
+    displayMode?: string;
+    assetWidth?: number;
+    assetHeight?: number;
     alt?: string;
     label?: string;
     caption?: string;
@@ -98,7 +114,7 @@ interface CmsSection {
   deliverableItems?: Array<{_key: string; number?: string; title?: string; description?: string}>;
   ctaLabel?: string;
   ctaLink?: string;
-  text?: string;
+  text?: PortableTextValue | string;
 }
 
 interface CmsCaseStudy {
@@ -131,26 +147,61 @@ function normalizeSurface(surface?: string): ShowcaseSurface {
   return surface === 'light' ? 'light' : 'dark';
 }
 
+function normalizeLayoutToken(value?: string): string | undefined {
+  if (!value) return undefined;
+  return stegaClean(value).trim() || undefined;
+}
+
+function normalizeSplitLayout(layoutMode?: string, imagePosition?: string): ShowcaseBlock['imagePosition'] {
+  const cleanImagePosition = normalizeLayoutToken(imagePosition);
+  const cleanLayoutMode = normalizeLayoutToken(layoutMode);
+
+  if (cleanImagePosition === 'right') return 'right';
+  if (cleanImagePosition === 'full') return 'full';
+  if (cleanImagePosition === 'copyOnly') return 'copyOnly';
+  if (cleanImagePosition === 'left') return 'left';
+  if (cleanLayoutMode === 'mediaRight') return 'right';
+  if (cleanLayoutMode === 'full') return 'full';
+  if (cleanLayoutMode === 'copyOnly') return 'copyOnly';
+  if (cleanLayoutMode === 'mediaLeft') return 'left';
+  return undefined;
+}
+
 function mapFrames(
   frames?: Array<{
     _key: string;
     mediaType?: string;
+    displayMode?: string;
+    assetWidth?: number;
+    assetHeight?: number;
     alt?: string;
     label?: string;
     caption?: string;
     assetUrl?: string;
   }>,
 ): ShowcaseFrame[] | undefined {
-  const nextFrames = frames
+  const nextFrames: ShowcaseFrame[] | undefined = frames
     ?.filter((frame) => frame.assetUrl)
-    .map((frame) => ({
-      _key: frame._key,
-      mediaType: frame.mediaType === 'video' ? 'video' : 'image',
-      src: frame.assetUrl!,
-      alt: frame.alt || undefined,
-      label: frame.label || undefined,
-      caption: frame.caption || undefined,
-    }));
+    .map((frame) => {
+      const mediaType: ShowcaseFrame['mediaType'] = frame.mediaType === 'video' ? 'video' : 'image';
+
+      return {
+        _key: frame._key,
+        mediaType,
+        src: frame.assetUrl!,
+        displayMode: frame.displayMode === 'contain' ? 'contain' : 'cover',
+        aspectRatio:
+          typeof frame.assetWidth === 'number' &&
+          typeof frame.assetHeight === 'number' &&
+          frame.assetWidth > 0 &&
+          frame.assetHeight > 0
+            ? frame.assetWidth / frame.assetHeight
+            : undefined,
+        alt: frame.alt || undefined,
+        label: frame.label || undefined,
+        caption: frame.caption || undefined,
+      };
+    });
 
   return nextFrames && nextFrames.length > 0 ? nextFrames : undefined;
 }
@@ -171,7 +222,7 @@ function mapLegacyShowcaseBlock(block: CmsShowcaseBlock): ShowcaseBlock {
   return {
     _key: block._key,
     layout: (block.layout as ShowcaseBlock['layout']) || 'split',
-    imagePosition: (block.imagePosition as 'left' | 'right' | 'full' | 'copyOnly') || undefined,
+    imagePosition: normalizeSplitLayout(block.layoutMode, block.imagePosition),
     mediaType: (block.mediaType as 'image' | 'video') || (block.videoUrl ? 'video' : 'image'),
     imageDisplay: (block.imageDisplay as 'cover' | 'contain') || undefined,
     eyebrow: block.itemLabel?.trim() || undefined,
@@ -200,7 +251,7 @@ function mapFlatSectionToShowcaseBlock(section: FlatShowcaseSection): ShowcaseBl
       return {
         _key: section._key,
         layout: 'split',
-        imagePosition: section.imagePosition,
+        imagePosition: normalizeSplitLayout((section as {layoutMode?: string}).layoutMode, section.imagePosition),
         mediaType: section.mediaType || (section.video ? 'video' : 'image'),
         imageDisplay: section.imageDisplay,
         copyStyle: section.copyStyle,
@@ -226,9 +277,10 @@ function mapFlatSectionToShowcaseBlock(section: FlatShowcaseSection): ShowcaseBl
       return {
         _key: section._key,
         layout: 'filmStrip',
-        eyebrow: section.eyebrow,
-        title: section.title,
-        body: normalizePortableTextOrString(section.body),
+        frameAspectRatio: section.frameAspectRatio,
+        frameWidth: section.frameWidth,
+        frameGap: section.frameGap,
+        stripPadding: section.stripPadding,
         frames: section.frames,
       };
     case 'showcaseStat':
@@ -342,7 +394,7 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
         actLabel: section.actLabel?.trim() || undefined,
         surface: normalizeSurface(section.surface),
         eyebrow: section.eyebrow?.trim() || undefined,
-        imagePosition: (section.imagePosition as 'left' | 'right' | 'full' | 'copyOnly') || undefined,
+        imagePosition: normalizeSplitLayout(section.layoutMode, section.imagePosition),
         mediaType: (section.mediaType as 'image' | 'video') || (section.videoUrl ? 'video' : 'image'),
         imageDisplay: (section.imageDisplay as 'cover' | 'contain') || undefined,
         copyStyle: (section.copyStyle as 'default' | 'display' | 'pull-quote') || undefined,
@@ -379,9 +431,10 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
         _key: section._key,
         actLabel: section.actLabel?.trim() || undefined,
         surface: normalizeSurface(section.surface),
-        eyebrow: section.eyebrow?.trim() || undefined,
-        title: section.title?.trim() || undefined,
-        body: normalizePortableTextOrString(section.body),
+        frameAspectRatio: (section.frameAspectRatio as '4/3' | '3/2' | '16/9' | '1/1' | '9/16') || undefined,
+        frameWidth: (section.frameWidth as 'compact' | 'standard' | 'large') || undefined,
+        frameGap: (section.frameGap as 'tight' | 'standard' | 'loose') || undefined,
+        stripPadding: (section.stripPadding as 'compact' | 'standard' | 'roomy') || undefined,
         frames: mapFrames(section.frames),
       };
 
@@ -444,11 +497,18 @@ function mapCmsSection(section: CmsSection): CaseStudySourceSection | null {
       } satisfies DeliverablesSection;
 
     case 'closer':
-      if (!section.text?.trim()) return null;
+      if (
+        !(
+          (typeof section.text === 'string' && section.text.trim()) ||
+          normalizePortableTextOrString(section.text)
+        )
+      ) {
+        return null;
+      }
       return {
         _type: 'closer',
         _key: section._key,
-        text: section.text.trim(),
+        text: normalizePortableTextOrString(section.text)!,
       } satisfies CloserSection;
 
     default:
@@ -529,11 +589,16 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
       actLabel,
       surface,
       eyebrow,
+      layoutMode,
       imagePosition,
       mediaType,
       imageDisplay,
       copyStyle,
       textAlign,
+      frameAspectRatio,
+      frameWidth,
+      frameGap,
+      stripPadding,
       title,
       tagline,
       "imageUrl": image.asset->url,
@@ -546,6 +611,9 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
       "frames": frames[] {
         _key,
         "mediaType": select(defined(mediaType) => mediaType, defined(video) => "video", "image"),
+        displayMode,
+        "assetWidth": coalesce(asset->metadata.dimensions.width, image.asset->metadata.dimensions.width, video.asset->metadata.dimensions.width),
+        "assetHeight": coalesce(asset->metadata.dimensions.height, image.asset->metadata.dimensions.height, video.asset->metadata.dimensions.height),
         alt,
         label,
         caption,
@@ -560,11 +628,16 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
         _key,
         itemLabel,
         layout,
+        layoutMode,
         imagePosition,
         mediaType,
         imageDisplay,
         copyStyle,
         textAlign,
+        frameAspectRatio,
+        frameWidth,
+        frameGap,
+        stripPadding,
         title,
         body[]{
           ...,
@@ -583,6 +656,9 @@ const CASE_STUDY_QUERY = defineQuery(/* groq */ `
         "frames": frames[] {
           _key,
           "mediaType": select(defined(mediaType) => mediaType, defined(video) => "video", "image"),
+          displayMode,
+          "assetWidth": coalesce(asset->metadata.dimensions.width, image.asset->metadata.dimensions.width, video.asset->metadata.dimensions.width),
+          "assetHeight": coalesce(asset->metadata.dimensions.height, image.asset->metadata.dimensions.height, video.asset->metadata.dimensions.height),
           alt,
           label,
           caption,
@@ -655,11 +731,16 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
       actLabel,
       surface,
       eyebrow,
+      layoutMode,
       imagePosition,
       mediaType,
       imageDisplay,
       copyStyle,
       textAlign,
+      frameAspectRatio,
+      frameWidth,
+      frameGap,
+      stripPadding,
       title,
       tagline,
       "imageUrl": image.asset->url,
@@ -672,6 +753,9 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
       "frames": frames[] {
         _key,
         "mediaType": select(defined(mediaType) => mediaType, defined(video) => "video", "image"),
+        displayMode,
+        "assetWidth": coalesce(asset->metadata.dimensions.width, image.asset->metadata.dimensions.width, video.asset->metadata.dimensions.width),
+        "assetHeight": coalesce(asset->metadata.dimensions.height, image.asset->metadata.dimensions.height, video.asset->metadata.dimensions.height),
         alt,
         label,
         caption,
@@ -686,11 +770,16 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
         _key,
         itemLabel,
         layout,
+        layoutMode,
         imagePosition,
         mediaType,
         imageDisplay,
         copyStyle,
         textAlign,
+        frameAspectRatio,
+        frameWidth,
+        frameGap,
+        stripPadding,
         title,
         body[]{
           ...,
@@ -709,6 +798,9 @@ const CASE_STUDY_PREVIEW_QUERY = defineQuery(/* groq */ `
         "frames": frames[] {
           _key,
           "mediaType": select(defined(mediaType) => mediaType, defined(video) => "video", "image"),
+          displayMode,
+          "assetWidth": coalesce(asset->metadata.dimensions.width, image.asset->metadata.dimensions.width, video.asset->metadata.dimensions.width),
+          "assetHeight": coalesce(asset->metadata.dimensions.height, image.asset->metadata.dimensions.height, video.asset->metadata.dimensions.height),
           alt,
           label,
           caption,
@@ -752,9 +844,8 @@ async function getCmsCaseStudies(preview?: boolean): Promise<CaseStudy[]> {
   try {
     const {data: records} = (await sanityFetch({
       query,
-      perspective: preview ? undefined : 'published',
-      stega: preview ? undefined : false,
-      revalidate: 0,
+      perspective: preview ? 'drafts' : 'published',
+      stega: !!preview,
     })) as {data: CmsCaseStudy[]};
     return records.map(mapCmsCaseStudy).filter((item): item is CaseStudy => Boolean(item));
   } catch (error) {

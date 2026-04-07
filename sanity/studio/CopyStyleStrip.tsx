@@ -14,8 +14,8 @@ function PillToggle({
   onChange: (value: string) => void;
 }) {
   return (
-    <Flex gap={2} align="center">
-      <Text size={0} style={{color: 'rgba(250,248,244,0.35)', fontSize: 10, whiteSpace: 'nowrap'}}>
+    <Flex gap={2} align="center" wrap="wrap">
+      <Text size={0} style={{color: 'rgba(250,248,244,0.35)', fontSize: 10, whiteSpace: 'nowrap', minWidth: 44}}>
         {label}
       </Text>
       <Flex
@@ -32,8 +32,8 @@ function PillToggle({
             type="button"
             onClick={() => onChange(opt.value)}
             style={{
-              padding: '3px 8px',
-              fontSize: 10,
+              padding: '5px 10px',
+              fontSize: 11,
               cursor: 'pointer',
               border: 'none',
               background: value === opt.value ? 'rgba(200, 60, 47, 0.15)' : 'transparent',
@@ -92,6 +92,22 @@ export function SurfaceToggleInput(props: StringInputProps) {
   );
 }
 
+export function MediaTypeInput(props: StringInputProps) {
+  const value = (props.value as string) || 'image';
+
+  return (
+    <PillToggle
+      label="Media"
+      options={[
+        {label: 'Image', value: 'image'},
+        {label: 'Video', value: 'video'},
+      ]}
+      value={value}
+      onChange={(v) => props.onChange(set(v))}
+    />
+  );
+}
+
 /**
  * Compact text style picker — replaces the native radio input.
  */
@@ -120,7 +136,7 @@ export function TextAlignInput(props: StringInputProps) {
 
   return (
     <Flex gap={2} align="center">
-      <Text size={0} style={{color: 'rgba(250,248,244,0.35)', fontSize: 10, whiteSpace: 'nowrap'}}>
+      <Text size={0} style={{color: 'rgba(250,248,244,0.35)', fontSize: 10, whiteSpace: 'nowrap', minWidth: 44}}>
         Align
       </Text>
       <Flex
@@ -149,8 +165,8 @@ export function TextAlignInput(props: StringInputProps) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: 30,
-                height: 22,
+                width: 34,
+                height: 26,
                 cursor: 'pointer',
                 border: 'none',
                 background: active ? 'rgba(200, 60, 47, 0.15)' : 'transparent',

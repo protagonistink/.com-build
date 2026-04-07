@@ -6,7 +6,7 @@ import {defineDocuments, defineLocations, presentationTool} from 'sanity/present
 import {structureTool} from 'sanity/structure';
 import {media} from 'sanity-plugin-media';
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash';
-import {normalizeEnvValue} from './lib/env';
+import {getPublicSanityConfig} from './lib/env';
 import {schemaTypes} from './sanity/schemaTypes';
 import {structure} from './sanity/structure';
 import {BrandLogo} from './sanity/studio/BrandLogo';
@@ -14,8 +14,7 @@ import {StudioLayoutWrapper} from './sanity/studio/StudioLayoutWrapper';
 import {caseStudyTemplates} from './sanity/templates';
 import {sanityTheme} from './sanity/theme';
 
-const DEFAULT_SANITY_PROJECT_ID = 'dkok2iir';
-const DEFAULT_SANITY_DATASET = 'production';
+const {projectId, dataset} = getPublicSanityConfig();
 
 const presentationDocuments = defineDocuments([
   {
@@ -96,21 +95,12 @@ const presentationLocations = {
   }),
 };
 
-function getPublicEnvWithDefault(name: 'NEXT_PUBLIC_SANITY_PROJECT_ID' | 'NEXT_PUBLIC_SANITY_DATASET') {
-  const value = normalizeEnvValue(process.env[name]);
-  if (value) return value;
-  return name === 'NEXT_PUBLIC_SANITY_PROJECT_ID'
-    ? DEFAULT_SANITY_PROJECT_ID
-    : DEFAULT_SANITY_DATASET;
-}
-
 export default defineConfig({
   name: 'protagonist-ink',
   title: 'Protagonist Ink',
-  basePath: '/studio',
 
-  projectId: getPublicEnvWithDefault('NEXT_PUBLIC_SANITY_PROJECT_ID'),
-  dataset: getPublicEnvWithDefault('NEXT_PUBLIC_SANITY_DATASET'),
+  projectId,
+  dataset,
 
   plugins: [
     structureTool({structure}),

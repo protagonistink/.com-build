@@ -15,6 +15,8 @@ export interface ShowcaseFrame {
   _key: string;
   mediaType: 'image' | 'video';
   src: string;
+  displayMode?: 'cover' | 'contain';
+  aspectRatio?: number;
   alt?: string;
   label?: string;
   caption?: string;
@@ -49,6 +51,10 @@ export interface ShowcaseBlock {
   video?: ShowcaseVideo;
   statValue?: string;
   statLabel?: string;
+  frameAspectRatio?: '4/3' | '3/2' | '16/9' | '1/1' | '9/16';
+  frameWidth?: 'compact' | 'standard' | 'large';
+  frameGap?: 'tight' | 'standard' | 'loose';
+  stripPadding?: 'compact' | 'standard' | 'roomy';
   frames?: ShowcaseFrame[];
   details?: ShowcaseDetail[];
 }
@@ -100,9 +106,10 @@ export interface ShowcaseFilmStripSection {
   _key: string;
   actLabel?: string;
   surface?: ShowcaseSurface;
-  eyebrow?: string;
-  title?: string;
-  body?: StoryBody;
+  frameAspectRatio?: '4/3' | '3/2' | '16/9' | '1/1' | '9/16';
+  frameWidth?: 'compact' | 'standard' | 'large';
+  frameGap?: 'tight' | 'standard' | 'loose';
+  stripPadding?: 'compact' | 'standard' | 'roomy';
   frames?: ShowcaseFrame[];
 }
 
@@ -168,7 +175,7 @@ export interface DeliverablesSection {
 export interface CloserSection {
   _type: 'closer';
   _key: string;
-  text: string;
+  text: StoryBody;
 }
 
 export type CaseStudySourceSection =

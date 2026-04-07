@@ -18,7 +18,7 @@ export function CaseStudyBlockPreview(props: PreviewProps) {
   const subtitle = typeof props.subtitle === 'string' ? props.subtitle : undefined;
   const description = typeof props.description === 'string' ? props.description : undefined;
 
-  const isEmpty = !description && !props.imageUrl;
+  const isEmpty = !description && !props.imageUrl && !media;
 
   return (
     <Card
@@ -50,6 +50,8 @@ export function CaseStudyBlockPreview(props: PreviewProps) {
         >
           <Flex align="center" justify="center" style={{width: '100%', height: '100%'}}>
             {props.imageUrl ? (
+              // Studio previews render arbitrary Sanity image URLs; next/image is not a good fit here.
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={props.imageUrl}
                 alt=""

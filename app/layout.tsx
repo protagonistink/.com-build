@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { VisualEditing } from "next-sanity/visual-editing";
@@ -9,13 +8,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import { SanityLive } from "@/sanity/lib/live";
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-cormorant",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.protagonist.ink"),
@@ -62,7 +54,7 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
       </head>
       <body
-        className={`${cormorant.variable} font-sans bg-ink text-warmwhite antialiased selection:bg-rust selection:text-warmwhite`}
+        className="font-sans bg-ink text-warmwhite antialiased selection:bg-rust selection:text-warmwhite"
       >
         <Navbar />
         <ScrollReveal />

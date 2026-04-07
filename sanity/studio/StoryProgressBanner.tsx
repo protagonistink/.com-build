@@ -8,7 +8,7 @@ interface Section {
   _type: string;
   _key: string;
   body?: string | unknown[];
-  text?: string;
+  text?: string | unknown[];
   title?: string;
   quote?: string;
   headline?: string;
@@ -37,7 +37,8 @@ const BEAT_CHECKS: Record<string, (s: Section) => boolean> = {
   videoEmbed: (s) => Boolean(s.url?.trim()),
   deliverables: (s) => Boolean(s.headline?.trim()),
   climax: (s) => Boolean(s.quote?.trim()),
-  closer: (s) => Boolean(s.text?.trim()),
+  closer: (s) =>
+    Boolean((typeof s.text === 'string' && s.text.trim()) || hasPortableTextContent(s.text as PortableTextValue | undefined)),
 };
 
 const BEAT_LABELS: Record<string, string> = {

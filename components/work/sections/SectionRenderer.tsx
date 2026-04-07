@@ -6,15 +6,26 @@ import VideoEmbed from './VideoEmbed';
 import Deliverables from './Deliverables';
 import Closer from './Closer';
 
-export default function SectionRenderer({ sections }: { sections: CaseStudySection[] }) {
+type SectionMetaItem = {
+  label: string;
+  value: string;
+};
+
+export default function SectionRenderer({
+  sections,
+  prologueMetaItems = [],
+}: {
+  sections: CaseStudySection[];
+  prologueMetaItems?: SectionMetaItem[];
+}) {
   if (!sections || sections.length === 0) return null;
 
   return (
     <>
-      {sections.map((section) => {
+      {sections.map((section, index) => {
         switch (section._type) {
           case 'prologue':
-            return <Prologue key={section._key} section={section} />;
+            return <Prologue key={section._key} section={section} metaItems={index === 0 ? prologueMetaItems : []} />;
           case 'showcase':
             return <Showcase key={section._key} section={section} />;
           case 'climax':

@@ -17,11 +17,11 @@ export function WritersGuide() {
         <Card padding={4} radius={3} tone="positive" border>
           <Stack space={3}>
             <Text size={2} weight="semibold">
-              You can't break the live site from here.
+              You can&rsquo;t break the live site from here.
             </Text>
             <Text size={1} muted>
               Everything saves as a draft first. Nothing goes live until the status is set to
-              "Published." Save as often as you want — messy drafts are expected and encouraged.
+              &ldquo;Published.&rdquo; Save as often as you want — messy drafts are expected and encouraged.
             </Text>
           </Stack>
         </Card>
@@ -37,14 +37,14 @@ export function WritersGuide() {
             </Text>
             <Text size={1}>
               <strong>Story tab</strong> — The beats of the case file. When you create a new one,
-              you'll pick a template that gives you a skeleton to fill in.
+              you&rsquo;ll pick a template that gives you a skeleton to fill in.
             </Text>
             <Text size={1}>
               <strong>Publishing tab</strong> — Status and publish date. Patrick handles this part —
               you can skip it.
             </Text>
             <Text size={1}>
-              <strong>SEO tab</strong> — Search engine details. Also Patrick's territory.
+              <strong>SEO tab</strong> — Search engine details. Also Patrick&rsquo;s territory.
             </Text>
           </Stack>
         </Stack>
@@ -58,7 +58,7 @@ export function WritersGuide() {
             <Text size={1}>2. Click <strong>+</strong> and pick a story shape</Text>
             <Text size={1}>3. Fill in the <strong>Hero</strong> tab (title + client name is enough to start)</Text>
             <Text size={1}>4. Switch to the <strong>Story</strong> tab and fill in the blocks</Text>
-            <Text size={1}>5. Save anytime. Come back anytime. That's it.</Text>
+            <Text size={1}>5. Save anytime. Come back anytime. That&rsquo;s it.</Text>
           </Stack>
         </Stack>
 
@@ -76,7 +76,7 @@ export function WritersGuide() {
               <strong>SEO fields</strong> — meta titles, descriptions, canonical URLs. Not your job.
             </Text>
             <Text size={1}>
-              <strong>Slug</strong> — auto-generated from your title. Don't touch it.
+              <strong>Slug</strong> — auto-generated from your title. Don&rsquo;t touch it.
             </Text>
           </Stack>
         </Stack>
@@ -88,8 +88,8 @@ export function WritersGuide() {
             </Text>
             <Text size={1} muted>
               Every field has a description underneath it that tells you what goes there. The
-              gray placeholder text inside empty fields shows you an example. If you're still
-              unsure, just write something rough — it's a draft, not a tattoo.
+              gray placeholder text inside empty fields shows you an example. If you&rsquo;re still
+              unsure, just write something rough — it&rsquo;s a draft, not a tattoo.
             </Text>
           </Stack>
         </Card>

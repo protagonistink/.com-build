@@ -1,8 +1,24 @@
+import { fileURLToPath } from "node:url";
 import type { NextConfig } from "next";
 
+const projectRoot = fileURLToPath(new URL(".", import.meta.url));
+
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: projectRoot,
+  },
   async redirects() {
     return [
+      {
+        source: '/studio',
+        destination: 'https://protagonistink.sanity.studio/',
+        permanent: false,
+      },
+      {
+        source: '/studio/:path*',
+        destination: 'https://protagonistink.sanity.studio/',
+        permanent: false,
+      },
       {
         source: '/journal',
         destination: '/blog',
