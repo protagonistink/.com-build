@@ -88,7 +88,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
       {/* ================================================================
           HERO — Cinematic opening (kept from original)
           ================================================================ */}
-      <section className="relative min-h-[90vh] md:min-h-screen bg-trueblack text-warmwhite overflow-hidden texture-grain">
+      <section className="relative min-h-[90vh] md:min-h-[min(100vh,56rem)] bg-trueblack text-warmwhite overflow-hidden texture-grain">
         {/* Hero image */}
         <ParallaxHeroBackground
           src={project.image}
@@ -116,8 +116,8 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
         </div>
 
         {/* Hero content */}
-        <div className="relative z-10 min-h-[90vh] md:min-h-screen px-6 md:px-10 lg:px-12 pt-24 md:pt-28 lg:pt-32 pb-16 md:pb-24 lg:pb-28">
-          <div className="max-w-[1400px] mx-auto w-full min-h-[calc(90vh-6rem)] md:min-h-[calc(100vh-7rem)] flex flex-col justify-end pb-12 md:pb-14 lg:pb-16">
+        <div className="relative z-10 min-h-[90vh] md:min-h-[min(100vh,56rem)] px-6 md:px-10 lg:px-12 pt-24 md:pt-28 lg:pt-32 pb-16 md:pb-24 lg:pb-28">
+          <div className="max-w-[1400px] mx-auto w-full min-h-[calc(90vh-6rem)] md:min-h-[calc(min(100vh,56rem)-7rem)] flex flex-col justify-end pb-12 md:pb-14 lg:pb-16">
             {/* Breadcrumb */}
             <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-white/50 mb-5 md:mb-6 drop-shadow-md">
               <Link href="/work" className="hover:text-white transition-colors duration-300">Case Study</Link>
@@ -144,7 +144,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
           </div>
         </div>
 
-        <div className="pointer-events-none absolute left-1/2 top-[calc(100vh-3.75rem)] sm:top-[calc(100vh-4.25rem)] md:top-[calc(100vh-4.75rem)] -translate-x-1/2 -translate-y-full z-10 flex flex-col items-center gap-2 drop-shadow-md">
+        <div className="pointer-events-none absolute left-1/2 bottom-6 md:bottom-8 lg:bottom-10 -translate-x-1/2 z-10 flex flex-col items-center gap-2 drop-shadow-md">
           <div className="w-px h-12 bg-gradient-to-b from-transparent to-white/40" />
           <span className="text-[8px] uppercase tracking-[0.3em] text-white/40">Scroll</span>
         </div>
