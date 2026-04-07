@@ -142,7 +142,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
             )}
 
             <div className="mt-8 md:mt-10 flex flex-col items-center gap-3 text-white/38 drop-shadow-md self-center">
-              <div className="h-9 w-px bg-gradient-to-b from-rust/85 to-white/35" />
+              <div className="h-9 w-px bg-gradient-to-b from-white/35 to-rust/85" />
               <span className="text-[8px] uppercase tracking-[0.3em]">Scroll</span>
             </div>
           </div>
