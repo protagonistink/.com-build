@@ -1,8 +1,7 @@
 // app/blog/[slug]/page.tsx
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import PostCredits from '@/components/blog/detail/PostCredits';
-import MoreInk from '@/components/blog/detail/MoreInk';
+import SuggestedReading from '@/components/blog/detail/SuggestedReading';
 import EditorialFooter from '@/components/blog/detail/EditorialFooter';
 import Prose from '@/components/blog/detail/Prose';
 import SanityPortableText from '@/components/blog/detail/SanityPortableText';
@@ -77,12 +76,12 @@ export default async function BlogDetailPage({
                 src={post.mainImage}
                 alt={post.mainImageAlt || post.title}
                 fill
-                className="object-cover opacity-[0.40]"
+                className="object-cover opacity-[0.22]"
                 sizes="100vw"
                 priority
               />
             </div>
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.30)_0%,rgba(10,10,10,0.52)_36%,rgba(10,10,10,0.85)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.62)_0%,rgba(10,10,10,0.74)_36%,rgba(10,10,10,0.9)_100%)]" />
           </>
         )}
 
@@ -117,7 +116,7 @@ export default async function BlogDetailPage({
       </section>
 
       {/* ═══ BODY ═══ */}
-      <section className="relative z-20 -mt-8 md:-mt-12 bg-[#f9f7f2] texture-paper rounded-t-[2rem] md:rounded-t-[2.5rem] shadow-[0_-12px_24px_-12px_rgba(0,0,0,0.12)]">
+      <section className="relative z-20 -mt-8 md:-mt-12 bg-[#FAFAFA] texture-paper rounded-t-[2rem] md:rounded-t-[2.5rem] shadow-[0_-8px_30px_rgba(0,0,0,0.12)] pb-20 md:pb-32">
         {/* Body content */}
         <div className="pt-12 md:pt-16">
           {post.body ? (
@@ -134,13 +133,13 @@ export default async function BlogDetailPage({
         </div>
 
         {/* Transition marker */}
-        <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-16 md:pb-24">
+        <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-8 md:pb-10">
           <div className="mx-auto w-fit flex items-center justify-center">
             <Image
               src="/images/brand/transparent_black_symbol.png"
               alt=""
-              width={96}
-              height={96}
+              width={132}
+              height={132}
               aria-hidden
               className="opacity-[0.18]"
             />
@@ -149,13 +148,8 @@ export default async function BlogDetailPage({
 
       </section>
 
-      {/* ═══ POST CREDITS — FAQ ═══ */}
-      {post.faqItems && post.faqItems.length > 0 && (
-        <PostCredits items={post.faqItems} />
-      )}
-
       {/* ═══ FURTHER READING ═══ */}
-      <MoreInk posts={cataloguePosts} />
+      <SuggestedReading posts={cataloguePosts} />
 
       {/* Editorial footer — newsletter, Story Teardown, PI mark */}
       <EditorialFooter />
