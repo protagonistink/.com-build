@@ -1,0 +1,5 @@
+# Ethic Serif is a commercial face; its web licence is unconfirmed and this repo is public.
+# Copy the .woff files into assets/fonts/ locally; they stay out of git.
+assets/fonts/EthicSerif-*
+docs/design-system/fonts/
+.DS_Store
