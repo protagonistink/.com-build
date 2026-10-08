@@ -1,0 +1,56 @@
+/* Protagonist Ink — design tokens as CSS custom properties.
+   Source of truth: tokens.json (same folder). Keep the two in sync. */
+
+@font-face { font-family: "Satoshi"; src: url("fonts/Satoshi-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Satoshi"; src: url("fonts/Satoshi-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Satoshi"; src: url("fonts/Satoshi-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Satoshi"; src: url("fonts/Satoshi-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+/* Ethic Serif (Jen Wagner). WOFF only for now; confirm the web licence before launch. */
+@font-face { font-family: "Ethic Serif"; src: url("fonts/EthicSerif-Light.woff") format("woff"); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "Ethic Serif"; src: url("fonts/EthicSerif-LightItalic.woff") format("woff"); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: "Ethic Serif"; src: url("fonts/EthicSerif-Regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Ethic Serif"; src: url("fonts/EthicSerif-Italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Ethic Serif"; src: url("fonts/EthicSerif-Medium.woff") format("woff"); font-weight: 500; font-style: normal; font-display: swap; }
+
+:root {
+  /* Colour */
+  --paper: #FAFAF7;
+  --ink: #282828;
+  --red: #C83C2F;
+  --red-press: #A93226;
+  --red-on-ink: #E86A57;      /* PROPOSED: red type on ink surfaces only */
+  --indigo: #252B54;
+  --graphite: #6D6A64;
+  --proof: #E1D5D2;
+  --paper-muted: #A8A49C;     /* secondary text on ink */
+  --rule: rgba(40, 40, 40, 0.16);
+  --rule-on-ink: rgba(250, 250, 247, 0.18);
+  --focus: #C83C2F;
+
+  /* Type */
+  --font-serif: "Ethic Serif", Georgia, serif;
+  --font-sans: "Satoshi", "Helvetica Neue", Arial, sans-serif;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+  --space-8: 96px;
+  --space-9: 144px;
+
+  /* Radius */
+  --radius-none: 0px;
+  --radius-soft: 2px;
+  --radius-frame: 8px;       /* framed surfaces: covers, artifacts, portraits, list tabs */
+  --radius-pill: 999px;
+
+  /* Layout */
+  --content-max: 1280px;
+  --gutter: 32px;
+  --margin: 64px;
+  --target-min: 44px;
+}

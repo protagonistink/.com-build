@@ -19,6 +19,8 @@ const eslintConfig = defineConfig([
     ".zip_temp/**",
     "tmp_founders/**",
     "**/*.new",
+    // Static site build, not part of the Next.js app:
+    "site-2026/**",
   ]),
 ]);
 
